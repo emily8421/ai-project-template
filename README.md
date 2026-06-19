@@ -51,6 +51,7 @@
 
 ```text
 ai/global-rules.md        # 跨项目通用规则（带版本号，审计基准）
+INIT-PROMPT.md            # 常用 Prompt 模板（初始化/单任务/审查）
 CONTRIBUTING.md           # 模板变更治理流程
 git-guide.md             # git 使用说明
 scripts/new-project.sh    # 一键起新项目
