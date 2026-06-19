@@ -7,7 +7,7 @@
 ```text
 1. 复制本目录 → NewProject/
 2. 初始化 git 仓库：进入新目录 `git init -b main`，建远端仓库并推送
-   （默认账号 emily8421，账号说明见 docs/git-guide.md；
+   （默认账号 emily8421，账号说明见 git-guide.md；
     或直接用 scripts/new-project.sh 一步完成「复制 + 建库 + 首提交 + 推送」）
 3. 填写 docs/00-scenario.md ~ 02-srs.md
 4. 先填 ai/project-rules.md 的 §1 Phase边界 + §2 技术栈 + §3 项目形态与文档裁剪（凭 00-02 粗略定即可，作为 03-09 生成的约束）
@@ -31,11 +31,12 @@
 | `ai/global-rules.md` | 跨项目通用规则，逐字复用 |
 | `ai/project-rules.md` | 本项目专属规则（Phase边界、技术栈、项目形态裁剪、编码约定与禁区），每个新项目重新填写 |
 | `docs/00-09` | 核心文档骨架，00-02人工提供，03-09由AI生成、人工确认；其中06/07按 `ai/project-rules.md` §3 的项目形态可省略 |
+| `docs/vision/` | 产品愿景叙事源文档（人工输入，不直接驱动开发；AI 据此抽取 00-09，见 INIT-PROMPT §0） |
 | `tasks/` | 任务单，按需启用（见tasks/README.md） |
 | `AGENTS.md` / `CLAUDE.md` / `.cursor/rules/project-rules.mdc` | 三个AI工具的入口文件，均指向`ai/index.md`，不随规则增减而修改（Cursor入口额外带frontmatter以便自动加载） |
 | `INIT-PROMPT.md` | 常用Prompt模板（初始化/单任务执行/审查） |
 | `CONTRIBUTING.md` | 模板变更治理流程（分支→PR→评审→合并，含派生项目回流） |
-| `docs/git-guide.md` | git 使用说明（账号体系/起新项目/提交规范/同步/踩坑） |
+| `git-guide.md` | git 使用说明（账号体系/起新项目/提交规范/同步/踩坑） |
 | `scripts/` | 自动化脚本：`new-project.sh`（起新项目）、`sync-template.sh`（下行同步） |
 | `_archive/` | 规范体系设计文档存档，供人查阅，AI不读取，新项目可保留或删除 |
 | `_examples/` | 填好的参考样例项目（演示文档填完的样子），仅供对照，新项目可保留或删除 |
@@ -51,7 +52,7 @@
 ```text
 ai/global-rules.md        # 跨项目通用规则（带版本号，审计基准）
 CONTRIBUTING.md           # 模板变更治理流程
-docs/git-guide.md         # git 使用说明
+git-guide.md             # git 使用说明
 scripts/new-project.sh    # 一键起新项目
 scripts/sync-template.sh  # 本下行同步脚本（自举后由它自动完成）
 ```
