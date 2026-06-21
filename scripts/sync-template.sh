@@ -28,6 +28,7 @@ SYNC_FILES=(
   "git-guide.md"
   "scripts/new-project.sh"
   "scripts/sync-template.sh"
+  "scripts/check-template.sh"
 )
 
 git rev-parse --is-inside-work-tree >/dev/null
