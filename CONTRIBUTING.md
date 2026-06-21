@@ -73,6 +73,7 @@
 
 > 区别于 README 的 global-rules 版本记录，这里记治理 / 基建类变更。
 
+- 2026-06-21：新增轻量愿景样例——`_examples/quick-script/` 展示小脚本如何从愿景文档走轻量路径，省略 `docs/06`、`docs/07`，保留 `docs/09` 验证闭环。
 - 2026-06-21：新增模板自检脚本——`scripts/check-template.sh` 检查 AI 入口、规则索引、核心文档骨架、同步清单与模板版本号；同步清单、README 与 PR checklist 补充自检脚本说明。
 - 2026-06-21：模板初始化体验改进——`ai/project-rules.md` 增加生成 `docs/03-09` 前的必填检查；`docs/03-09` 增加最小示例区块；`scripts/new-project.sh` 支持 `ACCOUNT`、`VISIBILITY` 环境变量及 `--visibility` 参数，README 补充脚本覆盖用法。
 - 2026-06-21：模板可用性改进——`scripts/sync-template.sh --dry-run` 改为真正只预览差异、不修改工作区、不 stage，并为 `--commit` 增加无差异不提交保护；README 增加轻量项目路径与同步预览说明；`ai/project-rules.md` 增加 AI 修改前确认规则。

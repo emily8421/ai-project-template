@@ -9,7 +9,7 @@
 | 你的起点 / 项目形态 | 推荐样例 | 重点看什么 |
 |---|---|---|
 | 先有一份产品愿景，希望 AI 生成工程文档并进入开发 | `vision-to-product/` | 愿景文档如何抽取为 `docs/00-09`，以及 Phase1 如何进入 Sprint |
-| 项目很小，只是脚本 / 小工具 | `quick-script/`（待补） | 如何走轻量路径，保留最少文档但仍有验收口径 |
+| 项目很小，只是脚本 / 小工具 | `quick-script/` | 如何走轻量路径，保留最少文档但仍有验收口径 |
 | 有数据库 + 对外 API，需要完整闭环 | `todo-api/` | `docs/06-db-design.md`、`docs/07-api-spec.md`、`docs/09-verification.md` 如何联动 |
 
 ## 推荐阅读顺序
