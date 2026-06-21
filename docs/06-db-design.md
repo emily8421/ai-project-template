@@ -17,3 +17,27 @@
 
 ## 4. 表间关系
 （外键 / 关联关系，文字或 ER 图描述）
+
+## 最小示例（填写粒度参考）
+
+```markdown
+## 1. 表清单
+| 表名 | 阶段 | 状态 | 用途 | 对应 REQ |
+|---|---|---|---|---|
+| app_records | [P2] | 骨架 | 保存用户处理历史 | REQ-005 |
+
+## 2. 表结构
+### app_records [P2][骨架]
+| 字段 | 类型 | 约束 | 说明 |
+|---|---|---|---|
+| id | string | primary key | 记录 ID |
+| input_text | text | not null | 原始输入 |
+| output_text | text | not null | 处理结果 |
+| created_at | datetime | not null | 创建时间 |
+
+## 3. 索引设计
+- `idx_app_records_created_at`：按创建时间倒序查询历史记录。
+
+## 4. 表间关系
+- Phase2 暂无跨表关系；后续若增加用户体系，再补用户与记录关系。
+```
