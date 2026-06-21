@@ -60,7 +60,7 @@ TEMPLATE_REMOTE=<模板仓库URL> bash scripts/new-project.sh <项目名>
 | `INIT-PROMPT.md` | 常用Prompt模板（初始化/单任务执行/审查） |
 | `CONTRIBUTING.md` | 模板变更治理流程（分支→PR→评审→合并，含派生项目回流） |
 | `git-guide.md` | git 使用说明（账号体系/起新项目/提交规范/同步/踩坑） |
-| `scripts/` | 自动化脚本：`new-project.sh`（起新项目）、`sync-template.sh`（下行同步） |
+| `scripts/` | 自动化脚本：`new-project.sh`（起新项目）、`sync-template.sh`（下行同步）、`check-template.sh`（模板自检） |
 | `_archive/` | 规范体系设计文档存档，供人查阅，AI不读取，新项目可保留或删除 |
 | `_examples/` | 填好的参考样例项目（演示文档填完的样子），仅供对照，新项目可保留或删除 |
 
@@ -79,9 +79,12 @@ CONTRIBUTING.md           # 模板变更治理流程
 git-guide.md             # git 使用说明
 scripts/new-project.sh    # 一键起新项目
 scripts/sync-template.sh  # 本下行同步脚本（自举后由它自动完成）
+scripts/check-template.sh # 模板自检脚本（入口、文档骨架、同步清单、版本号）
 ```
 
 手动下行：逐文件覆盖复制 + 提交。自动下行：在派生项目里先执行 `bash scripts/sync-template.sh --dry-run` 只预览差异（不修改工作区、不 stage），确认后执行 `bash scripts/sync-template.sh --commit` 覆盖并提交。审计：在各项目 `grep「模板版本」` 比对，版本落后于模板即需同步。
+
+模板仓库改动提交前建议运行：`bash scripts/check-template.sh`，用于检查入口文件、核心文档骨架、同步清单与版本号是否自洽。
 
 ### 版本记录
 
