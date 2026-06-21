@@ -23,6 +23,21 @@
 > 「从产品愿景文档生成完整文档体系」——它会一次性产出 00-09 + design-\* + 阶段建议（含验证计划）；
 > 人工只需确认 03 §3 的阶段路线图，即可进入 Sprint1。愿景文档约定放 `docs/vision/product-vision.md`。
 
+### 轻量项目路径
+
+若项目是小脚本、一次性实验、纯工具库或明确不会长期演进的轻量项目，可按以下方式裁剪，但仍需保留基本边界与验证口径：
+
+```text
+1. 填写 docs/00-scenario.md ~ 02-srs.md，只写当前要解决的问题与验收口径
+2. 填写 ai/project-rules.md 的 §1 Phase边界、§2 技术栈、§3 项目形态与文档裁剪
+3. 保留 docs/03-prd.md、04-architecture.md、05-tech-spec.md、08-dev-plan.md、09-verification.md 的最小版
+4. 若无持久化存储，删除 docs/06-db-design.md，并在 ai/project-rules.md §3 声明省略
+5. 若无对外接口，删除 docs/07-api-spec.md，并在 ai/project-rules.md §3 声明省略
+6. 每次只实现一个小任务；任务完成后把验证结果记录到 docs/09-verification.md 或当前 Sprint
+```
+
+轻量路径只减少文档篇幅，不改变“先明确需求与边界，再让 AI 编码”的原则。
+
 ## 目录说明
 
 | 路径 | 作用 |
@@ -58,7 +73,7 @@ scripts/new-project.sh    # 一键起新项目
 scripts/sync-template.sh  # 本下行同步脚本（自举后由它自动完成）
 ```
 
-手动下行：逐文件覆盖复制 + 提交。自动下行：在派生项目里执行 `bash scripts/sync-template.sh --commit`（先 `--dry-run` 看差异）。审计：在各项目 `grep「模板版本」` 比对，版本落后于模板即需同步。
+手动下行：逐文件覆盖复制 + 提交。自动下行：在派生项目里先执行 `bash scripts/sync-template.sh --dry-run` 只预览差异（不修改工作区、不 stage），确认后执行 `bash scripts/sync-template.sh --commit` 覆盖并提交。审计：在各项目 `grep「模板版本」` 比对，版本落后于模板即需同步。
 
 ### 版本记录
 
