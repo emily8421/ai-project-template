@@ -19,6 +19,14 @@
 8. 进入Sprint1
 ```
 
+`scripts/new-project.sh` 默认使用 `emily8421` 创建私有仓库；如需覆盖，可使用参数或环境变量：
+
+```bash
+ACCOUNT=<GitHub账号> VISIBILITY=private bash scripts/new-project.sh <项目名>
+bash scripts/new-project.sh <项目名> --account <GitHub账号> --visibility public
+TEMPLATE_REMOTE=<模板仓库URL> bash scripts/new-project.sh <项目名>
+```
+
 > **若起点是一份产品愿景文档**（而非从零写 00-02）：完成步骤 1–2 后，跳过 3–5，直接用 `INIT-PROMPT.md` §0
 > 「从产品愿景文档生成完整文档体系」——它会一次性产出 00-09 + design-\* + 阶段建议（含验证计划）；
 > 人工只需确认 03 §3 的阶段路线图，即可进入 Sprint1。愿景文档约定放 `docs/vision/product-vision.md`。
