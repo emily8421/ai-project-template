@@ -16,3 +16,21 @@
 
 ## 3. 请求 / 响应示例
 （逐接口的入参、出参示例）
+
+## 最小示例（填写粒度参考）
+
+```markdown
+## 1. 统一约定
+- 响应格式：`{ "success": boolean, "data": object | null, "error": string | null }`
+- 错误码：`VALIDATION_ERROR`、`INTERNAL_ERROR`
+
+## 2. 接口清单
+| 方法 | 路径 / 命令 | 阶段 | 状态 | 用途 | 对应功能 |
+|---|---|---|---|---|---|
+| POST | /process | [P1] | P1-已设计 | 提交文本并返回处理结果 | F-001 |
+
+## 3. 请求 / 响应示例
+### POST /process
+请求：`{ "text": "示例输入" }`
+响应：`{ "success": true, "data": { "result": "示例输出" }, "error": null }`
+```

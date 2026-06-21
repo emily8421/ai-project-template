@@ -2,19 +2,23 @@
 # new-project.sh — 从 ai-project-template 派生新项目并初始化 git 远端
 #
 # 用法:
-#   bash scripts/new-project.sh <项目名> [--account <login>] [--no-examples] [--local]
+#   bash scripts/new-project.sh <项目名> [--account <login>] [--visibility public|private] [--no-examples] [--local]
 #     <项目名>           新项目目录名（相对当前目录，或绝对路径），默认也是 GitHub 仓库名
-#     --account <login>  建仓库的 GitHub 账号（默认 emily8421）
+#     --account <login>  建仓库的 GitHub 账号（默认取 ACCOUNT，未设置则为 emily8421）
+#     --visibility <v>   GitHub 仓库可见性：private 或 public（默认取 VISIBILITY，未设置则为 private）
 #     --no-examples      不复制 _archive/ 与 _examples/ 参考材料
 #     --local            走本地模板派生（默认 = 脚本所在仓库根，需自行确保 git pull 到最新）；
 #                        不加此参数则从 GitHub main 派生（推荐，事实来源）
 #   环境变量:
+#     ACCOUNT            默认建库账号（可被 --account 覆盖）
+#     VISIBILITY         默认仓库可见性：private 或 public（可被 --visibility 覆盖）
 #     TEMPLATE_REMOTE    模板远端（默认 https://github.com/emily8421/ai-project-template.git）
 # 依赖: git、gh（目标账号已登录或可 switch 到）
 # 说明: 默认从 GitHub main 派生（事实来源）；--local 走本地。两种产物等价，派生时任选。
 set -euo pipefail
 
-ACCOUNT="emily8421"
+ACCOUNT="${ACCOUNT:-emily8421}"
+VISIBILITY="${VISIBILITY:-private}"
 NO_EXAMPLES=0
 USE_LOCAL=0
 NAME=""
@@ -23,15 +27,20 @@ TEMPLATE_REMOTE="${TEMPLATE_REMOTE:-https://github.com/emily8421/ai-project-temp
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --account) ACCOUNT="${2:?--account 需要值}"; shift 2;;
+    --visibility) VISIBILITY="${2:?--visibility 需要值}"; shift 2;;
     --no-examples) NO_EXAMPLES=1; shift;;
     --local) USE_LOCAL=1; shift;;
-    -h|--help) echo "用法: bash scripts/new-project.sh <项目名> [--account <login>] [--no-examples] [--local]"; exit 0;;
+    -h|--help) echo "用法: bash scripts/new-project.sh <项目名> [--account <login>] [--visibility public|private] [--no-examples] [--local]"; exit 0;;
     -*) echo "未知选项: $1" >&2; exit 1;;
     *) if [[ -n "$NAME" ]]; then echo "多余的位置参数: $1" >&2; exit 1; fi; NAME="$1"; shift;;
   esac
 done
 
-[[ -n "$NAME" ]] || { echo "用法: bash scripts/new-project.sh <项目名> [--account <login>] [--no-examples] [--local]" >&2; exit 1; }
+[[ -n "$NAME" ]] || { echo "用法: bash scripts/new-project.sh <项目名> [--account <login>] [--visibility public|private] [--no-examples] [--local]" >&2; exit 1; }
+case "$VISIBILITY" in
+  private|public) ;;
+  *) echo "--visibility 仅支持 private 或 public: $VISIBILITY" >&2; exit 1;;
+esac
 
 TARGET="$NAME"; [[ "$TARGET" = /* ]] || TARGET="$PWD/$TARGET"
 [[ ! -e "$TARGET" ]] || { echo "目标已存在: $TARGET" >&2; exit 1; }
@@ -51,7 +60,7 @@ else
   SOURCE="remote"
 fi
 
-echo "==> 目标: $TARGET（账号 $ACCOUNT，仓库 $ACCOUNT/$BASE）"
+echo "==> 目标: $TARGET（账号 $ACCOUNT，仓库 $ACCOUNT/$BASE，$VISIBILITY）"
 
 if [[ "$NO_EXAMPLES" -eq 1 ]]; then
   rm -rf "$TARGET/_archive" "$TARGET/_examples"
@@ -68,7 +77,7 @@ if [[ -n "$ACTIVE" && "$ACTIVE" != "$ACCOUNT" ]]; then
   gh auth switch -u "$ACCOUNT"
 fi
 
-gh repo create "$ACCOUNT/$BASE" --private --source=. --remote=origin --push \
+gh repo create "$ACCOUNT/$BASE" "--$VISIBILITY" --source=. --remote=origin --push \
   --description "Derived from ai-project-template"
 
 echo
