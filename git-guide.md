@@ -84,14 +84,48 @@ git branch -d <已合并分支名>
 
 ## 5. 下行同步（模板 → 项目）
 
-派生项目同步模板方法论更新：
+派生项目同步模板方法论更新时，优先使用 `scripts/sync-template.sh`，不要手动逐文件复制。该流程是**模板 → 派生项目**的下行获取，不会把派生项目内容提交回模板。
+
+### 5.1 标准操作流程
+
+在派生项目根目录执行：
+
+```powershell
+git status
+git switch -c chore/sync-template-vX.Y
+bash scripts/sync-template.sh --dry-run
+```
+
+确认 `--dry-run` 输出只涉及 README「方法论同步」清单中的模板方法论文件，且不会覆盖项目专属内容后，再执行：
+
+```powershell
+bash scripts/sync-template.sh --commit
+bash scripts/check-template.sh
+git status --short --branch
+```
+
+如果项目要求走 PR，继续执行：
+
+```powershell
+git push -u origin chore/sync-template-vX.Y
+gh pr create --fill
+```
+
+### 5.2 两条核心命令
 
 ```
 bash scripts/sync-template.sh --dry-run    # 先看差异
 bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y
 ```
 
-同步文件清单见 README「方法论同步」。
+### 5.3 注意事项
+
+- 执行前工作区应干净；若 `git status` 显示未提交改动，先提交 / 暂存 / 放弃这些改动，不要混入同步提交。
+- `--dry-run` 只预览差异，不修改工作区、不 stage。
+- `--commit` 会覆盖同步清单中的文件并自动提交；提交信息通常由脚本生成。
+- `README.md` 是项目件，`ai/project-rules.md` 是项目专属规则，默认不应被同步覆盖。
+- 同步文件清单见 README「方法论同步」，具体以 `scripts/sync-template.sh` 中的 `SYNC_FILES` 为准。
+- 同步后若自检失败，先修复同步造成的不自洽，再 push / PR。
 
 ## 6. 常见踩坑
 
