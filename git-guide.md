@@ -126,6 +126,7 @@ bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y
 - `README.md` 是项目件，`ai/project-rules.md` 是项目专属规则，默认不应被同步覆盖。
 - 同步文件清单见 README「方法论同步」，具体以 `scripts/sync-template.sh` 中的 `SYNC_FILES` 为准。
 - 同步后若自检失败，先修复同步造成的不自洽，再 push / PR。
+- 老派生项目若执行 `--dry-run` 后出现 staged 改动，说明本地 `scripts/sync-template.sh` 过旧；先恢复工作区，手动用模板最新版覆盖该脚本，再重新执行 `--dry-run`。
 
 ## 6. 常见踩坑
 
