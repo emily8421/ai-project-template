@@ -27,7 +27,7 @@ TEMPLATE-UPGRADE-vX.Y-proposal-inbox-patch.md
 3. 将提案文件加入 `_proposals/`。
 4. 模板维护者使用 AI 读取 `_proposals/TEMPLATE-UPGRADE-*.md`，汇总分析后生成优化计划。
 5. 按优化计划修改模板文件，并通过 PR 评审合并。
-6. 提案处理完成后，从 `_proposals/` 清理已处理的提案文件。
+6. 提案处理完成后，从 `_proposals/` 清理已处理的提案文件；如需保留历史记录，移动到 `_archive/proposals/`。
 
 ## AI 汇总要求
 
@@ -41,3 +41,7 @@ TEMPLATE-UPGRADE-vX.Y-proposal-inbox-patch.md
 - 验证方式：需要运行哪些自检或人工审查。
 
 AI 不应直接把派生项目的项目专属内容写入模板；所有落地改动必须保持去项目化。
+
+## 已处理提案
+
+已处理并需要保留记录的提案，归档到 `_archive/proposals/`。本目录仅保留待处理或正在汇总的提案。
