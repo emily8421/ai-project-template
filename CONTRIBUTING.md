@@ -18,6 +18,15 @@
 - ❌ 在派生项目里修改 `ai/global-rules.md` 后手动回抄到模板——这会让两边版本漂移、无法审计。
 - ❌ 把项目专属内容（具体技术栈 / REQ / 表 / 接口）写进模板。
 
+## 2.5 模板 ↔ 派生：双向闭环
+
+模板方法论在「模板仓库」与「派生项目」间双向流动，两方向互补、构成闭环：
+
+- **上行·改进**：派生项目发现可通用优化 → 在本项目 `_proposals/` 起草 `TEMPLATE-UPGRADE-*.md` → 回到模板仓库提交到 `_proposals/` 收件箱 → 模板 PR 合并 → 模板演进。
+- **下行·对齐**：派生项目执行 `scripts/sync-template.sh` → 拉取模板最新方法论覆盖本地同步清单 → 按项目提交记录审计版本。
+
+只有上行没有下行，模板改了但派生项目拿不到；只有下行没有上行，模板不会吸收派生项目经验。两者缺一不可。
+
 ## 3. 上行流程 A：直接改模板
 
 ```text
@@ -38,21 +47,30 @@
 
 ## 4. 上行流程 B：派生项目归纳回流
 
-在派生项目开发中沉淀出的可通用优化（积累规则、文档骨架改进、新支柱等），按此回流，**不要把方案长期留在派生项目根目录**：
+在派生项目开发中沉淀出的可通用优化（积累规则、文档骨架改进、新支柱等），按此回流，**不要把方案长期停留在派生项目根目录**：
 
 ```text
-1. 在派生项目里把优化写成「去项目化」的提案（动机 / 拟改文件 / 是否触发版本号 / 影响面）
-2. 到【模板仓库】开分支，把提案落成实际改动（不是把提案文档丢进模板）
-3. 走 §3 的 PR 流程评审、合并
-4. 合并后下行同步回原派生项目（及其他项目）
-5. 删除派生项目里临时的提案文档（如 *-UPGRADE-*.md），改由「模板版本 vX.Y + git log」作为变更事实来源
+1. 在派生项目 `_proposals/` 中把优化写成「去项目化」提案：TEMPLATE-UPGRADE-*.md
+   （动机 / 拟改文件 / 是否触发版本号 / 影响面），可选附 TEMPLATE-UPGRADE-*-patch.md
+2. 到【模板仓库】开分支，把提案文件提交到模板仓库 `_proposals/` 收件箱（临时记录）
+3. 模板维护者使用 INIT-PROMPT.md「模板优化汇总」读取 `_proposals/` 全部提案，输出去重 / 冲突 / 依赖分析与优化计划
+4. 按优化计划修改模板文件，走 §3 的 PR 流程评审、合并
+5. 合并后下行同步回原派生项目（及其他项目）
+6. 派生项目里已处理的提案可移动到项目历史记录或删除；模板仓库 `_proposals/` 中已处理提案也可归档，变更事实以「模板版本 vX.Y + git log」为准
 ```
+
+提案与 patch 的分工：
+
+- **`TEMPLATE-UPGRADE-*.md`** = WHY / WHAT：去项目化说明动机、拟改、版本号影响与影响面，给评审者决策。
+- **`TEMPLATE-UPGRADE-*-patch.md`** = HOW：可选但推荐，记录基于当前模板版本的 old→new 修改建议，给执行者合并落地。
 
 > 示例：LUMEN 的 `TEMPLATE-UPGRADE-v1.4.md` 即按此回流——它在 LUMEN 里起草，最终以 PR 形式合入模板，同步后从 LUMEN 移除。
 
 ## 5. 下行同步（模板 → 项目）
 
 见 README「方法论同步（模板 ⇄ 项目）」的文件清单。手动逐文件覆盖，或用 `bash scripts/sync-template.sh --commit`（先 `--dry-run`）。提交信息：`sync template vX.Y`。审计：在各项目 `grep「模板版本」` 比对。
+
+> 注：`sync-template.sh` 是**下行获取**：派生项目拉取模板最新方法论并覆盖本地同步清单；派生项目是接收方，不会修改模板仓库。模板的改进只通过 §3 / §4 的模板仓库 PR 产生。
 
 ## 6. 分支命名约定
 
@@ -73,6 +91,7 @@
 
 > 区别于 README 的 global-rules 版本记录，这里记治理 / 基建类变更。
 
+- 2026-06-22：新增模板优化提案收件箱工作流——模板仓库 `_proposals/` 收集派生项目去项目化提案，`INIT-PROMPT.md` 增加模板优化汇总 Prompt，`scripts/new-project.sh` 为派生项目创建本地提案起草区并项目化 README。
 - 2026-06-21：增强示例完整性自检——`scripts/check-template.sh` 增加 `_examples` 检查，固定验证 `vision-to-product`、`quick-script`、`todo-api` 三个入口及旧示例目录已清理。
 - 2026-06-21：清理旧示例项目——删除 `_examples/text-cleaner-cli/`、`_examples/text-normalizer-lib/`、`_examples/md-notes-frontend/`，保留 `vision-to-product`、`quick-script`、`todo-api` 三个清晰入口。
 - 2026-06-21：更新 Todo API 示例验证闭环——`_examples/todo-api/` 补 `OVERVIEW.md` 与 `docs/09-verification.md`，并同步新版 `project-rules.md` 结构，用作 DB + REST API 完整参考。
