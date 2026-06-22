@@ -39,6 +39,43 @@ git push -u origin main
 - Commit message 用「完成 XX」式，避免「修改 / update / test」等模糊词；跨模块改动拆成多条（见 `INIT-PROMPT.md` §6）。
 - 任何模块开发前先有设计说明再写代码（`global-rules.md` §1.3）。
 
+### 3.1 代码修改完成后的标准流程
+
+完成一次任务后，按以下顺序收尾：
+
+```powershell
+git status
+git diff
+# 运行项目对应验证命令，例如：bash scripts/check-template.sh / npm test / pytest
+git add <文件路径>
+git commit -m "类型: 简短说明"
+git push -u origin <当前分支名>   # 首次推送该分支
+gh pr create --fill              # 模板仓库必须走 PR
+```
+
+后续同一分支已有 upstream 时，推送可简化为：
+
+```powershell
+git push
+```
+
+PR 合并后，同步本地 `main` 并清理已合并分支：
+
+```powershell
+git switch main
+git pull
+git branch -d <已合并分支名>
+```
+
+常用提交类型：
+
+- `feat:` 新增功能
+- `fix:` 修复问题
+- `docs:` 更新文档
+- `chore:` 调整脚本、流程或治理文件
+- `refactor:` 重构但不改变行为
+- `test:` 增加或修正测试
+
 ## 4. 模板变更流程
 
 见 `CONTRIBUTING.md`：模板仓库一律**分支 → PR → 评审 → 合并**，`main` 受分支保护、禁止直推。
