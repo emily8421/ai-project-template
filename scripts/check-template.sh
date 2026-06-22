@@ -43,6 +43,33 @@ require_contains() {
   fi
 }
 
+require_dir() {
+  local dir="$1"
+  if [[ -d "$dir" ]]; then
+    pass "存在目录: $dir"
+  else
+    fail "缺失目录: $dir"
+  fi
+}
+
+require_absent_dir() {
+  local dir="$1"
+  if [[ -d "$dir" ]]; then
+    fail "不应存在目录: $dir"
+  else
+    pass "目录已清理: $dir"
+  fi
+}
+
+require_absent_file() {
+  local file="$1"
+  if [[ -f "$file" ]]; then
+    fail "不应存在文件: $file"
+  else
+    pass "文件已省略: $file"
+  fi
+}
+
 extract_index_rules() {
   grep -E '^- ai/.+\.md$' ai/index.md | sed 's/^- //'
 }
@@ -56,6 +83,26 @@ extract_sync_files_from_script() {
       if (length($0) > 0) print $0
     }
   ' scripts/sync-template.sh
+}
+
+require_example_common() {
+  local example_dir="$1"
+  require_dir "$example_dir"
+  require_file "$example_dir/OVERVIEW.md"
+  require_file "$example_dir/ai/project-rules.md"
+  require_contains "$example_dir/ai/project-rules.md" '初始化必填检查' "$example_dir project-rules 含初始化必填检查"
+  require_contains "$example_dir/ai/project-rules.md" 'AI修改确认规则' "$example_dir project-rules 含 AI 修改确认规则"
+  require_file "$example_dir/docs/vision/product-vision.md"
+}
+
+require_example_docs() {
+  local example_dir="$1"
+  shift
+  local doc
+  for doc in "$@"; do
+    require_file "$example_dir/docs/$doc"
+    require_contains "$example_dir/docs/$doc" '^# ' "$example_dir/docs/$doc 含一级标题"
+  done
 }
 
 echo "==> 检查 AI 入口文件"
@@ -115,6 +162,56 @@ while IFS= read -r sync_file; do
   require_file "$sync_file"
   require_contains "README.md" "$(printf '%s' "$sync_file" | sed 's/[.[\*^$()+?{}|\\]/\\&/g')" "README 同步清单包含 $sync_file"
 done < <(extract_sync_files_from_script)
+
+echo
+echo "==> 检查参考样例完整性"
+require_file "_examples/README.md"
+require_contains "_examples/README.md" 'vision-to-product/' "示例导航包含 vision-to-product"
+require_contains "_examples/README.md" 'quick-script/' "示例导航包含 quick-script"
+require_contains "_examples/README.md" 'todo-api/' "示例导航包含 todo-api"
+
+require_absent_dir "_examples/text-cleaner-cli"
+require_absent_dir "_examples/text-normalizer-lib"
+require_absent_dir "_examples/md-notes-frontend"
+
+require_example_common "_examples/vision-to-product"
+require_example_docs "_examples/vision-to-product" \
+  00-scenario.md \
+  01-user-requirements.md \
+  02-srs.md \
+  03-prd.md \
+  04-architecture.md \
+  05-tech-spec.md \
+  06-db-design.md \
+  07-api-spec.md \
+  08-dev-plan.md \
+  09-verification.md
+
+require_example_common "_examples/quick-script"
+require_example_docs "_examples/quick-script" \
+  00-scenario.md \
+  01-user-requirements.md \
+  02-srs.md \
+  03-prd.md \
+  04-architecture.md \
+  05-tech-spec.md \
+  08-dev-plan.md \
+  09-verification.md
+require_absent_file "_examples/quick-script/docs/06-db-design.md"
+require_absent_file "_examples/quick-script/docs/07-api-spec.md"
+
+require_example_common "_examples/todo-api"
+require_example_docs "_examples/todo-api" \
+  00-scenario.md \
+  01-user-requirements.md \
+  02-srs.md \
+  03-prd.md \
+  04-architecture.md \
+  05-tech-spec.md \
+  06-db-design.md \
+  07-api-spec.md \
+  08-dev-plan.md \
+  09-verification.md
 
 echo
 if [[ "$FAILURES" -eq 0 ]]; then
