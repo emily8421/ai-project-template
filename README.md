@@ -1,16 +1,14 @@
 # ai-project-template
 
-跨项目复用的AI编程项目模板。新建项目时，整体复制本目录到新项目根目录即可（`_archive/`、`_examples/` 为模板自带参考材料，新项目可保留或删除；`_proposals/` 为模板提案收件箱，新项目只保留干净起草区）。
+跨项目复用的AI编程项目模板。新建项目推荐使用 `scripts/new-project.sh` 从 GitHub `main` 派生；不建议手工复制模板文件夹后再改造。
 
 ## 快速开始
 
 ```text
-1. 复制本目录 → NewProject/
-2. 初始化 git 仓库：进入新目录 `git init -b main`，建远端仓库并推送
-   （默认账号 emily8421，账号说明见 git-guide.md；
-    或直接用 scripts/new-project.sh 一步完成「复制 + 建库 + 首提交 + 推送」）
-3. 填写 docs/00-scenario.md ~ 02-srs.md
-4. 运行 `scripts/collect-env.ps1` 生成 `docs/env/local-env.md`，补齐人工确认项，作为本机 Demo 与资源约束输入
+1. 在模板仓库运行 `bash scripts/new-project.sh <项目名>`，创建派生项目、初始化 Git、首提交并推送远端
+2. 进入新项目目录：`cd <项目名>`
+3. 运行 `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1` 生成 `docs/env/local-env.md`，补齐人工确认项
+4. 填写 docs/00-scenario.md ~ 02-srs.md
 5. 先填 ai/project-rules.md 的 §1 Phase边界 + §2 技术栈 + §2.5 运行环境与资源约束 + §3 项目形态与文档裁剪（含演示形态；凭 00-02 粗略定即可，作为 03-09 生成的约束）
 6. 用 INIT-PROMPT.md 中的“新项目初始化”Prompt，按 §3 的裁剪结果生成 docs/03-09（无数据库则省略 06；无公开接口则省略 07）
 7. 人工审核03-09后，补 ai/project-rules.md 的 §4 目录特例 + §5 编码约定与禁区
@@ -29,7 +27,7 @@ TEMPLATE_REMOTE=<模板仓库URL> bash scripts/new-project.sh <项目名>
 bash scripts/new-project.sh <项目名> --local --no-remote  # 只创建本地项目，不建远端，适合烟测
 ```
 
-> **若起点是一份产品愿景文档**（而非从零写 00-02）：完成步骤 1–2 后，建议先运行步骤 4 生成本机资源约束，再用 `INIT-PROMPT.md` §0
+> **若起点是一份产品愿景文档**（而非从零写 00-02）：完成步骤 1–3 后，直接用 `INIT-PROMPT.md` §0
 > 「从产品愿景文档生成完整文档体系」——它会一次性产出 00-09 + design-\* + 阶段建议（含验证计划）；
 > 人工只需确认 03 §3 的阶段路线图，即可进入 Sprint1。愿景文档约定放 `docs/vision/product-vision.md`。
 
@@ -103,6 +101,7 @@ scripts/collect-env.ps1   # 本机运行环境采集脚本
 
 > 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；多个小改可合并为同一个版本发布。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+- v1.6.2（2026-06-23）：将派生项目新建 / 同步标准 SOP 固化为可复制 Prompt。`git-guide.md` §2 明确新建项目推荐使用 `scripts/new-project.sh` 从 GitHub `main` 派生，`INIT-PROMPT.md` 新增 §14 新建项目 Prompt；`INIT-PROMPT.md` §12 同步 Prompt 改为运行时读取模板 `VERSION`，避免固定版本号。
 - v1.6.1（2026-06-23）：增强派生项目下行同步安全性。`scripts/sync-template.sh` 在 fetch 模板后会对比远端最新版脚本与本地脚本，不一致时停止并提示先 bootstrap 最新脚本；`git-guide.md`、`INIT-PROMPT.md` 和 `scripts/check-template.sh` 同步补充该 SOP，避免旧脚本漏同步新文件或错误解析版本。
 - v1.6.0（2026-06-23）：新增运行环境与资源约束机制：`scripts/collect-env.ps1` 自动生成 `docs/env/local-env.md`，`ai/project-rules.md` 新增 §2.5，`docs/04` / `docs/05` / `docs/09` 增加运行拓扑、资源评估与本机资源验证，`INIT-PROMPT.md` 新增环境采集 Prompt；同步更新 README、`new-project`、自检脚本、同步清单和 `_examples/`。版本治理改为根目录 `VERSION` 三段式，并规定所有模板修改必须先形成提案、完成后归档到 `_archive/proposals/`。
 
