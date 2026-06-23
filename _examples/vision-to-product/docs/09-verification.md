@@ -35,3 +35,8 @@
 
 - Sprint1：TC-001、TC-002、TC-004、TC-005、TC-006 中 add/show 部分。
 - Sprint2：TC-003、TC-006 中 search 部分。
+## 5. 本机资源验证
+
+- 启动验证：在 `docs/env/local-env.md` 描述的本机环境中运行 CLI 帮助命令、add、search、show。
+- 资源记录：记录 SQLite 文件大小、测试数据量、命令耗时和内存占用是否在人工确认上限内。
+- 降级验证：真实摘要未启用时，确认规则摘要 / mock 摘要路径可完成最小闭环。
