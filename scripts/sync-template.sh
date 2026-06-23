@@ -47,6 +47,21 @@ if ! git fetch --no-tags --depth=1 "$TEMPLATE_REMOTE" main; then
 fi
 REF="FETCH_HEAD"
 
+# 自身更新保护：派生项目里的旧脚本可能漏同步新文件或不是真 dry-run。
+# 因此先确认本地脚本与模板远端最新版一致；不一致时停止，让用户先 bootstrap 脚本。
+if git cat-file -e "$REF:scripts/sync-template.sh" 2>/dev/null; then
+  REMOTE_SCRIPT_HASH="$(git rev-parse "$REF:scripts/sync-template.sh")"
+  LOCAL_SCRIPT_HASH="$(git hash-object --path=scripts/sync-template.sh scripts/sync-template.sh 2>/dev/null || true)"
+  if [[ -z "$LOCAL_SCRIPT_HASH" || "$REMOTE_SCRIPT_HASH" != "$LOCAL_SCRIPT_HASH" ]]; then
+    echo "✗ 本地 scripts/sync-template.sh 不是模板远端最新版，已停止同步。" >&2
+    echo "  请先执行以下 bootstrap 步骤，单独提交脚本更新后，再重新运行本命令：" >&2
+    echo "    git checkout FETCH_HEAD -- scripts/sync-template.sh" >&2
+    echo "    git add scripts/sync-template.sh" >&2
+    echo "    git commit -m \"chore: bootstrap latest sync script\"" >&2
+    exit 1
+  fi
+fi
+
 # 解析模板版本号（用于提交信息）
 VERSION="$(git show "$REF:VERSION" 2>/dev/null | tr -d '[:space:]' || true)"
 if [[ -z "$VERSION" ]]; then

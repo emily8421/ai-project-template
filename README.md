@@ -103,6 +103,7 @@ scripts/collect-env.ps1   # 本机运行环境采集脚本
 
 > 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；多个小改可合并为同一个版本发布。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+- v1.6.1（2026-06-23）：增强派生项目下行同步安全性。`scripts/sync-template.sh` 在 fetch 模板后会对比远端最新版脚本与本地脚本，不一致时停止并提示先 bootstrap 最新脚本；`git-guide.md`、`INIT-PROMPT.md` 和 `scripts/check-template.sh` 同步补充该 SOP，避免旧脚本漏同步新文件或错误解析版本。
 - v1.6.0（2026-06-23）：新增运行环境与资源约束机制：`scripts/collect-env.ps1` 自动生成 `docs/env/local-env.md`，`ai/project-rules.md` 新增 §2.5，`docs/04` / `docs/05` / `docs/09` 增加运行拓扑、资源评估与本机资源验证，`INIT-PROMPT.md` 新增环境采集 Prompt；同步更新 README、`new-project`、自检脚本、同步清单和 `_examples/`。版本治理改为根目录 `VERSION` 三段式，并规定所有模板修改必须先形成提案、完成后归档到 `_archive/proposals/`。
 
 - v1.5（2026-06-22）：`ai/global-rules.md` §5 明确 `frontend/` 由 `project-rules.md` §3「演示形态」决定，并注明根 `README.md` 是项目件；新增 §9「模板优化反馈」，规定派生项目起草 `TEMPLATE-UPGRADE-*.md`、模板仓库 `_proposals/` 汇总分析与 PR 落地。同期非 global-rules 改动：`ai/project-rules.md` §3 增加「演示形态」必填项；`INIT-PROMPT.md` 增加演示形态推导、README 项目化与模板优化汇总 Prompt；`scripts/new-project.sh` 创建干净 `_proposals/` 起草区并项目化 README；`CONTRIBUTING.md` 升级上行回流流程；`scripts/check-template.sh` 增加 `_proposals` 检查。

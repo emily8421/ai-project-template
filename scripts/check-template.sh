@@ -175,8 +175,10 @@ require_contains "_proposals/README.md" '任何需要修改项目模板' "_propo
 require_contains "_archive/proposals/README.md" 'VERSION' "归档 README 以 VERSION 为事实来源"
 require_contains "CONTRIBUTING.md" '提案 → 分支 → PR → 评审 → 合并 → 归档' "CONTRIBUTING 含提案先行流程"
 require_contains "CONTRIBUTING.md" 'vMAJOR\.MINOR\.PATCH' "CONTRIBUTING 含三段式版本规则"
-require_contains "README.md" 'v1\.6\.0' "README 版本记录包含 v1.6.0"
+require_contains "README.md" 'v1\.6\.1' "README 版本记录包含 v1.6.1"
 require_contains "git-guide.md" 'chore/sync-template-vX\.Y\.Z' "git-guide 使用三段式同步分支"
+require_contains "git-guide.md" 'bootstrap latest sync script' "git-guide 包含同步脚本 bootstrap 步骤"
+require_contains "INIT-PROMPT.md" 'bootstrap 最新同步脚本' "INIT-PROMPT 同步流程包含 bootstrap 步骤"
 require_contains ".github/pull_request_template.md" '提案检查' "PR 模板包含提案检查"
 require_contains ".github/pull_request_template.md" 'VERSION' "PR 模板检查 VERSION"
 require_contains ".github/ISSUE_TEMPLATE/template-change.md" 'vMAJOR\.MINOR\.PATCH' "Issue 模板说明三段式版本"
@@ -190,6 +192,8 @@ require_contains "scripts/collect-env.ps1" '人工确认项' "collect-env 保留
 require_contains "scripts/collect-env.ps1" '服务器资源预案' "collect-env 保留服务器资源预案"
 require_contains "scripts/sync-template.sh" '"VERSION"' "sync-template 同步 VERSION"
 require_contains "scripts/sync-template.sh" 'REF:VERSION' "sync-template 从 VERSION 解析版本"
+require_contains "scripts/sync-template.sh" 'REMOTE_SCRIPT_HASH' "sync-template 检查远端脚本 hash"
+require_contains "scripts/sync-template.sh" 'bootstrap latest sync script' "sync-template 提示 bootstrap 同步脚本"
 
 echo
 echo "==> 检查同步清单一致性"
