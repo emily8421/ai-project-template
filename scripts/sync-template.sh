@@ -28,6 +28,7 @@ SYNC_FILES=(
   "AGENTS.md"
   "CLAUDE.md"
   ".cursor/rules/project-rules.mdc"
+  "SOP.md"
   "INIT-PROMPT.md"
   "CONTRIBUTING.md"
   "git-guide.md"
