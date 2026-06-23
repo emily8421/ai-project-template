@@ -99,11 +99,11 @@ cat > "$TARGET/README.md" <<EOF
 
 ## 快速开始
 
-1. 运行 `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1` 生成 `docs/env/local-env.md`，补齐本机可运行边界、允许降级 / Mock 项与服务器预案。
-2. 把产品愿景写入 `docs/vision/product-vision.md`，只写业务叙事、目标用户、核心场景、非目标与远期想法。
-3. 初填 `ai/project-rules.md` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束与项目形态裁剪；不确定项标“待确认”。
-4. 复制 `INIT-PROMPT.md` §0 给 AI，让 AI 基于 product-vision + local-env 一次性生成 / 修订 `docs/00-09`、必要的 `design-*`、项目 README 与 Sprint1。
-5. 人工确认 `docs/03-prd.md` §3 阶段路线图和 `docs/05-tech-spec.md` 的本机 Demo 可行性；确认后进入 Sprint 开发。
+1. 运行 \`powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1\` 生成 \`docs/env/local-env.md\`，补齐本机可运行边界、允许降级 / Mock 项与服务器预案。
+2. 把产品愿景写入 \`docs/vision/product-vision.md\`，只写业务叙事、目标用户、核心场景、非目标与远期想法。
+3. 初填 \`ai/project-rules.md\` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束与项目形态裁剪；不确定项标“待确认”。
+4. 复制 \`INIT-PROMPT.md\` §0 给 AI，让 AI 基于 product-vision + local-env 一次性生成 / 修订 \`docs/00-09\`、必要的 \`design-*\`、项目 README 与 Sprint1。
+5. 人工确认 \`docs/03-prd.md\` §3 阶段路线图和 \`docs/05-tech-spec.md\` 的本机 Demo 可行性；确认后进入 Sprint 开发。
 
 ## 文档入口
 
