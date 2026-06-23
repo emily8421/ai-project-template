@@ -105,6 +105,69 @@ require_example_docs() {
   done
 }
 
+require_sync_dry_run_direction() {
+  local test_root
+  local template_dir
+  local derived_dir
+  local output
+
+  test_root="$(mktemp -d)"
+  template_dir="$test_root/template"
+  derived_dir="$test_root/derived"
+  mkdir -p "$template_dir/scripts" "$template_dir/ai" "$template_dir/.cursor/rules" \
+    "$derived_dir/scripts" "$derived_dir/ai" "$derived_dir/.cursor/rules"
+
+  (
+    cd "$template_dir"
+    git init -b main >/dev/null
+    cp "$ROOT/scripts/sync-template.sh" scripts/sync-template.sh
+    cp "$ROOT/scripts/check-template.sh" scripts/check-template.sh
+    cp "$ROOT/scripts/collect-env.ps1" scripts/collect-env.ps1
+    printf 'v9.9.9\n' > VERSION
+    printf '# index\n' > ai/index.md
+    printf '# global\n' > ai/global-rules.md
+    printf 'agent\n' > AGENTS.md
+    printf 'claude\n' > CLAUDE.md
+    printf 'cursor\n' > .cursor/rules/project-rules.mdc
+    printf 'init\n' > INIT-PROMPT.md
+    printf 'contrib\n' > CONTRIBUTING.md
+    printf 'guide\n' > git-guide.md
+    git add -A
+    git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
+  )
+
+  if (
+    cd "$derived_dir"
+    git init -b main >/dev/null
+    cp "$ROOT/scripts/sync-template.sh" scripts/sync-template.sh
+    printf 'v0.0.1\n' > VERSION
+    printf '# index\n' > ai/index.md
+    printf '# old global\n' > ai/global-rules.md
+    printf 'agent\n' > AGENTS.md
+    printf 'claude\n' > CLAUDE.md
+    printf 'cursor\n' > .cursor/rules/project-rules.mdc
+    printf 'old init\n' > INIT-PROMPT.md
+    printf 'old contrib\n' > CONTRIBUTING.md
+    printf 'old guide\n' > git-guide.md
+    git add -A
+    git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
+    output="$(TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --dry-run 2>&1)"
+    if grep -Eq 'scripts/(check-template\.sh|collect-env\.ps1).*\|' <<<"$output" \
+      && grep -Eq 'insertions?\(\+\)' <<<"$output" \
+      && ! grep -Eq 'scripts/(check-template\.sh|collect-env\.ps1).*deletions?\(-\)' <<<"$output"; then
+      exit 0
+    fi
+    printf '%s\n' "$output" >&2
+    exit 1
+  ); then
+    pass "sync-template dry-run 对模板新增文件显示为新增"
+  else
+    fail "sync-template dry-run 对模板新增文件的方向错误"
+  fi
+
+  rm -rf "$test_root"
+}
+
 echo "==> 检查 AI 入口文件"
 require_file "AGENTS.md"
 require_file "CLAUDE.md"
@@ -175,7 +238,7 @@ require_contains "_proposals/README.md" '任何需要修改项目模板' "_propo
 require_contains "_archive/proposals/README.md" 'VERSION' "归档 README 以 VERSION 为事实来源"
 require_contains "CONTRIBUTING.md" '提案 → 分支 → PR → 评审 → 合并 → 归档' "CONTRIBUTING 含提案先行流程"
 require_contains "CONTRIBUTING.md" 'vMAJOR\.MINOR\.PATCH' "CONTRIBUTING 含三段式版本规则"
-require_contains "README.md" 'v1\.6\.2' "README 版本记录包含 v1.6.2"
+require_contains "README.md" 'v1\.6\.3' "README 版本记录包含 v1.6.3"
 require_contains "git-guide.md" '新建派生项目的\*\*操作 SOP 权威文档' "git-guide 标明新建项目 SOP 权威"
 require_contains "git-guide.md" 'bash scripts/new-project\.sh <项目名>' "git-guide 推荐 new-project 脚本"
 require_contains "git-guide.md" '不推荐手工复制整个模板文件夹' "git-guide 禁止手工复制模板作为标准流程"
@@ -207,6 +270,10 @@ require_contains "scripts/sync-template.sh" '"VERSION"' "sync-template 同步 VE
 require_contains "scripts/sync-template.sh" 'REF:VERSION' "sync-template 从 VERSION 解析版本"
 require_contains "scripts/sync-template.sh" 'REMOTE_SCRIPT_HASH' "sync-template 检查远端脚本 hash"
 require_contains "scripts/sync-template.sh" 'bootstrap latest sync script' "sync-template 提示 bootstrap 同步脚本"
+require_contains "scripts/sync-template.sh" 'remote_file_matches_local' "sync-template dry-run 使用 hash 判断差异"
+require_contains "scripts/sync-template.sh" 'show_local_to_template_stat' "sync-template dry-run 按本地到模板方向统计"
+require_contains "scripts/sync-template.sh" '本地当前文件 -> 模板' "sync-template dry-run 明确统计方向"
+require_sync_dry_run_direction
 
 echo
 echo "==> 检查同步清单一致性"

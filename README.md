@@ -101,6 +101,7 @@ scripts/collect-env.ps1   # 本机运行环境采集脚本
 
 > 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；多个小改可合并为同一个版本发布。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+- v1.6.3（2026-06-23）：修正 `scripts/sync-template.sh --dry-run` 的差异预览方向。dry-run 现在按“本地当前文件 → 模板 VERSION”显示统计，与 `--commit` 实际覆盖方向一致，避免将模板新增内容误显示为删除。
 - v1.6.2（2026-06-23）：将派生项目新建 / 同步标准 SOP 固化为可复制 Prompt。`git-guide.md` §2 明确新建项目推荐使用 `scripts/new-project.sh` 从 GitHub `main` 派生，`INIT-PROMPT.md` 新增 §14 新建项目 Prompt；`INIT-PROMPT.md` §12 同步 Prompt 改为运行时读取模板 `VERSION`，避免固定版本号。
 - v1.6.1（2026-06-23）：增强派生项目下行同步安全性。`scripts/sync-template.sh` 在 fetch 模板后会对比远端最新版脚本与本地脚本，不一致时停止并提示先 bootstrap 最新脚本；`git-guide.md`、`INIT-PROMPT.md` 和 `scripts/check-template.sh` 同步补充该 SOP，避免旧脚本漏同步新文件或错误解析版本。
 - v1.6.0（2026-06-23）：新增运行环境与资源约束机制：`scripts/collect-env.ps1` 自动生成 `docs/env/local-env.md`，`ai/project-rules.md` 新增 §2.5，`docs/04` / `docs/05` / `docs/09` 增加运行拓扑、资源评估与本机资源验证，`INIT-PROMPT.md` 新增环境采集 Prompt；同步更新 README、`new-project`、自检脚本、同步清单和 `_examples/`。版本治理改为根目录 `VERSION` 三段式，并规定所有模板修改必须先形成提案、完成后归档到 `_archive/proposals/`。
