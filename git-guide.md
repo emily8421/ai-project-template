@@ -93,8 +93,14 @@ git branch -d <已合并分支名>
 ```powershell
 git status
 git switch -c chore/sync-template-vX.Y.Z
+git fetch --no-tags --depth=1 https://github.com/emily8421/ai-project-template.git main
+git checkout FETCH_HEAD -- scripts/sync-template.sh
+git add scripts/sync-template.sh
+git commit -m "chore: bootstrap latest sync script"
 bash scripts/sync-template.sh --dry-run
 ```
+
+若 `git commit` 提示无变更，说明本地 `scripts/sync-template.sh` 已是最新版，可直接继续 `--dry-run`。
 
 确认 `--dry-run` 输出只涉及 README「方法论同步」清单中的模板方法论文件，且不会覆盖项目专属内容后，再执行：
 
@@ -121,6 +127,8 @@ bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y.
 ### 5.3 注意事项
 
 - 执行前工作区应干净；若 `git status` 显示未提交改动，先提交 / 暂存 / 放弃这些改动，不要混入同步提交。
+- 同步前先 bootstrap 模板远端最新版 `scripts/sync-template.sh`；不要无条件信任派生项目本地旧脚本。
+- 新版 `sync-template.sh` 会在 fetch 后对比远端自身版本；若本地脚本不是最新版，会停止并提示先更新脚本。
 - `--dry-run` 只预览差异，不修改工作区、不 stage。
 - `--commit` 会覆盖同步清单中的文件并自动提交；提交信息通常由脚本生成。
 - `README.md` 是项目件，`ai/project-rules.md` 是项目专属规则，默认不应被同步覆盖。
