@@ -6,5 +6,5 @@
 
 - `_proposals/` 是待处理 / 汇总中的提案收件箱。
 - `_archive/proposals/` 是已处理提案的历史记录。
-- 提案归档后，模板变更事实仍以 `ai/global-rules.md` 模板版本、README 版本记录和 Git 历史为准。
+- 提案归档后，模板变更事实仍以根目录 `VERSION`、README 版本记录和 Git 历史为准。
 - 归档内容不得作为当前待办事项重复执行；若要再次调整，应创建新的 `TEMPLATE-UPGRADE-*.md` 提案。

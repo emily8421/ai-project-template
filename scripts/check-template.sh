@@ -137,6 +137,13 @@ for doc in \
   require_contains "$doc" '^# ' "$doc 含一级标题"
 done
 
+require_dir "docs/env"
+require_file "docs/env/README.md"
+require_contains "docs/env/README.md" 'collect-env\.ps1' "docs/env README 说明环境采集脚本"
+require_contains "docs/04-architecture.md" '部署 / 运行拓扑约束' "04 架构含运行拓扑约束"
+require_contains "docs/05-tech-spec.md" '运行环境与资源评估' "05 技术方案含资源评估"
+require_contains "docs/09-verification.md" '本机资源验证' "09 验证计划含本机资源验证"
+
 for optional_doc in docs/06-db-design.md docs/07-api-spec.md; do
   if [[ -f "$optional_doc" ]]; then
     require_contains "$optional_doc" '^# ' "$optional_doc 存在且含一级标题"
@@ -147,21 +154,42 @@ done
 
 echo
 echo "==> 检查版本号与治理文件"
-require_contains "ai/global-rules.md" '模板版本：v[0-9]+\.[0-9]+' "global-rules 含模板版本号"
+require_file "VERSION"
+require_contains "VERSION" '^v[0-9]+\.[0-9]+\.[0-9]+$' "VERSION 使用三段式模板版本号"
+require_contains "ai/global-rules.md" '全局规则版本：v[0-9]+\.[0-9]+' "global-rules 含全局规则版本号"
 require_file "README.md"
 require_file "CONTRIBUTING.md"
 require_file "INIT-PROMPT.md"
 require_file "git-guide.md"
+require_file ".github/pull_request_template.md"
+require_file ".github/ISSUE_TEMPLATE/template-change.md"
 require_file "scripts/new-project.sh"
 require_file "scripts/sync-template.sh"
 require_file "scripts/check-template.sh"
+require_file "scripts/collect-env.ps1"
 require_file "_proposals/README.md"
+require_file "_archive/proposals/README.md"
 require_contains "_proposals/README.md" '模板优化提案收件箱' "_proposals README 标明提案收件箱"
-require_contains "_proposals/README.md" 'TEMPLATE-UPGRADE-' "_proposals README 说明提案命名"
+require_contains "_proposals/README.md" 'TEMPLATE-UPGRADE-vX\.Y\.Z' "_proposals README 说明三段式提案命名"
+require_contains "_proposals/README.md" '任何需要修改项目模板' "_proposals README 说明提案先行"
+require_contains "_archive/proposals/README.md" 'VERSION' "归档 README 以 VERSION 为事实来源"
+require_contains "CONTRIBUTING.md" '提案 → 分支 → PR → 评审 → 合并 → 归档' "CONTRIBUTING 含提案先行流程"
+require_contains "CONTRIBUTING.md" 'vMAJOR\.MINOR\.PATCH' "CONTRIBUTING 含三段式版本规则"
+require_contains "README.md" 'v1\.6\.0' "README 版本记录包含 v1.6.0"
+require_contains "git-guide.md" 'chore/sync-template-vX\.Y\.Z' "git-guide 使用三段式同步分支"
+require_contains ".github/pull_request_template.md" '提案检查' "PR 模板包含提案检查"
+require_contains ".github/pull_request_template.md" 'VERSION' "PR 模板检查 VERSION"
+require_contains ".github/ISSUE_TEMPLATE/template-change.md" 'vMAJOR\.MINOR\.PATCH' "Issue 模板说明三段式版本"
 require_contains "scripts/new-project.sh" 'rm -rf "\$TARGET/_proposals"' "new-project 清理模板提案收件箱内容"
 require_contains "scripts/new-project.sh" 'mkdir -p "\$TARGET/_proposals"' "new-project 创建派生提案起草区"
 require_contains "scripts/new-project.sh" 'cat > "\$TARGET/README.md"' "new-project 项目化 README"
 require_contains "scripts/new-project.sh" '--no-remote' "new-project 支持本地-only 烟测"
+require_contains "scripts/new-project.sh" 'collect-env\.ps1' "new-project README 提醒采集本机环境"
+require_contains "scripts/collect-env.ps1" 'docs/env/local-env\.md' "collect-env 默认生成 local-env.md"
+require_contains "scripts/collect-env.ps1" '人工确认项' "collect-env 保留人工确认项"
+require_contains "scripts/collect-env.ps1" '服务器资源预案' "collect-env 保留服务器资源预案"
+require_contains "scripts/sync-template.sh" '"VERSION"' "sync-template 同步 VERSION"
+require_contains "scripts/sync-template.sh" 'REF:VERSION' "sync-template 从 VERSION 解析版本"
 
 echo
 echo "==> 检查同步清单一致性"

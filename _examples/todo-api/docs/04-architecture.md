@@ -19,3 +19,7 @@ FastAPI 单进程服务 ──► SQLite 文件（todos.db）
 ## 3. 技术选型理由
 - FastAPI：自带 OpenAPI 文档、写四个接口很快；不选 Flask 是因为 FastAPI 的类型校验/自动文档对单人开发更省心。
 - SQLite：零运维、单文件，单人场景完全够用；不选 PostgreSQL 是因为 Phase1 无需并发、无需独立数据库服务。
+## 4. 部署 / 运行拓扑约束
+- Phase1 采用本地单机服务拓扑：FastAPI 单进程服务与 SQLite 文件运行在同一台开发机。
+- 默认监听本机端口，仅用于 curl / 浏览器本地验证；不要求局域网或公网访问。
+- 派生项目需读取 `docs/env/local-env.md` 确认 Python、端口、磁盘空间和本机服务启动权限。

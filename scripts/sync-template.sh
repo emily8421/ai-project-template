@@ -4,7 +4,7 @@
 # 用法（在派生项目根目录执行）:
 #   bash scripts/sync-template.sh [--dry-run|--commit]
 #     --dry-run  仅抓取并预览差异，不修改工作区、不 stage（默认）
-#     --commit   抓取、覆盖、stage 并提交 "sync template vX.Y"
+#     --commit   抓取、覆盖、stage 并提交 "sync template vX.Y.Z"
 #   环境变量:
 #     TEMPLATE_REMOTE  模板远端（默认 https://github.com/emily8421/ai-project-template.git）
 # 依赖: git（网络可达模板远端；模板私有，活跃 gh 账号须有访问权限）
@@ -22,6 +22,7 @@ TEMPLATE_REMOTE="${TEMPLATE_REMOTE:-https://github.com/emily8421/ai-project-temp
 
 # 同步清单（与 README「方法论同步」单一来源；项目专属的 project-rules 不在此列）
 SYNC_FILES=(
+  "VERSION"
   "ai/index.md"
   "ai/global-rules.md"
   "AGENTS.md"
@@ -33,6 +34,7 @@ SYNC_FILES=(
   "scripts/new-project.sh"
   "scripts/sync-template.sh"
   "scripts/check-template.sh"
+  "scripts/collect-env.ps1"
 )
 
 git rev-parse --is-inside-work-tree >/dev/null
@@ -45,9 +47,12 @@ if ! git fetch --no-tags --depth=1 "$TEMPLATE_REMOTE" main; then
 fi
 REF="FETCH_HEAD"
 
-# 解析版本号（用于提交信息）
-LINE="$(git show "$REF:ai/global-rules.md" 2>/dev/null | grep '模板版本' | head -1 || true)"
-VERSION="$(printf '%s' "$LINE" | grep -oE 'v[0-9]+\.[0-9]+' | head -1 || true)"
+# 解析模板版本号（用于提交信息）
+VERSION="$(git show "$REF:VERSION" 2>/dev/null | tr -d '[:space:]' || true)"
+if [[ -z "$VERSION" ]]; then
+  LINE="$(git show "$REF:ai/global-rules.md" 2>/dev/null | grep -E '模板版本|全局规则版本' | head -1 || true)"
+  VERSION="$(printf '%s' "$LINE" | grep -oE 'v[0-9]+\.[0-9]+(\.[0-9]+)?' | head -1 || true)"
+fi
 [[ -n "$VERSION" ]] || VERSION="unknown"
 
 echo "==> 模板版本: $VERSION"

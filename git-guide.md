@@ -78,7 +78,7 @@ git branch -d <已合并分支名>
 
 ## 4. 模板变更流程
 
-见 `CONTRIBUTING.md`：模板仓库一律**分支 → PR → 评审 → 合并**，`main` 受分支保护、禁止直推。
+见 `CONTRIBUTING.md`：模板仓库一律**提案 → 分支 → PR → 评审 → 合并 → 归档**，`main` 受分支保护、禁止直推。
 
 派生项目里日常开发是否也走 PR 由项目自行决定；模板仓库强制走 PR。
 
@@ -92,7 +92,7 @@ git branch -d <已合并分支名>
 
 ```powershell
 git status
-git switch -c chore/sync-template-vX.Y
+git switch -c chore/sync-template-vX.Y.Z
 bash scripts/sync-template.sh --dry-run
 ```
 
@@ -107,7 +107,7 @@ git status --short --branch
 如果项目要求走 PR，继续执行：
 
 ```powershell
-git push -u origin chore/sync-template-vX.Y
+git push -u origin chore/sync-template-vX.Y.Z
 gh pr create --fill
 ```
 
@@ -115,7 +115,7 @@ gh pr create --fill
 
 ```
 bash scripts/sync-template.sh --dry-run    # 先看差异
-bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y
+bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y.Z
 ```
 
 ### 5.3 注意事项
