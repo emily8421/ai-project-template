@@ -18,20 +18,56 @@
 
 > ⚠️ `emilymmhere` 用的是 classic PAT（`ghp_`），权限在创建时固定，`gh auth refresh` 无法给它追加权限（如 `delete_repo`）。需要高危权限时用网页流程重登或新建带相应权限的 PAT。`emily8421` 是网页 OAuth 登录（`gho_`），可随时 refresh 追加 scope。
 
-## 2. 起新项目（复制模板 + 入 git）
+## 2. 新建项目（模板 → 派生项目）
 
-**手动**：
+本节是新建派生项目的**操作 SOP 权威文档**；`INIT-PROMPT.md` 可提供可复制给 AI 执行的 Prompt。正式起项目推荐使用 `scripts/new-project.sh`，不要先人工复制模板文件夹再运行脚本。
 
+### 2.1 推荐流程
+
+在本地 `ai-project-template` 仓库或任意能访问该脚本的位置执行：
+
+```powershell
+bash scripts/new-project.sh <项目名>
 ```
-git init -b main
-gh repo create emily8421/<项目名> --private --source=. --remote=origin
-git add -A && git commit -m "init: <项目名>"
-git push -u origin main
+
+默认行为：
+
+- 从 GitHub `ai-project-template` 的 `main` 拉取最新模板（事实来源）。
+- 创建新项目目录。
+- 移除模板仓库 `.git`，初始化新项目 Git。
+- 创建首提交。
+- 创建 GitHub 仓库并推送。
+
+### 2.2 常用选项
+
+```powershell
+bash scripts/new-project.sh <项目名> --no-remote          # 只创建本地项目，不建远端
+bash scripts/new-project.sh <项目名> --local --no-remote  # 用当前本地模板副本烟测
+bash scripts/new-project.sh <项目名> --account <账号> --visibility public
 ```
 
-**自动**：`bash scripts/new-project.sh <项目名>` 一步完成「取模板 + git init + 建库 + 首提交 + 推送」。默认从 GitHub `main` 派生（事实来源）；加 `--local` 改走本地模板（需自行确保最新）。详见脚本头部。
+正式项目优先不要使用 `--local`，除非你能确认本地模板已同步到 GitHub `main` 最新版本。
 
-> 手动与脚本**等价、派生时任选**——脚本只是把上面的手动步骤自动化。要一条命令就用脚本，要细控或脚本不在手边就手动 clone（两者都从 GitHub `main` 取，正确性一致）。
+### 2.3 新项目创建后
+
+```powershell
+cd <项目名>
+powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+```
+
+随后填写：
+
+- `docs/00-scenario.md` ~ `docs/02-srs.md`
+- `docs/env/local-env.md` 的人工确认项
+- `ai/project-rules.md` 的 Phase 边界、技术栈、运行环境与资源约束、项目形态裁剪
+
+再使用 `INIT-PROMPT.md` 的初始化 Prompt 生成 / 补齐 `docs/03-09`。
+
+### 2.4 不推荐做法
+
+- 不推荐手工复制整个模板文件夹。
+- 不推荐自己先 `git clone ai-project-template` 再手动改成新项目。
+- 不推荐复制后再运行 `new-project.sh`，因为脚本本身就是“创建新项目”的入口。
 
 ## 3. 日常提交规范
 
@@ -83,6 +119,8 @@ git branch -d <已合并分支名>
 派生项目里日常开发是否也走 PR 由项目自行决定；模板仓库强制走 PR。
 
 ## 5. 下行同步（模板 → 项目）
+
+本节是派生项目同步模板方法论的**操作 SOP 权威文档**；`INIT-PROMPT.md` §12 只是把本节整理成可复制给 AI 执行的 Prompt，`CONTRIBUTING.md` 只记录治理要求。
 
 派生项目同步模板方法论更新时，优先使用 `scripts/sync-template.sh`，不要手动逐文件复制。该流程是**模板 → 派生项目**的下行获取，不会把派生项目内容提交回模板。
 
