@@ -93,6 +93,12 @@ cat > "$TARGET/README.md" <<EOF
 
 （用 2-3 句话说明本项目要解决的问题、目标用户与当前阶段范围。）
 
+## 当前阶段
+
+- 当前阶段：Phase1 / MVP（待确认）
+- 阶段目标：（说明当前阶段要演示的最小闭环）
+- 非目标：（说明当前阶段明确不做什么）
+
 ## 当前能力
 
 - （列出当前 Phase 已确认要实现的核心能力）
@@ -118,12 +124,30 @@ cat > "$TARGET/README.md" <<EOF
 - \`docs/08-dev-plan.md\`：开发计划
 - \`docs/09-verification.md\`：验证计划
 
+## 运行环境
+
+- 本机环境记录：\`docs/env/local-env.md\`
+- 本机 Demo 可行性：（待确认）
+- 降级 / Mock 策略：（待确认）
+
+## 开发计划
+
+- 当前 Sprint：见 \`docs/08-dev-plan.md\`
+- 执行单个任务时使用 \`INIT-PROMPT.md\` §2
+
+## 验证方式
+
+- 验证计划：见 \`docs/09-verification.md\`
+- 本机资源验证：见 \`docs/09-verification.md\` 的资源验证项
+
 ## 模板关系
 
 - 通用方法论来自 \`ai-project-template\`。
 - 当前同步到的模板版本记录在 \`VERSION\`。
+- 根 \`README.md\` 是项目专属文档，不参与模板下行同步。
+- 模板方法论文件由 \`template-sync.json\` 定义，执行 \`scripts/sync-template.*\` 时可能被覆盖。
 - 项目专属规则写在 \`ai/project-rules.md\`。
-- 新增项目文档必须遵守 \`docs/README.md\` 的分区规则，不要直接堆到 \`docs/\` 根目录。
+- 项目事实文档写在 \`docs/\`，但新增文档必须遵守 \`docs/README.md\` 的分区规则，不要直接堆到 \`docs/\` 根目录。
 - 如发现可通用的模板优化，先在 \`_proposals/\` 起草提案，再回流到模板仓库。
 EOF
 

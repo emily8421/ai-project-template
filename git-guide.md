@@ -1,5 +1,9 @@
 # Git 使用说明
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+
 本项目（及所有派生自 `ai-project-template` 的项目）的 git 工作流。模板变更治理见 `CONTRIBUTING.md`。
 
 ## 1. 账号体系
@@ -140,7 +144,7 @@ bash scripts/sync-template.sh --dry-run
 
 若 `git commit` 提示无变更，说明本地 `scripts/sync-template.sh` 已是最新版，可直接继续 `--dry-run`。
 
-确认 `--dry-run` 输出只涉及 README「方法论同步」清单中的模板方法论文件，且不会覆盖项目专属内容后，再执行：
+确认 `--dry-run` 输出只涉及 `template-sync.json` 中的模板方法论文件，且不会覆盖项目专属内容后，再执行：
 
 ```powershell
 bash scripts/sync-template.sh --commit
@@ -169,7 +173,8 @@ bash scripts/sync-template.sh --commit     # 覆盖并提交 sync template vX.Y.
 - 新版 `sync-template.sh` 会在 fetch 后对比远端自身版本；若本地脚本不是最新版，会停止并提示先更新脚本。
 - `--dry-run` 只预览差异，不修改工作区、不 stage。
 - `--commit` 会覆盖同步清单中的文件并自动提交；提交信息通常由脚本生成。
-- `README.md` 是项目件，`ai/project-rules.md` 是项目专属规则，默认不应被同步覆盖。
+- 根 `README.md` 是项目件，`ai/project-rules.md` 是项目专属规则，均不在 `template-sync.json` 中，不参与模板下行同步。
+- 被 `template-sync.json` 列入的 Markdown 方法论文档会在同步时被覆盖；派生项目不要直接修改这些文件，如需改进请在 `_proposals/` 起草提案并回流模板。
 - 同步文件清单见 README「方法论同步」，具体以 `scripts/sync-template.sh` 中的 `SYNC_FILES` 为准。
 - 同步后若自检失败，先修复同步造成的不自洽，再 push / PR。
 - 老派生项目若执行 `--dry-run` 后出现 staged 改动，说明本地 `scripts/sync-template.sh` 过旧；先恢复工作区，手动用模板最新版覆盖该脚本，再重新执行 `--dry-run`。

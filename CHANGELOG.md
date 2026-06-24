@@ -1,6 +1,18 @@
 # CHANGELOG
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+
+## v1.6.7（2026-06-24）
+
+- 为模板同步 Markdown 文件补充同步覆盖说明，提示派生项目不要直接修改，应通过 `_proposals/` 回流模板。
+- 明确根 `README.md` 是项目专属文档，不参与模板下行同步。
+- 标准化 `scripts/new-project.sh` 生成的派生项目 README 版块。
+- 补齐 `_examples/` 的 docs 分区结构，与 v1.6.6 文档分区规则保持一致。
+- 增强 `scripts/check-template.sh` 对同步说明、派生 README 模板和样例分区的检查。
 
 ## v1.6.6（2026-06-24）
 

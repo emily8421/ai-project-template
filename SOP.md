@@ -1,5 +1,9 @@
 # SOP 索引
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+
 本文件是 `ai-project-template` 的标准操作流程导航。它只回答“当前场景应该看哪里”，不重复完整命令。
 
 ## 使用原则
@@ -7,7 +11,7 @@
 - 操作步骤权威来源：`git-guide.md`。
 - 可复制给 AI 执行的 Prompt：`INIT-PROMPT.md`。
 - 模板治理规则：`CONTRIBUTING.md`。
-- 项目快速入口与版本记录：`README.md`。
+- 项目快速入口：`README.md`；完整版本记录：`CHANGELOG.md`。
 
 ## 场景索引
 
@@ -23,7 +27,7 @@
 | 文档反向同步 | `ai/global-rules.md` §1 / §8 | `INIT-PROMPT.md` §7 | 代码事实与 docs 不一致时，先补文档事实 |
 | Phase 升级评估 | `docs/03-prd.md`、`ai/project-rules.md` §1 | `INIT-PROMPT.md` §8 | 评估当前完成度，再草拟下一 Phase 边界 |
 | Sprint 验收总结 | `docs/08-dev-plan.md`、`docs/09-verification.md` | `INIT-PROMPT.md` §9 | 对照验收标准总结是否完成 |
-| 派生项目同步模板 | `git-guide.md` §5 | `INIT-PROMPT.md` §12 | 必须先读取模板 `VERSION`，并 bootstrap 最新 `sync-template.sh` |
+| 派生项目同步模板 | `git-guide.md` §5 | `INIT-PROMPT.md` §12 | 必须先读取模板 `VERSION`，并 bootstrap 最新 `sync-template.sh`；根 `README.md` 不参与下行同步 |
 | 模板优化提案汇总 | `CONTRIBUTING.md` §4、`_proposals/README.md` | `INIT-PROMPT.md` §11 | 先提案，后改模板；完成后归档到 `_archive/proposals/` |
 | 直接修改模板 | `CONTRIBUTING.md` §3 / §7 | `INIT-PROMPT.md` §11 | 必须判断版本影响并更新 `VERSION` / README 版本记录 |
 | 生成提交信息 | `git-guide.md` §3 | `INIT-PROMPT.md` §6 | 基于实际 diff 生成清晰 commit message |

@@ -1,5 +1,9 @@
 # MAINTAINERS
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+
 本文件面向 `ai-project-template` 模板维护者。普通派生项目使用者优先看 `README.md`、`SOP.md` 和 `INIT-PROMPT.md`。
 
 ## 维护原则
@@ -28,6 +32,8 @@
 
 - 只放跨项目复用的方法论文件。
 - 不放项目专属内容，例如 `ai/project-rules.md`、根 `README.md`、`docs/` 业务文档或业务代码。
+- 同步 Markdown 文件必须在顶部包含 `Sync notice`，说明派生项目同步时可能被覆盖，不建议直接修改。
+- 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；它由 `scripts/new-project.sh` 初始化生成，后续由项目自行维护。
 - 新增方法论入口、脚本、规则文件时，必须同时更新 `template-sync.json` 和自检断言。
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 
