@@ -82,6 +82,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.7.0：新增阶段双维度（功能范围 + 交付物形态），强化 vision→docs 的 REQ 全覆盖、产品红线和“声称据实”约束。
 - v1.6.9：区分旧派生项目首次同步与 v1.6.8+ 后续同步；新增 `check-derived-sync` 派生边界检查，避免把模板仓库自检用于派生项目验收。
 - v1.6.8：新增 `INIT-PROMPT.md` §15「同步后项目整理」，用于派生项目同步方法论后审计 docs 分区、README、project-rules 与运行环境约束。
 - v1.6.7：补充模板同步文件的覆盖说明；明确派生项目根 `README.md` 不参与模板下行同步；标准化派生 README 版块；补齐样例 docs 分区结构。
