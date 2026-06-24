@@ -102,7 +102,7 @@ cat > "$TARGET/README.md" <<EOF
 1. 运行 \`powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1\` 生成 \`docs/env/local-env.md\`，补齐本机可运行边界、允许降级 / Mock 项与服务器预案。
 2. 把产品愿景写入 \`docs/vision/product-vision.md\`，只写业务叙事、目标用户、核心场景、非目标与远期想法。
 3. 初填 \`ai/project-rules.md\` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束与项目形态裁剪；不确定项标“待确认”。
-4. 复制 \`INIT-PROMPT.md\` §0 给 AI，让 AI 基于 product-vision + local-env 一次性生成 / 修订 \`docs/00-09\`、必要的 \`design-*\`、项目 README 与 Sprint1。
+4. 复制 \`INIT-PROMPT.md\` §0 给 AI，让 AI 基于 product-vision + local-env 一次性生成 / 修订 \`docs/00-09\`、必要的 \`docs/design/\` 详细设计、项目 README 与 Sprint1。
 5. 人工确认 \`docs/03-prd.md\` §3 阶段路线图和 \`docs/05-tech-spec.md\` 的本机 Demo 可行性；确认后进入 Sprint 开发。
 
 ## 文档入口
@@ -112,7 +112,9 @@ cat > "$TARGET/README.md" <<EOF
 - \`docs/01-user-requirements.md\`：用户需求
 - \`docs/02-srs.md\`：软件需求规格
 - \`docs/03-prd.md\`：产品需求与阶段路线图
+- \`docs/README.md\`：文档分区规则，新增文档前先看这里
 - \`docs/env/local-env.md\`：本机运行环境与资源约束
+- \`docs/design/\`：子系统 / 模块详细设计
 - \`docs/08-dev-plan.md\`：开发计划
 - \`docs/09-verification.md\`：验证计划
 
@@ -121,6 +123,7 @@ cat > "$TARGET/README.md" <<EOF
 - 通用方法论来自 \`ai-project-template\`。
 - 当前同步到的模板版本记录在 \`VERSION\`。
 - 项目专属规则写在 \`ai/project-rules.md\`。
+- 新增项目文档必须遵守 \`docs/README.md\` 的分区规则，不要直接堆到 \`docs/\` 根目录。
 - 如发现可通用的模板优化，先在 \`_proposals/\` 起草提案，再回流到模板仓库。
 EOF
 
