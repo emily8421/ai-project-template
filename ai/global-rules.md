@@ -1,5 +1,8 @@
 # Global Rules（跨项目通用规则）
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
 > 本文件对所有基于本模板创建的项目逐字复用，不针对具体项目修改。
 > 如需调整通用原则，先改本模板仓库的本文件，再覆盖同步到各项目（见README）。
 >

@@ -1,5 +1,9 @@
 # 常用Prompt模板
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+
 本文件收集项目生命周期中常用的可复制 Prompt。使用时先判断当前所处阶段，再复制对应章节中的 `text` 代码块给 AI；代码块外的说明用于帮助人判断“何时使用、输入什么、产出什么、下一步做什么”。
 
 ## 使用方式总览
