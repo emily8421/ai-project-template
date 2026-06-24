@@ -45,9 +45,10 @@ bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility privat
 # 模板自检
 powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
 
-# 派生项目同步模板方法论
+# 派生项目同步模板方法论（v1.6.8+ 后续同步；旧项目首次同步见 git-guide.md §5）
 powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
 powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
+powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ```
 
 ## 目录速览
@@ -81,6 +82,7 @@ powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.6.9：区分旧派生项目首次同步与 v1.6.8+ 后续同步；新增 `check-derived-sync` 派生边界检查，避免把模板仓库自检用于派生项目验收。
 - v1.6.8：新增 `INIT-PROMPT.md` §15「同步后项目整理」，用于派生项目同步方法论后审计 docs 分区、README、project-rules 与运行环境约束。
 - v1.6.7：补充模板同步文件的覆盖说明；明确派生项目根 `README.md` 不参与模板下行同步；标准化派生 README 版块；补齐样例 docs 分区结构。
 - v1.6.6：README 瘦身；新增 `MAINTAINERS.md` / `CHANGELOG.md`；新增 `docs/README.md` 文档分区规则，约束 AI 不把新增文档直接堆到 `docs/` 根目录。
