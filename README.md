@@ -81,9 +81,9 @@ powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.6.8：新增 `INIT-PROMPT.md` §15「同步后项目整理」，用于派生项目同步方法论后审计 docs 分区、README、project-rules 与运行环境约束。
 - v1.6.7：补充模板同步文件的覆盖说明；明确派生项目根 `README.md` 不参与模板下行同步；标准化派生 README 版块；补齐样例 docs 分区结构。
 - v1.6.6：README 瘦身；新增 `MAINTAINERS.md` / `CHANGELOG.md`；新增 `docs/README.md` 文档分区规则，约束 AI 不把新增文档直接堆到 `docs/` 根目录。
 - v1.6.5：新增 GitHub Actions 自检、5 分钟最小路径、`template-sync.json`、PowerShell 脚本入口和新项目烟测。
-- v1.6.4：新增 `SOP.md` 标准操作流程索引。
 
 完整记录见 `CHANGELOG.md`。
