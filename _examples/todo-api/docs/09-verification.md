@@ -12,13 +12,13 @@
 
 ## 2. REQ → 用例追溯矩阵
 
-| REQ | 阶段 | 状态 | 用例 ID | 验证方式 | 通过标准 |
-|---|---|---|---|---|---|
-| REQ-1 | [P1] | P1-已设计 | TC-001 | API 测试 + DB 测试 | POST /todos 返回 201，响应含 id/title/done/created_at，数据库新增记录 |
-| REQ-2 | [P1] | P1-已设计 | TC-002 | API 测试 | GET /todos 返回全部待办，按 created_at 倒序 |
-| REQ-3 | [P1] | P1-已设计 | TC-003 | API 测试 + DB 测试 | PATCH /todos/{id} 可更新 done，数据库状态同步变化 |
-| REQ-4 | [P1] | P1-已设计 | TC-004 | API 测试 + DB 测试 | DELETE /todos/{id} 返回 204，再查询不出现该记录 |
-| REQ-5 | [P1] | P1-已设计 | TC-005 | 持久化测试 | 服务 / 连接重启后，已创建待办仍可查询 |
+| REQ | 阶段 | 交付物形态 | 状态 | 用例 ID | 验证方式 | 通过标准 |
+|---|---|---|---|---|---|---|
+| REQ-1 | [P1] | Demo | P1-已设计 | TC-001 | API 测试 + DB 测试 | POST /todos 返回 201，响应含 id/title/done/created_at，数据库新增记录 |
+| REQ-2 | [P1] | Demo | P1-已设计 | TC-002 | API 测试 | GET /todos 返回全部待办，按 created_at 倒序 |
+| REQ-3 | [P1] | Demo | P1-已设计 | TC-003 | API 测试 + DB 测试 | PATCH /todos/{id} 可更新 done，数据库状态同步变化 |
+| REQ-4 | [P1] | Demo | P1-已设计 | TC-004 | API 测试 + DB 测试 | DELETE /todos/{id} 返回 204，再查询不出现该记录 |
+| REQ-5 | [P1] | Demo | P1-已设计 | TC-005 | 持久化测试 | 服务 / 连接重启后，已创建待办仍可查询 |
 
 ## 3. 错误与边界用例
 
@@ -31,8 +31,8 @@
 
 ## 4. 分阶段验证范围
 
-- Phase1：覆盖 REQ-1~REQ-5，以及 TC-101~TC-104。
-- Phase2：若增加分类标签、到期时间，在原位追加新的 REQ 和用例，不删除 Phase1 用例。
+- Phase1（Demo）：覆盖 REQ-1~REQ-5，以及 TC-101~TC-104。
+- Phase2（MVP）：若增加分类标签、到期时间，在原位追加新的 REQ 和用例，不删除 Phase1 用例。
 
 ## 5. Sprint 验收对应
 

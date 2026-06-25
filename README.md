@@ -16,7 +16,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 2. 补齐 `docs/env/local-env.md` 的人工确认项。
 3. 初填 `ai/project-rules.md` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束和项目形态裁剪。
 4. 复制 `INIT-PROMPT.md` §0 给 AI，让 AI 基于 `product-vision` + `local-env` 一次性生成 / 修订 `docs/00-09`、必要的 `docs/design/` 详细设计、项目 README 与 Sprint1。
-5. 人工确认 `docs/03-prd.md` §3 阶段路线图和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再用 `INIT-PROMPT.md` §2 执行第一个 Sprint。
+5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再用 `INIT-PROMPT.md` §2 执行第一个 Sprint。
 
 > Demo / MVP 默认优先在本机运行。若 `docs/env/local-env.md` 显示资源不足，AI 必须在 `docs/05-tech-spec.md` 写明降级 / Mock 策略或服务器资源预案。
 
@@ -82,6 +82,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.7.1：跟进阶段双维度，修正新项目 README 与样例项目的交付物形态说明，并将样例一致性纳入自检。
 - v1.7.0：新增阶段双维度（功能范围 + 交付物形态），强化 vision→docs 的 REQ 全覆盖、产品红线和“声称据实”约束。
 - v1.6.9：区分旧派生项目首次同步与 v1.6.8+ 后续同步；新增 `check-derived-sync` 派生边界检查，避免把模板仓库自检用于派生项目验收。
 - v1.6.8：新增 `INIT-PROMPT.md` §15「同步后项目整理」，用于派生项目同步方法论后审计 docs 分区、README、project-rules 与运行环境约束。
