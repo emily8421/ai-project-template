@@ -95,8 +95,9 @@ cat > "$TARGET/README.md" <<EOF
 
 ## 当前阶段
 
-- 当前阶段：Phase1 / MVP（待确认）
-- 阶段目标：（说明当前阶段要演示的最小闭环）
+- 当前阶段：Phase1（待确认）
+- 交付物形态：Demo / MVP / 产品（待确认；Phase1 不默认等于 MVP）
+- 阶段目标：（说明当前阶段要演示、上线或生产化到什么程度）
 - 非目标：（说明当前阶段明确不做什么）
 
 ## 当前能力
@@ -109,7 +110,7 @@ cat > "$TARGET/README.md" <<EOF
 2. 把产品愿景写入 \`docs/vision/product-vision.md\`，只写业务叙事、目标用户、核心场景、非目标与远期想法。
 3. 初填 \`ai/project-rules.md\` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束与项目形态裁剪；不确定项标“待确认”。
 4. 复制 \`INIT-PROMPT.md\` §0 给 AI，让 AI 基于 product-vision + local-env 一次性生成 / 修订 \`docs/00-09\`、必要的 \`docs/design/\` 详细设计、项目 README 与 Sprint1。
-5. 人工确认 \`docs/03-prd.md\` §3 阶段路线图和 \`docs/05-tech-spec.md\` 的本机 Demo 可行性；确认后进入 Sprint 开发。
+5. 人工确认 \`docs/03-prd.md\` §3 阶段路线图、交付物形态和 \`docs/05-tech-spec.md\` 的本机 Demo 可行性；确认后进入 Sprint 开发。
 
 ## 文档入口
 

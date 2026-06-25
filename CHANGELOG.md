@@ -6,6 +6,13 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.7.1（2026-06-25）
+
+- 跟进 v1.7.0 阶段双维度规则，修正 `scripts/new-project.sh` 生成的派生 README，避免继续把 Phase1 默认写成 MVP。
+- 更新 `_examples/` 三个样例的 PRD 与验证计划，补齐交付物形态和退出标准。
+- 增强 `scripts/check-template.sh`，将新项目 README 与样例交付物形态纳入自检，防止 Demo/MVP/产品语义回退。
+- README 与 `INIT-PROMPT.md` §15 补充同步 v1.7+ 后应审计交付物形态与验证矩阵。
+
 ## v1.7.0（2026-06-24）
 
 - `ai/global-rules.md` §8 新增阶段双维度：功能范围（P1/P2/愿景）与交付物形态（Demo/MVP/产品）必须同时声明。
