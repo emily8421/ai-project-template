@@ -34,4 +34,4 @@
 
 ## 使用方式
 
-新项目不要从本目录复制；应从模板根目录创建项目，再把自己的愿景放入 `docs/vision/product-vision.md`，使用 `INIT-PROMPT.md` §0 生成项目文档体系。
+新项目不要从本目录复制；应从模板根目录创建项目，再把自己的愿景放入 `docs/vision/product-vision.md`，先用 `ai/prompts/docs/01-review-inputs.md` 评审输入材料，再用 `ai/prompts/docs/00-generate-or-complete-docs.md` 生成项目文档体系。
