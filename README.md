@@ -1,6 +1,6 @@
 # ai-project-template
 
-跨项目复用的 AI 编程项目模板。默认路径是：先写产品愿景、采集本机环境，再让 AI 生成完整工程文档体系，最后按 Sprint 小步开发。
+跨项目复用的 AI 编程项目模板。默认路径是：先准备产品愿景或其他上游输入、采集本机环境，再让 AI 多入口生成 / 补齐工程文档体系，最后按 Sprint 小步开发。
 
 ## 5 分钟最小路径
 
@@ -15,8 +15,8 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 1. 把产品愿景写入 `docs/vision/product-vision.md`。
 2. 补齐 `docs/env/local-env.md` 的人工确认项。
 3. 初填 `ai/project-rules.md` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束和项目形态裁剪。
-4. 复制 `INIT-PROMPT.md` §0 给 AI，让 AI 基于 `product-vision` + `local-env` 一次性生成 / 修订 `docs/00-09`、必要的 `docs/design/` 详细设计、项目 README 与 Sprint1。
-5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再用 `INIT-PROMPT.md` §2 执行第一个 Sprint。
+4. 复制 `ai/prompts/docs/01-review-inputs.md` 给 AI 评审输入材料；评审通过后复制 `ai/prompts/docs/00-generate-or-complete-docs.md`，多入口生成 / 补齐 `docs/00-09`、必要的 `docs/design/` 详细设计、项目 README 与 Sprint1。
+5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再用 `ai/prompts/dev/02-run-task.md` 执行第一个 Sprint。
 
 > Demo / MVP 默认优先在本机运行。若 `docs/env/local-env.md` 显示资源不足，AI 必须在 `docs/05-tech-spec.md` 写明降级 / Mock 策略或服务器资源预案。
 
@@ -25,8 +25,8 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 | 你要做什么 | 看哪里 |
 |---|---|
 | 新建项目 | 本 README 的“5 分钟最小路径” |
-| 从愿景生成文档体系 | `INIT-PROMPT.md` §0 |
-| 执行第一个 Sprint | `INIT-PROMPT.md` §2 |
+| 多入口生成 / 补齐文档体系 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
+| 执行第一个 Sprint | `ai/prompts/dev/02-run-task.md` |
 | 判断 docs / 代码目录如何裁剪 | `docs/README.md` |
 | 查标准操作流程入口 | `SOP.md` |
 | 同步模板到派生项目 | `SOP.md`、`git-guide.md` §5 |
@@ -59,7 +59,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 | `docs/` | 项目事实、需求、设计、计划与验证；分区规则见 `docs/README.md` |
 | `tasks/` | 复杂 Sprint 拆分后的任务单 |
 | `SOP.md` | 标准操作流程索引 |
-| `INIT-PROMPT.md` | 可复制给 AI 的 Prompt 模板 |
+| `INIT-PROMPT.md` / `ai/prompts/` | Prompt 索引与按场景拆分的可复制 Prompt 模板 |
 | `CONTRIBUTING.md` | 模板变更治理流程 |
 | `MAINTAINERS.md` | 模板维护者说明、发布 checklist、同步清单维护规则 |
 | `CHANGELOG.md` | 完整版本记录 |
@@ -82,12 +82,12 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.9.0：拆分 Prompt Library，`INIT-PROMPT.md` 改为轻量索引，完整 Prompt 按场景迁移到 `ai/prompts/`。
+- v1.8.0：新增文档生命周期规则与 `docs/inputs/` 原始输入包，支持多入口生成 / 补齐文档体系，强化全链追溯、变更传播、横切事实一致性和外部文档接入。
 - v1.7.1：跟进阶段双维度，修正新项目 README 与样例项目的交付物形态说明，并将样例一致性纳入自检。
 - v1.7.0：新增阶段双维度（功能范围 + 交付物形态），强化 vision→docs 的 REQ 全覆盖、产品红线和“声称据实”约束。
 - v1.6.9：区分旧派生项目首次同步与 v1.6.8+ 后续同步；新增 `check-derived-sync` 派生边界检查，避免把模板仓库自检用于派生项目验收。
 - v1.6.8：新增 `INIT-PROMPT.md` §15「同步后项目整理」，用于派生项目同步方法论后审计 docs 分区、README、project-rules 与运行环境约束。
 - v1.6.7：补充模板同步文件的覆盖说明；明确派生项目根 `README.md` 不参与模板下行同步；标准化派生 README 版块；补齐样例 docs 分区结构。
-- v1.6.6：README 瘦身；新增 `MAINTAINERS.md` / `CHANGELOG.md`；新增 `docs/README.md` 文档分区规则，约束 AI 不把新增文档直接堆到 `docs/` 根目录。
-- v1.6.5：新增 GitHub Actions 自检、5 分钟最小路径、`template-sync.json`、PowerShell 脚本入口和新项目烟测。
 
 完整记录见 `CHANGELOG.md`。
