@@ -310,7 +310,9 @@ require_scaffold_mirror() {
     printf 'old guide\n' > git-guide.md
     git add -A
     git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
-    TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --commit
+    GIT_AUTHOR_NAME=test GIT_AUTHOR_EMAIL=test@example.com \
+      GIT_COMMITTER_NAME=test GIT_COMMITTER_EMAIL=test@example.com \
+      TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --commit
   ) >"$test_root/sync.log" 2>&1; then
     cat "$test_root/sync.log" >&2
     fail "_scaffold 同步执行失败"
