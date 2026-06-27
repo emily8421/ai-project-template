@@ -10,19 +10,29 @@
 
 - 模板方法论只在本仓库修改；派生项目发现通用优化时，先在 `_proposals/` 起草，再回流模板仓库。
 - 所有模板改动走「提案 → 分支 → PR → 评审 → 合并 → 归档」，不得直推 `main`。
+- 模板维护时必须先切维护分支，再开始第一次提交；不得先在本地 `main` 提交后再补建分支。
 - 任何影响下游同步判断的合并都必须递增根目录 `VERSION`，并更新 `CHANGELOG.md`。
 - 根 `README.md` 保持用户入口轻量；维护细节放本文件，完整版本记录放 `CHANGELOG.md`。
 
 ## 发布 Checklist
 
-1. 创建或更新 `TEMPLATE-UPGRADE-*.md` 提案，并在完成后归档到 `_archive/proposals/`。
-2. 判断版本影响，更新根目录 `VERSION`。
-3. 更新 `CHANGELOG.md`，确保包含当前 `VERSION`。
-4. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`。
-5. 若改变用户入口，保持 `README.md` 的 5 分钟路径可读，不塞入维护者细节。
-6. 运行：`git diff --check`。
-7. 运行：`powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
-8. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
+1. 先确认当前不在 `main` 直接改动；模板维护必须发生在维护分支上。
+2. 创建或更新 `TEMPLATE-UPGRADE-*.md` 提案，并在完成后归档到 `_archive/proposals/`。
+3. 判断版本影响，更新根目录 `VERSION`。
+4. 更新 `CHANGELOG.md`，确保包含当前 `VERSION`。
+5. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`。
+6. 若改变用户入口，保持 `README.md` 的 5 分钟路径可读，不塞入维护者细节。
+7. 运行：`git diff --check`。
+8. 运行：`powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
+9. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
+
+## 提案组织建议
+
+- 若模板修改来自 `_proposals/` 中现有提案，优先沿用原提案并在 PR 中处理完成后归档。
+- 若模板修改来自人工在当前会话中陆续提出的建议，应在本轮维护分支里同步维护一份 `TEMPLATE-UPGRADE-*.md` 作为记录。
+- 同一轮目标、同一条 PR、同一版本窗口内的多条新增建议，优先合并进同一份提案，而不是机械地“一条建议一份提案”。
+- 只有当建议明显属于不同主题、不同版本节奏或不同 PR 时，才拆成多份提案。
+- 提案应在修改过程中持续补充，不要全部改完后再统一回忆补写。
 
 ## 下行同步清单
 
