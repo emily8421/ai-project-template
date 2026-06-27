@@ -30,5 +30,6 @@
 | 需要采集本机资源约束 | `ai/prompts/setup/13-collect-env.md` | 自动生成 `docs/env/local-env.md` 并补人工确认项 |
 | 需要从模板新建派生项目 | `ai/prompts/setup/14-new-project.md` | 调用 `scripts/new-project.sh` 创建项目并完成初始化入口 |
 | 同步后整理派生项目 | `ai/prompts/maintainers/15-post-sync-cleanup.md` | 审计 docs 分区、README、project-rules 与运行环境约束，先出迁移计划再执行 |
+| 项目成型后回溯审计全链路 | `ai/prompts/review/16-docs-system-audit.md` | 用 document-lifecycle-rules 回溯审视 PLM 链路合理性、可行性与一致性，先出报告不改文件 |
 
 > 原则：Prompt 不是需求本身。AI 只能基于 `docs/`、`ai/document-lifecycle-rules.md`、`ai/project-rules.md` 与人工确认的信息工作；如果输入不足，先补输入，不要让 AI 猜。生成或修改任何项目事实文档前，必须按文档生命周期规则声明上游输入、约束来源、允许修改范围和下游影响。
