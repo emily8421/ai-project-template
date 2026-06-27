@@ -6,6 +6,11 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.18.0（2026-06-28）
+
+- 新增 `_scaffold` 规范镜像：`sync-template.sh` 下行同步时把模板 `docs/00-09` 撰写规范镜像到派生项目 `docs/_scaffold/`（只读、非项目事实、随模板刷新），不覆盖派生项目自己的 `docs/00-09`。
+- `scripts/check-derived-sync.sh` 放行 `docs/_scaffold/*`；`docs/README.md` 增加 `_scaffold/` 分区说明；`scripts/check-template.sh` 增加 `_scaffold` 镜像自检（临时派生项目验证镜像生成、项目事实不变、边界检查通过）。
+
 ## v1.17.0（2026-06-28）
 
 - 新增 `ai/prompts/review/16-docs-system-audit.md`，用于项目成型后用 `ai/document-lifecycle-rules.md` 回溯审视整条 PLM 链路（追溯链 / 横切一致 / 变更传播 / 外部接入 / 生成矩阵 / 可行性 / 交付物形态），产出健康度报告与回梳计划，先出报告不改文件。

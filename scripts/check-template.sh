@@ -243,6 +243,117 @@ require_new_project_local_smoke() {
   rm -rf "$test_root"
 }
 
+require_scaffold_mirror() {
+  local test_root template_dir derived_dir
+  test_root="$(mktemp -d)"
+  template_dir="$test_root/template"
+  derived_dir="$test_root/derived"
+  mkdir -p "$template_dir/scripts" "$template_dir/ai" "$template_dir/.cursor/rules" \
+    "$template_dir/docs/inputs" \
+    "$derived_dir/scripts" "$derived_dir/ai" "$derived_dir/.cursor/rules" "$derived_dir/docs"
+
+  local d
+  # 模板仓库：当前脚本 + template-sync.json + docs/00-09 规范骨架 + 最小入口
+  (
+    cd "$template_dir"
+    git init -b main >/dev/null
+    cp "$ROOT/scripts/sync-template.sh" scripts/sync-template.sh
+    cp "$ROOT/scripts/sync-template.ps1" scripts/sync-template.ps1
+    cp "$ROOT/scripts/check-template.sh" scripts/check-template.sh
+    cp "$ROOT/scripts/check-template.ps1" scripts/check-template.ps1
+    cp "$ROOT/scripts/check-derived-sync.sh" scripts/check-derived-sync.sh
+    cp "$ROOT/scripts/check-derived-sync.ps1" scripts/check-derived-sync.ps1
+    cp "$ROOT/scripts/collect-env.ps1" scripts/collect-env.ps1
+    printf 'v9.9.9\n' > VERSION
+    cp "$ROOT/template-sync.json" template-sync.json
+    printf '# index\n' > ai/index.md
+    printf '# global\n' > ai/global-rules.md
+    printf '# lifecycle\n' > ai/document-lifecycle-rules.md
+    mkdir -p ai/prompts
+    cp -R "$ROOT/ai/prompts/." ai/prompts/
+    printf '# docs\n' > docs/README.md
+    printf '# inputs\n' > docs/inputs/README.md
+    for d in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
+      printf '# template spec %s\n' "$d" > "docs/$d.md"
+    done
+    printf 'agent\n' > AGENTS.md
+    printf 'claude\n' > CLAUDE.md
+    printf 'cursor\n' > .cursor/rules/project-rules.mdc
+    printf 'sop\n' > SOP.md
+    printf 'init\n' > INIT-PROMPT.md
+    printf 'contrib\n' > CONTRIBUTING.md
+    printf 'guide\n' > git-guide.md
+    git add -A
+    git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
+  )
+
+  # 派生项目：自带 docs/00-09 项目事实（与模板规范不同）+ 执行 sync --commit
+  if ! (
+    cd "$derived_dir"
+    git init -b main >/dev/null
+    cp "$ROOT/scripts/sync-template.sh" scripts/sync-template.sh
+    cp "$ROOT/scripts/check-derived-sync.sh" scripts/check-derived-sync.sh
+    cp "$ROOT/scripts/check-derived-sync.ps1" scripts/check-derived-sync.ps1
+    printf 'v0.0.1\n' > VERSION
+    printf '# index\n' > ai/index.md
+    printf '# old global\n' > ai/global-rules.md
+    printf '# old docs\n' > docs/README.md
+    for d in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
+      printf '# project fact %s\n' "$d" > "docs/$d.md"
+    done
+    printf 'agent\n' > AGENTS.md
+    printf 'claude\n' > CLAUDE.md
+    printf 'cursor\n' > .cursor/rules/project-rules.mdc
+    printf 'old sop\n' > SOP.md
+    printf 'old init\n' > INIT-PROMPT.md
+    printf 'old contrib\n' > CONTRIBUTING.md
+    printf 'old guide\n' > git-guide.md
+    git add -A
+    git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
+    GIT_AUTHOR_NAME=test GIT_AUTHOR_EMAIL=test@example.com \
+      GIT_COMMITTER_NAME=test GIT_COMMITTER_EMAIL=test@example.com \
+      TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --commit
+  ) >"$test_root/sync.log" 2>&1; then
+    cat "$test_root/sync.log" >&2
+    fail "_scaffold 同步执行失败"
+    rm -rf "$test_root"
+    return
+  fi
+
+  local count
+  count="$(find "$derived_dir/docs/_scaffold" -type f 2>/dev/null | wc -l | tr -d ' ')"
+  if [[ "$count" -eq 10 ]]; then
+    pass "_scaffold 生成 10 个规范镜像"
+  else
+    fail "_scaffold 应生成 10 个规范镜像，实际 $count"
+  fi
+
+  if grep -q '# template spec 00-scenario' "$derived_dir/docs/_scaffold/00-scenario.md" 2>/dev/null; then
+    pass "_scaffold 镜像内容来自模板规范"
+  else
+    fail "_scaffold 镜像内容不是模板规范"
+  fi
+
+  local drift=0
+  for d in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
+    grep -q "# project fact $d" "$derived_dir/docs/$d.md" 2>/dev/null || drift=1
+  done
+  if [[ "$drift" -eq 0 ]]; then
+    pass "派生 docs/00-09 项目事实未被覆盖"
+  else
+    fail "派生 docs/00-09 项目事实被覆盖（违反 _scaffold 红线）"
+  fi
+
+  if ( cd "$derived_dir" && bash scripts/check-derived-sync.sh ) >"$test_root/check.log" 2>&1; then
+    pass "check-derived-sync 接受 _scaffold 同步提交"
+  else
+    cat "$test_root/check.log" >&2
+    fail "check-derived-sync 误判 _scaffold 越界"
+  fi
+
+  rm -rf "$test_root"
+}
+
 echo "==> 检查 AI 入口文件"
 require_file "AGENTS.md"
 require_file "CLAUDE.md"
@@ -466,6 +577,8 @@ require_file "ai/prompts/maintainers/15-post-sync-cleanup.md"
 require_file "ai/prompts/review/16-docs-system-audit.md"
 require_contains "ai/prompts/review/16-docs-system-audit.md" '全链路' "16 系统审计提示词覆盖全链路回溯"
 require_contains "ai/prompts/review/16-docs-system-audit.md" 'ai/document-lifecycle-rules\.md' "16 系统审计提示词引用文档生命周期规则"
+require_contains "ai/prompts/review/16-docs-system-audit.md" 'docs/_scaffold' "16 系统审计提示词对照 _scaffold 规范基线"
+require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '16-docs-system-audit\.md' "同步后整理 Prompt 指向 16 系统审计（_scaffold 闭环）"
 require_contains "INIT-PROMPT.md" 'Prompt Library' "INIT-PROMPT 是 Prompt Library 索引"
 require_contains "INIT-PROMPT.md" 'ai/prompts/docs/01-review-inputs\.md' "INIT-PROMPT 指向输入评审 Prompt"
 require_contains "INIT-PROMPT.md" 'ai/prompts/docs/00-generate-or-complete-docs\.md' "INIT-PROMPT 指向文档生成 Prompt"
@@ -507,6 +620,9 @@ require_contains "scripts/check-derived-sync.sh" '同步清单外变更' "check-
 require_contains "scripts/check-derived-sync.sh" 'README\.md\|ai/project-rules\.md\|docs/0\[0-9\]-\*' "check-derived-sync 保护项目专属文件"
 require_contains "scripts/check-derived-sync.sh" 'git show --name-only --stat' "check-derived-sync 输出最近同步提交文件"
 require_contains "scripts/check-derived-sync.sh" 'ai/prompts/maintainers/15-post-sync-cleanup\.md' "check-derived-sync 指向同步后整理 Prompt"
+require_contains "scripts/sync-template.sh" 'docs/_scaffold' "sync-template 含 _scaffold 规范镜像步骤"
+require_contains "scripts/check-derived-sync.sh" 'docs/_scaffold/\*' "check-derived-sync 放行 _scaffold 规范镜像"
+require_contains "docs/README.md" '_scaffold' "docs README 说明 _scaffold 规范镜像分区"
 require_contains "SOP.md" '新建派生项目' "SOP 索引包含新建派生项目场景"
 require_contains "SOP.md" '第一次准备开发环境' "SOP 索引包含环境准备场景"
 require_contains "SOP.md" '运行新手烟测' "SOP 索引包含新手烟测场景"
@@ -598,6 +714,7 @@ require_contains "scripts/sync-template.sh" '本地当前文件 -> 模板' "sync
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke
+require_scaffold_mirror
 
 echo
 echo "==> 检查同步清单一致性"
