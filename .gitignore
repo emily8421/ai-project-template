@@ -24,6 +24,9 @@ Thumbs.db
 # 日志
 *.log
 
+# 本地会话 / 临时续接记录
+NEXT-STEPS.md
+
 # 构建产物
 dist/
 build/

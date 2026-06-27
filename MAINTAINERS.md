@@ -48,6 +48,7 @@
 - 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`template-docs/` 下对应文档与 `SOP.md` 的入口是否一致。
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 - `scripts/check-template.sh` / `scripts/check-template.ps1` 只用于模板仓库完整性自检；派生项目同步验收使用 `scripts/check-derived-sync.sh` / `scripts/check-derived-sync.ps1`。
+- `NEXT-STEPS.md` 之类的本地续接便签不属于模板方法论文档；应保持本地临时性，并通过 `.gitignore` 排除，不进入同步清单和正式提交。
 
 ## 自检与 CI
 
