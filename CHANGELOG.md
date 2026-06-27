@@ -6,6 +6,11 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.17.0（2026-06-28）
+
+- 新增 `ai/prompts/review/16-docs-system-audit.md`，用于项目成型后用 `ai/document-lifecycle-rules.md` 回溯审视整条 PLM 链路（追溯链 / 横切一致 / 变更传播 / 外部接入 / 生成矩阵 / 可行性 / 交付物形态），产出健康度报告与回梳计划，先出报告不改文件。
+- `INIT-PROMPT.md` 场景索引、`template-sync.json` 与 `scripts/check-template.sh` 纳入新提示词。
+
 ## v1.16.0（2026-06-27）
 
 - 新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。

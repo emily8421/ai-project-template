@@ -107,6 +107,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.17.0：新增 `ai/prompts/review/16-docs-system-audit.md`，用于项目成型后用文档生命周期规则回溯审计整条 PLM 链路，先出报告不改文件。
 - v1.16.2：补充模板维护纪律，明确无论是现有提案驱动还是对话中主动提出的模板修改，都必须先切维护分支、同步维护提案记录、合并后再归档。
 - v1.16.0：新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
 - v1.15.1：修正公司中转站说明边界，明确内网手册用于 LeMesh / CC-Switch / 中转代理配置，不替代 `Claude CLI` / `Codex CLI` 的官方安装文档。
