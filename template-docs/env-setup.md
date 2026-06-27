@@ -32,7 +32,7 @@
 
 详细安装与公司中转配置衔接，见：
 
-- `AI-CLI-SETUP.md`
+- `template-docs/ai-cli-setup.md`
 
 ### 条件必需
 
@@ -89,7 +89,7 @@
 - 什么时候可以先不装：
   只做模板环境烟测、还没开始真正用 AI 编码时，可以先不装；但正式进入 AI 协作开发前，最好至少准备一种 AI CLI。
 - 更完整的安装与配置顺序：
-  见 `AI-CLI-SETUP.md`
+  见 `template-docs/ai-cli-setup.md`
 
 ### Codex CLI
 
@@ -104,7 +104,7 @@
 - 什么时候可以先不装：
   和 Claude CLI 一样，纯本地烟测阶段可以暂时不装；但真正开始 AI 协作开发前，建议至少准备一种。
 - 更完整的安装与配置顺序：
-  见 `AI-CLI-SETUP.md`
+  见 `template-docs/ai-cli-setup.md`
 
 ### GitHub CLI (`gh`)
 
@@ -295,7 +295,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 1. 先把系统级依赖装好。
 2. 再按你实际要用的 AI 工具官方文档完成安装和登录。
 3. 最后确认该工具能读取仓库根入口文件。
-4. 如果要接公司代理，再看 `AI-CLI-SETUP.md` 和内网手册的衔接说明。
+4. 如果要接公司代理，再看 `template-docs/ai-cli-setup.md` 和内网手册的衔接说明。
 
 更具体一点：
 
@@ -387,7 +387,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 
 ## 14. 与其他文档的关系
 
-- 第一次整体上手看 `BEGINNER-GUIDE.md`
-- 想知道为什么模板这样分层看 `TEMPLATE-METHODOLOGY.md`
+- 第一次整体上手看 `template-docs/beginner-guide.md`
+- 想知道为什么模板这样分层看 `template-docs/template-methodology.md`
 - 想看完整项目流程看 `README.md` 与 `SOP.md`
 - 想采集本机资源看 `docs/env/README.md` 和 `scripts/collect-env.ps1`

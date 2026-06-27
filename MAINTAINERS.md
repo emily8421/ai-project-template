@@ -4,7 +4,7 @@
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 
-本文件面向 `ai-project-template` 模板维护者。普通派生项目使用者优先看 `README.md`、`BEGINNER-GUIDE.md`、`ENV-SETUP.md`、`AI-CLI-SETUP.md`、`SMOKE-TEST.md`、`SMOKE-TEST-REPORT-TEMPLATE.md`、`SOP.md` 和 `INIT-PROMPT.md`。
+本文件面向 `ai-project-template` 模板维护者。普通派生项目使用者优先看 `README.md`、`template-docs/beginner-guide.md`、`template-docs/env-setup.md`、`template-docs/ai-cli-setup.md`、`template-docs/smoke-test.md`、`template-docs/smoke-test-report-template.md`、`SOP.md` 和 `INIT-PROMPT.md`。
 
 ## 维护原则
 
@@ -35,7 +35,7 @@
 - 同步 Markdown 文件必须在顶部包含 `Sync notice`，说明派生项目同步时可能被覆盖，不建议直接修改。
 - 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；它由 `scripts/new-project.sh` 初始化生成，后续由项目自行维护。
 - 新增方法论入口、脚本、规则文件时，必须同时更新 `template-sync.json` 和自检断言。
-- 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`BEGINNER-GUIDE.md`、`ENV-SETUP.md` 与 `SOP.md` 的入口是否一致。
+- 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`template-docs/` 下对应文档与 `SOP.md` 的入口是否一致。
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 - `scripts/check-template.sh` / `scripts/check-template.ps1` 只用于模板仓库完整性自检；派生项目同步验收使用 `scripts/check-derived-sync.sh` / `scripts/check-derived-sync.ps1`。
 

@@ -154,4 +154,4 @@ Remove-Item -Recurse -Force .\smoke-demo
 - 哪一步失败
 - 是否需要补 README / SOP / ENV-SETUP / BEGINNER-GUIDE
 
-若希望统一记录格式，直接使用 `SMOKE-TEST-REPORT-TEMPLATE.md`。
+若希望统一记录格式，直接使用 `template-docs/smoke-test-report-template.md`。

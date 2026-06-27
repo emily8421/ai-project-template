@@ -18,7 +18,7 @@
 | 文件 | 职责 |
 |---|---|
 | `README.md` | 5 分钟最小路径与总导航 |
-| `BEGINNER-GUIDE.md` | 面向第一次使用者的操作手册 |
+| `template-docs/beginner-guide.md` | 面向第一次使用者的操作手册 |
 | `SOP.md` | 场景索引与流程入口 |
 | `ai/index.md` | AI 规则入口 |
 | `ai/global-rules.md` | 跨项目通用规则 |
@@ -74,8 +74,8 @@
 | 区域 | 放什么 | 不放什么 |
 |---|---|---|
 | 根目录 `README.md` | 总导航、最小路径、版本摘要 | 维护者细节、长篇教程 |
-| 根目录 `BEGINNER-GUIDE.md` | 初学者操作手册 | 规则正文、项目业务事实 |
-| 根目录 `TEMPLATE-METHODOLOGY.md` | 模板设计说明 | 派生项目过程文档 |
+| `template-docs/beginner-guide.md` | 初学者操作手册 | 规则正文、项目业务事实 |
+| `template-docs/template-methodology.md` | 模板设计说明 | 派生项目过程文档 |
 | 根目录 `SOP.md` | 场景索引 | 大段重复命令、完整教程 |
 | `ai/` | AI 运行时规则 | 解释性长文、模板历史叙事 |
 | `docs/` | 派生项目事实、需求、设计、计划、验证 | 模板自身元设计 |

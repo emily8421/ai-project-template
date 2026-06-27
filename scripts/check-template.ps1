@@ -150,10 +150,12 @@ function Invoke-NativeTemplateCheck {
 
   foreach ($path in @(
       "README.md",
-      "BEGINNER-GUIDE.md",
-      "ENV-SETUP.md",
-      "SMOKE-TEST.md",
-      "TEMPLATE-METHODOLOGY.md",
+      "template-docs/beginner-guide.md",
+      "template-docs/env-setup.md",
+      "template-docs/ai-cli-setup.md",
+      "template-docs/smoke-test.md",
+      "template-docs/smoke-test-report-template.md",
+      "template-docs/template-methodology.md",
       "CHANGELOG.md",
       "VERSION",
       "template-sync.json",
@@ -198,16 +200,16 @@ function Invoke-NativeTemplateCheck {
   }
 
   Require-Contains "CHANGELOG.md" ([regex]::Escape($version)) "CHANGELOG includes current VERSION"
-  Require-Contains "README.md" "ENV-SETUP\.md" "README includes environment setup entry"
-  Require-Contains "README.md" "SMOKE-TEST\.md" "README includes smoke test entry"
+  Require-Contains "README.md" "template-docs/env-setup\.md" "README includes environment setup entry"
+  Require-Contains "README.md" "template-docs/smoke-test\.md" "README includes smoke test entry"
   Require-Contains "README.md" "bash scripts/new-project\.sh my-demo --local --no-remote" "README includes quick-start path"
-  Require-Contains "BEGINNER-GUIDE.md" "SMOKE-TEST\.md" "BEGINNER-GUIDE includes smoke test entry"
-  Require-Contains "ENV-SETUP.md" "bootstrap-dev-env\.ps1" "ENV-SETUP includes bootstrap script"
-  Require-Contains "ENV-SETUP.md" "check-prereqs\.ps1" "ENV-SETUP includes prerequisite check script"
-  Require-Contains "SMOKE-TEST.md" "scripts/check-prereqs\.ps1" "SMOKE-TEST includes prerequisite check step"
-  Require-Contains "SMOKE-TEST.md" "scripts/new-project\.sh smoke-demo --local --no-remote" "SMOKE-TEST includes local smoke project creation"
-  Require-Contains "SMOKE-TEST.md" "scripts/collect-env\.ps1" "SMOKE-TEST includes environment collection step"
-  Require-Contains "docs/env/README.md" "ENV-SETUP\.md" "docs/env README includes environment setup entry"
+  Require-Contains "template-docs/beginner-guide.md" "template-docs/smoke-test\.md" "BEGINNER-GUIDE includes smoke test entry"
+  Require-Contains "template-docs/env-setup.md" "bootstrap-dev-env\.ps1" "ENV-SETUP includes bootstrap script"
+  Require-Contains "template-docs/env-setup.md" "check-prereqs\.ps1" "ENV-SETUP includes prerequisite check script"
+  Require-Contains "template-docs/smoke-test.md" "scripts/check-prereqs\.ps1" "SMOKE-TEST includes prerequisite check step"
+  Require-Contains "template-docs/smoke-test.md" "scripts/new-project\.sh smoke-demo --local --no-remote" "SMOKE-TEST includes local smoke project creation"
+  Require-Contains "template-docs/smoke-test.md" "scripts/collect-env\.ps1" "SMOKE-TEST includes environment collection step"
+  Require-Contains "docs/env/README.md" "template-docs/env-setup\.md" "docs/env README includes environment setup entry"
   Require-Contains "scripts/new-project.sh" "ENV-SETUP\.md" "new-project README template includes environment setup entry"
   Require-Contains "scripts/new-project.sh" "check-prereqs\.ps1" "new-project README template includes prerequisite check step"
   Require-Contains "scripts/check-prereqs.ps1" "Git Bash" "check-prereqs checks Git Bash"

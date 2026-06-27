@@ -2,7 +2,7 @@
 
 本目录用于保存项目初始化阶段的本机运行环境与资源约束。
 
-如果机器还没装好基础开发环境，先看根目录 `ENV-SETUP.md`，并先运行 `scripts/check-prereqs.ps1` / `scripts/bootstrap-dev-env.ps1`。
+如果机器还没装好基础开发环境，先看 `template-docs/env-setup.md`，并先运行 `scripts/check-prereqs.ps1` / `scripts/bootstrap-dev-env.ps1`。
 
 ## 生成方式
 

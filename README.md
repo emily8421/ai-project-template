@@ -2,11 +2,11 @@
 
 跨项目复用的 AI 编程项目模板。默认路径是：先准备产品愿景或其他上游输入、采集本机环境，再让 AI 多入口生成 / 补齐工程文档体系，最后按 Sprint 小步开发。
 
-第一次使用模板，先看 `BEGINNER-GUIDE.md`；想理解这套模板为什么这样设计，再看 `TEMPLATE-METHODOLOGY.md`。
-如果机器还没准备好开发环境，先看 `ENV-SETUP.md`。
-如果要单独安装 `Claude CLI` / `Codex CLI`，看 `AI-CLI-SETUP.md`。
-如果要验证新手能否从零跑通最小路径，按 `SMOKE-TEST.md` 执行。
-如果要留痕一次烟测结果，使用 `SMOKE-TEST-REPORT-TEMPLATE.md`。
+第一次使用模板，先看 `template-docs/beginner-guide.md`；想理解这套模板为什么这样设计，再看 `template-docs/template-methodology.md`。
+如果机器还没准备好开发环境，先看 `template-docs/env-setup.md`。
+如果要单独安装 `Claude CLI` / `Codex CLI`，看 `template-docs/ai-cli-setup.md`。
+如果要验证新手能否从零跑通最小路径，按 `template-docs/smoke-test.md` 执行。
+如果要留痕一次烟测结果，使用 `template-docs/smoke-test-report-template.md`。
 
 ## 5 分钟最小路径
 
@@ -30,12 +30,12 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 
 | 你要做什么 | 看哪里 |
 |---|---|
-| 第一次使用模板 | `BEGINNER-GUIDE.md` |
-| 第一次准备开发环境 | `ENV-SETUP.md` |
-| 单独安装 AI CLI 工具 | `AI-CLI-SETUP.md` |
-| 验证新手最小链路是否跑通 | `SMOKE-TEST.md` |
-| 记录一轮烟测结果 | `SMOKE-TEST-REPORT-TEMPLATE.md` |
-| 理解模板为什么这样设计 | `TEMPLATE-METHODOLOGY.md` |
+| 第一次使用模板 | `template-docs/beginner-guide.md` |
+| 第一次准备开发环境 | `template-docs/env-setup.md` |
+| 单独安装 AI CLI 工具 | `template-docs/ai-cli-setup.md` |
+| 验证新手最小链路是否跑通 | `template-docs/smoke-test.md` |
+| 记录一轮烟测结果 | `template-docs/smoke-test-report-template.md` |
+| 理解模板为什么这样设计 | `template-docs/template-methodology.md` |
 | 新建项目 | 本 README 的“5 分钟最小路径” |
 | 多入口生成 / 补齐文档体系 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
 | 执行第一个 Sprint | `ai/prompts/dev/02-run-task.md` |
@@ -79,12 +79,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 | 路径 | 作用 |
 |---|---|
-| `BEGINNER-GUIDE.md` | 第一次使用模板时的操作手册 |
-| `ENV-SETUP.md` | 新手开发环境准备、必备软件清单与一键安装说明 |
-| `AI-CLI-SETUP.md` | `Claude CLI` / `Codex CLI` 安装与公司中转配置衔接说明 |
-| `SMOKE-TEST.md` | 新手最小链路烟测操作单 |
-| `SMOKE-TEST-REPORT-TEMPLATE.md` | 新手烟测记录模板 |
-| `TEMPLATE-METHODOLOGY.md` | 模板自身的方法论设计说明 |
+| `template-docs/` | 模板自身的手册、烟测、环境和方法论说明 |
 | `ai/` | AI 行为规范；AI 每次任务先读 `ai/index.md` |
 | `docs/` | 项目事实、需求、设计、计划与验证；分区规则见 `docs/README.md` |
 | `tasks/` | 复杂 Sprint 拆分后的任务单 |

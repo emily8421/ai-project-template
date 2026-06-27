@@ -11,6 +11,11 @@
 - 新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
 - 更新 `ENV-SETUP.md`、`BEGINNER-GUIDE.md`、`README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充 AI CLI 独立入口。
 
+## v1.16.1（2026-06-27）
+
+- 将模板元文档集中迁移到 `template-docs/`，避免根目录继续堆积 `BEGINNER-GUIDE`、`ENV-SETUP`、`AI-CLI-SETUP`、`SMOKE-TEST`、`SMOKE-TEST-REPORT-TEMPLATE`、`TEMPLATE-METHODOLOGY` 等说明文件。
+- 更新 `README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh` 的入口和同步路径。
+
 ## v1.15.1（2026-06-27）
 
 - 修正公司中转站说明边界：`ENV-SETUP.md` 与 `BEGINNER-GUIDE.md` 现在明确区分“CLI 官方安装 / 登录”和“LeMesh / CC-Switch / 中转代理配置”，避免把内网手册误写成 `Claude CLI` / `Codex CLI` 安装指南。

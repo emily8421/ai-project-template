@@ -41,7 +41,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 5. 评审通过后，再用 `ai/prompts/docs/00-generate-or-complete-docs.md` 生成或补齐 `docs/00-09`。
 6. 人工确认 `docs/03-prd.md`、`docs/05-tech-spec.md`、`docs/08-dev-plan.md` 后，用 `ai/prompts/dev/02-run-task.md` 执行第一个 Sprint。
 
-如果机器还没准备好开发环境，先看 `ENV-SETUP.md`，并先运行：
+如果机器还没准备好开发环境，先看 `template-docs/env-setup.md`，并先运行：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
@@ -143,10 +143,10 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 ## 14. 推荐阅读路径
 
 - 第一次使用模板：`README.md` -> 本手册 -> `SOP.md`。
-- 第一次准备开发环境：`ENV-SETUP.md` -> `scripts/check-prereqs.ps1` -> `scripts/bootstrap-dev-env.ps1`。
-- 想验证一遍新手链路：`SMOKE-TEST.md`。
-- 想记录一遍烟测结果：`SMOKE-TEST-REPORT-TEMPLATE.md`。
-- 想单独安装 `Claude CLI` / `Codex CLI`：`AI-CLI-SETUP.md`。
+- 第一次准备开发环境：`template-docs/env-setup.md` -> `scripts/check-prereqs.ps1` -> `scripts/bootstrap-dev-env.ps1`。
+- 想验证一遍新手链路：`template-docs/smoke-test.md`。
+- 想记录一遍烟测结果：`template-docs/smoke-test-report-template.md`。
+- 想单独安装 `Claude CLI` / `Codex CLI`：`template-docs/ai-cli-setup.md`。
 - 准备生成文档体系：`ai/project-rules.md` -> `docs/README.md` -> `ai/prompts/docs/01-review-inputs.md`。
 - 准备执行第一个 Sprint：`docs/08-dev-plan.md` -> `ai/prompts/dev/02-run-task.md`。
-- 想理解模板为什么这么设计：`TEMPLATE-METHODOLOGY.md`。
+- 想理解模板为什么这么设计：`template-docs/template-methodology.md`。

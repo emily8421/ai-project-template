@@ -7,13 +7,13 @@
 
 ## 使用原则
 
-- 新手第一次使用模板：先看 `README.md` 与 `BEGINNER-GUIDE.md`。
-- 新手第一次准备开发环境：看 `ENV-SETUP.md`，先检测再安装。
-- 要单独安装 `Claude CLI` / `Codex CLI`：看 `AI-CLI-SETUP.md`。
-- 要验证新手最小链路：看 `SMOKE-TEST.md`。
-- 要留痕一轮烟测结果：看 `SMOKE-TEST-REPORT-TEMPLATE.md`。
-- 需要理解模板方法论与设计边界：看 `TEMPLATE-METHODOLOGY.md`。
-- 若 PowerShell 下的 Git Bash 入口报错：先看 `ENV-SETUP.md` 的脚本边界说明，不要默认判断为模板规则缺失。
+- 新手第一次使用模板：先看 `README.md` 与 `template-docs/beginner-guide.md`。
+- 新手第一次准备开发环境：看 `template-docs/env-setup.md`，先检测再安装。
+- 要单独安装 `Claude CLI` / `Codex CLI`：看 `template-docs/ai-cli-setup.md`。
+- 要验证新手最小链路：看 `template-docs/smoke-test.md`。
+- 要留痕一轮烟测结果：看 `template-docs/smoke-test-report-template.md`。
+- 需要理解模板方法论与设计边界：看 `template-docs/template-methodology.md`。
+- 若 PowerShell 下的 Git Bash 入口报错：先看 `template-docs/env-setup.md` 的脚本边界说明，不要默认判断为模板规则缺失。
 - 操作步骤权威来源：`git-guide.md`。
 - 可复制给 AI 执行的 Prompt：`INIT-PROMPT.md` 索引与 `ai/prompts/`。
 - 模板治理规则：`CONTRIBUTING.md`。
@@ -23,12 +23,12 @@
 
 | 场景 | 权威操作文档 | 可复制 Prompt | 备注 |
 |---|---|---|---|
-| 第一次使用模板 | `README.md`、`BEGINNER-GUIDE.md` | `ai/prompts/setup/14-new-project.md` | 先建立最小路径、文件边界和初始化顺序 |
-| 第一次准备开发环境 | `ENV-SETUP.md` | 无 | 先运行 `scripts/check-prereqs.ps1`，再决定是否运行 `scripts/bootstrap-dev-env.ps1` |
-| 安装 AI CLI 工具 | `AI-CLI-SETUP.md` | 无 | 用于单独处理 `Claude CLI` / `Codex CLI` 安装，以及与公司中转站配置的衔接顺序 |
-| 运行新手烟测 | `SMOKE-TEST.md` | 无 | 用于验证 Windows 下的新手最小链路是否真的可跑通 |
-| 记录新手烟测结果 | `SMOKE-TEST-REPORT-TEMPLATE.md` | 无 | 用统一格式记录每一步结果和问题归因 |
-| 想理解模板为什么这样设计 | `TEMPLATE-METHODOLOGY.md` | 无 | 面向模板维护者或想理解方法论的人 |
+| 第一次使用模板 | `README.md`、`template-docs/beginner-guide.md` | `ai/prompts/setup/14-new-project.md` | 先建立最小路径、文件边界和初始化顺序 |
+| 第一次准备开发环境 | `template-docs/env-setup.md` | 无 | 先运行 `scripts/check-prereqs.ps1`，再决定是否运行 `scripts/bootstrap-dev-env.ps1` |
+| 安装 AI CLI 工具 | `template-docs/ai-cli-setup.md` | 无 | 用于单独处理 `Claude CLI` / `Codex CLI` 安装，以及与公司中转站配置的衔接顺序 |
+| 运行新手烟测 | `template-docs/smoke-test.md` | 无 | 用于验证 Windows 下的新手最小链路是否真的可跑通 |
+| 记录新手烟测结果 | `template-docs/smoke-test-report-template.md` | 无 | 用统一格式记录每一步结果和问题归因 |
+| 想理解模板为什么这样设计 | `template-docs/template-methodology.md` | 无 | 面向模板维护者或想理解方法论的人 |
 | 新建派生项目 | `git-guide.md` §2 | `ai/prompts/setup/14-new-project.md` | 推荐 `scripts/new-project.sh` 从 GitHub `main` 派生；远端建仓默认优先使用当前 `gh` 登录账号；不要手工复制模板目录 |
 | 新项目初始化 docs | `README.md` 快速开始 | `ai/prompts/docs/01-review-inputs.md` / `ai/prompts/docs/00-generate-or-complete-docs.md` | 输入不确定先评审，再生成 / 补齐文档体系 |
 | 采集本机环境 | `docs/env/README.md` | `ai/prompts/setup/13-collect-env.md` | 生成 `docs/env/local-env.md`，人工补齐确认项 |
@@ -47,12 +47,12 @@
 
 ## 常见选择
 
-- “我是第一次用这套模板” → 先看 `README.md` 与 `BEGINNER-GUIDE.md`，再按 `ai/prompts/setup/14-new-project.md` 启动。
-- “我的机器还没装好开发环境” → 先看 `ENV-SETUP.md`，再运行 `scripts/check-prereqs.ps1`。
-- “我要单独安装 Claude CLI 或 Codex CLI” → 看 `AI-CLI-SETUP.md`。
-- “我要验证一个新手能不能从零跑通这套模板” → 看 `SMOKE-TEST.md`。
-- “我要把烟测结果记下来，方便后续修模板” → 看 `SMOKE-TEST-REPORT-TEMPLATE.md`。
-- “我想知道这套模板为什么这么分层” → 看 `TEMPLATE-METHODOLOGY.md`。
+- “我是第一次用这套模板” → 先看 `README.md` 与 `template-docs/beginner-guide.md`，再按 `ai/prompts/setup/14-new-project.md` 启动。
+- “我的机器还没装好开发环境” → 先看 `template-docs/env-setup.md`，再运行 `scripts/check-prereqs.ps1`。
+- “我要单独安装 Claude CLI 或 Codex CLI” → 看 `template-docs/ai-cli-setup.md`。
+- “我要验证一个新手能不能从零跑通这套模板” → 看 `template-docs/smoke-test.md`。
+- “我要把烟测结果记下来，方便后续修模板” → 看 `template-docs/smoke-test-report-template.md`。
+- “我想知道这套模板为什么这么分层” → 看 `template-docs/template-methodology.md`。
 - “我要开一个新项目” → 先看 `git-guide.md` §2，或复制 `ai/prompts/setup/14-new-project.md`。
 - “我要把已有项目同步到最新模板” → 先看 `git-guide.md` §5，复制 `ai/prompts/maintainers/12-sync-template.md`；同步后用 `scripts/check-derived-sync.ps1` 检查边界，再用 `ai/prompts/maintainers/15-post-sync-cleanup.md` 整理项目专属内容。
 - “我要让 AI 生成文档体系” → 输入不确定先用 `ai/prompts/docs/01-review-inputs.md`；评审通过后用 `ai/prompts/docs/00-generate-or-complete-docs.md`。
