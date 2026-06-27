@@ -25,6 +25,12 @@ DEFAULT_SYNC_FILES=(
   "VERSION"
   "CHANGELOG.md"
   "MAINTAINERS.md"
+  "BEGINNER-GUIDE.md"
+  "ENV-SETUP.md"
+  "AI-CLI-SETUP.md"
+  "SMOKE-TEST.md"
+  "SMOKE-TEST-REPORT-TEMPLATE.md"
+  "TEMPLATE-METHODOLOGY.md"
   "template-sync.json"
   "ai/index.md"
   "ai/global-rules.md"
@@ -63,6 +69,8 @@ DEFAULT_SYNC_FILES=(
   "scripts/check-derived-sync.sh"
   "scripts/check-derived-sync.ps1"
   "scripts/collect-env.ps1"
+  "scripts/check-prereqs.ps1"
+  "scripts/bootstrap-dev-env.ps1"
 )
 
 SYNC_FILES=()

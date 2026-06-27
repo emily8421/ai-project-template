@@ -6,6 +6,57 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.16.0（2026-06-27）
+
+- 新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
+- 更新 `ENV-SETUP.md`、`BEGINNER-GUIDE.md`、`README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充 AI CLI 独立入口。
+
+## v1.15.1（2026-06-27）
+
+- 修正公司中转站说明边界：`ENV-SETUP.md` 与 `BEGINNER-GUIDE.md` 现在明确区分“CLI 官方安装 / 登录”和“LeMesh / CC-Switch / 中转代理配置”，避免把内网手册误写成 `Claude CLI` / `Codex CLI` 安装指南。
+
+## v1.15.0（2026-06-27）
+
+- `ENV-SETUP.md` 补充 AI CLI 工具说明，把 `Claude CLI`、`Codex CLI` 纳入“至少一种”的推荐清单，并解释为什么当前不优先脚本化这类工具。
+- `ENV-SETUP.md` 与 `BEGINNER-GUIDE.md` 新增公司中转站入口：`http://192.168.30.51:50088/994_wiki/?term=lemesh_ai_model`，提示实际模型代理配置以内网手册为准。
+- `SMOKE-TEST.md` 明确当前烟测不覆盖 AI CLI 安装登录和公司中转站具体配置。
+
+## v1.14.0（2026-06-27）
+
+- `ENV-SETUP.md` 补充“每个工具是什么、为什么要装、什么时候可以跳过”的新手解释，避免只给软件清单却不解释用途。
+
+## v1.13.0（2026-06-27）
+
+- 新增 `SMOKE-TEST-REPORT-TEMPLATE.md`，为每次新手烟测提供统一记录格式，便于区分问题更像出在环境、文档入口还是脚本提示。
+- 更新 `SMOKE-TEST.md`、`README.md`、`BEGINNER-GUIDE.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充烟测记录入口并纳入下行同步清单。
+- `scripts/check-prereqs.ps1` 将 `gh` 从本地烟测的硬必需项降为条件必需；`scripts/bootstrap-dev-env.ps1` 对 `winget` 安装失败改为明确告警；`SMOKE-TEST.md` 与 `ENV-SETUP.md` 明确本地烟测不要求 `gh`。
+- `scripts/check-prereqs.ps1` 进一步区分“Git Bash 已安装”和“bash 命令已加入 PATH”；`SMOKE-TEST.md` 与 `ENV-SETUP.md` 增加使用 Git Bash 完整路径执行脚本的示例。
+- `scripts/new-project.sh` 在本机未配置 Git 身份时，改为使用临时本地身份完成初始化提交，避免本地烟测卡在 `Author identity unknown`。
+- `scripts/new-project.sh` 不再默认绑定固定 GitHub 账号；远端建仓优先读取当前 `gh` 登录账号，只有需要切换账号时才显式传 `--account`。
+
+## v1.12.0（2026-06-27）
+
+- 新增 `SMOKE-TEST.md`，把 Windows 下的新手环境检查、本地建项目、环境采集和文档入口验证串成一份独立烟测操作单。
+- 更新 `README.md`、`BEGINNER-GUIDE.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充新手烟测入口并纳入下行同步清单。
+- `scripts/check-template.ps1` 在 PowerShell 无法启动 Git Bash 时，改为退回原生 PowerShell 结构检查；`scripts/check-derived-sync.ps1` 与 `scripts/sync-template.ps1` 则改为输出明确的 Bash 启动错误，避免直接暴露难懂的底层崩溃信息。
+- `README.md`、`SOP.md`、`ENV-SETUP.md`、`git-guide.md` 与 `MAINTAINERS.md` 补充 Windows 边界说明：Git Bash / MSYS 启动失败优先视为本机环境问题，不继续靠模板 fallback 扩复杂度。
+
+## v1.11.0（2026-06-27）
+
+- 新增 `ENV-SETUP.md`，把新手环境准备、必备 / 推荐软件清单、Windows 一键安装入口和常见限制独立成环境手册。
+- 新增 `scripts/check-prereqs.ps1`，用于检测 Git / Git Bash / gh / Node.js / Python / VS Code / Docker / Java 等前置项。
+- 新增 `scripts/bootstrap-dev-env.ps1`，基于 `winget` 尽量一键安装基础开发环境。
+- 更新 `README.md`、`BEGINNER-GUIDE.md`、`SOP.md`、`docs/env/README.md`、`scripts/new-project.sh` 与新建项目 Prompt，补上“先准备环境，再采集环境”的新手入口。
+- `template-sync.json` 与 `scripts/sync-template.sh` 将环境手册和新脚本纳入下行同步清单。
+- `ENV-SETUP.md` 补充当前支持边界：正式支持 Windows；Linux / macOS 暂只保留软件清单参考和后续扩展建议，不声称已提供一键安装能力。
+
+## v1.10.0（2026-06-27）
+
+- 新增 `BEGINNER-GUIDE.md`，把“第一次使用模板该先看什么、先做什么、常见错误是什么”独立成新手操作手册。
+- 新增 `TEMPLATE-METHODOLOGY.md`，以当前活文件为基准重写模板设计说明，明确它属于模板元文档而不是 `docs/` 中的派生项目过程文档。
+- 更新 `README.md`、`SOP.md`、`MAINTAINERS.md`，补充新手入口与方法论入口。
+- `template-sync.json` 将上述两份新文档纳入下行同步清单，避免派生项目保留过期副本。
+
 ## v1.9.0（2026-06-26）
 
 - 拆分 Prompt Library：`INIT-PROMPT.md` 改为轻量索引，完整可复制 Prompt 迁移到 `ai/prompts/` 并按 docs / dev / review / planning / setup / git / maintainers 分类。

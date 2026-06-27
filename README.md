@@ -2,6 +2,12 @@
 
 跨项目复用的 AI 编程项目模板。默认路径是：先准备产品愿景或其他上游输入、采集本机环境，再让 AI 多入口生成 / 补齐工程文档体系，最后按 Sprint 小步开发。
 
+第一次使用模板，先看 `BEGINNER-GUIDE.md`；想理解这套模板为什么这样设计，再看 `TEMPLATE-METHODOLOGY.md`。
+如果机器还没准备好开发环境，先看 `ENV-SETUP.md`。
+如果要单独安装 `Claude CLI` / `Codex CLI`，看 `AI-CLI-SETUP.md`。
+如果要验证新手能否从零跑通最小路径，按 `SMOKE-TEST.md` 执行。
+如果要留痕一次烟测结果，使用 `SMOKE-TEST-REPORT-TEMPLATE.md`。
+
 ## 5 分钟最小路径
 
 ```bash
@@ -24,6 +30,12 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 
 | 你要做什么 | 看哪里 |
 |---|---|
+| 第一次使用模板 | `BEGINNER-GUIDE.md` |
+| 第一次准备开发环境 | `ENV-SETUP.md` |
+| 单独安装 AI CLI 工具 | `AI-CLI-SETUP.md` |
+| 验证新手最小链路是否跑通 | `SMOKE-TEST.md` |
+| 记录一轮烟测结果 | `SMOKE-TEST-REPORT-TEMPLATE.md` |
+| 理解模板为什么这样设计 | `TEMPLATE-METHODOLOGY.md` |
 | 新建项目 | 本 README 的“5 分钟最小路径” |
 | 多入口生成 / 补齐文档体系 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
 | 执行第一个 Sprint | `ai/prompts/dev/02-run-task.md` |
@@ -39,7 +51,14 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 # 新建本地烟测项目
 bash scripts/new-project.sh my-demo --local --no-remote
 
+# 检查新手环境前置项
+powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+
+# 一键安装基础开发环境
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+
 # 新建远端项目
+bash scripts/new-project.sh my-demo --visibility private
 bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility private
 
 # 模板自检
@@ -51,10 +70,21 @@ powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ```
 
+> Windows 使用边界：
+> `scripts/check-template.ps1` 现在在 PowerShell 无法拉起 Git Bash 时，会退回到原生 PowerShell 结构检查。
+> `scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 仍依赖 Git Bash；若报 Git Bash / MSYS 启动错误，优先视为本机环境问题，而不是模板新手步骤缺失。
+> 远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。
+
 ## 目录速览
 
 | 路径 | 作用 |
 |---|---|
+| `BEGINNER-GUIDE.md` | 第一次使用模板时的操作手册 |
+| `ENV-SETUP.md` | 新手开发环境准备、必备软件清单与一键安装说明 |
+| `AI-CLI-SETUP.md` | `Claude CLI` / `Codex CLI` 安装与公司中转配置衔接说明 |
+| `SMOKE-TEST.md` | 新手最小链路烟测操作单 |
+| `SMOKE-TEST-REPORT-TEMPLATE.md` | 新手烟测记录模板 |
+| `TEMPLATE-METHODOLOGY.md` | 模板自身的方法论设计说明 |
 | `ai/` | AI 行为规范；AI 每次任务先读 `ai/index.md` |
 | `docs/` | 项目事实、需求、设计、计划与验证；分区规则见 `docs/README.md` |
 | `tasks/` | 复杂 Sprint 拆分后的任务单 |
@@ -82,6 +112,14 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.16.0：新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
+- v1.15.1：修正公司中转站说明边界，明确内网手册用于 LeMesh / CC-Switch / 中转代理配置，不替代 `Claude CLI` / `Codex CLI` 的官方安装文档。
+- v1.15.0：补充 AI CLI 工具说明，把 `Claude CLI` / `Codex CLI` 纳入新手环境文档；新增公司中转站手册入口，并明确非最小工具优先文档化而非立即脚本化。
+- v1.14.0：补充 `ENV-SETUP.md` 的工具说明，明确 Git、Git Bash、PowerShell、gh、Node.js、Python、VS Code、Docker、Java 分别是什么、为什么要装。
+- v1.13.0：新增 `SMOKE-TEST-REPORT-TEMPLATE.md`；完善 `new-project.sh` 的默认账号策略，远端建仓优先使用当前 `gh` 登录账号，本地烟测则无需 GitHub 账号。
+- v1.12.0：新增 `SMOKE-TEST.md`，把 Windows 下的新手环境检查、本地建项目、环境采集和文档入口验证串成一份独立烟测操作单。
+- v1.11.0：新增 `ENV-SETUP.md`、`scripts/check-prereqs.ps1` 和 `scripts/bootstrap-dev-env.ps1`，补上新手环境准备、一键安装和前置检测入口。
+- v1.10.0：新增 `BEGINNER-GUIDE.md` 与 `TEMPLATE-METHODOLOGY.md`，把“新手上手”与“模板设计说明”从旧归档文档中解耦；`README.md`、`SOP.md` 和同步清单同步补充新入口。
 - v1.9.0：拆分 Prompt Library，`INIT-PROMPT.md` 改为轻量索引，完整 Prompt 按场景迁移到 `ai/prompts/`。
 - v1.8.0：新增文档生命周期规则与 `docs/inputs/` 原始输入包，支持多入口生成 / 补齐文档体系，强化全链追溯、变更传播、横切事实一致性和外部文档接入。
 - v1.7.1：跟进阶段双维度，修正新项目 README 与样例项目的交付物形态说明，并将样例一致性纳入自检。

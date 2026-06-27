@@ -141,6 +141,10 @@ git branch -d <已合并分支名>
 
 无论哪种路径，`scripts/check-template.sh` / `scripts/check-template.ps1` 都是**模板仓库完整性自检**，不应作为派生项目同步成功判断。派生项目同步后只检查同步边界与最近提交。
 
+> Windows 说明：
+> 若 `scripts/sync-template.ps1` 或 `scripts/check-derived-sync.ps1` 报 Git Bash / MSYS 启动错误，优先视为本机环境问题；不要先把它理解成模板缺了新手步骤。
+> 当前 `scripts/check-template.ps1` 已在此场景下提供 PowerShell fallback，但同步和派生边界检查仍要求 Git Bash 能正常启动。
+
 ### 5.2 旧派生项目首次同步到 v1.6.8+
 
 适用于：项目里没有 `scripts/sync-template.ps1`、没有 `template-sync.json`、`VERSION` 低于 `v1.6.8`，或不确定当前同步脚本是否为新版。
