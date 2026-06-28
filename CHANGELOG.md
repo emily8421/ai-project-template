@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.18.1（2026-06-28）
+
+- 根目录操作文档追赶 v1.17.0 / v1.18.0 建立的 `_scaffold` / 16 号审计闭环（v1.18.0 落地时漏改了操作权威 `git-guide.md`，脚本层与提示词层已自洽、人读文档滞后）：
+  - `git-guide.md §5` 新增 §5.6「`_scaffold` 规范镜像」：说明下行同步会新增只读 `docs/_scaffold/00-09`、不覆盖项目自己的 `docs/00-09`、`docs/_scaffold/*` 在 dry-run 中属预期；§5.2 清单补 `_scaffold` 例外，§5.5 补 `15-post-sync-cleanup → 16-docs-system-audit` 闭环。
+  - `SOP.md` 场景索引新增「项目文档成型后回溯审计」行，指向 `ai/prompts/review/16-docs-system-audit.md`。
+  - `MAINTAINERS.md` 自检 / CI 章节与发布 Checklist 补 `check-template.sh` 的 `_scaffold` 镜像自检（`require_scaffold_mirror`）；文档分区补 `inputs/`、`archive/`、`_scaffold/`。
+  - `README.md` 补 v1.16.1 元文档迁移到 `template-docs/` 的说明，消除早期版本记录旧文件名与现名的矛盾。
+  - `CONTRIBUTING.md §8` 注明治理类变更自 v1.6.5 起统一记入 `CHANGELOG.md`，本节不再追加。
+
 ## v1.18.0（2026-06-28）
 
 - 新增 `_scaffold` 规范镜像：`sync-template.sh` 下行同步时把模板 `docs/00-09` 撰写规范镜像到派生项目 `docs/_scaffold/`（只读、非项目事实、随模板刷新），不覆盖派生项目自己的 `docs/00-09`。
