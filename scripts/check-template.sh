@@ -623,6 +623,14 @@ require_contains "scripts/check-derived-sync.sh" 'ai/prompts/maintainers/15-post
 require_contains "scripts/sync-template.sh" 'docs/_scaffold' "sync-template 含 _scaffold 规范镜像步骤"
 require_contains "scripts/check-derived-sync.sh" 'docs/_scaffold/\*' "check-derived-sync 放行 _scaffold 规范镜像"
 require_contains "docs/README.md" '_scaffold' "docs README 说明 _scaffold 规范镜像分区"
+
+# 防文档滞后：根目录人读操作文档必须引用 _scaffold / 16 号审计闭环。
+# 避免「脚本层（sync-template / check-template）已自洽、人读文档却滞后」再现
+# （v1.17/v1.18 引入 _scaffold/16 时 git-guide §5 漏更即此问题，PR #37 事后补齐）。
+require_contains "git-guide.md" 'docs/_scaffold' "git-guide §5 说明 _scaffold 规范镜像（防文档滞后）"
+require_contains "git-guide.md" '16-docs-system-audit' "git-guide §5 接 16 号审计闭环（防文档滞后）"
+require_contains "SOP.md" '16-docs-system-audit' "SOP 场景索引含 16 号审计（防文档滞后）"
+require_contains "MAINTAINERS.md" 'require_scaffold_mirror' "MAINTAINERS 自检说明含 _scaffold 镜像自检（防文档滞后）"
 require_contains "SOP.md" '新建派生项目' "SOP 索引包含新建派生项目场景"
 require_contains "SOP.md" '第一次准备开发环境' "SOP 索引包含环境准备场景"
 require_contains "SOP.md" '运行新手烟测' "SOP 索引包含新手烟测场景"
