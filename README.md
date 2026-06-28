@@ -107,6 +107,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.18.2：`check-template.sh` 增加「防文档滞后」断言，要求 git-guide/SOP/MAINTAINERS 引用 `_scaffold`/16 号审计闭环，杜绝脚本先行、文档滞后再现。
 - v1.18.1：根目录操作文档（`git-guide.md` / `SOP.md` / `MAINTAINERS.md` / `README.md` / `CONTRIBUTING.md`）追赶 v1.17–v1.18 的 `_scaffold` / 16 号审计闭环；`git-guide.md §5` 补 `_scaffold` 镜像说明与 `15→16` 闭环。
 - v1.18.0：新增 `_scaffold` 规范镜像，下行同步时把模板 `docs/00-09` 撰写规范镜像到派生项目 `docs/_scaffold/`（只读、不覆盖项目事实）。
 - v1.17.0：新增 `ai/prompts/review/16-docs-system-audit.md`，用于项目成型后用文档生命周期规则回溯审计整条 PLM 链路，先出报告不改文件。
