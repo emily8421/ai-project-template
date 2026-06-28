@@ -20,7 +20,7 @@
 2. 创建或更新 `TEMPLATE-UPGRADE-*.md` 提案，并在完成后归档到 `_archive/proposals/`。
 3. 判断版本影响，更新根目录 `VERSION`。
 4. 更新 `CHANGELOG.md`，确保包含当前 `VERSION`。
-5. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`。
+5. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 `_scaffold` 镜像自检（`require_scaffold_mirror`）通过。
 6. 若改变用户入口，保持 `README.md` 的 5 分钟路径可读，不塞入维护者细节。
 7. 运行：`git diff --check`。
 8. 运行：`powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
@@ -56,6 +56,7 @@
 - Bash 入口：`bash scripts/check-template.sh`。
 - 派生项目同步边界检查入口：`powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1` 或 `bash scripts/check-derived-sync.sh`。
 - CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
+- `check-template.sh` 含 `_scaffold` 规范镜像自检（`require_scaffold_mirror`）：在临时派生项目验证下行同步会生成 `docs/_scaffold/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
 - 自检可以包含结构性断言，不应过度绑定长文案；新增文案检查时优先选择稳定关键词。
 - Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1` 可以退回到原生结构检查；但 `scripts/check-derived-sync.ps1` 与 `scripts/sync-template.ps1` 仍要求 Git Bash 正常工作。不要继续为这类系统问题堆更多 fallback，优先修本机环境。
 
@@ -79,8 +80,10 @@
 `docs/README.md` 是派生项目内文档分区规则。维护该文件时遵守：
 
 - `docs/` 根目录只放 `00-09` 核心文档和 `README.md`。
-- 输入类源文档放 `docs/vision/`。
+- 输入类源文档放 `docs/vision/`；尚未归类的原始输入包放 `docs/inputs/`。
 - 子系统详细设计放 `docs/design/`。
 - 决策记录放 `docs/decisions/`。
 - 调研 / 实验 / 运行环境 / 会议记录分别放对应子目录。
+- 历史归档放 `docs/archive/`。
+- `docs/_scaffold/`（v1.18.0+）是模板 `00-09` 撰写规范的只读镜像，随模板同步刷新，不作为项目事实、不直接驱动开发。
 - AI 需要新增文档时，必须先判断文档类型；不确定则先提议路径并等待人工确认。
