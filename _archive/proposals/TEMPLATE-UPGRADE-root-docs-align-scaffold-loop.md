@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 根目录文档追赶 `_scaffold` / 16 号审计闭环
 
 > 类型：模板仓库内直接发起的文档同步修订提案（去项目化）。
-> 状态：待落地。
+> 状态：已落地于 v1.18.1（2026-06-28）；随 PR #37 合并，从 `_proposals/` 归档到 `_archive/proposals/`。
 > 关联：补 v1.17.0（`16-docs-system-audit`）与 v1.18.0（`docs/_scaffold` 镜像）落地时遗漏的根目录人读文档更新。CHANGELOG v1.18.0 列了要改的文件（`sync-template` / `check-derived-sync` / `docs/README` / `check-template`），唯独漏了操作权威 `git-guide.md`。
 
 ## 1. 现状与问题
