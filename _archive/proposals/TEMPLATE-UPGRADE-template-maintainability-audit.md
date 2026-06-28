@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 模板可维护性审计与去个人化优化
 
 > 类型：模板仓库内直接发起（去项目化）。
-> 状态：本分支按 v1.18.3 落地中；PR 合并后归档到 `_archive/proposals/`。
+> 状态：已落地于 v1.18.3（2026-06-28）；随 PR #40 合并，从 `_proposals/` 归档到 `_archive/proposals/`。
 > 关联：v1.18.2 后对 `ai-project-template` 进行只读评估时发现的维护性、隐私边界与自检覆盖优化点。
 
 ## 1. 现状与问题
