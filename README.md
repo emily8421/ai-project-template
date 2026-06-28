@@ -47,6 +47,8 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 
 ## 常用命令
 
+### 派生项目使用者
+
 ```bash
 # 新建本地烟测项目
 bash scripts/new-project.sh my-demo --local --no-remote
@@ -61,19 +63,33 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
 bash scripts/new-project.sh my-demo --visibility private
 bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility private
 
-# 模板自检
-powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
-
-# 派生项目同步模板方法论（v1.6.8+ 后续同步；旧项目首次同步见 git-guide.md §5）
+# 派生项目同步模板方法论（在派生项目仓库运行；v1.6.8+ 后续同步）
 powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
 powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ```
 
-> Windows 使用边界：
-> `scripts/check-template.ps1` 现在在 PowerShell 无法拉起 Git Bash 时，会退回到原生 PowerShell 结构检查。
-> `scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 仍依赖 Git Bash；若报 Git Bash / MSYS 启动错误，优先视为本机环境问题，而不是模板新手步骤缺失。
-> 远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。
+旧项目首次同步见 `git-guide.md` §5；派生项目同步验收使用 `check-derived-sync`，不要用完整模板自检替代。
+
+### 模板维护者
+
+```bash
+# 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行）
+powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
+
+# Bash 完整自检入口（CI 使用同类路径）
+bash scripts/check-template.sh
+```
+
+Windows 脚本入口选择：
+
+| 入口 | 运行位置 | Git Bash 依赖 | 失败时优先排查 |
+|---|---|---|---|
+| `scripts/check-template.ps1` | 模板仓库 | 可 fallback 到 PowerShell 结构检查 | 若 Bash 启动失败，先看输出中的 fallback 结果 |
+| `scripts/sync-template.ps1` | 派生项目仓库 | 需要 Git Bash | Git for Windows / MSYS 是否可启动 |
+| `scripts/check-derived-sync.ps1` | 派生项目仓库 | 需要 Git Bash | Git for Windows / MSYS 是否可启动 |
+
+远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。
 
 ## 目录速览
 
@@ -107,6 +123,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.18.3：增强模板维护性与去个人化；`check-template.sh` 动态校验当前 `VERSION` 与 CHANGELOG 顺序，`git-guide.md` 移除具体账号 / 邮箱事实，README 命令按使用者分组并补 Windows 脚本入口矩阵，`new-project.sh` 生成 `ai/project-rules.md` 首次必填 checklist。
 - v1.18.2：`check-template.sh` 增加「防文档滞后」断言，要求 git-guide/SOP/MAINTAINERS 引用 `_scaffold`/16 号审计闭环，杜绝脚本先行、文档滞后再现。
 - v1.18.1：根目录操作文档（`git-guide.md` / `SOP.md` / `MAINTAINERS.md` / `README.md` / `CONTRIBUTING.md`）追赶 v1.17–v1.18 的 `_scaffold` / 16 号审计闭环；`git-guide.md §5` 补 `_scaffold` 镜像说明与 `15→16` 闭环。
 - v1.18.0：新增 `_scaffold` 规范镜像，下行同步时把模板 `docs/00-09` 撰写规范镜像到派生项目 `docs/_scaffold/`（只读、不覆盖项目事实）。

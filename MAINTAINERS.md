@@ -42,9 +42,11 @@
 
 - 只放跨项目复用的方法论文件。
 - 不放项目专属内容，例如 `ai/project-rules.md`、根 `README.md`、`docs/` 业务文档或业务代码。
+- 不放具体维护者账号、个人邮箱、个人 Token 类型或本机私有备忘；这类内容只能留在本地忽略文件中。
 - 同步 Markdown 文件必须在顶部包含 `Sync notice`，说明派生项目同步时可能被覆盖，不建议直接修改。
 - 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；它由 `scripts/new-project.sh` 初始化生成，后续由项目自行维护。
 - 新增方法论入口、脚本、规则文件时，必须同时更新 `template-sync.json` 和自检断言。
+- `template-sync.json` 是完整清单权威；人读文档只维护分组摘要和维护规则，避免复制一份容易漂移的完整文件列表。
 - 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`template-docs/` 下对应文档与 `SOP.md` 的入口是否一致。
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 - `scripts/check-template.sh` / `scripts/check-template.ps1` 只用于模板仓库完整性自检；派生项目同步验收使用 `scripts/check-derived-sync.sh` / `scripts/check-derived-sync.ps1`。
@@ -58,6 +60,7 @@
 - CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
 - `check-template.sh` 含 `_scaffold` 规范镜像自检（`require_scaffold_mirror`）：在临时派生项目验证下行同步会生成 `docs/_scaffold/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
 - 自检可以包含结构性断言，不应过度绑定长文案；新增文案检查时优先选择稳定关键词。
+- 新增关键机制时，必须考虑防文档滞后断言：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免“脚本已变、操作文档滞后”。
 - Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1` 可以退回到原生结构检查；但 `scripts/check-derived-sync.ps1` 与 `scripts/sync-template.ps1` 仍要求 Git Bash 正常工作。不要继续为这类系统问题堆更多 fallback，优先修本机环境。
 
 ## README 边界
