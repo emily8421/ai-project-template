@@ -8,9 +8,11 @@
 
 ## 1. 账号体系
 
-- **主账号 `emily8421`**：模板仓库 `emily8421/ai-project-template` 与各派生项目（如 `emily8421/LUMEN-DEMO`）都在此账号下。日常推送用它。
-- **次账号 `emilymmhere`**：备用 / 历史账号。
-- 多账号切换用 gh：
+本模板只保留通用 GitHub / Git 身份操作，不记录具体维护者账号、邮箱或 Token 类型。若某个维护者需要保存本机账号备忘，请写入本地临时文件（如被 `.gitignore` 排除的 `NEXT-STEPS.md`），不要提交到模板同步文档。
+
+- **主账号**：拥有模板仓库与派生项目的日常推送权限。
+- **备用账号**：仅在组织权限、历史仓库或临时授权需要时切换使用。
+- 多账号切换用 `gh`：
 
   ```
   gh auth login             # 添加账号（网页或 token）
@@ -18,9 +20,9 @@
   gh auth switch -u <账号>  # 切换活跃账号
   ```
 
-- **提交身份**：commit 作者按 `git config user.name/user.email`（本项目为 `mmemily <maixh2012@gmail.com>`）。只要该邮箱在 GitHub 账号上验证过，提交会自动归属该账号——换账号不必改 git 身份。
+- **提交身份**：commit 作者按 `git config user.name/user.email`。只要该邮箱在目标 GitHub 账号上验证过，提交会自动归属该账号；切换 `gh` 活跃账号不一定需要改 git 提交身份。
 
-> ⚠️ `emilymmhere` 用的是 classic PAT（`ghp_`），权限在创建时固定，`gh auth refresh` 无法给它追加权限（如 `delete_repo`）。需要高危权限时用网页流程重登或新建带相应权限的 PAT。`emily8421` 是网页 OAuth 登录（`gho_`），可随时 refresh 追加 scope。
+> ⚠️ Token / OAuth 权限取决于登录方式与授权范围。若 `gh` 报 scope 不足，优先运行 `gh auth status` 确认活跃账号，再按 GitHub 官方流程刷新授权、重新登录或更换具备对应权限的账号。
 
 ## 2. 新建项目（模板 → 派生项目）
 
@@ -154,7 +156,7 @@ git branch -d <已合并分支名>
 ```powershell
 git status
 git switch -c chore/sync-template-vX.Y.Z
-git fetch --no-tags --depth=1 https://github.com/emily8421/ai-project-template.git main
+git fetch --no-tags --depth=1 <模板仓库远端URL> main
 git show FETCH_HEAD:VERSION
 git checkout FETCH_HEAD -- scripts/sync-template.sh
 git add scripts/sync-template.sh

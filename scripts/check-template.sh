@@ -94,6 +94,42 @@ require_sync_notice() {
   require_contains ".cursor/rules/project-rules.mdc" 'Sync notice' "Cursor 规则包含入口同步说明"
 }
 
+require_changelog_current_version() {
+  local version
+  version="$(tr -d '\r\n[:space:]' < VERSION)"
+
+  require_contains "CHANGELOG.md" "^## ${version//./\\.}（" "CHANGELOG 包含当前 VERSION: $version"
+
+  local first_version
+  first_version="$(grep -E '^## v[0-9]+\.[0-9]+\.[0-9]+（' CHANGELOG.md | head -n 1 | sed -E 's/^## (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')"
+  if [[ "$first_version" == "$version" ]]; then
+    pass "CHANGELOG 最新三段式版本位于顶部: $version"
+  else
+    fail "CHANGELOG 最新三段式版本不在顶部（期望 $version，实际 ${first_version:-未找到}）"
+  fi
+}
+
+require_changelog_semver_desc() {
+  local previous_key=""
+  local version key major minor patch
+  local ok=1
+
+  while IFS= read -r version; do
+    IFS=. read -r major minor patch <<<"${version#v}"
+    key="$(printf '%06d%06d%06d' "$major" "$minor" "$patch")"
+    if [[ -n "$previous_key" && "$key" -gt "$previous_key" ]]; then
+      fail "CHANGELOG 三段式版本未按降序排列: $version"
+      ok=0
+      break
+    fi
+    previous_key="$key"
+  done < <(grep -E '^## v[0-9]+\.[0-9]+\.[0-9]+（' CHANGELOG.md | sed -E 's/^## (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+
+  if [[ "$ok" -eq 1 ]]; then
+    pass "CHANGELOG 三段式版本按降序排列"
+  fi
+}
+
 require_example_common() {
   local example_dir="$1"
   require_dir "$example_dir"
@@ -453,7 +489,8 @@ require_file "CHANGELOG.md"
 require_file "MAINTAINERS.md"
 require_file "template-sync.json"
 require_contains "VERSION" '^v[0-9]+\.[0-9]+\.[0-9]+$' "VERSION 使用三段式模板版本号"
-require_contains "CHANGELOG.md" 'v1\.9\.0' "CHANGELOG 包含当前版本 v1.9.0"
+require_changelog_current_version
+require_changelog_semver_desc
 require_contains "MAINTAINERS.md" '发布 Checklist' "MAINTAINERS 包含发布 checklist"
 require_contains "MAINTAINERS.md" 'template-sync\.json' "MAINTAINERS 说明同步清单维护"
 require_contains "MAINTAINERS.md" 'README\.md.*轻量' "MAINTAINERS 约束 README 保持轻量"
@@ -631,6 +668,12 @@ require_contains "git-guide.md" 'docs/_scaffold' "git-guide §5 说明 _scaffold
 require_contains "git-guide.md" '16-docs-system-audit' "git-guide §5 接 16 号审计闭环（防文档滞后）"
 require_contains "SOP.md" '16-docs-system-audit' "SOP 场景索引含 16 号审计（防文档滞后）"
 require_contains "MAINTAINERS.md" 'require_scaffold_mirror' "MAINTAINERS 自检说明含 _scaffold 镜像自检（防文档滞后）"
+require_contains "MAINTAINERS.md" '防文档滞后断言' "MAINTAINERS 沉淀关键机制防滞后断言规则"
+require_contains "MAINTAINERS.md" '不放具体维护者账号' "MAINTAINERS 说明个人账号信息不进入同步文档"
+require_contains "README.md" '### 派生项目使用者' "README 常用命令区分派生项目使用者"
+require_contains "README.md" '### 模板维护者' "README 常用命令区分模板维护者"
+require_contains "README.md" 'Windows 脚本入口选择' "README 包含 Windows 脚本入口矩阵"
+require_contains "scripts/new-project.sh" 'ai/project-rules\.md.*首次必填 checklist' "new-project 生成 project-rules 首次必填 checklist"
 require_contains "SOP.md" '新建派生项目' "SOP 索引包含新建派生项目场景"
 require_contains "SOP.md" '第一次准备开发环境' "SOP 索引包含环境准备场景"
 require_contains "SOP.md" '运行新手烟测' "SOP 索引包含新手烟测场景"

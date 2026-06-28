@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.18.3（2026-06-28）
+
+- `scripts/check-template.sh` 将 CHANGELOG 当前版本检查改为动态读取根目录 `VERSION`，并增加三段式版本标题降序检查，避免版本记录硬编码或插入顺序漂移。
+- `git-guide.md` 账号体系去个人化：移除会随模板同步下发的具体维护者账号、个人邮箱与 Token 类型事实，保留通用多账号 / 提交身份 / scope 排查方法。
+- `README.md` 将常用命令拆为“派生项目使用者”和“模板维护者”，并补 Windows 脚本入口选择矩阵，明确哪些命令依赖 Git Bash。
+- `MAINTAINERS.md` 补充同步清单摘要边界、个人信息禁入同步文档、关键机制防文档滞后断言规则。
+- `scripts/new-project.sh` 生成的派生项目 README 增加 `ai/project-rules.md` 首次必填 checklist，降低占位未填就进入设计阶段的风险。
+
 ## v1.18.2（2026-06-28）
 
 - `scripts/check-template.sh` 增加「防文档滞后」断言组：要求根目录人读操作文档（`git-guide §5` / `SOP` / `MAINTAINERS`）引用 `_scaffold` / 16 号审计闭环，避免「脚本层已自洽、人读文档滞后」再现（v1.17/v1.18 引入这些机制时 `git-guide §5` 曾漏更，PR #37 事后补齐，本版把防护固化为断言）。
@@ -29,11 +37,6 @@
 - 新增 `ai/prompts/review/16-docs-system-audit.md`，用于项目成型后用 `ai/document-lifecycle-rules.md` 回溯审视整条 PLM 链路（追溯链 / 横切一致 / 变更传播 / 外部接入 / 生成矩阵 / 可行性 / 交付物形态），产出健康度报告与回梳计划，先出报告不改文件。
 - `INIT-PROMPT.md` 场景索引、`template-sync.json` 与 `scripts/check-template.sh` 纳入新提示词。
 
-## v1.16.0（2026-06-27）
-
-- 新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
-- 更新 `ENV-SETUP.md`、`BEGINNER-GUIDE.md`、`README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充 AI CLI 独立入口。
-
 ## v1.16.2（2026-06-27）
 
 - `CONTRIBUTING.md`、`MAINTAINERS.md` 与 `_proposals/README.md` 补充模板维护纪律：无论是现有提案驱动，还是对话中主动提出的模板修改，都必须先切维护分支、同步维护提案记录、PR 合并后再归档。
@@ -44,6 +47,11 @@
 
 - 将模板元文档集中迁移到 `template-docs/`，避免根目录继续堆积 `BEGINNER-GUIDE`、`ENV-SETUP`、`AI-CLI-SETUP`、`SMOKE-TEST`、`SMOKE-TEST-REPORT-TEMPLATE`、`TEMPLATE-METHODOLOGY` 等说明文件。
 - 更新 `README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh` 的入口和同步路径。
+
+## v1.16.0（2026-06-27）
+
+- 新增 `AI-CLI-SETUP.md`，把 `Claude CLI` / `Codex CLI` 的安装、验证、与公司中转站配置的衔接顺序独立成文档。
+- 更新 `ENV-SETUP.md`、`BEGINNER-GUIDE.md`、`README.md`、`SOP.md`、`MAINTAINERS.md`、`template-sync.json` 与 `scripts/sync-template.sh`，补充 AI CLI 独立入口。
 
 ## v1.15.1（2026-06-27）
 

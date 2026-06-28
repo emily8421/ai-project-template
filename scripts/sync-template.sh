@@ -118,7 +118,8 @@ git rev-parse --is-inside-work-tree >/dev/null
 echo "==> 抓取模板: $TEMPLATE_REMOTE (main)"
 if ! git fetch --no-tags --depth=1 "$TEMPLATE_REMOTE" main; then
   echo "✗ 抓取失败。模板仓库是私有的——确保活跃 gh 账号有访问权限：" >&2
-  echo "    gh auth switch -u emily8421" >&2
+  echo "    gh auth status" >&2
+  echo "    gh auth switch -u <有模板仓库访问权限的账号>" >&2
   exit 1
 fi
 REF="FETCH_HEAD"
