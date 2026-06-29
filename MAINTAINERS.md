@@ -33,6 +33,7 @@
 - 同一轮目标、同一条 PR、同一版本窗口内的多条新增建议，优先合并进同一份提案，而不是机械地“一条建议一份提案”。
 - 只有当建议明显属于不同主题、不同版本节奏或不同 PR 时，才拆成多份提案。
 - 提案应在修改过程中持续补充，不要全部改完后再统一回忆补写。
+- 长任务或多提案维护应按 `ai/session-rules.md` 持续维护本地续接文件；真实续接文件不得提交。
 
 ## 下行同步清单
 
@@ -51,6 +52,7 @@
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 - `scripts/check-template.sh` / `scripts/check-template.ps1` 只用于模板仓库完整性自检；派生项目同步验收使用 `scripts/check-derived-sync.sh` / `scripts/check-derived-sync.ps1`。
 - `NEXT-STEPS.md` 之类的本地续接便签不属于模板方法论文档；应保持本地临时性，并通过 `.gitignore` 排除，不进入同步清单和正式提交。
+- `.ai/session-handoff.md` 是新版本地续接文件，也必须保持本地临时性；模板只同步 `ai/session-rules.md` 与 `template-docs/session-handoff.example.md`。
 
 ## 自检与 CI
 
@@ -61,6 +63,7 @@
 - `check-template.sh` 含 `_scaffold` 规范镜像自检（`require_scaffold_mirror`）：在临时派生项目验证下行同步会生成 `docs/_scaffold/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
 - 自检可以包含结构性断言，不应过度绑定长文案；新增文案检查时优先选择稳定关键词。
 - 新增关键机制时，必须考虑防文档滞后断言：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免“脚本已变、操作文档滞后”。
+- 新增高频 Prompt 或 SOP 时，应评估是否需要新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt。
 - Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1` 可以退回到原生结构检查；但 `scripts/check-derived-sync.ps1` 与 `scripts/sync-template.ps1` 仍要求 Git Bash 正常工作。不要继续为这类系统问题堆更多 fallback，优先修本机环境。
 
 ## README 边界

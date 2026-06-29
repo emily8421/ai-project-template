@@ -21,8 +21,8 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 1. 把产品愿景写入 `docs/vision/product-vision.md`。
 2. 补齐 `docs/env/local-env.md` 的人工确认项。
 3. 初填 `ai/project-rules.md` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束和项目形态裁剪。
-4. 复制 `ai/prompts/docs/01-review-inputs.md` 给 AI 评审输入材料；评审通过后复制 `ai/prompts/docs/00-generate-or-complete-docs.md`，多入口生成 / 补齐 `docs/00-09`、必要的 `docs/design/` 详细设计、项目 README 与 Sprint1。
-5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再用 `ai/prompts/dev/02-run-task.md` 执行第一个 Sprint。
+4. 在 AI CLI 中说“评审输入材料”（或 `/run review-inputs`），让 AI 读取 `ai/commands/` 路由与 `ai/prompts/docs/01-review-inputs.md`；评审通过后说“生成文档体系”（或 `/run generate-docs`）。
+5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再说“执行当前 Sprint”（或 `/run run-dev-task`）。
 
 > Demo / MVP 默认优先在本机运行。若 `docs/env/local-env.md` 显示资源不足，AI 必须在 `docs/05-tech-spec.md` 写明降级 / Mock 策略或服务器资源预案。
 
@@ -37,6 +37,8 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 | 记录一轮烟测结果 | `template-docs/smoke-test-report-template.md` |
 | 理解模板为什么这样设计 | `template-docs/template-methodology.md` |
 | 新建项目 | 本 README 的“5 分钟最小路径” |
+| 使用 AI 快捷命令 | `ai/commands/README.md` |
+| 新 CLI 窗口续接任务 | `ai/session-rules.md` |
 | 多入口生成 / 补齐文档体系 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
 | 执行第一个 Sprint | `ai/prompts/dev/02-run-task.md` |
 | 判断 docs / 代码目录如何裁剪 | `docs/README.md` |
@@ -97,6 +99,8 @@ Windows 脚本入口选择：
 |---|---|
 | `template-docs/` | 模板自身的手册、烟测、环境和方法论说明 |
 | `ai/` | AI 行为规范；AI 每次任务先读 `ai/index.md` |
+| `ai/commands/` | AI CLI 快捷命令路由；用户可说“更新方法论”或 `/run sync-methodology` |
+| `ai/session-rules.md` | AI 会话续接与断点恢复规则；本地续接文件不进入提交 |
 | `docs/` | 项目事实、需求、设计、计划与验证；分区规则见 `docs/README.md` |
 | `tasks/` | 复杂 Sprint 拆分后的任务单 |
 | `SOP.md` | 标准操作流程索引 |
@@ -123,6 +127,7 @@ Windows 脚本入口选择：
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.19.0：新增 AI CLI 快捷命令路由 `ai/commands/` 与会话续接规则 `ai/session-rules.md`，支持 `/run ...` 或自然语言触发常用 Prompt，并用 `.ai/session-handoff.md` / `NEXT-STEPS.md` 记录断点。
 - v1.18.3：增强模板维护性与去个人化；`check-template.sh` 动态校验当前 `VERSION` 与 CHANGELOG 顺序，`git-guide.md` 移除具体账号 / 邮箱事实，README 命令按使用者分组并补 Windows 脚本入口矩阵，`new-project.sh` 生成 `ai/project-rules.md` 首次必填 checklist。
 - v1.18.2：`check-template.sh` 增加「防文档滞后」断言，要求 git-guide/SOP/MAINTAINERS 引用 `_scaffold`/16 号审计闭环，杜绝脚本先行、文档滞后再现。
 - v1.18.1：根目录操作文档（`git-guide.md` / `SOP.md` / `MAINTAINERS.md` / `README.md` / `CONTRIBUTING.md`）追赶 v1.17–v1.18 的 `_scaffold` / 16 号审计闭环；`git-guide.md §5` 补 `_scaffold` 镜像说明与 `15→16` 闭环。

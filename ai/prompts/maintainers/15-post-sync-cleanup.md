@@ -1,9 +1,11 @@
-﻿# 15 同步后项目整理（派生项目）
+# 15 同步后项目整理（派生项目）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 **用途**：派生项目完成模板方法论同步后，审计并整理项目专属内容，使其符合最新模板建议。
+
+**快捷命令**：`/run post-sync-cleanup`（自然语言：同步后整理项目 / 方法论同步后清理）。
 
 **目的**：弥补 `sync-template` 只同步方法论、不自动修改项目事实文档的空白；先输出迁移计划，经人工确认后再移动 / 修改项目文档。
 
@@ -12,6 +14,8 @@
 **不适用场景**：还未完成模板方法论同步；或用户要求直接开发新功能。
 
 **使用前准备**：确认当前在派生项目根目录，工作区状态已知；已完成 `scripts/sync-template.*` 同步并提交或准备单独提交同步后整理改动。
+
+**续接要求**：第一段输出迁移计划后，必须把迁移范围、待确认项、禁止事项和下一步写入 / 更新续接文件。
 
 **预期产出**：先输出审计结果与迁移计划；人工确认后，执行 docs 分区整理、README 补齐、`ai/project-rules.md` 补齐和运行环境约束补齐。
 
