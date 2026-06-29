@@ -37,6 +37,7 @@ DEFAULT_SYNC_FILES=(
   "ai/global-rules.md"
   "ai/document-lifecycle-rules.md"
   "ai/session-rules.md"
+  "ai/doc-standards/README.md"
   "ai/commands/README.md"
   "ai/commands/sync-methodology.md"
   "ai/commands/post-sync-cleanup.md"
@@ -94,10 +95,10 @@ DEFAULT_SYNC_FILES=(
   "scripts/bootstrap-dev-env.ps1"
 )
 
-# _scaffold 规范镜像：把模板 docs/00-09 撰写规范镜像到派生项目 docs/_scaffold/。
-# 与 SYNC_FILES 不同，这是 src(docs/0X) != dest(docs/_scaffold/0X) 的专用镜像步骤；
-# 产物是只读规范镜像，不是项目事实，绝不覆盖派生项目自己的 docs/0X。
-SCAFFOLD_DOCS=(
+# doc-standards 规范镜像：把模板 docs/00-09 撰写规范镜像到派生项目 ai/doc-standards/。
+# 与 SYNC_FILES 不同，这是 src(docs/0X) != dest(ai/doc-standards/0X) 的专用镜像步骤；
+# 产物是只读 AI 文档标准，不是项目事实，绝不覆盖派生项目自己的 docs/0X。
+DOC_STANDARD_DOCS=(
   "docs/00-scenario.md"
   "docs/01-user-requirements.md"
   "docs/02-srs.md"
@@ -231,9 +232,9 @@ if [[ "$MODE" == "--dry-run" ]]; then
   done
 
   echo
-  echo "==> _scaffold 规范镜像（docs/00-09 → docs/_scaffold/，只读规范，不覆盖项目事实）:"
-  for src in "${SCAFFOLD_DOCS[@]}"; do
-    dest="docs/_scaffold/$(basename "$src")"
+  echo "==> doc-standards 规范镜像（docs/00-09 → ai/doc-standards/，只读规范，不覆盖项目事实）:"
+  for src in "${DOC_STANDARD_DOCS[@]}"; do
+    dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then
       if [[ -f "$dest" ]]; then
         remote_hash="$(git rev-parse "$REF:$src")"
@@ -264,11 +265,11 @@ else
     fi
   done
 
-  echo "==> _scaffold 规范镜像（docs/00-09 → docs/_scaffold/，只读规范，不覆盖项目事实）:"
-  for src in "${SCAFFOLD_DOCS[@]}"; do
-    dest="docs/_scaffold/$(basename "$src")"
+  echo "==> doc-standards 规范镜像（docs/00-09 → ai/doc-standards/，只读规范，不覆盖项目事实）:"
+  for src in "${DOC_STANDARD_DOCS[@]}"; do
+    dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then
-      mkdir -p docs/_scaffold
+      mkdir -p ai/doc-standards
       git show "$REF:$src" > "$dest"
       git add "$dest"
       UPDATED_FILES+=("$dest")
