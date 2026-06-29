@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.20.0（2026-06-29）
+
+- 将模板 `docs/00-09` 撰写规范镜像主路径从 `docs/_scaffold/00-09` 迁移为 `ai/doc-standards/00-09`，明确其定位为 AI 文档标准 / 审计基线，而非项目事实或初始化脚手架。
+- `scripts/sync-template.sh` 下行同步改为生成 / 刷新 `ai/doc-standards/00-09`；`scripts/check-derived-sync.sh` 放行新路径，并迁移期兼容旧 `docs/_scaffold/*`。
+- 新增 `ai/doc-standards/README.md`，说明只读、非项目事实、由 `sync-template` 刷新、供 AI 审计 / 生成对照使用。
+- `16-docs-system-audit` 和 `docs-system-audit` 快捷命令优先读取 `ai/doc-standards/00-09`，旧项目 fallback 到 `docs/_scaffold/00-09`；`15-post-sync-cleanup` 同步说明更新为新路径。
+- `README.md`、`SOP.md`、`git-guide.md`、`MAINTAINERS.md`、`docs/README.md` 与 `scripts/check-template.sh` 同步更新路径说明、自检函数和防文档滞后断言。
+- 归档已落地提案：`TEMPLATE-UPGRADE-doc-standards-location.md`。
+
 ## v1.19.0（2026-06-29）
 
 - 新增 AI CLI 快捷命令路由：`ai/commands/` 提供 `/run ...` 与自然语言意图到权威 Prompt / SOP / 脚本说明的映射，降低用户手工查找、复制、粘贴 prompt 的成本。

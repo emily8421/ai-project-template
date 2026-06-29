@@ -20,7 +20,7 @@
 2. 创建或更新 `TEMPLATE-UPGRADE-*.md` 提案，并在完成后归档到 `_archive/proposals/`。
 3. 判断版本影响，更新根目录 `VERSION`。
 4. 更新 `CHANGELOG.md`，确保包含当前 `VERSION`。
-5. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 `_scaffold` 镜像自检（`require_scaffold_mirror`）通过。
+5. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 `doc-standards` 镜像自检（`require_doc_standards_mirror`）通过。
 6. 若改变用户入口，保持 `README.md` 的 5 分钟路径可读，不塞入维护者细节。
 7. 运行：`git diff --check`。
 8. 运行：`powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
@@ -60,7 +60,7 @@
 - Bash 入口：`bash scripts/check-template.sh`。
 - 派生项目同步边界检查入口：`powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1` 或 `bash scripts/check-derived-sync.sh`。
 - CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
-- `check-template.sh` 含 `_scaffold` 规范镜像自检（`require_scaffold_mirror`）：在临时派生项目验证下行同步会生成 `docs/_scaffold/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
+- `check-template.sh` 含 `doc-standards` 规范镜像自检（`require_doc_standards_mirror`）：在临时派生项目验证下行同步会生成 `ai/doc-standards/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
 - 自检可以包含结构性断言，不应过度绑定长文案；新增文案检查时优先选择稳定关键词。
 - 新增关键机制时，必须考虑防文档滞后断言：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免“脚本已变、操作文档滞后”。
 - 新增高频 Prompt 或 SOP 时，应评估是否需要新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt。
@@ -91,5 +91,5 @@
 - 决策记录放 `docs/decisions/`。
 - 调研 / 实验 / 运行环境 / 会议记录分别放对应子目录。
 - 历史归档放 `docs/archive/`。
-- `docs/_scaffold/`（v1.18.0+）是模板 `00-09` 撰写规范的只读镜像，随模板同步刷新，不作为项目事实、不直接驱动开发。
+- `ai/doc-standards/`（v1.20.0+）是模板 `00-09` 撰写规范的只读镜像，随模板同步刷新，不作为项目事实、不直接驱动开发；旧项目可能残留 `docs/_scaffold/`。
 - AI 需要新增文档时，必须先判断文档类型；不确定则先提议路径并等待人工确认。

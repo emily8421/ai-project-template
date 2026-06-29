@@ -127,6 +127,7 @@ Windows 脚本入口选择：
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.20.0：将模板 `docs/00-09` 撰写规范镜像主路径从 `docs/_scaffold/` 迁移为 `ai/doc-standards/`，明确其是 AI 文档标准 / 审计基线而非项目事实；旧路径仅作迁移期兼容。
 - v1.19.0：新增 AI CLI 快捷命令路由 `ai/commands/` 与会话续接规则 `ai/session-rules.md`，支持 `/run ...` 或自然语言触发常用 Prompt，并用 `.ai/session-handoff.md` / `NEXT-STEPS.md` 记录断点。
 - v1.18.3：增强模板维护性与去个人化；`check-template.sh` 动态校验当前 `VERSION` 与 CHANGELOG 顺序，`git-guide.md` 移除具体账号 / 邮箱事实，README 命令按使用者分组并补 Windows 脚本入口矩阵，`new-project.sh` 生成 `ai/project-rules.md` 首次必填 checklist。
 - v1.18.2：`check-template.sh` 增加「防文档滞后」断言，要求 git-guide/SOP/MAINTAINERS 引用 `_scaffold`/16 号审计闭环，杜绝脚本先行、文档滞后再现。

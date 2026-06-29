@@ -41,7 +41,7 @@
 | Sprint 验收总结 | `/run sprint-summary` | `docs/08-dev-plan.md`、`docs/09-verification.md` | `ai/prompts/dev/09-sprint-summary.md` | 对照验收标准总结是否完成 |
 | 派生项目同步模板 | `/run sync-methodology` | `git-guide.md` §5 | `ai/prompts/maintainers/12-sync-template.md` | 先判定同步路径；根 `README.md` 不参与下行同步；同步后只做派生边界检查，不跑模板自检 |
 | 同步后项目整理 | `/run post-sync-cleanup` | `docs/README.md`、`ai/project-rules.md`、`docs/env/local-env.md` | `ai/prompts/maintainers/15-post-sync-cleanup.md` | 同步方法论后，先出迁移计划，确认后再执行 |
-| 项目文档成型后回溯审计 | `/run docs-system-audit` | `ai/document-lifecycle-rules.md`、`docs/_scaffold/` | `ai/prompts/review/16-docs-system-audit.md` | 回溯审视 PLM 链路合理性、可行性与一致性，先出报告不改文件 |
+| 项目文档成型后回溯审计 | `/run docs-system-audit` | `ai/document-lifecycle-rules.md`、`ai/doc-standards/` | `ai/prompts/review/16-docs-system-audit.md` | 回溯审视 PLM 链路合理性、可行性与一致性，先出报告不改文件；旧项目可 fallback 到 `docs/_scaffold/` |
 | 模板优化提案汇总 | `/run template-proposal-summary` | `CONTRIBUTING.md` §4、`_proposals/README.md` | `ai/prompts/maintainers/11-template-proposal-summary.md` | 先提案，后改模板；完成后归档到 `_archive/proposals/` |
 | 直接修改模板 | `/run template-proposal-summary` | `CONTRIBUTING.md` §3 / §7 | `ai/prompts/maintainers/11-template-proposal-summary.md` | 必须判断版本影响并更新 `VERSION` / README 版本记录 |
 | 生成提交信息 | `/run commit-message` | `git-guide.md` §3 | `ai/prompts/git/06-commit-message.md` | 基于实际 diff 生成清晰 commit message |

@@ -20,6 +20,7 @@
 - `docs/README.md`
 - `ai/project-rules.md`
 - `docs/env/local-env.md`（如存在）
+- `ai/doc-standards/README.md`（如需要理解规范镜像定位）
 - `ai/prompts/maintainers/15-post-sync-cleanup.md`
 
 ## 执行流程

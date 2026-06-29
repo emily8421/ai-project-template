@@ -20,7 +20,8 @@
 - `ai/document-lifecycle-rules.md`
 - `ai/prompts/review/16-docs-system-audit.md`
 - `docs/00-scenario.md` 至 `docs/09-verification.md`（按项目形态存在则读取）
-- `docs/_scaffold/00-09`（如存在，作为当前 v1.18.x 规范镜像）
+- `ai/doc-standards/00-09`（如存在，作为当前规范镜像）
+- `docs/_scaffold/00-09`（旧项目 fallback 路径，如存在）
 
 ## 执行流程
 
