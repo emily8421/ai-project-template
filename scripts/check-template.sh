@@ -500,7 +500,10 @@ require_contains "template-sync.json" '"files"' "template-sync.json 包含同步
 require_contains "template-sync.json" '"CHANGELOG\.md"' "template-sync 同步 CHANGELOG"
 require_contains "template-sync.json" '"MAINTAINERS\.md"' "template-sync 同步 MAINTAINERS"
 require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "template-sync 同步文档生命周期规则"
+require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
+require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
 require_contains "template-sync.json" '"ai/prompts/README\.md"' "template-sync 同步 Prompt Library README"
+require_contains "template-sync.json" '"template-docs/session-handoff\.example\.md"' "template-sync 同步会话续接样例"
 require_contains "template-sync.json" '"docs/README\.md"' "template-sync 同步 docs README"
 require_contains "template-sync.json" '"docs/inputs/README\.md"' "template-sync 同步 docs inputs README"
 require_contains "template-sync.json" '"scripts/check-derived-sync\.sh"' "template-sync 同步派生边界检查 Bash 入口"
@@ -513,6 +516,31 @@ require_file "template-docs/ai-cli-setup.md"
 require_file "template-docs/smoke-test.md"
 require_file "template-docs/smoke-test-report-template.md"
 require_file "ai/document-lifecycle-rules.md"
+require_file "ai/session-rules.md"
+require_file "ai/commands/README.md"
+for command_file in \
+  ai/commands/sync-methodology.md \
+  ai/commands/post-sync-cleanup.md \
+  ai/commands/docs-system-audit.md \
+  ai/commands/template-proposal-summary.md \
+  ai/commands/generate-docs.md \
+  ai/commands/review-inputs.md \
+  ai/commands/project-review.md \
+  ai/commands/edit-single-doc.md \
+  ai/commands/sync-docs-from-code.md \
+  ai/commands/phase-upgrade.md \
+  ai/commands/docs-checklist.md \
+  ai/commands/run-dev-task.md \
+  ai/commands/fix-bug.md \
+  ai/commands/sprint-summary.md \
+  ai/commands/collect-env.md \
+  ai/commands/new-project.md \
+  ai/commands/commit-message.md; do
+  require_file "$command_file"
+  require_contains "$command_file" '## 必读文件' "$command_file 含必读文件"
+  require_contains "$command_file" '## 写入风险' "$command_file 含写入风险"
+done
+require_file "template-docs/session-handoff.example.md"
 require_file "CONTRIBUTING.md"
 require_file "SOP.md"
 require_file "INIT-PROMPT.md"
@@ -539,6 +567,8 @@ require_contains "_archive/proposals/README.md" 'VERSION' "归档 README 以 VER
 require_contains "CONTRIBUTING.md" '提案 → 分支 → PR → 评审 → 合并 → 归档' "CONTRIBUTING 含提案先行流程"
 require_contains "CONTRIBUTING.md" 'vMAJOR\.MINOR\.PATCH' "CONTRIBUTING 含三段式版本规则"
 require_contains "README.md" 'SOP\.md' "README 包含 SOP 索引入口"
+require_contains "README.md" 'ai/commands/README\.md' "README 包含 AI 快捷命令入口"
+require_contains "README.md" 'ai/session-rules\.md' "README 包含会话续接规则入口"
 require_contains "README.md" 'ENV-SETUP\.md' "README 包含环境准备入口"
 require_contains "README.md" 'SMOKE-TEST\.md' "README 包含新手烟测入口"
 require_contains "README.md" 'SMOKE-TEST-REPORT-TEMPLATE\.md' "README 包含烟测记录模板入口"
@@ -647,7 +677,10 @@ require_contains ".github/workflows/template-check.yml" 'git diff --check' "GitH
 require_contains ".github/workflows/template-check.yml" 'git diff-tree --check' "GitHub Actions 处理新分支 push 空白检查"
 require_contains "scripts/sync-template.sh" 'template-sync\.json' "sync-template 从 template-sync.json 读取同步清单"
 require_contains "scripts/sync-template.sh" '"ai/document-lifecycle-rules\.md"' "sync-template 兜底清单含文档生命周期规则"
+require_contains "scripts/sync-template.sh" '"ai/session-rules\.md"' "sync-template 兜底清单含会话续接规则"
+require_contains "scripts/sync-template.sh" '"ai/commands/README\.md"' "sync-template 兜底清单含 AI 快捷命令索引"
 require_contains "scripts/sync-template.sh" '"ai/prompts/README\.md"' "sync-template 兜底清单含 Prompt Library README"
+require_contains "scripts/sync-template.sh" '"ai/prompts/review/16-docs-system-audit\.md"' "sync-template 兜底清单含 16 系统审计 Prompt"
 require_contains "scripts/sync-template.sh" '"ai/prompts/docs/00-generate-or-complete-docs\.md"' "sync-template 兜底清单含文档生成 Prompt"
 require_contains "scripts/sync-template.sh" '"docs/inputs/README\.md"' "sync-template 兜底清单含 docs inputs README"
 require_contains "scripts/sync-template.ps1" 'sync-template\.sh' "sync-template PowerShell 入口调用 Bash 脚本"
@@ -660,6 +693,29 @@ require_contains "scripts/check-derived-sync.sh" 'ai/prompts/maintainers/15-post
 require_contains "scripts/sync-template.sh" 'docs/_scaffold' "sync-template 含 _scaffold 规范镜像步骤"
 require_contains "scripts/check-derived-sync.sh" 'docs/_scaffold/\*' "check-derived-sync 放行 _scaffold 规范镜像"
 require_contains "docs/README.md" '_scaffold' "docs README 说明 _scaffold 规范镜像分区"
+
+# AI CLI 使用体验入口：快捷命令与会话续接必须贯穿规则、Prompt、同步清单和人读文档。
+require_contains "ai/index.md" 'ai/session-rules\.md' "ai/index 纳入会话续接规则"
+require_contains "ai/index.md" 'ai/commands/README\.md' "ai/index 纳入 AI 快捷命令索引"
+require_contains "ai/global-rules.md" 'ai/commands/README\.md' "global-rules 指向快捷命令路由"
+require_contains "ai/global-rules.md" 'ai/session-rules\.md' "global-rules 指向会话续接规则"
+require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules 定义新续接文件"
+require_contains "ai/session-rules.md" 'NEXT-STEPS\.md' "session-rules 兼容 NEXT-STEPS"
+require_contains ".gitignore" '\.ai/session-handoff\.md' ".gitignore 排除新续接文件"
+require_contains ".gitignore" 'NEXT-STEPS\.md' ".gitignore 排除旧续接文件"
+require_contains "ai/commands/README.md" '/run sync-methodology' "commands README 包含同步方法论命令"
+require_contains "ai/commands/README.md" '/run docs-system-audit' "commands README 包含文档体系审核命令"
+require_contains "ai/commands/sync-methodology.md" 'ai/prompts/maintainers/12-sync-template\.md' "sync-methodology 路由到同步 Prompt"
+require_contains "ai/commands/docs-system-audit.md" 'ai/prompts/review/16-docs-system-audit\.md' "docs-system-audit 路由到 16 审计 Prompt"
+require_contains "ai/commands/template-proposal-summary.md" 'ai/prompts/maintainers/11-template-proposal-summary\.md' "template-proposal-summary 路由到提案汇总 Prompt"
+require_contains "ai/prompts/dev/02-run-task.md" '/run run-dev-task' "run-task Prompt 标注快捷命令"
+require_contains "ai/prompts/maintainers/12-sync-template.md" '/run sync-methodology' "同步 Prompt 标注快捷命令"
+require_contains "SOP.md" '快捷命令' "SOP 场景索引包含快捷命令列"
+require_contains "SOP.md" '/run sync-methodology' "SOP 包含同步方法论快捷命令"
+require_contains "INIT-PROMPT.md" 'ai/commands/README\.md' "INIT-PROMPT 指向快捷命令索引"
+require_contains "MAINTAINERS.md" 'ai/commands/' "MAINTAINERS 要求维护快捷命令入口"
+require_contains "CONTRIBUTING.md" '\.ai/session-handoff\.md' "CONTRIBUTING 说明续接文件不提交"
+require_contains "template-docs/session-handoff.example.md" 'AI Session Handoff Example' "会话续接样例标题正确"
 
 # 防文档滞后：根目录人读操作文档必须引用 _scaffold / 16 号审计闭环。
 # 避免「脚本层（sync-template / check-template）已自洽、人读文档却滞后」再现

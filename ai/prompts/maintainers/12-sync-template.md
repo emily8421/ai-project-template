@@ -1,9 +1,11 @@
-﻿# 12 派生项目同步模板方法论
+# 12 派生项目同步模板方法论
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 **用途**：在派生项目中，让 AI 按标准流程执行 `ai-project-template` 方法论下行同步。
+
+**快捷命令**：`/run sync-methodology`（自然语言：更新方法论 / 同步模板方法论 / 派生项目同步模板）。
 
 **目的**：避免人工记忆命令，确保先按派生项目版本选择正确入口，再 dry-run、确认不覆盖项目专属内容，最后 commit / PR。
 
@@ -12,6 +14,8 @@
 **不适用场景**：要把派生项目经验回流到模板；这种情况应先在派生项目 `_proposals/` 起草提案，再按 `CONTRIBUTING.md` 上行流程处理。
 
 **使用前准备**：确认当前在派生项目根目录，已保存业务改动；目标模板版本必须从模板仓库根目录 `VERSION` 读取，不在 Prompt 中固定写死。
+
+**续接要求**：同步流程开始后，按 `ai/session-rules.md` 记录当前同步路径、目标版本、已执行命令、待确认项和下一步。
 
 **预期产出**：同步分支、同步提交、派生同步边界检查结果、派生项目已处理提案归档计划和 PR 链接。
 

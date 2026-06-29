@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.19.0（2026-06-29）
+
+- 新增 AI CLI 快捷命令路由：`ai/commands/` 提供 `/run ...` 与自然语言意图到权威 Prompt / SOP / 脚本说明的映射，降低用户手工查找、复制、粘贴 prompt 的成本。
+- 新增会话续接与断点恢复规则：`ai/session-rules.md` 定义新窗口恢复流程、自动更新触发点和写入确认边界；默认本地续接文件为 `.ai/session-handoff.md`，兼容 `NEXT-STEPS.md`，并通过 `.gitignore` 排除。
+- 新增 `template-docs/session-handoff.example.md` 作为续接文件样例；`README.md`、`SOP.md`、`INIT-PROMPT.md`、`ai/prompts/README.md` 和常用 Prompt 改为命令路由优先、详细 Prompt 作为权威执行模板。
+- `template-sync.json`、`scripts/sync-template.sh` 兜底清单与 `scripts/check-template.sh` 纳入新规则 / 命令文件 / 样例文件，并增加防入口滞后断言。
+- 归档已落地提案：`TEMPLATE-UPGRADE-ai-command-router.md` 与 `TEMPLATE-UPGRADE-session-handoff.md`；`TEMPLATE-UPGRADE-doc-standards-location.md` 暂留 `_proposals/`，待后续阶段迁移 `docs/_scaffold` 路径。
+
 ## v1.18.3（2026-06-28）
 
 - `scripts/check-template.sh` 将 CHANGELOG 当前版本检查改为动态读取根目录 `VERSION`，并增加三段式版本标题降序检查，避免版本记录硬编码或插入顺序漂移。
