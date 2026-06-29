@@ -71,7 +71,7 @@ powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ```
 
-旧项目首次同步见 `git-guide.md` §5；派生项目同步验收使用 `check-derived-sync`，不要用完整模板自检替代。
+旧项目首次同步见 `git-guide.md` §5；派生项目同步验收使用 `check-derived-sync`，不要用完整模板自检替代。真实派生同步完成后，建议用 `template-docs/derived-sync-report-template.md` 记录同步运行结果，并将可通用优化点转写为去项目化 `_proposals/TEMPLATE-UPGRADE-*.md`。
 
 ### 模板维护者
 
@@ -127,6 +127,7 @@ Windows 脚本入口选择：
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.21.0：新增派生项目模板同步运行记录模板 `template-docs/derived-sync-report-template.md`，真实同步后可记录命令、结果、问题和可回流优化点，并提炼去项目化模板提案。
 - v1.20.0：将模板 `docs/00-09` 撰写规范镜像主路径从 `docs/_scaffold/` 迁移为 `ai/doc-standards/`，明确其是 AI 文档标准 / 审计基线而非项目事实；旧路径仅作迁移期兼容。
 - v1.19.0：新增 AI CLI 快捷命令路由 `ai/commands/` 与会话续接规则 `ai/session-rules.md`，支持 `/run ...` 或自然语言触发常用 Prompt，并用 `.ai/session-handoff.md` / `NEXT-STEPS.md` 记录断点。
 - v1.18.3：增强模板维护性与去个人化；`check-template.sh` 动态校验当前 `VERSION` 与 CHANGELOG 顺序，`git-guide.md` 移除具体账号 / 邮箱事实，README 命令按使用者分组并补 Windows 脚本入口矩阵，`new-project.sh` 生成 `ai/project-rules.md` 首次必填 checklist。
