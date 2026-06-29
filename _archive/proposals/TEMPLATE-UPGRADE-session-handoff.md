@@ -185,4 +185,3 @@ template-docs/session-handoff.example.md
 - **格式漂移**：提供样例文件，后续可用脚本统一生成骨架。
 - **AI 忘记更新**：在 `ai/index.md` 引入独立规则，并在常用 prompt 中重复关键触发点；`check-template.sh` 增加稳定关键词断言。
 - **多个 AI 工具并行写入冲突**：以 git 工作区实际状态为准；续接文件只作为提示线索，不作为权威事实。
-

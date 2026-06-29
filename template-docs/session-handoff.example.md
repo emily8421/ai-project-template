@@ -41,4 +41,3 @@
 - `git status --short --branch`
 - `git diff -- ...`
 - `bash scripts/check-template.sh`
-

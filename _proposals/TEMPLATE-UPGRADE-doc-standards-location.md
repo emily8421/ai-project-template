@@ -119,4 +119,3 @@ ai/doc-standards/00-09
 - **路径再次命名争议**：落地前先确认 `doc-standards` 是否为最终命名；若改名，仅替换路径，不改变迁移策略。
 - **文档滞后**：同步更新 `check-template.sh` 的防文档滞后断言，要求脚本、提示词、`git-guide.md` / `SOP.md` / `MAINTAINERS.md` 关键入口引用新路径与 16 号审计闭环。
 - **历史记录混淆**：`CHANGELOG.md` / `README.md` 的旧版本条目保留 `_scaffold` 历史事实，只在新版本记录中说明迁移。
-
