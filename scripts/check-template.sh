@@ -117,7 +117,7 @@ require_changelog_semver_desc() {
   while IFS= read -r version; do
     IFS=. read -r major minor patch <<<"${version#v}"
     key="$(printf '%06d%06d%06d' "$major" "$minor" "$patch")"
-    if [[ -n "$previous_key" && "$key" -gt "$previous_key" ]]; then
+    if [[ -n "$previous_key" && "$key" > "$previous_key" ]]; then
       fail "CHANGELOG 三段式版本未按降序排列: $version"
       ok=0
       break
