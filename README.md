@@ -1,30 +1,88 @@
 # ai-project-template
 
-跨项目复用的 AI 编程项目模板。默认路径是：先准备产品愿景或其他上游输入、采集本机环境，再让 AI 多入口生成 / 补齐工程文档体系，最后按 Sprint 小步开发。
+跨项目复用的 AI 编程项目模板。默认路径是：先确认机器能运行模板脚本，再准备产品愿景或其他上游输入、采集本机环境，让 AI 多入口生成 / 补齐工程文档体系，最后按 Sprint 小步开发。
 
-第一次使用模板，先看 `template-docs/beginner-guide.md`；想理解这套模板为什么这样设计，再看 `template-docs/template-methodology.md`。
-如果机器还没准备好开发环境，先看 `template-docs/env-setup.md`。
-如果要单独安装 `Claude CLI` / `Codex CLI`，看 `template-docs/ai-cli-setup.md`。
-如果要验证新手能否从零跑通最小路径，按 `template-docs/smoke-test.md` 执行。
-如果要留痕一次烟测结果，使用 `template-docs/smoke-test-report-template.md`。
+第一次使用模板，先看 `template-docs/beginner-guide.md`。如果你不确定这台机器是否装好了 Git Bash、PowerShell、Node.js、Python 等基础工具，先看 `template-docs/env-setup.md` 并运行环境检查；缺工具再按文档执行安装脚本。
+
+- 想理解这套模板为什么这样设计：看 `template-docs/template-methodology.md`。
+- 要单独安装 `Claude CLI` / `Codex CLI`：看 `template-docs/ai-cli-setup.md`。
+- 要验证新手能否从零跑通最小路径：按 `template-docs/smoke-test.md` 执行。
+- 要留痕一次烟测结果：使用 `template-docs/smoke-test-report-template.md`。
 
 ## 5 分钟最小路径
+
+如果这是第一次在这台机器上使用模板，先检查基础环境：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+```
+
+检查点：
+
+- 命令能正常执行。
+- 输出中能看到 `Required` / `Recommended` / `Optional` 三类结果。
+- 输出中能看到 `Summary` 和 `Suggested next steps`。
+
+如果输出提示缺少必备工具，先运行基础安装脚本：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+```
+
+安装完成后重新打开终端，再运行一次 `scripts/check-prereqs.ps1`。若只缺 `gh`，但你只做本地起步或本地烟测，可先继续；远端建仓前再补 `gh auth login`。更完整的环境说明见 `template-docs/env-setup.md`。
+
+确认环境可用后，再新建项目：
 
 ```bash
 bash scripts/new-project.sh my-demo --local --no-remote
 cd my-demo
+```
+
+进入新项目后，采集本机运行环境：
+
+```powershell
 powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 ```
 
 然后：
 
-1. 把产品愿景写入 `docs/vision/product-vision.md`。
-2. 补齐 `docs/env/local-env.md` 的人工确认项。
+1. 准备上游输入：把产品愿景写入 `docs/vision/product-vision.md`；已有 brief / PRD / SRS / 现有系统说明时，先放入 `docs/inputs/`。
+2. 补齐 `docs/env/local-env.md` 的人工确认项，明确本机必须跑通什么、哪些可以 Mock / 远程运行。
 3. 初填 `ai/project-rules.md` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束和项目形态裁剪。
-4. 在 AI CLI 中说“评审输入材料”（或 `/run review-inputs`），让 AI 读取 `ai/commands/` 路由与 `ai/prompts/docs/01-review-inputs.md`；评审通过后说“生成文档体系”（或 `/run generate-docs`）。
+4. 在 AI CLI 中说“评审输入材料”（或 `/run review-inputs`），让 AI 读取 `ai/commands/` 路由与 `ai/prompts/docs/01-review-inputs.md`；评审通过后说“生成文档体系”（或 `/run generate-docs`）。真正开始 AI 协作开发前，至少准备并登录一种 AI CLI；安装顺序见 `template-docs/ai-cli-setup.md`。
 5. 人工确认 `docs/03-prd.md` §3 阶段路线图、交付物形态和 `docs/05-tech-spec.md` 的本机 Demo 可行性，再说“执行当前 Sprint”（或 `/run run-dev-task`）。
 
 > Demo / MVP 默认优先在本机运行。若 `docs/env/local-env.md` 显示资源不足，AI 必须在 `docs/05-tech-spec.md` 写明降级 / Mock 策略或服务器资源预案。
+
+## 推荐路径：先打开 AI CLI
+
+> Keyword for template checks: newbie AI CLI onboarding path.
+
+更推荐的新手工作方式是：先完成必要的环境检查和至少一种 AI CLI 安装，然后尽快进入 AI CLI 对话窗口，让 AI 读取本仓库规则并带你执行后续步骤。这样可以少敲命令，也能让 AI 在每一步说明目的、影响范围和需要你确认的事项。
+
+最少只需要先人工完成：
+
+1. 运行 `scripts/check-prereqs.ps1`，确认 Git Bash / PowerShell 等基础工具可用。
+2. 按 `template-docs/ai-cli-setup.md` 安装并登录 `Claude CLI` 或 `Codex CLI` 其中一种。
+3. 在模板仓库或派生项目根目录打开 AI CLI 对话窗口。
+
+第一次打开 AI CLI 后，可以直接说：
+
+```text
+我是第一次使用这个 ai-project-template。请先读取 ai/index.md 和相关规则，
+然后按新手 AI CLI 引导路径带我完成：
+1. 检查基础环境
+2. 判断是否需要安装/补齐工具
+3. 新建本地项目
+4. 采集本机环境
+5. 准备上游输入
+6. 评审输入材料
+7. 生成文档体系
+
+每一步执行命令前先说明目的和影响范围，需要我确认后再运行。
+```
+
+如果 AI CLI 还没装好，先按上面的“5 分钟最小路径”手动走；AI CLI 装好后，再切回推荐路径。
 
 ## 我该看哪个文件
 
@@ -52,16 +110,13 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 ### 派生项目使用者
 
 ```bash
-# 新建本地烟测项目
-bash scripts/new-project.sh my-demo --local --no-remote
-
 # 检查新手环境前置项
 powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 
 # 一键安装基础开发环境
 powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
 
-# 新建远端项目
+# 新建正式项目（默认创建远端仓库；需要 gh auth login）
 bash scripts/new-project.sh my-demo --visibility private
 bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility private
 
@@ -76,6 +131,9 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ### 模板维护者
 
 ```bash
+# 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令）
+bash scripts/new-project.sh smoke-demo --local --no-remote
+
 # 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行）
 powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
 
@@ -127,6 +185,7 @@ Windows 脚本入口选择：
 
 当前模板版本见 `VERSION`。最近版本摘要：
 
+- v1.21.1：优化新手入口顺序，前置环境自检与缺失项决策，并新增 AI CLI 推荐路径；`README.md` / `template-docs/beginner-guide.md` / `template-docs/ai-cli-setup.md` 提供首次打开 AI CLI 后的引导提示词，派生项目 README 模板同步改为新入口。
 - v1.21.0：新增派生项目模板同步运行记录模板 `template-docs/derived-sync-report-template.md`，真实同步后可记录命令、结果、问题和可回流优化点，并提炼去项目化模板提案。
 - v1.20.0：将模板 `docs/00-09` 撰写规范镜像主路径从 `docs/_scaffold/` 迁移为 `ai/doc-standards/`，明确其是 AI 文档标准 / 审计基线而非项目事实；旧路径仅作迁移期兼容。
 - v1.19.0：新增 AI CLI 快捷命令路由 `ai/commands/` 与会话续接规则 `ai/session-rules.md`，支持 `/run ...` 或自然语言触发常用 Prompt，并用 `.ai/session-handoff.md` / `NEXT-STEPS.md` 记录断点。
