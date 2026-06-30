@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.21.1（2026-06-30）
+
+- 优化新手入口顺序：`README.md` 与 `template-docs/beginner-guide.md` 前置 `scripts/check-prereqs.ps1` 环境自检，再进入 `new-project.sh`、`collect-env.ps1`、输入评审和文档生成。
+- `README.md` 的 5 分钟路径在环境缺失时直接给出 `scripts/bootstrap-dev-env.ps1` 命令，并把“本地烟测项目”命令从派生项目使用者区移到模板维护者区，避免把烟测路径误当正式项目起步路径。
+- 新增新手 AI CLI 推荐路径：`README.md`、`template-docs/beginner-guide.md` 与 `template-docs/ai-cli-setup.md` 提供首次打开 AI CLI 后可复制的引导提示词，让 AI 读取 `ai/index.md`、路由命令并辅助执行后续步骤。
+- `template-docs/env-setup.md` 新增新手决策表，明确缺 Git Bash / `winget` / Node.js / Python / `gh` / AI CLI 时的下一步，以及本地烟测可跳过项。
+- `template-docs/smoke-test.md` 与新手指南对齐，要求烟测验证“先检查环境、缺失项有下一步、再建项目”的最小链路。
+- `scripts/new-project.sh` 生成的派生项目 README 改为指向 `template-docs/env-setup.md`，并优先使用 AI CLI 引导模式、`/run review-inputs`、`/run generate-docs`、`/run run-dev-task` 入口。
+- `scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加防入口滞后断言，避免新手文档再次回到默认已安装环境的假设。
+
 ## v1.21.0（2026-06-29）
 
 - 新增 `template-docs/derived-sync-report-template.md`，用于派生项目真实同步模板方法论后记录同步前后版本、执行命令、边界检查结果、问题和可回流优化点。
