@@ -6,6 +6,13 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.21.2（2026-06-30）
+
+- 增强 `ai/prompts/review/16-docs-system-audit.md`：审计报告必须区分事实 / 追溯断点、横切传播残留、规范基线缺口、可行性 / 部署缺口和本地续接状态，避免把新版文档标准差异误判为业务事实错误。
+- 补充旧派生文档兼容审计规则：对照 `ai/doc-standards/00-09` 时按语义等价和最小补齐处理，不要求逐字重写成示例骨架；历史 `F-*` 等编号优先用兼容矩阵闭合追溯。
+- 为审计回梳增加修复后聚焦自检清单，覆盖 `git diff --check`、旧措辞残留、必需章节 / 追溯矩阵、悬空 ID 和本地续接状态。
+- 归档 / 更新已吸收提案：`TEMPLATE-UPGRADE-docs-spec-sync.md`、`TEMPLATE-UPGRADE-docs-system-audit-prompt.md`；保留 `TEMPLATE-UPGRADE-sync-powershell-fallback.md` 作为后续较大功能待办。
+
 ## v1.21.1（2026-06-30）
 
 - 优化新手入口顺序：`README.md` 与 `template-docs/beginner-guide.md` 前置 `scripts/check-prereqs.ps1` 环境自检，再进入 `new-project.sh`、`collect-env.ps1`、输入评审和文档生成。

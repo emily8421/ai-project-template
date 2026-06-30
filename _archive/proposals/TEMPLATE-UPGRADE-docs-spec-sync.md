@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 00-09 撰写规范同步机制（规范与项目事实分离）
 
 > 类型：派生项目起草的模板优化提案（去项目化）。
-> 状态：已落地于 v1.18.0（2026-06-28）；采用方案 B'（内置镜像步骤）；从 `_proposals/` 归档到 `_archive/proposals/`。
+> 状态：已落地于 v1.18.0（2026-06-28），并于 v1.20.0 迁移主路径为 `ai/doc-standards/00-09`；从 `_proposals/` 归档到 `_archive/proposals/`。
 > 关联：补 sync-template 的规范同步缺口；与 `document-lifecycle-rules.md` §5（生成矩阵）、review 类提示词、`TEMPLATE-UPGRADE-docs-system-audit-prompt.md` 互补。
 
 ## 1. 现状与问题（已 fetch 模板核对）
