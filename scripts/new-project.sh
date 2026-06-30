@@ -111,7 +111,7 @@ cat > "$TARGET/README.md" <<EOF
 2. 运行 \`powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1\` 生成 \`docs/env/local-env.md\`，补齐本机必须跑通的功能、允许降级 / Mock 项与服务器预案。
 3. 准备可审计上游输入：可先把产品愿景写入 \`docs/vision/product-vision.md\`，或把尚未归类的小工具 brief、PRD / SRS、任务单、现有系统说明放入 \`docs/inputs/\`。
 4. 初填 \`ai/project-rules.md\` 的项目名称、Phase1 目标、技术栈倾向、运行环境约束与项目形态裁剪；不确定项标“待确认”。
-5. 在 AI CLI 中说“评审输入材料”（或 \`/run review-inputs\`），让 AI 读取 \`ai/commands/\` 路由并评审输入材料；评审通过后说“生成文档体系”（或 \`/run generate-docs\`），多入口生成 / 补齐 \`docs/00-09\`、必要的 \`docs/design/\` 详细设计、项目 README 与 Sprint1。
+5. 在 AI CLI 中说“评审输入材料”（或 \`/run review-inputs\`），让 AI 读取 \`ai/commands/\` 路由并评审输入材料；评审通过后说“生成文档体系”（或 \`/run generate-docs\`），多入口生成 / 补齐 \`docs/00-09\`、必要的 \`docs/design/\` 详细设计、项目 README 与 Sprint1；底层 Prompt 见 \`ai/prompts/docs/00-generate-or-complete-docs.md\`。
 6. 人工确认 \`docs/03-prd.md\` §3 阶段路线图、交付物形态和 \`docs/05-tech-spec.md\` 的本机 Demo 可行性；确认后再说“执行当前 Sprint”（或 \`/run run-dev-task\`）。
 
 > 纯本地烟测可以暂时不安装 AI CLI；真正开始 AI 协作开发前，至少准备并登录一种 AI CLI，安装顺序见 \`template-docs/ai-cli-setup.md\`。
