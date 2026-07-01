@@ -39,10 +39,12 @@
 
 > Keyword for template checks: newbie AI CLI onboarding path.
 
-先确保两件事：
+先确保这些（命令与排障见 scenario-guides A1）：
 
-1. 基础环境检查能运行：`powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1`。
-2. 至少一种 AI CLI 已安装并能打开：`Claude CLI` 或 `Codex CLI`；安装说明见 `template-docs/ai-cli-setup.md`。
+1. 基础环境检查能运行：`scripts/check-prereqs.ps1`；缺工具按 `template-docs/env-setup.md` 运行 `scripts/bootstrap-dev-env.ps1`。
+2. 至少一种 AI CLI 已安装并能打开：官方文档安装并登录 `Claude CLI` 或 `Codex CLI`（见 `template-docs/ai-cli-setup.md`）。
+3.（可选）验证新手链路：按 `template-docs/smoke-test.md` 执行，用 `template-docs/smoke-test-report-template.md` 留痕。
+4.（公司环境）中转站 / LeMesh / CC-Switch 见内网手册（`lemesh_ai_model`），不替代 CLI 官方安装。
 
 然后在模板仓库或派生项目根目录打开 AI CLI，不用记具体步骤，直接说一个具体场景（如「我想用这个模板新建项目」「帮我准备输入材料」）。AI 会读取 `template-docs/scenario-guides.md`，按场景剧本先给你「做什么 + 为什么」的引导计划，确认后再路由到具体命令执行；也可 `/run scenario`。完整场景目录见该文件。
 
@@ -52,49 +54,9 @@
 - 在需要写文件、安装依赖、运行会改变状态的命令前明确授权。
 - 补充 AI 无法替你决定的信息，例如产品愿景、阶段边界、是否允许联网、是否允许 Mock、是否需要服务器。
 
-### 路径 B：兜底，手动命令模式
+### 兜底：没有 AI CLI 时
 
-#### 第一步：检查机器是否具备基础环境
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
-```
-
-看输出里的 `Summary` 和 `Suggested next steps`：
-
-- 如果缺少必备项，先看 `template-docs/env-setup.md`，按需运行 `scripts/bootstrap-dev-env.ps1`。
-- 如果只缺 `gh`，但你只做本地烟测或本地起步，可以先继续；远端建仓前再补 `gh auth login`。
-- 如果 PowerShell 找不到 `bash`，但 Git Bash 已安装，可按 `template-docs/env-setup.md` 里的完整路径方式运行 Bash 脚本。
-
-#### 第二步：新建本地项目
-
-```bash
-bash scripts/new-project.sh my-demo --local --no-remote
-cd my-demo
-```
-
-#### 第三步：采集本机运行环境
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
-```
-
-然后打开 `docs/env/local-env.md`，补齐“人工确认项”：本机必须跑通什么、哪些可以 Mock / 远程运行、是否允许联网、是否需要服务器预案。
-
-#### 第四步：准备上游输入
-
-至少准备一种可审计输入：
-
-- 产品愿景：写入 `docs/vision/product-vision.md`。
-- 小工具 brief / 客户 PRD / SRS / 现有系统说明：先放入 `docs/inputs/`。
-- 明确任务单：确认已有 docs 是否足够支撑任务，不足时先补需求链路。
-
-#### 第五步：让 AI 先评审，再生成文档体系
-
-1. 初填 `ai/project-rules.md` 的 `§1`、`§2`、`§2.5`、`§3`，先把阶段边界、技术栈倾向、运行环境约束和项目形态写清楚。
-2. 在 AI CLI 中说“评审输入材料”（或 `/run review-inputs`），让 AI 先确认入口模式、文档剖面、缺口和待确认项。
-3. 评审通过后，再说“生成文档体系”（或 `/run generate-docs`），生成或补齐 `docs/00-09`。
-4. 人工确认 `docs/03-prd.md`、`docs/05-tech-spec.md`、`docs/08-dev-plan.md` 后，再说“执行当前 Sprint”（或 `/run run-dev-task`）。
+若暂不装 AI CLI，手动命令等价路径见 `template-docs/scenario-guides.md` 的 A0–A8 场景步骤（每个场景都有「cmd 指针」指向 `README` / `git-guide` / `SOP` 的手动命令）。本手册专注「理解模板」，不再重复手动命令清单。
 
 > 纯本地烟测可以暂时不安装 AI CLI；真正开始 AI 协作开发前，建议至少完成 `Claude CLI` 或 `Codex CLI` 其中一种的安装与登录。
 

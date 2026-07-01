@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.22.1（2026-07-01）
+
+- 入口文档简化：README 瘦身到 1 屏（开头简介 + 快速开始三入口「说场景 / 找命令 / 理解设计」+ 当前版本 + 目录速览），删除「5 分钟最小路径」「我该看哪个文件」大表、常用命令、轻量项目路径等冗余 section。
+- `SOP.md` 接收 README 的「常用命令」（派生使用者 / 模板维护者 / Windows 脚本入口矩阵），定位为速查表。
+- `docs/README.md` 接收「轻量项目路径」。
+- `template-docs/beginner-guide.md` 删冗余「路径 B」手动命令，路径 A 收拢环境入口 keyword，定位为「理解手册」；起步动作统一指向 scenario-guides。
+- `scripts/check-template.sh` 配套调整断言：README 改为入口指引断言，详细命令断言移到 SOP，环境/烟测入口由 beginner-guide 断言覆盖。
+- 提案：`_proposals/TEMPLATE-UPGRADE-simplify-entry-docs.md`。
+
 ## v1.22.0（2026-07-01）
 
 - 新增场景引导编排层 `template-docs/scenario-guides.md` 与元命令 `ai/commands/scenario.md`（`/run scenario`）：按角色（A 使用者 / C 维护者）组织 23 个端到端场景剧本，用户说一个具体场景意图，AI 即按契约产出「做什么 + 为什么」引导计划，确认后逐步执行；含 cwd 路由入口（零资产 / 模板仓库 / 派生项目三分支）、A7 PLM 文档精修转换子场景、A9 阶段规划与 M1 元场景；每个场景步骤三层一一对应（做什么 / 为什么 / 机器执行）。
