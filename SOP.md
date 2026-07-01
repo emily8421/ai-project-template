@@ -7,6 +7,7 @@
 
 ## 使用原则
 
+- 不确定该走哪个场景、或想让 AI 先给引导计划再执行：用 `/run scenario`（见 `template-docs/scenario-guides.md`）。
 - 新手第一次使用模板：先看 `README.md` 与 `template-docs/beginner-guide.md`。
 - 新手第一次准备开发环境：看 `template-docs/env-setup.md`，先检测再安装。
 - 要单独安装 `Claude CLI` / `Codex CLI`：看 `template-docs/ai-cli-setup.md`。
@@ -23,6 +24,7 @@
 
 | 场景 | 快捷命令 | 权威操作文档 | 详细 Prompt | 备注 |
 |---|---|---|---|---|
+| 任意场景意图 / 新手首次打开 AI CLI | `/run scenario` | `template-docs/scenario-guides.md` | 无 | 先产出「做什么+为什么」引导计划，确认后再路由到具体 command |
 | 第一次使用模板 | `/run new-project` | `README.md`、`template-docs/beginner-guide.md` | `ai/prompts/setup/14-new-project.md` | 先建立最小路径、文件边界和初始化顺序 |
 | 第一次准备开发环境 | 无 | `template-docs/env-setup.md` | 无 | 先运行 `scripts/check-prereqs.ps1`，再决定是否运行 `scripts/bootstrap-dev-env.ps1` |
 | 安装 AI CLI 工具 | 无 | `template-docs/ai-cli-setup.md` | 无 | 用于单独处理 `Claude CLI` / `Codex CLI` 安装，以及与公司中转站配置的衔接顺序 |
@@ -50,6 +52,7 @@
 
 ## 常见选择
 
+- “我不确定该用哪个命令 / 我想让 AI 带我一步步做” → 用 `/run scenario`，AI 按 `template-docs/scenario-guides.md` 先给引导计划再执行。
 - “我是第一次用这套模板” → 先看 `README.md` 与 `template-docs/beginner-guide.md`，再用 `/run new-project`。
 - “我的机器还没装好开发环境” → 先看 `template-docs/env-setup.md`，再运行 `scripts/check-prereqs.ps1`。
 - “我要单独安装 Claude CLI 或 Codex CLI” → 看 `template-docs/ai-cli-setup.md`。

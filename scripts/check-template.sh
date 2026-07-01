@@ -70,6 +70,19 @@ require_absent_file() {
   fi
 }
 
+require_absent_contains() {
+  local file="$1"
+  local pattern="$2"
+  local message="$3"
+  if [[ ! -f "$file" ]]; then
+    fail "$message（文件缺失: $file）"
+  elif grep -Eq -- "$pattern" "$file"; then
+    fail "$message（仍含应收敛内容）"
+  else
+    pass "$message"
+  fi
+}
+
 extract_index_rules() {
   grep -E '^- ai/.+\.md$' ai/index.md | sed 's/^- //'
 }
@@ -754,6 +767,32 @@ require_contains "git-guide.md" 'PowerShell fallback' "git-guide 说明同步 fa
 require_contains "template-docs/env-setup.md" 'PowerShell fallback' "环境准备文档说明 fallback 边界"
 require_contains "template-docs/derived-sync-report-template.md" 'PowerShell fallback' "同步运行记录模板记录 fallback"
 require_contains "CONTRIBUTING.md" 'derived-sync-report-template' "CONTRIBUTING 说明同步运行记录与去项目化回流"
+
+# 场景引导编排层（scenario-guides）：让「说一个场景 → 给引导计划」成为标准交互。
+require_file "template-docs/scenario-guides.md"
+require_contains "template-docs/scenario-guides.md" '场景路由入口' "scenario-guides 含场景路由入口"
+require_contains "template-docs/scenario-guides.md" '引导计划输出契约' "scenario-guides 含引导计划契约"
+require_contains "template-docs/scenario-guides.md" 'A0 冷启动' "scenario-guides 含冷启动场景"
+require_contains "template-docs/scenario-guides.md" 'mermaid' "scenario-guides 含图表格式默认"
+require_contains "template-docs/scenario-guides.md" '当前 `gh` 登录账户' "scenario-guides 账户约定用当前 gh 登录账户（去账户化）"
+# 去账户化：scenario-guides 账户约定用「当前 gh 登录账户」（见上条正向断言）。
+# 模板仓库地址 emily8421/ai-project-template 是模板自己的家，不属于用户账户默认化，允许出现。
+require_file "ai/commands/scenario.md"
+require_contains "ai/commands/scenario.md" 'template-docs/scenario-guides\.md' "scenario 命令路由到 scenario-guides"
+require_contains "ai/commands/scenario.md" '/run scenario' "scenario 命令含 /run scenario"
+require_contains "ai/commands/README.md" '/run scenario' "commands README 含 scenario 元命令"
+require_contains "template-sync.json" '"template-docs/scenario-guides\.md"' "template-sync 同步 scenario-guides"
+require_contains "template-sync.json" '"ai/commands/scenario\.md"' "template-sync 同步 scenario 命令"
+require_contains "ai/document-lifecycle-rules.md" '设计文档图表规范' "document-lifecycle 含图表规范"
+require_contains "ai/document-lifecycle-rules.md" 'mermaid' "document-lifecycle 图表规范默认 mermaid"
+require_contains "ai/project-rules.md" '图表格式偏好' "project-rules 含图表格式偏好填项"
+# 防漂移：README/beginner-guide/ai-cli-setup 三处新手话术已收敛到 scenario-guides，不再逐字重复。
+require_contains "README.md" 'template-docs/scenario-guides\.md' "README 推荐路径指向 scenario-guides"
+require_contains "template-docs/beginner-guide.md" 'template-docs/scenario-guides\.md' "BEGINNER-GUIDE 路径 A 指向 scenario-guides"
+require_contains "template-docs/ai-cli-setup.md" 'template-docs/scenario-guides\.md' "AI-CLI-SETUP 指向 scenario-guides"
+require_absent_contains "README.md" '按新手 AI CLI 引导路径带我完成' "README 不再保留全量新手话术（已收敛）"
+require_absent_contains "template-docs/beginner-guide.md" '按新手 AI CLI 引导路径带我完成' "BEGINNER-GUIDE 不再保留全量新手话术"
+require_absent_contains "template-docs/ai-cli-setup.md" '按新手 AI CLI 引导路径带我完成' "AI-CLI-SETUP 不再保留全量新手话术"
 
 # 防文档滞后：根目录人读操作文档必须引用 doc-standards / 16 号审计闭环。
 # 避免「脚本层（sync-template / check-template）已自洽、人读文档却滞后」再现
