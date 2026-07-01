@@ -22,14 +22,7 @@
 
 ## 3. 先判断你处在哪种状态
 
-| 你的状态 | 先做什么 | 下一步 |
-|---|---|---|
-| 不确定这台机器能不能跑模板 | 运行 `scripts/check-prereqs.ps1` | 缺必备工具时看 `template-docs/env-setup.md` |
-| 机器缺 Git Bash / Node.js / Python 等基础工具 | 运行 `scripts/bootstrap-dev-env.ps1` 或手工安装 | 重开终端后再跑一次 `check-prereqs.ps1` |
-| 只想验证新手链路是否通 | 按 `template-docs/smoke-test.md` 执行 | 用 `template-docs/smoke-test-report-template.md` 留痕 |
-| 基础环境已通过检查 | 运行 `scripts/new-project.sh` 新建项目 | 进入项目后运行 `scripts/collect-env.ps1` |
-| 已有派生项目，但还没环境记录 | 在项目根目录运行 `scripts/collect-env.ps1` | 补齐 `docs/env/local-env.md` 人工确认项 |
-| 准备真正让 AI CLI 执行任务 | 至少安装并登录一种 AI CLI | 安装顺序看 `template-docs/ai-cli-setup.md` |
+scenario-guides §2 的 cwd 三分支（零资产 / 在模板仓库 / 在派生项目）决定你从哪个场景起步。打开 AI CLI 说一个场景或 `/run scenario`，AI 会判断状态并给引导计划；本节不再重复状态表。
 
 ## 4. 照着做：从零开始的最小路径
 
@@ -128,23 +121,18 @@
 
 ## 10. 第一次生成文档体系怎么做
 
-- 输入材料不确定时，先评审，不要直接让 AI 生成一整套文档。
-- 先判断入口模式：Vision-first、PRD-first、Task-first、Existing-system 等。
-- 再判断文档剖面：Full、Standard、Lean、Existing-system。
-- 生成后重点检查四件事：范围是否越界、`docs/06` / `docs/07` 是否裁剪正确、Demo 是否真能在本机跑、`docs/08` 是否已经拆成可执行 Sprint。
+走 scenario-guides 文档链路（A4 评审输入 → A5 生成骨架 → A6 逐文档精修 → A7 审计）：输入不确定先评审，别直接生成一整套；判断入口模式（Vision/PRD/Task/Existing-system 等）与文档剖面（Full/Standard/Lean）；生成后重点查范围越界、`docs/06`/`docs/07` 裁剪、本机 Demo 可行性、`docs/08` Sprint 拆分。
 
 ## 11. 第一次执行任务怎么做
 
-- 一次只执行一个 Sprint 或一个 task。
-- 执行前先读相关 `docs/03-09` 和 `ai/index.md` 指向的规则文件。
-- 修改范围尽量限制在 1 到 3 个文件或模块。
-- 完成后把验证结果记到 `docs/09-verification.md` 或当前 Sprint 的验收记录。
+走 scenario-guides A10（执行 Sprint）：一次一个 Sprint/task；执行前读相关 `docs/03-09` 与 `ai/index.md` 指向的规则；修改限 1–3 个文件/模块；验证结果记到 `docs/09-verification.md` 或 Sprint 验收记录。
 
-## 12. 什么时候用 `SOP`、命令和 Prompt
+## 12. 什么时候用 SOP、命令和 Prompt
 
-- `SOP.md`：当你已经知道要做什么，但不知道该找哪个流程入口时再看。
-- `ai/commands/README.md`：当你想用 `/run ...` 或自然语言触发常见任务时再看。
-- `INIT-PROMPT.md` 和 `ai/prompts/`：当命令路由不够细，需要复制完整操作模板给 AI 时再看。
+- 不确定做什么 / 想让 AI 引导 → `template-docs/scenario-guides.md`（`/run scenario`）
+- 已知意图找命令速查 → `SOP.md`
+- `/run ...` 快捷命令 → `ai/commands/README.md`
+- 命令路由不够细，需要完整操作模板 → `ai/prompts/`（`INIT-PROMPT.md` 是入口指针）
 - Prompt 不是需求本身；输入不足时，先补输入，不要让 AI 猜。
 
 ## 13. 常见错误
@@ -167,10 +155,7 @@
 
 ## 15. 后续查找入口
 
-- 环境准备卡住：看 `template-docs/env-setup.md`，再回到本手册 §4。
-- 想验证一遍新手链路：按 `template-docs/smoke-test.md` 执行。
-- 想记录一遍烟测结果：使用 `template-docs/smoke-test-report-template.md`。
-- 想单独安装 `Claude CLI` / `Codex CLI`：看 `template-docs/ai-cli-setup.md`。
-- 生成文档体系前：先确认 `ai/project-rules.md`、`docs/env/local-env.md` 和上游输入材料。
-- 执行第一个 Sprint 前：先确认 `docs/08-dev-plan.md` 和 `docs/09-verification.md`。
-- 想理解模板为什么这么设计：看 `template-docs/template-methodology.md`。
+- 入口与场景：`README.md` 快速开始 + `template-docs/scenario-guides.md`
+- 命令速查：`SOP.md`
+- 完整 Prompt：`ai/prompts/`（`INIT-PROMPT.md` 指针）
+- 模板设计深究：`template-docs/template-methodology.md`

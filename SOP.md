@@ -20,7 +20,7 @@
 - 模板治理规则：`CONTRIBUTING.md`。
 - 项目快速入口：`README.md`；完整版本记录：`CHANGELOG.md`。
 
-## 场景索引
+## 场景索引（速查；完整场景剧本见 `template-docs/scenario-guides.md`）
 
 | 场景 | 快捷命令 | 权威操作文档 | 详细 Prompt | 备注 |
 |---|---|---|---|---|
