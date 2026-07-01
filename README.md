@@ -66,21 +66,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 2. 按 `template-docs/ai-cli-setup.md` 安装并登录 `Claude CLI` 或 `Codex CLI` 其中一种。
 3. 在模板仓库或派生项目根目录打开 AI CLI 对话窗口。
 
-第一次打开 AI CLI 后，可以直接说：
-
-```text
-我是第一次使用这个 ai-project-template。请先读取 ai/index.md 和相关规则，
-然后按新手 AI CLI 引导路径带我完成：
-1. 检查基础环境
-2. 判断是否需要安装/补齐工具
-3. 新建本地项目
-4. 采集本机环境
-5. 准备上游输入
-6. 评审输入材料
-7. 生成文档体系
-
-每一步执行命令前先说明目的和影响范围，需要我确认后再运行。
-```
+第一次打开 AI CLI 后，不用记具体步骤——直接说一个具体场景（如「我想用这个模板新建项目」「帮我准备输入材料」「帮我规划阶段」）。AI 会读取 `template-docs/scenario-guides.md`，先给你「做什么 + 为什么」的引导计划，确认后再执行；也可直接 `/run scenario`。完整场景目录与契约见 `template-docs/scenario-guides.md`。
 
 如果 AI CLI 还没装好，先按上面的“5 分钟最小路径”手动走；AI CLI 装好后，再切回推荐路径。
 
@@ -95,6 +81,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 | 记录一轮烟测结果 | `template-docs/smoke-test-report-template.md` |
 | 理解模板为什么这样设计 | `template-docs/template-methodology.md` |
 | 新建项目 | 本 README 的“5 分钟最小路径” |
+| 想让 AI 引导 / 不确定用哪个命令 | `template-docs/scenario-guides.md`（`/run scenario`） |
 | 使用 AI 快捷命令 | `ai/commands/README.md` |
 | 新 CLI 窗口续接任务 | `ai/session-rules.md` |
 | 多入口生成 / 补齐文档体系 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
@@ -110,6 +97,7 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 ### 派生项目使用者
 
 ```bash
+# 场景引导：在 AI CLI 里说一个具体场景或 /run scenario（见 template-docs/scenario-guides.md）
 # 检查新手环境前置项
 powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 

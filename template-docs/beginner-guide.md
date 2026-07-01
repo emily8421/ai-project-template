@@ -44,21 +44,7 @@
 1. 基础环境检查能运行：`powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1`。
 2. 至少一种 AI CLI 已安装并能打开：`Claude CLI` 或 `Codex CLI`；安装说明见 `template-docs/ai-cli-setup.md`。
 
-然后在模板仓库或派生项目根目录打开 AI CLI，对它说：
-
-```text
-我是第一次使用这个 ai-project-template。请先读取 ai/index.md 和相关规则，
-然后按新手 AI CLI 引导路径带我完成：
-1. 检查基础环境
-2. 判断是否需要安装/补齐工具
-3. 新建本地项目
-4. 采集本机环境
-5. 准备上游输入
-6. 评审输入材料
-7. 生成文档体系
-
-每一步执行命令前先说明目的和影响范围，需要我确认后再运行。
-```
+然后在模板仓库或派生项目根目录打开 AI CLI，不用记具体步骤，直接说一个具体场景（如「我想用这个模板新建项目」「帮我准备输入材料」）。AI 会读取 `template-docs/scenario-guides.md`，按场景剧本先给你「做什么 + 为什么」的引导计划，确认后再路由到具体命令执行；也可 `/run scenario`。完整场景目录见该文件。
 
 接下来你主要做三件事：
 
