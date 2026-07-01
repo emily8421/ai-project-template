@@ -146,8 +146,8 @@ Windows 脚本入口选择：
 | 入口 | 运行位置 | Git Bash 依赖 | 失败时优先排查 |
 |---|---|---|---|
 | `scripts/check-template.ps1` | 模板仓库 | 可 fallback 到 PowerShell 结构检查 | 若 Bash 启动失败，先看输出中的 fallback 结果 |
-| `scripts/sync-template.ps1` | 派生项目仓库 | 需要 Git Bash | Git for Windows / MSYS 是否可启动 |
-| `scripts/check-derived-sync.ps1` | 派生项目仓库 | 需要 Git Bash | Git for Windows / MSYS 是否可启动 |
+| `scripts/sync-template.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
+| `scripts/check-derived-sync.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
 
 远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。
 

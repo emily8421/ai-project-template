@@ -1,7 +1,7 @@
-﻿# TEMPLATE-UPGRADE: sync/check PowerShell 原生 fallback（Git Bash/MSYS 启动失败时）
+# TEMPLATE-UPGRADE: sync/check PowerShell 原生 fallback（Git Bash/MSYS 启动失败时）
 
 > 类型：派生项目起草的模板优化提案（去项目化）。
-> 状态：待回流 `ai-project-template`（按 `CONTRIBUTING.md` §4 上行流程）。
+> 状态：已落地于 v1.21.3（2026-07-01）；从 `_proposals/` 归档到 `_archive/proposals/`。
 > 来源：派生项目同步 `v1.21.0` 的真实运行记录；详见本项目 `docs/archive/template-sync/2026-06-30-sync-template-v1.21.0.md`。
 
 ## 1. 动机

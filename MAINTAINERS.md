@@ -65,7 +65,7 @@
 - 自检可以包含结构性断言，不应过度绑定长文案；新增文案检查时优先选择稳定关键词。
 - 新增关键机制时，必须考虑防文档滞后断言：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免“脚本已变、操作文档滞后”。
 - 新增高频 Prompt 或 SOP 时，应评估是否需要新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt。
-- Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1` 可以退回到原生结构检查；但 `scripts/check-derived-sync.ps1` 与 `scripts/sync-template.ps1` 仍要求 Git Bash 正常工作。不要继续为这类系统问题堆更多 fallback，优先修本机环境。
+- Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1`、`scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 都会明确标注 PowerShell fallback；若 fallback 也失败，再优先修本机 Git for Windows / MSYS 环境，不要把系统问题误判为模板同步缺口。
 
 ## README 边界
 

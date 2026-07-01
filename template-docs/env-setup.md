@@ -393,8 +393,8 @@ bash scripts/new-project.sh smoke-demo --local --no-remote
 ```
 
 - `scripts/check-template.ps1` 如果无法从 PowerShell 拉起 Git Bash，会退回到原生 PowerShell 结构检查。
-- `scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 仍依赖 Git Bash；如果它们报 `Win32 error 5`、`E_ACCESSDENIED` 或类似 MSYS 启动错误，优先判断为本机 Git Bash / MSYS 运行环境问题。
-- 这类问题通常不意味着“新手少做了模板规定的某个初始化步骤”；不要继续堆模板 fallback，先检查本机 Git for Windows、终端宿主、权限策略或安全软件限制。
+- `scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 优先调用 Git Bash；如果它们报 `Win32 error 5`、`E_ACCESSDENIED` 或类似 MSYS 启动错误，会明确标注并进入 PowerShell fallback。fallback 也失败时，才优先判断为本机 Git Bash / MSYS、权限策略或网络环境问题。
+- 这类问题通常不意味着“新手少做了模板规定的某个初始化步骤”；fallback 已覆盖同步 / 边界检查的最小能力，若仍失败，先检查本机 Git for Windows、终端宿主、权限策略或安全软件限制。
 
 ## 13. 当前支持边界与跨平台计划
 
