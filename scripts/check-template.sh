@@ -672,9 +672,7 @@ require_contains "ai/prompts/review/16-docs-system-audit.md" 'ai/document-lifecy
 require_contains "ai/prompts/review/16-docs-system-audit.md" 'ai/doc-standards' "16 系统审计提示词优先对照 doc-standards 规范基线"
 require_contains "ai/prompts/review/16-docs-system-audit.md" 'docs/_scaffold' "16 系统审计提示词兼容旧 _scaffold 规范基线"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '16-docs-system-audit\.md' "同步后整理 Prompt 指向 16 系统审计（doc-standards 闭环）"
-require_contains "INIT-PROMPT.md" 'Prompt Library' "INIT-PROMPT 是 Prompt Library 索引"
-require_contains "INIT-PROMPT.md" 'ai/prompts/docs/01-review-inputs\.md' "INIT-PROMPT 指向输入评审 Prompt"
-require_contains "INIT-PROMPT.md" 'ai/prompts/docs/00-generate-or-complete-docs\.md' "INIT-PROMPT 指向文档生成 Prompt"
+# INIT-PROMPT v1.22.2 起简化为指针：Prompt 明细索引由 SOP 场景索引 + ai/prompts/README 承担，不再要求 INIT-PROMPT 含 Prompt 明细。
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'docs/design/\*' "生成 Prompt 使用 docs/design 详细设计路径"
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '模板骨架' "生成 Prompt 要求保留文档模板骨架"
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'Product Vision 处置' "生成 Prompt 说明 Product Vision 处置"
