@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.22.3（2026-07-02）
+
+文档整理（v1.22.0–2 入口简化后的连带）：
+
+- `README.md` 目录速览补缺失：`_archive/`、`tasks/`、骨架目录（`frontend/ backend/ tests/ docker/`）、`ai/prompts/`、`ai/doc-standards/`、`.github/`。
+- `git-guide.md` §7 命令速查加交叉引用（脚本命令见 SOP 常用命令）。
+- `CONTRIBUTING.md` / `MAINTAINERS.md`：修陈旧引用（5 分钟路径→快速开始、README 方法论同步 section→`template-sync.json`）；提案组织建议去重（归 `CONTRIBUTING.md` §3.1，MAINTAINERS 改引用）。
+- `template-docs/beginner-guide.md`：操作/路由章节（§3/§10/§11/§12/§15）精简为指向 scenario-guides/SOP/README，强化「理解手册」定位（预期/准备/目录心智/常见错误）。
+- `SOP.md` 场景索引标注为速查（完整剧本见 scenario-guides）。
+- 提案：`_proposals/TEMPLATE-UPGRADE-cleanup-docs-v1.22.3.md`。
+
 ## v1.22.2（2026-07-01）
 
 - `INIT-PROMPT.md` 简化为指针：删「场景→命令→Prompt」明细表（与 SOP 场景索引重复），改为指向 scenario-guides / SOP 场景索引 / commands-README / prompts-README 的入口指针；~13 处引用不动（文件保留，向下兼容派生项目）。
