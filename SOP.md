@@ -64,3 +64,44 @@
 - “我要让 AI 生成文档体系” → 输入不确定先用 `/run review-inputs`；评审通过后用 `/run generate-docs`。
 - “我要改模板本身” → 先看 `CONTRIBUTING.md`，先写 `TEMPLATE-UPGRADE-*.md` 提案；已有提案时用 `/run template-proposal-summary`。
 - “我重新打开了 CLI 窗口” → 先按 `ai/session-rules.md` 读取 `.ai/session-handoff.md` / `NEXT-STEPS.md` 和 Git 状态。
+
+## 常用命令
+
+### 派生项目使用者
+
+```bash
+# 检查新手环境前置项
+powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+# 一键安装基础开发环境
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+# 新建正式项目（默认创建远端仓库；需要 gh auth login）
+bash scripts/new-project.sh my-demo --visibility private
+bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility private
+# 派生项目同步模板方法论（在派生项目仓库运行；v1.6.8+ 后续同步）
+powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
+powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
+powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
+```
+
+旧项目首次同步见 `git-guide.md` §5；派生项目同步验收使用 `check-derived-sync`，不要用完整模板自检替代。真实派生同步完成后，建议用 `template-docs/derived-sync-report-template.md` 记录同步运行结果。
+
+### 模板维护者
+
+```bash
+# 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令）
+bash scripts/new-project.sh smoke-demo --local --no-remote
+# 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行）
+powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
+# Bash 完整自检入口（CI 使用同类路径）
+bash scripts/check-template.sh
+```
+
+### Windows 脚本入口选择
+
+| 入口 | 运行位置 | Git Bash 依赖 | 失败时优先排查 |
+|---|---|---|---|
+| `scripts/check-template.ps1` | 模板仓库 | 可 fallback 到 PowerShell 结构检查 | 若 Bash 启动失败，先看输出中的 fallback 结果 |
+| `scripts/sync-template.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
+| `scripts/check-derived-sync.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
+
+远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。
