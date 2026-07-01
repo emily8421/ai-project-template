@@ -6,6 +6,12 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.22.2（2026-07-01）
+
+- `INIT-PROMPT.md` 简化为指针：删「场景→命令→Prompt」明细表（与 SOP 场景索引重复），改为指向 scenario-guides / SOP 场景索引 / commands-README / prompts-README 的入口指针；~13 处引用不动（文件保留，向下兼容派生项目）。
+- `scripts/check-template.sh` 删 INIT-PROMPT 的 3 个 Prompt 明细断言（内容由 SOP 场景索引 + prompts/README 承担），保留 `require_file` 与「指向 commands-README」断言。
+- 提案：`_proposals/TEMPLATE-UPGRADE-simplify-init-prompt.md`。
+
 ## v1.22.1（2026-07-01）
 
 - 入口文档简化：README 瘦身到 1 屏（开头简介 + 快速开始三入口「说场景 / 找命令 / 理解设计」+ 当前版本 + 目录速览），删除「5 分钟最小路径」「我该看哪个文件」大表、常用命令、轻量项目路径等冗余 section。
