@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.4（2026-07-02）
+
+文档体系重构 PR-4a（template-docs 可读性）：3 份手册结构优化，覆盖用户诉求 #11。
+
+- `template-docs/env-setup.md`：15 节 → 10 节——合并 3 个「顺序 / 路径」节（§6 建议顺序 + §7 一键安装 + §8 三种路径）+ 2 个「脚本行为」节（§9 check-prereqs + §10 bootstrap）+ §1/§2 合并 + §5 折入 §4；§4 加速览表；§15 改导航表。
+- `template-docs/ai-cli-setup.md`：9 节 → 8 节——§7「推荐操作顺序」并入 §2「推荐顺序」。
+- `template-docs/template-methodology.md`：17 节碎片 → 6 主题（①定位 ②权威源 ③问题+目标 ④核心原则 ⑤各子系统设计 why ⑥演进+历史）。
+- 全部断言锚点保留（env-setup 8 / ai-cli-setup 5+1 absent / template-methodology 仅 file-existence）；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr4a-v1.23.4.md`。
+
 ## v1.23.3（2026-07-02）
 
 文档体系重构 PR-3b（导航）：关键文件夹补 README，覆盖用户诉求 #7。
