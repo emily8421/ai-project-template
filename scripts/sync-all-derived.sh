@@ -10,7 +10,7 @@
 #
 # 每个派生项目是独立 git 仓；本脚本逐个进入、跑该项目的
 # scripts/sync-template.sh + scripts/check-derived-sync.sh，再汇总。
-# template-local 脚本（不进 template-sync.json，类似 check-template）。
+# 随模板下行同步（在 template-sync.json）；维护者批量同步工具，类似 check-template。
 #
 # 派生项目判据: 子目录含 VERSION + scripts/sync-template.sh + docs/，
 #               且不含 _examples/（模板本体标识）。
