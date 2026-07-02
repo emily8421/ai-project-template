@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.6（2026-07-02）
+
+文档体系重构 PR-5b（导航衔接）：SOP 场景索引 ↔ scenario-guides 场景码对齐，覆盖用户诉求 #16。
+
+- `SOP.md`：顶部加**分工声明**（SOP = 命令速查 vs scenario-guides = 场景剧本，场景码对齐、互补不重复）；场景索引加**场景码列**（A0–A14 / C1–C7 / M1 对齐 scenario-guides）；拆「操作场景（带码 + 命令）」与「文档入口（看哪）」两区。
+- 解决 SOP 与 scenario-guides「各说各的」：两边现在用同一套场景码，可双向跳（找命令看 SOP，看剧本看 scenario-guides 对应码）。
+- ~24 个 SOP 断言锚点全保留（场景名 + 命令 + PowerShell fallback 等）；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-sop-scenario-coordination-v1.23.6.md`。
+
 ## v1.23.5（2026-07-02）
 
 文档体系重构 PR-4b（scenario-guides 导航）：加场景速查索引，覆盖用户诉求 #11（scenario-guides 部分）。
