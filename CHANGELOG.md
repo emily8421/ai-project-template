@@ -17,6 +17,17 @@
 - 与 PR-1（#54，v1.23.0）文件无重叠；check-template 全过，无脚本/同步清单变更。
 - 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr2-v1.23.1.md`。
 
+## v1.23.0（2026-07-02）
+
+文档体系重构 PR-1（核心全貌）：模板文档从「规则堆砌」转向「读者导向 + 通俗 + 条理 + 互相导航」。覆盖用户最初诉求 #1（docs 输入/输出区分）、#2（beginner-guide 全貌）、#8（docs 文档体系介绍 + 规范）。
+
+- `template-docs/beginner-guide.md` 全貌重构（5 章 → 7 节）：①是什么/能干啥 ②准备啥（工具/输入/决策三类合一）③怎么用（指 scenario-guides）④输入材料→文档体系→实现代码关系（新增核心心智图）⑤目录结构三层（模板方法/文档事实/代码骨架）⑥常见错误/问题 ⑦导航。
+- `docs/README.md` 重构（「文档分区规则」→「项目文档体系与分区规则」）：新增 §1 输入/输出二分（人工输入 vision/inputs vs AI 输出 00-09+design）、§2 00-09 各自干什么、§3 规范约束（编号/追溯/阶段标签/只增不删/撰写见 doc-standards）；保留分区/裁剪/根目录约束等。
+- `docs/vision/README.md`（新增）：标「人工输入区」定位，呼应 docs/README §1（#1 机制主力为已同步的 docs/README §1；本文件为模板仓本地增强）。
+- `docs/inputs/README.md`：顶部补「人工输入区」显式标注 + 指向 docs/README §1。
+- 后续 PR-2（MAINTAINERS/CONTRIBUTING/README 目录速览）、PR-3（git-guide/文件夹 README）另轮落地。
+- 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr1-v1.23.0.md`。
+
 ## v1.22.5（2026-07-02）
 
 端到端验证（`zhiyan-digital-cs-platform` 同步 v1.22.4）发现并修复的灰色地带：
