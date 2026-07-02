@@ -4,6 +4,8 @@
 
 直接让 AI 写代码，往往产出难维护、缺文档、不规范。本模板反过来——先让 AI 按规范生成各阶段工程文档（需求、架构、设计、计划、验证），再让 AI 在这些文档约束下写代码。这样你既能得到完整规范的过程文档，又能让代码符合设计、可审查、可维护。一套模板，跨项目复用。
 
+> **两类读者**：使用者（基于模板做派生项目）看本 `README.md` + `template-docs/beginner-guide.md`；模板维护者（维护本仓库）看 `MAINTAINERS.md`。
+
 ## 它能做什么
 
 - **生成工程文档体系**：给 AI 你的需求 / 愿景 / 想法，它按软件工程规范生成需求 → 架构 → 技术方案 →（数据库 → 接口）→ 开发计划 → 验证各阶段文档；支持多种输入起步（愿景 / PRD / SRS / 任务单 / 小工具 brief）。
@@ -43,6 +45,10 @@
 | `.github/` | CI 工作流（template-check）+ PR/Issue 模板 |
 | `SOP.md` | 操作流程速查（场景→命令） |
 | `git-guide.md` | git 操作 SOP（新建/提交/同步/PR） |
+| `CONTRIBUTING.md` | 模板变更治理流程（提案→分支→PR→版本→回流→同步） |
+| `MAINTAINERS.md` | 模板维护者手册（发布 checklist / 同步清单 / 自检 / README 边界） |
+| `INIT-PROMPT.md` | AI 任务入口指针（指向 commands / prompts 索引） |
+| `template-sync.json` | 下行同步文件清单（哪些方法论文件同步到派生项目） |
 | `_examples/` | 已填好的参考样例项目 |
 | `_proposals/` | 模板优化提案收件箱 |
 | `_archive/` | 已归档提案与旧文档 |
