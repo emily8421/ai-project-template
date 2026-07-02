@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.5（2026-07-02）
+
+文档体系重构 PR-4b（scenario-guides 导航）：加场景速查索引，覆盖用户诉求 #11（scenario-guides 部分）。
+
+- `template-docs/scenario-guides.md`：§5 顶部加**场景速查索引**（A0–A14 / C1–C7 / M1 共 23 场景的「触发说法 + 一句话」表，按角色分组）；§5 目录正文不动；§1 入口提示加「§5 顶部有速查索引」。
+- 5 个断言锚点全保留（场景路由入口 / 引导计划输出契约 / A0 冷启动 / mermaid / 当前 `gh` 登录账户）；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr4b-v1.23.5.md`。
+
 ## v1.23.4（2026-07-02）
 
 文档体系重构 PR-4a（template-docs 可读性）：3 份手册结构优化，覆盖用户诉求 #11。
