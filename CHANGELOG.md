@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.3（2026-07-02）
+
+文档体系重构 PR-3b（导航）：关键文件夹补 README，覆盖用户诉求 #7。
+
+- 新增 7 个文件夹 README（template-local，不进 sync 清单）：`template-docs/README`（手册导航）、`scripts/README`（脚本说明 + 模板/派生检查区别）、`ai/README`（ai/ 目录概览）、`frontend/` / `backend/` / `tests/` / `docker/` README（用途 + 裁剪提示，指向 `project-rules` §3）。
+- 派生项目的目录指引已由同步的 `beginner-guide` §5 三层结构覆盖；本批 README 为模板仓可读性增强。
+- check-template 全过；无脚本 / 同步清单 / 断言变更。
+- 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr3b-v1.23.3.md`。
+
 ## v1.23.2（2026-07-02）
 
 文档体系重构 PR-3（操作）：`git-guide.md` 分场景重构，覆盖用户诉求 #6。
