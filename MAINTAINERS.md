@@ -64,20 +64,29 @@
 - 新增高频 Prompt 或 SOP 时，应评估是否需要新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt。
 - Windows 下若 PowerShell 无法拉起 Git Bash，`scripts/check-template.ps1`、`scripts/sync-template.ps1` 与 `scripts/check-derived-sync.ps1` 都会明确标注 PowerShell fallback；若 fallback 也失败，再优先修本机 Git for Windows / MSYS 环境，不要把系统问题误判为模板同步缺口。
 
-## README 边界
+## README 边界与派生 README 规范
 
-`README.md` 只回答三件事：
+### 模板仓库 README（根 `README.md`）
 
-1. 如何最快启动一个项目。
-2. 该去哪个文件继续。
-3. 当前模板版本和最近变化。
+回答：项目是什么 + 它能做什么（能力）+ 快速开始（三入口）+ 当前版本 + 目录速览。保持轻量，不塞维护细节、完整版本历史、发布 checklist、同步清单维护细节、治理长说明。
 
-以下内容不要塞回 README：
+### 派生项目 README（项目专属，**不同步**）
 
-- 完整版本历史。
-- 发布 checklist。
-- 同步清单维护细节。
-- 模板治理流程长说明。
+派生项目根 `README.md` 由 `scripts/new-project.sh` 生成初版，项目自行维护（不参与下行同步）。规范结构（对齐模板 README，但内容是派生项目自己的）：
+
+1. 项目名称 + 简介（2-3 句：项目是什么、解决什么）
+2. 它能做什么（**项目自己的能力**，不是模板的通用能力）
+3. 快速开始（如何启动/运行本项目）
+4. 当前阶段（Phase + 交付物形态 Demo/MVP/产品）
+5. 目录速览（本项目关键路径）
+6. 文档入口（`docs/00-09` 指针）
+7. 模板关系（基于 `ai-project-template`，`VERSION`）
+
+约束：
+
+- 不照搬模板 README 的通用能力段（派生写自己的项目能力）。
+- 保留「模板关系 + VERSION」（追溯同步版本）。
+- `new-project.sh` 生成初版（含占位，提示项目填写）；sync 不覆盖（项目专属）。
 
 ## 文档分区维护
 

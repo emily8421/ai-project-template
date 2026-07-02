@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.22.5（2026-07-02）
+
+端到端验证（`zhiyan-digital-cs-platform` 同步 v1.22.4）发现并修复的灰色地带：
+
+- **#1 修复 PowerShell fallback Null bug**（`sync-template.ps1` / `check-template.ps1` / `check-derived-sync.ps1`）：`Test-TemplateBash` 在 `Start-Process` 返回 Null（Git Bash 启动失败）时对 `$proc.ExitCode` 调用报 InvokeMethodOnNull，脚本在 probe 阶段终止未进 fallback；加 `$proc` Null 防御 → `Ready=$false` → 正常进 fallback。
+- **#2 修复 check-derived-sync 工作区干净过严 + 误导提示**（`.sh` / `.ps1`）：工作区检查改为只看已跟踪改动（未跟踪项目内容如 `docs/inputs` 不阻塞）；失败提示精准化（见上方失败项，不再固定"scripts/check-template"）。
+- **派生 README 规范**：`MAINTAINERS.md` 明确派生 README section 结构（简介 / 它能做什么 / 快速开始 / 当前阶段 / 目录速览 / 文档入口 / 模板关系）+ 约束（不照搬模板通用能力、保留模板关系 + VERSION、new-project 生成 + sync 不覆盖）；`new-project.sh` README 模板对齐（「当前能力」→「它能做什么」+ AI CLI 引导段收敛指 scenario-guides）。
+- 提案：`_proposals/TEMPLATE-UPGRADE-fix-sync-derived-readme-v1.22.5.md`。
+
 ## v1.22.4（2026-07-02）
 
 - `README.md` 开头通俗化：重写首段（「用 AI 按软件工程规范开发软件」+ 解决"AI 代码难维护"的目的），新增「它能做什么」能力段（6 条：生成工程文档体系 / 文档约束代码 + 六维度合规审查 / 分阶段交付 Demo→MVP→产品 / 场景引导 / 跨项目复用 + 经验回流 / 多 AI 工具 + 会话续接），基于模板实际能力梳理。
