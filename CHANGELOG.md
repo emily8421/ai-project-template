@@ -8,11 +8,12 @@
 
 ## v1.23.1（2026-07-02）
 
-文档体系重构 PR-2（治理文档）：覆盖用户诉求 #3（MAINTAINERS）/ #4（CONTRIBUTING）/ #5（README 目录速览）。
+文档体系重构 PR-2（治理文档）：覆盖用户诉求 #3（MAINTAINERS）/ #4（CONTRIBUTING）/ #5（README 目录速览）/ #10（同步回流闭环显化）。
 
 - `MAINTAINERS.md`：开头简化（使用者只看 README + beginner-guide）+ 板块重构为「维护者怎么干活」递进（①你是谁 ②改模板全流程 ③发布 checklist ④下行同步清单 ⑤自检与CI ⑥README边界 ⑦文档分区维护）。
 - `CONTRIBUTING.md`：修编号（去 0/2.5）+ 重构为「贡献流程」递进 1-9（什么算模板改动→双向闭环→改模板流程→版本号纪律→回流→下行同步→分支命名→禁止→治理变更记录）。
 - `README.md`：开头加两类读者划分（使用者/维护者）；目录速览补 `CONTRIBUTING.md` / `MAINTAINERS.md` / `INIT-PROMPT.md` / `template-sync.json` 4 行。
+- 同步回流闭环显化（#10）：`CONTRIBUTING.md` §2「观察·回流」+ `MAINTAINERS.md` §1 点名完整链路（`sync-methodology` 生成运行记录 → `post-sync-cleanup` 归纳 → 去项目化提案）。
 - 与 PR-1（#54，v1.23.0）文件无重叠；check-template 全过，无脚本/同步清单变更。
 - 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr2-v1.23.1.md`。
 

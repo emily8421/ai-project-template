@@ -11,7 +11,7 @@
 
 - **模板维护者**（本文件读者）：维护 `ai-project-template` 仓库本身——方法论（`ai/`）、文档骨架（`docs/` 模板件）、脚本（`scripts/`）、治理与同步机制。改动走本仓库 PR。
 - **使用者**：基于模板做派生项目开发。看 `README.md` + `template-docs/beginner-guide.md`，在派生项目里干活，不读本文件。
-- **核心边界**：模板方法论只在**本仓库**修改。派生项目里发现的可通用优化，先在该项目 `_proposals/` 起草去项目化提案，再回流本仓库（见 `CONTRIBUTING.md` §5），不在派生项目里改 `ai/global-rules.md` 后手动回抄。
+- **核心边界**：模板方法论只在**本仓库**修改。派生项目里发现的可通用优化，先在该项目 `_proposals/` 起草去项目化提案，再回流本仓库（派生项目同步时由 `/run sync-methodology` / `/run post-sync-cleanup` 自动归纳可回流点，机制见 `CONTRIBUTING.md` §2；上行流程见 §5），不在派生项目里改 `ai/global-rules.md` 后手动回抄。
 - 所有模板改动走「提案 → 分支 → PR → 评审 → 合并 → 归档」，不直推 `main`，不在本地 `main` 先提交。
 
 ## 2. 改模板全流程（从想法到合并）
