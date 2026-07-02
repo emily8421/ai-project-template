@@ -6,6 +6,21 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.24.1（2026-07-02）
+
+v1.24 infrastructure release 收官。**PR-7 测试基础设施（#9）**。
+
+- **L3 端到端回归机制**：
+  - `template-docs/e2e-regression-checklist.md`（template-local）：6 项回归（R1 同步链路 / R2 check-derived-sync / R3 sync-all-derived 批量 / R4 场景引导路由 / R5 文档生成 / R6 PowerShell fallback），可自动化 + 人工 + 通过标准。
+  - `scripts/e2e-sync-check.sh`（template-local）：L3 发布门，聚合 `check-template`（含 doc-standards 镜像 + 新项目烟测）+ `sync-all-derived` 批量烟测，人工项指向 checklist。运行通过。
+  - `template-docs/e2e-report-template.md`（template-local）：回归报告模板。
+  - `MAINTAINERS` 发布 Checklist 补：MINOR / MAJOR 发布前跑 L3 + 报告确认（PATCH 可豁免）。
+- 专用测试派生项目 `ai-project-template-e2e` 是**外部 repo**（维护者 `gh repo create` + `new-project` 派生），模板仓内只给文档 + 命令。
+- check-template 加 5 断言（3 `require_file` + MAINTAINERS L3 + 回归清单 R6）。
+- 覆盖用户诉求 **#9**（最小测试清单 + 回归机制 + 专用测试派生项目 + 报告）。
+- 提案：`_proposals/TEMPLATE-UPGRADE-test-infra-pr7-v1.24.1.md`。
+- **#1–#16 + #9 全部完成；v1.23 文档重构 + v1.24 infrastructure release 收官。**
+
 ## v1.24.0（2026-07-02）
 
 v1.24 infrastructure release 启动。**PR-6 批量同步派生项目（#15）**。

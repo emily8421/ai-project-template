@@ -35,6 +35,8 @@
 
 ## 3. 发布 Checklist
 
+> **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/e2e-report-template.md` 出报告确认。PATCH（仅文档 / 小修）可豁免。
+
 每次发版前逐条过：
 
 1. 先确认当前不在 `main` 直接改动；改动发生在维护分支上。
