@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.24.2（2026-07-03）
+
+global-rules §8.1 加「双维度总览表」撰写推荐（回流自派生项目提案 phase-overview-table，另一 AI 起草）。
+
+- `ai/global-rules.md` §8.1：加推荐——`docs/03-prd.md` §3 路线图顶部用「双维度总览表」集中呈现阶段 × 交付物形态（Demo/MVP/产品），避免交付物形态被要素级 `[P1]`/`[P2]`/`[愿景]` 标签淹没。Lean 剖面可裁剪列集；非强制。
+- `docs/03-prd.md` §3：加「双维度总览表」标注，显式说明下方表是双维度总览、与要素级标签形成「全景 ↔ 要素」对照（呼应 §8.1）。
+- 动机：交付物形态是阶段级属性（少数点声明），功能范围是要素级标签（遍布 04-09，上百次），前者易被后者淹没；总览表让 Demo→MVP→产品 演进线一目了然。
+- cherry-pick 自 `change/phase-overview-table`（去项目化提案）；非破坏、不改双维度定义；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-phase-overview-table.md`。
+
 ## v1.24.1（2026-07-02）
 
 v1.24 infrastructure release 收官。**PR-7 测试基础设施（#9）**。
