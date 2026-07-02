@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.2（2026-07-02）
+
+文档体系重构 PR-3（操作）：`git-guide.md` 分场景重构，覆盖用户诉求 #6。
+
+- `git-guide.md`：从「按主题」改为「**按场景**」组织——§1 先准备（gh 账号 + 身份）+ §2 场景速查表 + §3 场景 A 派生日常提交 + §4 场景 B 模板维护 + §5 场景 C 派生同步 + §6 场景 D 新建项目 + §7 踩坑 + §8 命令速查。下行同步保持在 §5（CONTRIBUTING / sync-methodology 的 `§5` 引用不断）；新建项目 §2 → §6。
+- 跨引用同步：`ai/commands/new-project.md`、`ai/prompts/setup/14-new-project.md` 的 `git-guide §2` → `§6（场景 D）`。
+- SOP 细节与 ~15 个断言锚点全保留；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-docs-restructure-pr3-v1.23.2.md`。
+
 ## v1.23.1（2026-07-02）
 
 文档体系重构 PR-2（治理文档）：覆盖用户诉求 #3（MAINTAINERS）/ #4（CONTRIBUTING）/ #5（README 目录速览）/ #10（同步回流闭环显化）。
