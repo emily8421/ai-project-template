@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.23.7（2026-07-02）
+
+文档体系重构 PR-5（ai/ 规则件）：document-lifecycle-rules 读者导向 + global-rules 去重，覆盖用户诉求 #12 + #14。
+
+- `ai/document-lifecycle-rules.md`（#12）：顶部加**阅读地图**（是什么 / 为什么 / 怎么做 / 规范 / 图表 → §1–§13 映射）；§1 加「文档体系是什么 + 为什么需要这套规则」framing。**不重组、不重编号**（§2 / §3 / §5 / §6 / §13 被 7 处跨引用）；6 锚点全保留。
+- `ai/global-rules.md`（#14）：§6「最佳实践流程总览」改为 stub 指针（指向 §1.1，删重复的 Scenario→Code 链，保留「避免想法→AI→代码」）；**保留 §6 号**（§7 / §8 / §9 被 6 处跨引用，不能重编号）。§8 阶段双维度不动（与 doc-lifecycle §4 文档剖面是不同概念，非重复——纠正 #13 评估误判）。
+- 11 个 global-rules 锚点 + 全部跨引用保留；check-template 全过。
+- 提案：`_proposals/TEMPLATE-UPGRADE-ai-rules-pr5-v1.23.7.md`。
+
 ## v1.23.6（2026-07-02）
 
 文档体系重构 PR-5b（导航衔接）：SOP 场景索引 ↔ scenario-guides 场景码对齐，覆盖用户诉求 #16。
