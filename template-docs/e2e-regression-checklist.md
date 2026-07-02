@@ -1,8 +1,11 @@
 # L3 端到端回归清单（模板发布前）
 
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
 本清单是 `ai-project-template` **MINOR / MAJOR 发布前**的 L3 端到端回归项，在专用测试派生项目（或临时派生项目）上跑，确认模板改动没有破坏同步链路、批量同步、场景引导、文档生成等端到端能力。
 
-> 这是**模板维护者**发布门；派生项目不跑。可自动化部分用 `scripts/e2e-sync-check.sh`，不可自动化部分人工跑，结果记到 `template-docs/e2e-report-template.md`。本文件 template-local（不进同步清单）。
+> 这是**模板维护者**发布门；派生项目不跑。可自动化部分用 `scripts/e2e-sync-check.sh`，不可自动化部分人工跑，结果记到 `template-docs/e2e-report-template.md`。
 
 ## 如何建 / 用专用测试派生项目 `ai-project-template-e2e`
 

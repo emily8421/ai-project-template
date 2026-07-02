@@ -8,7 +8,7 @@
 # + sync-all-derived 批量烟测。不重复 check-template 内部测试，只做发布门聚合 + 批量烟测。
 # 不可自动化项（场景引导路由 / 文档生成 / PowerShell fallback）见
 # template-docs/e2e-regression-checklist.md，人工跑并记到 e2e-report-template.md。
-# template-local（不进同步清单）；不改真实项目。
+# 随模板下行同步（在 template-sync.json）；不改真实项目。
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

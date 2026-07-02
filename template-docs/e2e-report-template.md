@@ -1,6 +1,9 @@
 # L3 端到端回归报告
 
-> 模板发布前 L3 回归记录。复制本模板填写，保存到 `docs/archive/e2e/<YYYY-MM-DD>-v<X.Y.Z>.md` 或本地。template-local（不进同步清单）。
+> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
+> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+
+> 模板发布前 L3 回归记录。复制本模板填写，保存到 `docs/archive/e2e/<YYYY-MM-DD>-v<X.Y.Z>.md` 或本地。
 
 ## 基本信息
 
