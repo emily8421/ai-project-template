@@ -31,6 +31,7 @@
 - **提案先行**：先新增或更新 `TEMPLATE-UPGRADE-*.md`（动机 / 拟改 / 版本影响 / 影响面 / 验证），改的过程中持续补充，不要改完再回忆补。提案组织建议（沿用现有、同一 PR 合并一份）见 `CONTRIBUTING.md` §3.1。
 - **影响下游就 bump 版本**：任何影响下游同步判断的合并都递增根目录 `VERSION` 并更新 `CHANGELOG.md`（版本规则见 `CONTRIBUTING.md` §4）。
 - **长任务维护续接**：多提案或长任务按 `ai/session-rules.md` 维护本地续接文件（`.ai/session-handoff.md`）；真实续接文件不提交。
+- **多会话并发**：多个 AI 会话同时操作本仓库时，各用独立 worktree（`git worktree add`），勿共用工作区——否则 commit 会落错分支。见 `git-guide.md` §4「多会话并发操作」。
 - 完成后，已处理提案移到 `_archive/proposals/`，未处理或延后的留在 `_proposals/`。
 
 ## 3. 发布 Checklist

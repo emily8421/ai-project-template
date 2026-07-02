@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.24.5（2026-07-03）
+
+多会话并发操作规范：git-guide + MAINTAINERS + session-rules 记录「独立 worktree」约定，防并发 commit 落错分支。
+
+- `git-guide.md` §4（场景 B）：加「多会话并发操作」小节——`git worktree add` 命令 + why（共用工作区 = 共用 HEAD，`先确认分支再 commit` 非原子，必然偶发落错）+ 完成清理。
+- `MAINTAINERS.md` §2：加「多会话并发」指针 bullet（→ git-guide §4）。
+- `ai/session-rules.md`：加 §7「多会话并发操作」AI 行为约定（并发前先确认是否开独立 worktree）。
+- 动机：多次 AI 会话并发操作模板仓导致 commit 落错分支（3 起）；git 无自动机制，须靠每会话独立目录这一约定。
+- check-template 全过。
+
 ## v1.24.4（2026-07-03）
 
 INIT-PROMPT reframe：标题 + 定位行对齐「启动入口」定位（#17 子问）。
