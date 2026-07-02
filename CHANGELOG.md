@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.24.0（2026-07-02）
+
+v1.24 infrastructure release 启动。**PR-6 批量同步派生项目（#15）**。
+
+- **新增 `scripts/sync-all-derived.sh`**（template-local 维护者脚本，不进 sync 清单）：一条指令批量同步父目录下所有派生项目——遍历子目录、判定派生项目（`VERSION`+`scripts/sync-template.sh`+`docs/`，排除模板本体 `_examples/`）、逐个跑该项目的 `sync-template` + `check-derived-sync`、汇总成功 / 跳过 / 失败。默认 `--dry-run`，`--commit` 才写；工作区有未提交跟踪改动 / 非派生 / 同步失败 自动跳过，绝不强行写入。最小自测通过（2 假派生 + 非派生 + 模板本体）。
+- **新场景 C8 批量同步所有派生项目**（`scenario-guides.md`，C 维护者）：触发「批量同步 / sync all derived」；步骤 确认目录版本账户 → dry-run 全预览 → commit 批量 → 看汇总。`--commit` 在每个派生当前分支提交；要 PR-per-project 可审计流程改用 A13。
+- **交叉引用**：scenario-guides（C8 + 速查索引 C1–C8 + §5 C 头 C1–C8）、SOP（场景索引 C8 行）、MAINTAINERS（下行同步节批量 bullet）、git-guide §5（批量同步 note）。
+- **check-template 新断言**：`require_file scripts/sync-all-derived.sh` + scenario-guides C8 + SOP / MAINTAINERS `sync-all-derived` 引用。
+- 覆盖用户诉求 **#15**（23 场景未覆盖的「一条指令批量更新派生项目」缺口）。
+- 提案：`_proposals/TEMPLATE-UPGRADE-batch-sync-pr6-v1.24.0.md`。
+
 ## v1.23.7（2026-07-02）
 
 文档体系重构 PR-5（ai/ 规则件）：document-lifecycle-rules 读者导向 + global-rules 去重，覆盖用户诉求 #12 + #14。

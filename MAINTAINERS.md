@@ -62,6 +62,7 @@
 - `scripts/check-template.sh` / `.ps1` 只用于模板仓库完整性自检；派生项目同步验收用 `scripts/check-derived-sync.sh` / `.ps1`。
 - `NEXT-STEPS.md` / `.ai/session-handoff.md` 是本地续接便签，不属于模板方法论文档；保持本地临时性，通过 `.gitignore` 排除，不进同步清单和正式提交。模板只同步 `ai/session-rules.md` 与 `template-docs/session-handoff.example.md`。
 - 真实派生项目同步后的问题优先沉淀到 `template-docs/derived-sync-report-template.md` 运行记录；只有可通用于多个项目的问题，才去项目化转写为 `_proposals/TEMPLATE-UPGRADE-*.md` 回流。
+- **批量同步**：维护者发新版后，可用 `scripts/sync-all-derived.sh <父目录> --dry-run|--commit` 一条指令更新父目录下所有派生项目（场景 C8）；默认 dry-run，工作区不干净 / 非派生 / 模板本体自动跳过。要 PR-per-project 可审计流程仍走 A13。
 
 ## 5. 自检与 CI
 
