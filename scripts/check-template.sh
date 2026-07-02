@@ -553,7 +553,9 @@ for command_file in \
   ai/commands/sprint-summary.md \
   ai/commands/collect-env.md \
   ai/commands/new-project.md \
-  ai/commands/commit-message.md; do
+  ai/commands/commit-message.md \
+  ai/commands/submit-proposal.md \
+  ai/commands/submit-feedback.md; do
   require_file "$command_file"
   require_contains "$command_file" '## 必读文件' "$command_file 含必读文件"
   require_contains "$command_file" '## 写入风险' "$command_file 含写入风险"
@@ -650,6 +652,7 @@ require_contains "ai/document-lifecycle-rules.md" '横切事实' "document-lifec
 require_contains "ai/document-lifecycle-rules.md" '外部文档接入规则' "document-lifecycle 定义外部文档接入"
 require_contains "docs/README.md" 'ai/document-lifecycle-rules\.md' "docs README 指向文档生命周期规则"
 require_contains "ai/global-rules.md" 'docs/design/<子系统>\.md' "global-rules 使用 docs/design 子系统设计路径"
+require_contains "ai/global-rules.md" '回流来源标识' "global-rules §9 含回流来源标识规则"
 require_contains "ai/global-rules.md" '阶段双维度' "global-rules 定义阶段双维度"
 require_contains "ai/global-rules.md" '交付物形态.*Demo.*MVP.*产品' "global-rules 定义交付物形态"
 require_contains "ai/global-rules.md" '不得把 Demo 声称为 MVP / 产品' "global-rules 禁止混淆 Demo 与 MVP/产品"
@@ -785,6 +788,7 @@ require_file "ai/commands/scenario.md"
 require_contains "ai/commands/scenario.md" 'template-docs/scenario-guides\.md' "scenario 命令路由到 scenario-guides"
 require_contains "ai/commands/scenario.md" '/run scenario' "scenario 命令含 /run scenario"
 require_contains "ai/commands/README.md" '/run scenario' "commands README 含 scenario 元命令"
+require_contains "ai/commands/README.md" 'submit-proposal' "commands README 含 submit-proposal 回流命令"
 require_contains "template-sync.json" '"template-docs/scenario-guides\.md"' "template-sync 同步 scenario-guides"
 require_contains "template-sync.json" '"ai/commands/scenario\.md"' "template-sync 同步 scenario 命令"
 require_contains "ai/document-lifecycle-rules.md" '设计文档图表规范' "document-lifecycle 含图表规范"

@@ -6,6 +6,21 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.25.0（2026-07-03）
+
+派生 → 模板反馈与提案回流渠道（标准化 + 半自动）。回流自派生提案 `derived-feedback-channel`。
+
+- **来源标识规则**（`ai/global-rules.md` §9 增补）：回流提案 / 反馈头部标 `> 来源：<派生>(owner/repo)`，解决来源不可识别（曾导致回流 PR 被误判为「另一会话并发」）。
+- **2 新命令**（跨仓库开 issue，免 fork）：
+  - `submit-proposal`（`/run submit-proposal` + `ai/prompts/maintainers/17-submit-proposal.md`）：成熟提案校验（去项目化 + 来源 + 字段）后 `gh issue create`（label `proposal`）。
+  - `submit-feedback`（`/run submit-feedback` + `ai/prompts/maintainers/18-submit-feedback.md`）：半自动汇集候选问题（sync 运行记录 / audit / check 告警 / 草稿）+ 人工勾选 + 开 issue（label `feedback`）。
+- **Issue 模板** `.github/ISSUE_TEMPLATE/derived-feedback.md`（template-local）：预填来源 / 类型 / 去项目化确认。
+- **`template-proposal-summary`（11）扩展**：除 `_proposals/`，也读模板仓带 `proposal`/`feedback` 标签的 issue。
+- **新场景 A15**（scenario-guides + 速查索引 + SOP 场景索引）：「回流提案 / 反馈到模板」——派生使用者上报侧（C1 是维护者收侧）。
+- 动机：团队场景（多成员 / 多机器 / 多派生）回流摩擦 + 来源混淆；半自动（非全自动）保留人工判断。
+- check-template 加断言（§9 来源标识 + commands/README `submit-proposal` + 命令循环含 2 新命令 + 4 新文件入 sync 清单）；全过。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-derived-feedback-channel.md`。
+
 ## v1.24.5（2026-07-03）
 
 多会话并发操作规范：git-guide + MAINTAINERS + session-rules 记录「独立 worktree」约定，防并发 commit 落错分支。

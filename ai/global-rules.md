@@ -170,3 +170,5 @@ Prompt / SOP / 脚本说明执行；不要要求用户手工打开 prompt 文件
 每次任务收尾时，AI 应顺带审视本次工作是否暴露出可通用于多个项目的模板优化点（如规则不清、决策前置不足、文档骨架缺口、脚本流程别扭）。任何需要修改项目模板的工作，都必须先形成 `TEMPLATE-UPGRADE-*.md` 提案（去项目化：动机 / 拟改 / 版本 / 影响），可附 `TEMPLATE-UPGRADE-*-patch.md` 记录具体 old→new 修改建议；成熟后回流到模板仓库 `_proposals/` 收件箱，由模板仓库 PR 落地。模板改动合并并下行同步后，已处理提案必须移动到 `_archive/proposals/` 归档或在派生项目历史中留痕。
 
 在模板仓库内，模板维护者 AI 处理 `_proposals/` 时必须先读取全部 `TEMPLATE-UPGRADE-*.md` 与可选 `*-patch.md`，输出去重 / 冲突 / 依赖分析和合并或分阶段优化计划，再辅助修改 `ai/global-rules.md`、`INIT-PROMPT.md`、`ai/prompts/`、脚本和治理文档；所有实际改动仍需人工审查并通过 PR 合并。
+
+**回流来源标识**：派生项目回流到模板仓库的提案 / 反馈（`TEMPLATE-UPGRADE-*.md`、issue、PR），必须在头部标明来源派生：`> 来源：<派生项目名>（<owner>/<repo>）派生项目回流`。来源是「出处元数据」（公开仓库引用），不属于去项目化禁止的客户 / 账号 / 路径 / 业务细节。模板自产提案标「模板维护者」。这让维护者处理 `_proposals/` / issue 时一眼知出处，不与「别的会话 / 模板自产」混淆。派生项目提交提案 / 反馈的流程见 `ai/commands/submit-proposal.md`、`ai/commands/submit-feedback.md`（跨仓库开 issue，免 fork）。
