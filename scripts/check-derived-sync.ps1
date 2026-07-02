@@ -58,6 +58,14 @@ function Test-TemplateBash {
       -RedirectStandardOutput $stdoutFile `
       -RedirectStandardError $stderrFile
 
+    if ($null -eq $proc) {
+      return [pscustomobject]@{
+        Ready    = $false
+        ExitCode = -1
+        StdErr   = 'Start-Process returned null (bash failed to start from PowerShell)'
+      }
+    }
+
     $stderr = if (Test-Path $stderrFile) { (Get-Content $stderrFile -Raw).Trim() } else { "" }
     return [pscustomobject]@{
       Ready    = ($proc.ExitCode -eq 0)
@@ -154,11 +162,11 @@ function Invoke-NativeDerivedSyncCheck {
   & git status --short --branch | ForEach-Object { Write-Host $_ }
   Write-Host ""
 
-  $porcelain = @(& git status --porcelain)
-  if ($porcelain.Count -gt 0) {
-    Fail "working tree is not clean; review uncommitted changes before checking sync boundary"
+  $trackedChanges = @(& git status --porcelain | Where-Object { $_ -notlike '?? *' })
+  if ($trackedChanges.Count -gt 0) {
+    Fail "tracked changes uncommitted; review before checking sync boundary (untracked project content does not block)"
   } else {
-    Pass "working tree clean"
+    Pass "working tree clean (untracked project content does not block)"
   }
 
   Require-File "template-sync.json"
@@ -218,7 +226,7 @@ function Invoke-NativeDerivedSyncCheck {
   }
 
   Write-Error "FAIL derived sync boundary check failed: $script:Failures issue(s)." -ErrorAction Continue
-  Write-Error "   Do not use scripts/check-template.sh/.ps1 for derived project validation; it is a template-repo self-check." -ErrorAction Continue
+  Write-Error "   See FAIL items above; derived sync validation uses check-derived-sync, not check-template (template self-check)." -ErrorAction Continue
   return 1
 }
 
