@@ -39,6 +39,7 @@
 | `ai/prompts/` | 详细 Prompt 模板（按场景拆分） |
 | `ai/doc-standards/` | 模板 `docs/00-09` 撰写规范镜像（只读，随模板同步刷新） |
 | `docs/` | 项目事实、需求、设计、计划、验证（分区见 `docs/README.md`） |
+| `sync-records/` | 同步运行记录（派生项目记录模板同步过程，与 `docs/` 项目文档分离） |
 | `tasks/` | 复杂 Sprint 拆分后的任务单（按需启用） |
 | `frontend/` `backend/` `tests/` `docker/` | 代码骨架目录，按项目形态裁剪（见 `ai/project-rules.md §3`） |
 | `scripts/` | 新建项目、同步、自检、环境采集脚本 |

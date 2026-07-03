@@ -31,7 +31,7 @@
 4. 先输出 dry-run / commit 计划和风险点。
 5. 用户确认后执行同步命令。
 6. 同步后运行 `check-derived-sync`，不要用 `check-template` 验收派生项目。
-7. 生成或建议生成派生同步运行记录，推荐路径：`docs/archive/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md`。
+7. 生成或建议生成派生同步运行记录，推荐路径：`sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md`（长期记录，与项目文档分离）；若用户暂不想提交，可先写入 `.ai/session-handoff.md`。
 8. 从运行记录中判断是否存在可通用模板优化点；如有，生成去项目化 `_proposals/TEMPLATE-UPGRADE-*.md`。
 9. 输出同步后整理建议，通常下一步是 `post-sync-cleanup`。
 
