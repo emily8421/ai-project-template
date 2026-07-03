@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.26.2（2026-07-03）
+
+scripts 说明与模板自检可维护性：补齐 scripts README 说明，明确 `.sh` / `.ps1` 主从关系与 fallback 权威边界。
+
+- **`scripts/README.md`**：补齐 `e2e-sync-check.sh`、`sync-all-derived.sh` 说明；新增运行位置 / 读写 / 谁用列；明确 `.sh` / `.ps1` 主从关系（`.sh` 为主实现，`.ps1` 优先委托 Git Bash）；新增 Windows 脚本入口选择章节与权威性说明。
+- **`SOP.md`**：Windows 脚本入口选择补充权威性说明（完整权威检查：Bash `check-template.sh` + CI；结构性兜底检查：PowerShell native fallback；fallback 通过 ≠ 完整自检通过）。
+- **`MAINTAINERS.md`**：自检与 CI 章节补充权威性说明，明确 Bash check-template.sh + CI 为完整权威检查，PowerShell fallback 为结构性兜底检查。
+- **`scripts/check-template.ps1`**：fallback 输出明确"非完整权威检查"，避免用户误把 fallback 通过当作完整自检通过；提示发布 / CI 仍应以 Bash 自检为准。
+- check-template 全过。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-scripts-self-check-maintainability.md`。
+
 ## v1.26.1（2026-07-03）
 
 派生同步运行记录路径分离（sync-records-location）：将模板同步运行记录与项目开发文档分离，降低理解成本。
