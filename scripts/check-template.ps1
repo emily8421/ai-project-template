@@ -151,6 +151,8 @@ function Invoke-NativeTemplateCheck {
   Write-Host "Git Bash could not be started from PowerShell on this machine."
   Write-Host "Running a native structural subset check instead."
   Write-Host ""
+  Write-Host "Note: This is a structural fallback check, not equivalent to the full"
+  Write-Host "      template self-check. For release, always rely on CI or Bash self-check."
 
   foreach ($path in @(
       "README.md",
