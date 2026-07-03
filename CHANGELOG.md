@@ -6,6 +6,19 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.26.0（2026-07-03）
+
+会话续接场景化 + 被动中断裁决优先级（session-resume）：让「读取续接点 / 继续上次 / 换 CLI 接手」在多 CLI + 被动中断下更稳。
+
+- **`ai/session-rules.md` §1 加固**：新增「裁决优先级」链（Git 客观事实 > `.ai/session-handoff.md` > `NEXT-STEPS.md` > 冲突停下问用户）+「主动 vs 被动中断」表（被动中断含跨 CLI 接手，handoff 缺失/过时时以 Git 为唯一锚点）；「兼容旧文件」收紧为「仅读旧项目时兜底，新项目不再创建 `NEXT-STEPS.md`」。
+- **`ai/session-rules.md` §2 调整**：恢复流程改为「先取 Git 客观事实，再读续接文件」（原顺序反，易被过时 handoff 先入为主）；第 4 步显式「交叉核对判主动 / 被动中断」，被动中断以 Git 为唯一锚点重建并标注不确定项。
+- **新场景 A16**（scenario-guides + 速查索引）：「会话续接 / 中断恢复（跨 CLI 接手）」——跨 Claude / Codex / Cursor 的统一恢复入口，换 CLI 不丢上下文；顺带修正已有索引 bug（标题 A0–A14 / A0–A15 → A0–A16）。
+- **`ai/commands/README.md`**：自然语言示例加「读取续接点 / 继续上次」，让 AI 识别该短语时路由到 scenario → A16。
+- 动机：多 CLI 实际使用中，撞 token / 时间上限被迫换 CLI、窗口中断重开是高频场景；原规范裁决优先级散落、被动中断未显式命名、场景层无入口。
+- housekeeping：删除本仓库根目录过时的 `NEXT-STEPS.md`（v1.21.3 旧记录，已 gitignore，不进版本库）。
+- check-template 全过。
+- 起草自 `_proposals/TEMPLATE-UPGRADE-session-resume.md`。
+
 ## v1.25.0（2026-07-03）
 
 派生 → 模板反馈与提案回流渠道（标准化 + 半自动）。回流自派生提案 `derived-feedback-channel`。
