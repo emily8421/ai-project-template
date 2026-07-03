@@ -118,4 +118,11 @@ bash scripts/check-template.sh
 | `scripts/sync-template.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
 | `scripts/check-derived-sync.ps1` | 派生项目仓库 | 优先 Git Bash；失败时可 PowerShell fallback | 输出中的 fallback 标识；若 fallback 也失败再修 Git for Windows / MSYS |
 
+**权威性说明**：
+- `.sh` 文件是**主实现 / 权威逻辑**，适用于 CI、Git Bash 和类 Unix 环境
+- `.ps1` 文件是 **Windows 友好包装入口**，优先委托 Git Bash
+- **完整权威检查**：Bash `check-template.sh` + CI（模板仓）
+- **结构性兜底检查**：PowerShell native fallback（Git Bash 无法启动时最低保障）
+- **等价性**：fallback 通过 ≠ 完整自检通过；发布前仍应以 CI 或 Bash 自检为准
+
 远端建仓默认优先使用当前 `gh` 已登录账号；只有需要切换账号时，才显式传 `--account`。

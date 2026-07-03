@@ -69,14 +69,25 @@
 
 ## 5. 自检与 CI
 
-- 本地自检：`bash scripts/check-template.sh` 或 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
-- 派生项目同步边界检查：`check-derived-sync.ps1` / `.sh`。
-- CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
-- `check-template.sh` 含 doc-standards 规范镜像自检（`require_doc_standards_mirror`）：在临时派生项目验证下行同步会生成 `ai/doc-standards/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
-- 自检可含结构性断言，不应过度绑定长文案；新增文案检查时优先选稳定关键词。
-- **新增关键机制时必须考虑防文档滞后断言**：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免「脚本已变、操作文档滞后」。
-- 新增高频 Prompt 或 SOP 时，评估是否新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt 正文。
-- Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-template.ps1`、`check-derived-sync.ps1` 都会明确标注 PowerShell fallback；fallback 也失败时，优先修本机 Git for Windows / MSYS 环境，不要把系统问题误判为模板同步缺口。
+- **完整权威检查**：Bash `check-template.sh` + CI（模板仓）
+- **结构性兜底检查**：PowerShell native fallback（Git Bash 无法启动时最低保障）
+- **等价性**：fallback 通过 ≠ 完整自检通过；发布前仍应以 CI 或 Bash 自检为准
+
+本地自检：
+- 模板仓：`bash scripts/check-template.sh` 或 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`
+- 派生项目：`bash scripts/check-derived-sync.sh` 或 `powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1`
+
+CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
+
+`check-template.sh` 含 doc-standards 规范镜像自检（`require_doc_standards_mirror`）：在临时派生项目验证下行同步会生成 `ai/doc-standards/00-09`、项目事实 `docs/00-09` 不被覆盖、且 `check-derived-sync` 接受该同步提交。
+
+自检可含结构性断言，不应过度绑定长文案；新增文案检查时优先选稳定关键词。
+
+**新增关键机制时必须考虑防文档滞后断言**：脚本、Prompt、`README.md` / `SOP.md` / `MAINTAINERS.md` / `git-guide.md` 等人读入口中至少关键路径要有稳定关键词引用，避免「脚本已变、操作文档滞后」。
+
+新增高频 Prompt 或 SOP 时，评估是否新增 / 更新 `ai/commands/` 快捷命令入口；命令文件只做路由，不复制大段 Prompt 正文。
+
+Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-template.ps1`、`check-derived-sync.ps1` 都会明确标注 PowerShell fallback；fallback 也失败时，优先修本机 Git for Windows / MSYS 环境，不要把系统问题误判为模板同步缺口。
 
 ## 6. README 边界与派生 README 规范
 
