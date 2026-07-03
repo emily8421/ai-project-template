@@ -108,4 +108,3 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - **旧项目已有记录分散**：兼容扫描新旧路径，不强制迁移。
 - **根目录增加目录心智负担**：在 README 目录速览中简短说明，避免放入 `docs/`。
 - **运行记录含敏感信息**：保留去敏提醒；敏感内容不应进入长期记录，可写入本地 `.ai/session-handoff.md`。
-
