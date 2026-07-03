@@ -13,7 +13,7 @@
 
 **不适用场景**：还未完成模板方法论同步；或用户要求直接开发新功能。
 
-**使用前准备**：确认当前在派生项目根目录，工作区状态已知；已完成 `scripts/sync-template.*` 同步并提交或准备单独提交同步后整理改动；如存在 `docs/archive/template-sync/` 同步运行记录，先读取最近一份。
+**使用前准备**：确认当前在派生项目根目录，工作区状态已知；已完成 `scripts/sync-template.*` 同步并提交或准备单独提交同步后整理改动；如存在 `sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 同步运行记录，先读取最近一份。
 
 **续接要求**：第一段输出迁移计划后，必须把迁移范围、待确认项、禁止事项和下一步写入 / 更新续接文件。
 
@@ -38,7 +38,7 @@
    - 先读取 `ai/index.md` 列出的全部规则文件。
    - 再读取 `docs/README.md`，理解最新 docs 分区规则。
    - 再读取 `ai/project-rules.md`、根 `README.md`、`docs/00-09`、`docs/vision/product-vision.md`（如存在）。
-   - 如存在 `docs/archive/template-sync/` 下的同步运行记录，读取最近一份，提取同步问题、待确认项和可回流模板优化点。
+   - 如存在 `sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 下的同步运行记录，读取最近一份，提取同步问题、待确认项和可回流模板优化点。
 
 2. 审计当前 docs 结构
    - 列出 `docs/` 根目录下所有文件和子目录。

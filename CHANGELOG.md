@@ -6,6 +6,23 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.26.1（2026-07-03）
+
+派生同步运行记录路径分离（sync-records-location）：将模板同步运行记录与项目开发文档分离，降低理解成本。
+
+- **路径变更**：同步运行记录推荐路径从 `docs/archive/template-sync/` 改为 `sync-records/template-sync/`，与 `docs/` 项目事实层分离。
+- **`template-docs/derived-sync-report-template.md`**：推荐路径更新 + 补充临时续接说明（`.ai/session-handoff.md` 不替代长期同步运行记录）。
+- **`ai/prompts/maintainers/12-sync-template.md`**：同步 Prompt 路径更新，区分长期记录（`sync-records/`）与临时续接（`.ai/session-handoff.md`）。
+- **`ai/commands/sync-methodology.md`**：命令文档路径更新 + 说明长期记录与临时续接区别。
+- **`ai/prompts/maintainers/15-post-sync-cleanup.md`**：同步后整理 Prompt 兼容新旧两个路径扫描。
+- **`ai/prompts/maintainers/18-submit-feedback.md`**：反馈汇集 Prompt 扫描源兼容新旧路径。
+- **`ai/commands/submit-feedback.md`**：反馈命令候选来源兼容新旧路径。
+- **`SOP.md`**：派生同步运行记录场景补充路径说明（长期记录路径 + 与项目文档分离）。
+- **`README.md`**：目录速览新增 `sync-records/` 说明（同步运行记录专用）。
+- 迁移策略：新记录默认写入 `sync-records/template-sync/`，旧项目 `docs/archive/template-sync/` 不强制迁移，扫描工具兼容新旧路径一段时间。
+- check-template 全过。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-sync-records-location.md`。
+
 ## v1.26.0（2026-07-03）
 
 会话续接场景化 + 被动中断裁决优先级（session-resume）：让「读取续接点 / 继续上次 / 换 CLI 接手」在多 CLI + 被动中断下更稳。

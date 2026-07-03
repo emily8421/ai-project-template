@@ -6,10 +6,10 @@
 本模板用于派生项目完成 `ai-project-template` 方法论同步后，记录真实同步过程、问题与可回流优化点。建议保存到派生项目：
 
 ```text
-docs/archive/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
+sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 ```
 
-如只是临时续接，可先写入 `.ai/session-handoff.md`；如发现可通用模板优化，再转写为去项目化 `_proposals/TEMPLATE-UPGRADE-*.md`。
+> 长期记录路径为 `sync-records/template-sync/`，与项目开发文档（`docs/`）分离，便于团队审计和回流提案扫描。若用户暂不想提交长期记录，可先写入 `.ai/session-handoff.md` 作为临时续接文件。
 
 ## 基本信息
 

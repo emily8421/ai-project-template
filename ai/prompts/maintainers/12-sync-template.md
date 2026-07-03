@@ -70,7 +70,7 @@
 14. 如有归档改动，运行 git status 并确认只移动提案记录，不改业务文件。
 15. 生成派生同步运行记录：
    - 读取 `template-docs/derived-sync-report-template.md`。
-   - 推荐保存到 `docs/archive/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md`；如果用户暂不想提交长期记录，先写入 `.ai/session-handoff.md`。
+   - 推荐保存到 `sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md`（长期记录，与项目文档分离，便于审计和回流扫描）；如果用户暂不想提交长期记录，先写入 `.ai/session-handoff.md`。
    - 记录同步前版本、目标版本、同步分支、dry-run / commit / check-derived-sync 命令、同步结果、是否新增 / 刷新 `ai/doc-standards/00-09`、是否残留旧 `docs/_scaffold/`、遇到的问题和后续动作。
 16. 从运行记录归纳可优化点：
    - 区分项目专属问题、环境问题和模板方法论问题。
