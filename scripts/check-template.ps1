@@ -1,4 +1,4 @@
-<#
+﻿<#
 check-template.ps1 - Windows PowerShell entrypoint for template self-check.
 
 Usage:
@@ -175,6 +175,7 @@ function Invoke-NativeTemplateCheck {
       "ai/implementation-lifecycle-rules.md",
       "ai/project-rules.md",
       "ai/commands/scenario.md",
+      "ai/commands/docs-evaluation.md",
       "docs/README.md",
       "docs/env/README.md",
       "docs/inputs/README.md",
@@ -241,6 +242,36 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/commands/scenario.md" "scenario-guides\.md" "scenario command routes to scenario-guides"
   Require-Contains "README.md" "scenario-guides" "README points to scenario-guides"
   Require-Contains "ai/document-lifecycle-rules.md" "mermaid" "document-lifecycle defaults diagrams to mermaid"
+  Require-Contains "ai/document-lifecycle-rules.md" "Inputs-first" "document-lifecycle defines inputs-first mode"
+  Require-Contains "ai/document-lifecycle-rules.md" "input-review-report\.md" "document-lifecycle defines vision readiness review"
+  Require-Contains "docs/README.md" "input-review-report\.md" "docs README defines inputs review report"
+  Require-Contains "docs/inputs/README.md" "input-review-report\.md" "docs inputs README defines input review report"
+  Require-Contains "ai/prompts/docs/01-review-inputs.md" "Product Vision" "input review prompt checks Product Vision readiness"
+  Require-Contains "ai/prompts/docs/01-review-inputs.md" "input-review-report\.md" "input review prompt includes minimal supplement checklist"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "Not Ready" "generate docs prompt blocks not-ready input"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "product-vision\.md" "generate docs prompt creates product vision first"
+  Require-Contains "ai/commands/docs-evaluation.md" "Go" "docs-evaluation command defines Go conclusion"
+  Require-Contains "ai/prompts/review/19-docs-evaluation.md" "Go" "docs-evaluation prompt defines Go conclusion"
+  Require-Contains "ai/prompts/review/19-docs-evaluation.md" "E1" "docs-evaluation prompt defines phase evaluation codes"
+  Require-Contains "template-sync.json" "ai/commands/docs-evaluation\.md" "template-sync includes docs-evaluation command"
+  Require-Contains "template-sync.json" "ai/prompts/review/19-docs-evaluation\.md" "template-sync includes docs-evaluation prompt"
+  Require-Contains "template-docs/scenario-guides.md" "docs-evaluation" "scenario guides include docs-evaluation"
+  Require-Contains "ai/document-lifecycle-rules.md" "E1" "document lifecycle includes evaluation codes"
+  Require-Contains "ai/implementation-lifecycle-rules.md" "Conditional Go" "implementation lifecycle references evaluation result"
+  Require-Contains "ai/global-rules.md" "AI" "global rules mentions AI recommendations"
+  Require-Contains "ai/document-lifecycle-rules.md" "C-001" "document lifecycle defines confirmation item structure"
+  Require-Contains "ai/session-rules.md" "AI" "session rules define confirmation item structure"
+  Require-Contains "ai/doc-standards/README.md" "AI" "doc standards define confirmation item recommendations"
+  Require-Contains "ai/commands/README.md" "AI" "commands README mentions confirmation recommendations"
+  Require-Contains "docs/03-prd.md" "C-001" "docs templates include structured confirmation items"
+  Require-Contains "ai/prompts/review/10-docs-checklist.md" "AI" "docs checklist validates confirmation recommendations"
+  Require-Contains "ai/global-rules.md" "frontend-interaction\.md" "global-rules defines frontend interaction design path"
+  Require-Contains "ai/document-lifecycle-rules.md" "前端交互设计触发规则" "document lifecycle defines frontend interaction trigger rules"
+  Require-Contains "docs/README.md" "docs/design/frontend-interaction\.md" "docs README defines frontend interaction design path"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "docs/design/frontend-interaction\.md" "generate docs prompt handles frontend interaction design"
+  Require-Contains "ai/prompts/review/10-docs-checklist.md" "前端交互设计" "docs checklist validates frontend interaction design"
+  Require-Contains "ai/prompts/review/16-docs-system-audit.md" "前端交互" "docs system audit validates frontend interaction design"
+  Require-Contains "template-docs/scenario-guides.md" "补前端交互设计" "scenario guides route frontend interaction design requests"
   Require-Contains "ai/index.md" "ai/implementation-lifecycle-rules\.md" "ai/index includes implementation lifecycle rules"
   Require-Contains "ai/global-rules.md" "ai/implementation-lifecycle-rules\.md" "global-rules points to implementation lifecycle rules"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Phase" "implementation lifecycle defines Phase layer"

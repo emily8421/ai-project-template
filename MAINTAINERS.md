@@ -113,12 +113,18 @@ Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-t
 - 保留「模板关系 + VERSION」（追溯同步版本）。
 - `new-project.sh` 生成初版（含占位，提示项目填写）；sync 不覆盖（项目专属）。
 
+### 派生项目 CI（项目专属，**不同步**）
+
+模板仓 `.github/workflows/template-check.yml` 只用于模板仓自身，会运行 `scripts/check-template.sh`。派生项目普通 PR 不应继承该 workflow，否则可能被模板仓 README、占位文档或提案收件箱规则误拦截。
+
+`scripts/new-project.sh` 会生成派生项目版 `.github/workflows/project-check.yml`：普通 PR / push 保留 `git diff --check`；仅当最新提交信息匹配 `sync template vX.Y.Z from ai-project-template` 时，运行 `scripts/check-derived-sync.sh HEAD`。旧派生项目若仍保留 `.github/workflows/template-check.yml`，应在同步后整理中迁移或禁用模板仓自检步骤。
+
 ## 7. 文档分区维护
 
 `docs/README.md` 是派生项目内文档分区规则。维护该文件时遵守：
 
 - `docs/` 根目录只放 `00-09` 核心文档和 `README.md`。
-- 输入类源文档放 `docs/vision/`；尚未归类的原始输入包放 `docs/inputs/`。
+- 用户原始输入统一先放 `docs/inputs/`；经评审、补齐和确认后的产品愿景叙事放 `docs/vision/`。
 - 子系统详细设计放 `docs/design/`。
 - 决策记录放 `docs/decisions/`。
 - 调研 / 实验 / 运行环境 / 会议记录分别放对应子目录。

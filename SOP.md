@@ -44,7 +44,7 @@
 | A10/C4 | 生成提交信息 | `/run commit-message` | `git-guide.md` §3 | `ai/prompts/git/06-commit-message.md` | 基于实际 diff 生成清晰 commit message |
 | A11 | Bug 修复 | `/run fix-bug` | `docs/08-dev-plan.md`、对应任务说明 | `ai/prompts/dev/05-fix-bug.md` | 先定位原因，再做最小修复 |
 | A12 | Sprint 验收总结 | `/run sprint-summary` | `docs/08-dev-plan.md`、`docs/09-verification.md` | `ai/prompts/dev/09-sprint-summary.md` | 对照验收标准总结是否完成 |
-| A13 | 派生项目同步模板 | `/run sync-methodology` | `git-guide.md` §5 | `ai/prompts/maintainers/12-sync-template.md` | 先判定同步路径；根 `README.md` 不参与下行同步；同步后只做派生边界检查，不跑模板自检，并用 `template-docs/derived-sync-report-template.md` 留运行记录 |
+| A13 | 派生项目同步模板 | `/run sync-methodology` | `git-guide.md` §5 | `ai/prompts/maintainers/12-sync-template.md` | 先判定同步路径；根 `README.md` 不参与下行同步；同步后只做派生边界检查，不跑模板自检；派生项目普通 PR 使用 `project-check.yml`，不用模板仓 `template-check.yml`；并用 `template-docs/derived-sync-report-template.md` 留运行记录 |
 | A13 | 同步后项目整理 | `/run post-sync-cleanup` | `docs/README.md`、`ai/project-rules.md`、`docs/env/local-env.md` | `ai/prompts/maintainers/15-post-sync-cleanup.md` | 同步方法论后，先出迁移计划，确认后再执行 |
 | A13/C6 | 派生同步运行记录 | 无 | `template-docs/derived-sync-report-template.md` | `ai/prompts/maintainers/12-sync-template.md` | 真实同步后记录命令、结果、问题和可回流优化点；项目事实留在派生项目，回流提案必须去项目化；长期记录保存到 `sync-records/template-sync/`，与 `docs/` 项目文档分离 |
 | A14 | Phase 升级评估 | `/run phase-upgrade` | `docs/03-prd.md`、`ai/project-rules.md` §1 | `ai/prompts/planning/08-phase-upgrade.md` | 评估当前完成度，再草拟下一 Phase 边界 |
