@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.0（2026-07-04）
+
+实现生命周期规则（implementation-lifecycle）第一步：新增实现侧权威规则入口，补齐文档体系之后的阶段规划、Sprint / Task、编码执行、分层验证和验收留痕闭环。
+
+- **新增 `ai/implementation-lifecycle-rules.md`**：定义 `Phase → Sprint → Task → Test Case → Commit / PR → 验收记录` 追溯链，明确阶段规划、Sprint / Task 拆分、单任务执行、测试与验证分层、验收留痕和代码事实反向同步规则。
+- **`ai/index.md`**：将实现生命周期规则加入 AI 必读清单，位于 `document-lifecycle-rules` 之后。
+- **`ai/global-rules.md`**：文档驱动开发原则补充实现生命周期规则指针，避免规则链只停留在“开发计划 → 代码”。
+- **同步与自检**：`template-sync.json` 与 `scripts/sync-template.sh` 兜底清单加入新规则；`scripts/check-template.sh` / `.ps1` 增加必读入口、同步清单和关键内容断言。
+- 本版本先建立核心规则与同步入口；`docs/08-dev-plan.md`、`docs/09-verification.md`、A9 专门 prompt、Scenario Guide A9-A12 增强留待后续 PR 分步落地。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-implementation-lifecycle.md`。
+
 ## v1.26.2（2026-07-03）
 
 scripts 说明与模板自检可维护性：补齐 scripts README 说明，明确 `.sh` / `.ps1` 主从关系与 fallback 权威边界。

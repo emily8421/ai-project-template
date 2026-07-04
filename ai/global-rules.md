@@ -15,6 +15,7 @@
    `Scenario → 用户需求 → SRS → PRD → 架构 → 技术方案 → 数据库设计 → API设计 → 开发计划 → 代码`。
    其中"数据库设计 / API设计"仅当本项目涉及持久化 / 对外接口时才经此环节；无则按 `ai/project-rules.md` §3 跳过 `docs/06`、`docs/07`。
    文档生成、追溯链、变更传播和多入口裁剪细则见 `ai/document-lifecycle-rules.md`。
+   阶段规划、Sprint / Task 拆分、编码执行、分层验证和验收留痕细则见 `ai/implementation-lifecycle-rules.md`。
    禁止直接从想法生成代码。
 2. **小步快跑**：一个功能 = 一个任务 = 一次提交。禁止一次实现整个系统。
 3. **先设计后实现**：任何模块开发前必须先有设计说明，再允许生成代码。

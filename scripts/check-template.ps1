@@ -172,6 +172,7 @@ function Invoke-NativeTemplateCheck {
       "ai/index.md",
       "ai/global-rules.md",
       "ai/document-lifecycle-rules.md",
+      "ai/implementation-lifecycle-rules.md",
       "ai/project-rules.md",
       "ai/commands/scenario.md",
       "docs/README.md",
@@ -240,6 +241,11 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/commands/scenario.md" "scenario-guides\.md" "scenario command routes to scenario-guides"
   Require-Contains "README.md" "scenario-guides" "README points to scenario-guides"
   Require-Contains "ai/document-lifecycle-rules.md" "mermaid" "document-lifecycle defaults diagrams to mermaid"
+  Require-Contains "ai/index.md" "ai/implementation-lifecycle-rules\.md" "ai/index includes implementation lifecycle rules"
+  Require-Contains "ai/global-rules.md" "ai/implementation-lifecycle-rules\.md" "global-rules points to implementation lifecycle rules"
+  Require-Contains "ai/implementation-lifecycle-rules.md" "Phase" "implementation lifecycle defines Phase layer"
+  Require-Contains "ai/implementation-lifecycle-rules.md" "Test Case" "implementation lifecycle defines test case layer"
+  Require-Contains "ai/implementation-lifecycle-rules.md" "Commit / PR" "implementation lifecycle defines commit and PR layer"
   Require-Contains "ai/project-rules.md" "mermaid" "project-rules includes diagram format preference"
 
   $syncFiles = Get-SyncFiles
