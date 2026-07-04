@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.5（2026-07-04）
+
+Issue 提案收件箱与维护者 triage 场景：补齐派生项目通过 GitHub issue 回流提案后的模板侧处理机制。
+
+- **`template-docs/scenario-guides.md` C1**：从“处理 `_proposals` 提案”扩展为“处理提案收件箱”，明确同时读取 `_proposals/`、带 `proposal` / `feedback` 标签的 issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue。
+- **`ai/commands/template-proposal-summary.md`**：适用场景、必读文件和执行流程补充 issue 查询、标签 triage、去项目化审查与 issue 关闭计划。
+- **治理文档**：`CONTRIBUTING.md` 与 `_proposals/README.md` 明确 GitHub issue 收件箱和 `_proposals/` 文件收件箱的关系。
+- **自检**：`scripts/check-template.sh` 增加关键断言，防止 C1 / command / governance 回退成只读 `_proposals/`。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-issue-proposal-triage-flow.md`。
+
 ## v1.27.4（2026-07-04）
 
 模板自检脚本可维护性整理：在不拆分脚本、不改变检查语义的前提下，先完成 `check-template.sh` 小步分组与重复断言收敛。
