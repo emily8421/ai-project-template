@@ -743,7 +743,7 @@ require_contains "ai/global-rules.md" 'ai/commands/README\.md' "global-rules 指
 require_contains "ai/global-rules.md" 'ai/session-rules\.md' "global-rules 指向会话续接规则"
 require_contains "ai/global-rules.md" 'ai/implementation-lifecycle-rules\.md' "global-rules 指向实现生命周期规则"
 require_file "ai/implementation-lifecycle-rules.md"
-require_contains "ai/implementation-lifecycle-rules.md" 'Phase → Sprint → Task → Test Case → Commit / PR → 验收记录' "implementation-lifecycle 定义实现追溯链"
+require_contains "ai/implementation-lifecycle-rules.md" 'REQ → Phase → Sprint / Task → Test Case → Commit / PR' "implementation-lifecycle 定义实现追溯链"
 require_contains "ai/implementation-lifecycle-rules.md" '测试与验证分层' "implementation-lifecycle 定义测试与验证分层"
 require_contains "ai/implementation-lifecycle-rules.md" '代码事实反向同步' "implementation-lifecycle 定义代码事实反向同步"
 require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules 定义新续接文件"
