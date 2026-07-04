@@ -252,6 +252,12 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "docs/09-verification.md" "BUG-001" "09 verification includes bug regression record"
   Require-Contains "ai/prompts/planning/19-plan-phases-and-sprints.md" "docs/08-dev-plan\.md" "A9 planning prompt outputs 08 draft"
   Require-Contains "ai/prompts/planning/19-plan-phases-and-sprints.md" "docs/09-verification\.md" "A9 planning prompt outputs 09 draft"
+  Require-Contains "template-docs/scenario-guides.md" "M0" "scenario guides include M0 help entry"
+  Require-Contains "template-docs/scenario-guides.md" "19-plan-phases-and-sprints" "scenario guides point A9 to planning prompt"
+  Require-Contains "template-docs/scenario-guides.md" "check-derived-sync" "scenario guides describe derived sync validation"
+  Require-Contains "ai/prompts/dev/02-run-task.md" "Test Case" "run task prompt requires test case traceability"
+  Require-Contains "ai/prompts/dev/09-sprint-summary.md" "docs/09-verification\.md" "sprint summary prompt writes verification record"
+  Require-Contains "template-docs/beginner-guide.md" "ai/implementation-lifecycle-rules\.md" "beginner guide points to implementation lifecycle"
   Require-Contains "ai/project-rules.md" "mermaid" "project-rules includes diagram format preference"
 
   $syncFiles = Get-SyncFiles

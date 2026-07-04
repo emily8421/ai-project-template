@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.2（2026-07-04）
+
+Scenario Guide 场景体系整理：让场景层承接 implementation lifecycle，并补齐 HELP / 能力索引与维护者场景说明。
+
+- **`template-docs/scenario-guides.md`**：新增 M0 HELP / 能力索引 / 角色选择；A9 改为正式指向 `implementation-lifecycle-rules` 与 `19-plan-phases-and-sprints`；A10/A12 强化 Test Case、验证包和 Sprint 验收包；C5/C6/C7 明确适用范围、跨仓同步验收与模板能力设计流程。
+- **`ai/prompts/dev/02-run-task.md`**：执行任务前要求读取实现生命周期规则，关联 REQ / Sprint / Task / Test Case、验证包和 Phase 边界。
+- **`ai/prompts/dev/09-sprint-summary.md`**：Sprint 总结增加验证证据、09 验收记录 / Sprint 验收包、风险与未验证项输出。
+- **`template-docs/beginner-guide.md`**：补实现阶段入口说明，指向 A9 规划 prompt、A10 执行和 A12 验收。
+- **自检**：`scripts/check-template.sh` / `.ps1` 增加 M0、A9 prompt、C6 跨仓、C7 模板能力流程、dev prompt 和 beginner guide 断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-scenario-guide-clarity.md`，并吸收 v1.27.0 / v1.27.1 的 implementation lifecycle 新入口。
+
 ## v1.27.1（2026-07-04）
 
 实现生命周期规则第二步：让开发计划、验证计划和 A9 规划 Prompt 承接 v1.27.0 的核心实现生命周期规则。
