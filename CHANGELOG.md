@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.4（2026-07-04）
+
+模板自检脚本可维护性整理：在不拆分脚本、不改变检查语义的前提下，先完成 `check-template.sh` 小步分组与重复断言收敛。
+
+- **`scripts/check-template.sh`**：补充脚本结构说明，明确基础 helper、专项检查函数与主流程分组。
+- **脚本文件检查**：新增 `require_files` helper，将连续脚本存在性断言收敛为列表式调用。
+- **专项检查函数**：新增 `check_script_entrypoints` 集中维护 `.ps1` 入口、fallback 与权威边界断言；新增 `check_project_bootstrap_scripts` 集中维护 `new-project`、环境采集、前置检查与 bootstrap 断言。
+- **提案状态**：继续保留 `_proposals/TEMPLATE-UPGRADE-scripts-self-check-maintainability.md`，后续再评估是否拆分 `scripts/checks/*.sh`。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-scripts-self-check-maintainability.md`。
+
 ## v1.27.3（2026-07-04）
 
 跨 AI CLI 修改前确认机制：强化项目级写入确认协议，并补充 Claude / Codex / IDE 工具配置建议与 Git 审计兜底。
