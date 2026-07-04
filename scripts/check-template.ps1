@@ -246,6 +246,12 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/implementation-lifecycle-rules.md" "Phase" "implementation lifecycle defines Phase layer"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Test Case" "implementation lifecycle defines test case layer"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Commit / PR" "implementation lifecycle defines commit and PR layer"
+  Require-Contains "docs/08-dev-plan.md" "Test Case" "08 dev plan defines test case traceability"
+  Require-Contains "docs/08-dev-plan.md" "tasks/task-00X-xxx\.md" "08 dev plan includes task split file path"
+  Require-Contains "docs/09-verification.md" "TC-ID" "09 verification includes test case evidence"
+  Require-Contains "docs/09-verification.md" "BUG-001" "09 verification includes bug regression record"
+  Require-Contains "ai/prompts/planning/19-plan-phases-and-sprints.md" "docs/08-dev-plan\.md" "A9 planning prompt outputs 08 draft"
+  Require-Contains "ai/prompts/planning/19-plan-phases-and-sprints.md" "docs/09-verification\.md" "A9 planning prompt outputs 09 draft"
   Require-Contains "ai/project-rules.md" "mermaid" "project-rules includes diagram format preference"
 
   $syncFiles = Get-SyncFiles

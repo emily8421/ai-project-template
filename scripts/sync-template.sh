@@ -75,6 +75,7 @@ DEFAULT_SYNC_FILES=(
   "ai/prompts/maintainers/12-sync-template.md"
   "ai/prompts/maintainers/15-post-sync-cleanup.md"
   "ai/prompts/planning/08-phase-upgrade.md"
+  "ai/prompts/planning/19-plan-phases-and-sprints.md"
   "ai/prompts/README.md"
   "ai/prompts/review/03-project-review.md"
   "ai/prompts/review/10-docs-checklist.md"

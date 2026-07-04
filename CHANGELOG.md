@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.1（2026-07-04）
+
+实现生命周期规则第二步：让开发计划、验证计划和 A9 规划 Prompt 承接 v1.27.0 的核心实现生命周期规则。
+
+- **`docs/08-dev-plan.md`**：补充 Phase / Sprint / Task 定义、测试等级 / 验证包、Sprint 完成包、任务拆分决策树和提交 / PR 粒度说明。
+- **`docs/09-verification.md`**：补充测试等级矩阵、Phase 测试大纲、Sprint 验收包、缺陷与回归记录、验证证据字段。
+- **新增 `ai/prompts/planning/19-plan-phases-and-sprints.md`**：作为 A9 阶段 / Sprint / 验证闭环规划 Prompt，先输出草稿等待确认，不直接修改文件。
+- **同步与自检**：`template-sync.json` 加入新 Prompt；`scripts/check-template.sh` / `.ps1` 增加 08、09、A9 Prompt 关键断言。
+- 后续仍待处理：Scenario Guide A9-A12、`run-dev-task` / `sprint-summary` prompt、`beginner-guide` 引导文案增强。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-implementation-lifecycle.md`。
+
 ## v1.27.0（2026-07-04）
 
 实现生命周期规则（implementation-lifecycle）第一步：新增实现侧权威规则入口，补齐文档体系之后的阶段规划、Sprint / Task、编码执行、分层验证和验收留痕闭环。
