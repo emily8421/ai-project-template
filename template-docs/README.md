@@ -6,7 +6,7 @@
 
 | 文档 | 看什么 |
 |---|---|
-| `scenario-guides.md` | 23 个场景剧本：说一个场景意图 → AI 给「做什么 + 为什么」引导计划 |
+| `scenario-guides.md` | 场景剧本：说一个场景意图 → AI 给「做什么 + 为什么」引导计划 |
 | `beginner-guide.md` | 第一次用的全貌心智模型（是什么 / 准备 / 怎么用 / 输入→文档→代码 / 目录 / 常见错误） |
 | `env-setup.md` | 装基础工具与环境（check-prereqs / bootstrap） |
 | `ai-cli-setup.md` | 装 AI CLI（Claude / Codex）+ 公司中转站衔接 |
