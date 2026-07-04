@@ -48,6 +48,8 @@ docs/inputs 原始输入包
 
 关键阶段转换前可使用 `ai/prompts/review/19-docs-evaluation.md` 做文档评估，输出 `Go / Conditional Go / No Go`。评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-docs-evaluation-<scope>.md`，不得写入 `docs/` 根目录，也不得替代 00-09 正式修订。
 
+生成或修订 `docs/05-tech-spec.md` 前，若项目涉及真实运行依赖（如 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API、重型 SDK），应先使用 `ai/prompts/review/20-tech-env-evaluation.md` 做技术路线与环境支撑评估，或在 `ai/project-rules.md` §2.5 / `docs/05-tech-spec.md` 说明跳过理由、风险和补做时点。技术环境评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不得替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。`collect-env` 只采集事实，不等于评估通过。
+
 | 评估码 | 阶段转换 | 核心问题 |
 |---|---|---|
 | E1 | 输入 / 愿景 → 需求阶段 | 输入是否足以生成 00-03；是否有来源锚点与需求编号 |
@@ -114,10 +116,11 @@ docs/inputs 原始输入包
 | `docs/02-srs.md` | 需求 | `01`、`00` | 系统需求规格；REQ 编号；当前阶段可验证口径；后续阶段粗粒度 | 不引入 `01` 没有的功能；不把远期写成当前阶段 | `03`、`09` |
 | `docs/03-prd.md` | 需求 / 产品 | `02`、`01`、`project-rules` | 功能范围、优先级、阶段路线图；阶段标签唯一来源 | 不绕过 REQ 自行定功能；不把 Demo 写成 MVP | `project-rules §1`、`04-09` |
 | `docs/04-architecture.md` | 总体设计 | `03`、`02`、`project-rules`、`docs/env/*` | 系统模块、边界、运行拓扑、子系统划分 | 不新增 PRD 外模块；不忽略资源约束 | `05-09`、`docs/design/*` |
-| `docs/05-tech-spec.md` | 总体设计 | `04`、`03`、`project-rules`、`docs/env/*` | 技术选型、版本、资源评估、降级 / Mock、服务器预案 | 不虚构依赖、模型、接口或资源；不把候选写成已用 | `06-09`、代码 |
+| `docs/05-tech-spec.md` | 总体设计 | `04`、`03`、`project-rules`、`docs/env/*`、技术环境评估报告（如触发） | 技术选型、版本、资源评估、降级 / Mock、服务器预案 | 不虚构依赖、模型、接口或资源；不把候选写成已用；不把环境采集当作评估通过 | `06-09`、代码 |
 | `docs/06-db-design.md` | 详细设计 | `02/03`、`04/05` | 表、字段、索引、约束；每张表追溯 REQ / 模块 | 不建无需求来源的表；不提前写死远期字段细节 | 代码、迁移、测试 |
 | `docs/07-api-spec.md` | 详细设计 | `02/03`、`04/05` | 接口契约、请求响应、权限、错误码 | 不建孤立接口；不暴露权限边界外能力 | 代码、集成测试 |
 | `docs/design/*` | 详细设计 | `04/05`、对应 REQ、`06/07` | 非平凡子系统流程、边界、状态机、失败处理；UI 型项目可包含前端交互设计 | 不替代 04/05；不提前实现远期细节；不新增未授权需求 / 接口 / 验收目标 | `08/09`、代码 |
+| `docs/research/*tech-env-evaluation*.md` | 技术评估留痕 | `docs/env/*`、`04/05`、依赖文件、启动脚本、Docker / 模型配置 | 记录技术路线候选、依赖安装 / 导入 / 最小运行验证、资源 / 网络 / 权限风险和 Go / Conditional Go / No-Go 结论 | 不替代 05；不替代 local-env；不把未执行验证写成已通过 | `05/09`、依赖文件、首个编码 Sprint |
 
 ### 5.1 前端交互设计触发规则
 

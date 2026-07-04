@@ -43,11 +43,19 @@
 
 ## 4. 运行环境与资源评估
 
-**撰写提要**：读取 `docs/env/local-env.md`，说明本机 Demo 是否可运行、资源瓶颈、降级策略和服务器预案。
+**撰写提要**：读取 `docs/env/local-env.md`，说明本机 Demo 是否可运行、资源瓶颈、降级策略和服务器预案。若项目涉及真实运行依赖，引用 `docs/research/*tech-env-evaluation*.md` 的 Go / Conditional Go / No-Go 结论；缺失时写明跳过理由、风险和补做时点。
 
 | 运行项 | 本机要求 | 当前本机是否满足 | 降级 / Mock | 服务器预案 |
 |---|---|---|---|---|
 |  |  | 是 / 否 / 待确认 |  |  |
+
+### 4.1 技术环境评估结论（如触发）
+
+- 评估报告：`docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md` / 暂无（原因：）
+- 评估结论：Go / Conditional Go / No-Go / 待评估
+- 已验证项：依赖安装 / 导入 / 最小运行 / build / dev server / Docker / 模型加载
+- 未验证项与补做时点：
+- 对 09 验证计划和依赖文件的影响：
 
 ## 5. Phase 技术约束
 
