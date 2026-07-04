@@ -2,10 +2,10 @@
 
 > 来源：模板维护者。
 > 类型：模板仓库内直接发起的模板优化提案。
-> 状态：部分落地；v1.26.2 已完成 scripts 说明与 fallback 权威边界，`check-template.sh` 可维护性整理待后续排期。
+> 状态：部分落地；v1.26.2 已完成 scripts 说明与 fallback 权威边界，v1.27.4 已完成 `check-template.sh` 小步分组整理与重复断言收敛；是否拆分 `scripts/checks/*.sh` 留待后续评估。
 > 覆盖问题：scripts README 说明不全；`.sh` / `.ps1` 关系不清；`check-template.sh` 体积与自检体系可维护性。
 
-## 0. 落地状态（2026-07-03）
+## 0. 落地状态（2026-07-04）
 
 已随 `change/scripts-self-check-v1.26.2` 主体落地：
 
@@ -16,8 +16,15 @@
 
 尚未落地，保留后续排期：
 
-- `check-template.sh` 分组整理 / 表驱动化。
 - 是否拆分为 `scripts/checks/*.sh` 并由 `check-template.sh` 作为总入口调度。
+
+已随 `change/check-template-maintainability` 小步落地：
+
+- `scripts/check-template.sh` 增加结构说明，区分基础 helper、专项检查函数与主流程分组。
+- 新增 `require_files` helper，将 scripts 文件存在性断言改为列表式调用。
+- 新增 `check_script_entrypoints`，集中维护 `.ps1` 入口、fallback 与权威边界断言。
+- 新增 `check_project_bootstrap_scripts`，集中维护 `new-project`、环境采集、前置检查与 bootstrap 断言。
+- `CHANGELOG.md` 与 `VERSION` 更新到 `v1.27.4`。
 
 因此本提案暂不归档；若后续决定把已完成部分归档，应先拆出新的 `TEMPLATE-UPGRADE-*check-template-maintainability.md` 承接未完成项。
 
