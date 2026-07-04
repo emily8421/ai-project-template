@@ -514,6 +514,7 @@ require_contains "template-sync.json" '"files"' "template-sync.json 包含同步
 require_contains "template-sync.json" '"CHANGELOG\.md"' "template-sync 同步 CHANGELOG"
 require_contains "template-sync.json" '"MAINTAINERS\.md"' "template-sync 同步 MAINTAINERS"
 require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "template-sync 同步文档生命周期规则"
+require_contains "template-sync.json" '"ai/implementation-lifecycle-rules\.md"' "template-sync 同步实现生命周期规则"
 require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
 require_contains "template-sync.json" '"ai/doc-standards/README\.md"' "template-sync 同步 doc-standards README"
 require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
@@ -736,9 +737,15 @@ require_contains "ai/doc-standards/README.md" 'Document Standards' "doc-standard
 
 # AI CLI 使用体验入口：快捷命令与会话续接必须贯穿规则、Prompt、同步清单和人读文档。
 require_contains "ai/index.md" 'ai/session-rules\.md' "ai/index 纳入会话续接规则"
+require_contains "ai/index.md" 'ai/implementation-lifecycle-rules\.md' "ai/index 纳入实现生命周期规则"
 require_contains "ai/index.md" 'ai/commands/README\.md' "ai/index 纳入 AI 快捷命令索引"
 require_contains "ai/global-rules.md" 'ai/commands/README\.md' "global-rules 指向快捷命令路由"
 require_contains "ai/global-rules.md" 'ai/session-rules\.md' "global-rules 指向会话续接规则"
+require_contains "ai/global-rules.md" 'ai/implementation-lifecycle-rules\.md' "global-rules 指向实现生命周期规则"
+require_file "ai/implementation-lifecycle-rules.md"
+require_contains "ai/implementation-lifecycle-rules.md" 'REQ → Phase → Sprint / Task → Test Case → Commit / PR' "implementation-lifecycle 定义实现追溯链"
+require_contains "ai/implementation-lifecycle-rules.md" '测试与验证分层' "implementation-lifecycle 定义测试与验证分层"
+require_contains "ai/implementation-lifecycle-rules.md" '代码事实反向同步' "implementation-lifecycle 定义代码事实反向同步"
 require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules 定义新续接文件"
 require_contains "ai/session-rules.md" 'NEXT-STEPS\.md' "session-rules 兼容 NEXT-STEPS"
 require_contains ".gitignore" '\.ai/session-handoff\.md' ".gitignore 排除新续接文件"

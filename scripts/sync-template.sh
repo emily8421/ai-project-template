@@ -37,6 +37,7 @@ DEFAULT_SYNC_FILES=(
   "ai/index.md"
   "ai/global-rules.md"
   "ai/document-lifecycle-rules.md"
+  "ai/implementation-lifecycle-rules.md"
   "ai/session-rules.md"
   "ai/doc-standards/README.md"
   "ai/commands/README.md"
