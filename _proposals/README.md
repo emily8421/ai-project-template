@@ -1,6 +1,6 @@
 # 模板优化提案收件箱
 
-`_proposals/` 是 `ai-project-template` 模板仓库专属的临时收件箱，用于收集派生项目中沉淀出的、已经去项目化的模板优化提案，也用于模板仓库内直接发起的待处理模板改动提案。
+`_proposals/` 是 `ai-project-template` 模板仓库专属的本地临时收件箱，用于收集派生项目中沉淀出的、已经去项目化的模板优化提案，也用于模板仓库内直接发起的待处理模板改动提案。GitHub issue 是另一类提案收件箱：派生项目可通过 `submit-proposal` / `submit-feedback` 把提案提交为带 `proposal` / `feedback` 标签的 issue；维护者处理 C1 时必须把 issue 与本目录文件一并纳入汇总。
 
 任何需要修改项目模板的工作，都必须先形成 `TEMPLATE-UPGRADE-*.md` 提案；提案处理完成后应移动到 `_archive/proposals/` 归档。
 
@@ -26,10 +26,10 @@ TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox-patch.md
 
 1. 在派生项目或模板仓库中起草去项目化提案。
 2. 回到模板仓库先开维护分支，不要直接在本地 `main` 修改。
-3. 将待处理提案文件加入 `_proposals/`，或在同一 PR 中先新增提案再落地修改。
-4. 模板维护者使用 AI 读取 `_proposals/TEMPLATE-UPGRADE-*.md`，汇总分析后生成优化计划。
+3. 将待处理提案文件加入 `_proposals/`，或通过 GitHub issue 提交到模板仓；同一 PR 中也可以先新增提案再落地修改。
+4. 模板维护者使用 AI 读取 `_proposals/TEMPLATE-UPGRADE-*.md`、带 `proposal` / `feedback` 标签的 issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue，汇总分析后生成优化计划。
 5. 按优化计划修改模板文件，并通过 PR 评审合并。
-6. 提案处理完成后，从 `_proposals/` 清理已处理的提案文件，并移动到 `_archive/proposals/` 归档；未处理或延后处理的提案继续留在 `_proposals/`。
+6. 提案处理完成后，从 `_proposals/` 清理已处理的提案文件，并移动到 `_archive/proposals/` 归档；已处理 issue 应关闭，未处理或延后处理的提案继续留在 `_proposals/` 或保留 issue 标签 / 状态说明。
 
 ## 主动新增建议时怎么记提案
 
@@ -51,7 +51,7 @@ TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox-patch.md
 
 ## AI 汇总要求
 
-模板维护者 AI 处理本目录时，应先读取全部 `TEMPLATE-UPGRADE-*.md` 与可选 `*-patch.md`，再输出优化计划，至少包括：
+模板维护者 AI 处理提案收件箱时，应先读取全部 `TEMPLATE-UPGRADE-*.md`、可选 `*-patch.md`、带 `proposal` / `feedback` 标签的 issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue，再输出优化计划，至少包括：
 
 - 去重：多个提案是否表达同一优化。
 - 冲突：是否改同一文件、同一段落或版本号。
