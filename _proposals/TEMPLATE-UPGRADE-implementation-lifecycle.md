@@ -2,7 +2,7 @@
 
 > 来源：模板维护者。
 > 类型：模板仓库内直接发起的模板优化提案。
-> 状态：第一步落地中；当前分支先新增实现生命周期核心规则、必读入口、同步清单与自检断言，docs/08、docs/09、A9 prompt、Scenario Guide 增强留待后续 PR。
+> 状态：第二步落地中；v1.27.0 已新增实现生命周期核心规则，当前分支继续增强 docs/08、docs/09 与 A9 规划 prompt，Scenario Guide / dev prompt / beginner guide 增强留待后续 PR。
 > 覆盖问题：A9-A12 阶段 / Sprint / 实现链路；beginner guide 中“实现代码”规则缺口。
 
 ## 0. 落地状态（2026-07-04）
@@ -22,6 +22,21 @@
 - 增强 `docs/09-verification.md`。
 - 新增 A9 阶段 / Sprint 规划 prompt。
 - 更新 `template-docs/scenario-guides.md` A9-A12、`run-dev-task` / `sprint-summary` prompt、`beginner-guide` 引导文案。
+
+### 第二步（v1.27.1）落地中
+
+当前分支 `change/implementation-lifecycle-docs-08-09` 继续落地：
+
+- 增强 `docs/08-dev-plan.md`。
+- 增强 `docs/09-verification.md`。
+- 新增 `ai/prompts/planning/19-plan-phases-and-sprints.md`。
+- `template-sync.json` 与 `scripts/check-template.sh` / `.ps1` 加入新 Prompt 和关键断言。
+
+仍留待后续 PR：
+
+- 更新 `template-docs/scenario-guides.md` A9-A12。
+- 强化 `ai/prompts/dev/02-run-task.md`、`ai/prompts/dev/09-sprint-summary.md`。
+- 增强 `template-docs/beginner-guide.md` 对实现生命周期的入口说明。
 
 ## 1. 背景与问题
 
