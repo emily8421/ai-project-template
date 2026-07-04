@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.27.3（2026-07-04）
+
+跨 AI CLI 修改前确认机制：强化项目级写入确认协议，并补充 Claude / Codex / IDE 工具配置建议与 Git 审计兜底。
+
+- **`ai/project-rules.md` §6**：写入前确认要求细化为目的、影响范围、预计文件、变更摘要、风险与验证方式；批量 patch 必须列出全部文件；单次“直接修改”授权仅对当前任务和已说明范围生效。
+- **`ai/implementation-lifecycle-rules.md`**：单任务执行规则补充多文件 patch 逐项摘要、修改前后 `git status` 和必要时审阅 `git diff`。
+- **`template-docs/ai-cli-setup.md`**：新增“写入前确认与权限模式”，明确三层防线：项目规则、工具配置、Git 审计；Claude / Codex / Cursor 等具体配置以官方文档为准，不承诺模板可硬性拦截所有写入。
+- **写入类 Prompt**：`run-dev-task`、`fix-bug`、`edit-single-doc` 均要求写入前列出预计文件 / 变更摘要 / 风险 / 验证方式并等待确认，修改后输出 `git status` 摘要和文件清单。
+- **自检**：`scripts/check-template.sh` / `.ps1` 增加关键确认协议和三层防线断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-cross-cli-edit-confirmation.md`。
+
 ## v1.27.2（2026-07-04）
 
 Scenario Guide 场景体系整理：让场景层承接 implementation lifecycle，并补齐 HELP / 能力索引与维护者场景说明。

@@ -258,6 +258,12 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/dev/02-run-task.md" "Test Case" "run task prompt requires test case traceability"
   Require-Contains "ai/prompts/dev/09-sprint-summary.md" "docs/09-verification\.md" "sprint summary prompt writes verification record"
   Require-Contains "template-docs/beginner-guide.md" "ai/implementation-lifecycle-rules\.md" "beginner guide points to implementation lifecycle"
+  Require-Contains "ai/project-rules.md" "CLI" "project rules mention CLI permission boundary"
+  Require-Contains "ai/project-rules.md" "git diff" "project rules mention git diff audit"
+  Require-Contains "template-docs/ai-cli-setup.md" "approval" "AI CLI setup mentions approval mode"
+  Require-Contains "template-docs/ai-cli-setup.md" "sandbox" "AI CLI setup mentions sandbox mode"
+  Require-Contains "ai/prompts/dev/02-run-task.md" "git status" "run task prompt asks for git status summary"
+  Require-Contains "ai/prompts/dev/05-fix-bug.md" "git status" "fix bug prompt asks for git status summary"
   Require-Contains "ai/project-rules.md" "mermaid" "project-rules includes diagram format preference"
 
   $syncFiles = Get-SyncFiles
