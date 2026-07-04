@@ -2,15 +2,16 @@
 
 > **派生项目首次初始化时必须替换本文内容。** 本文件在模板仓库中只是撰写骨架，不是任何派生项目的真实愿景；不要把模板示例或占位文字当成项目事实。
 >
-> **产品愿景叙事，不直接驱动开发。** 本文是工程文档（`docs/00-09`、`docs/design/*`）的上游输入，描述完整产品形态、目标体验和长期边界；工程基准以 `docs/00-scenario.md`、`docs/01-user-requirements.md`、`docs/02-srs.md` 和 `docs/03-prd.md` 为准。
+> **产品愿景叙事，不直接驱动开发。** 本文通常由 `docs/inputs/` 原始材料经输入评审、愿景就绪评估和人工确认后提炼，是工程文档（`docs/00-09`、`docs/design/*`）的上游愿景锚点，描述完整产品形态、目标体验和长期边界；工程基准以 `docs/00-scenario.md`、`docs/01-user-requirements.md`、`docs/02-srs.md` 和 `docs/03-prd.md` 为准。
 >
-> 如果项目不是 Vision-first，请不要强行补愿景；在本文“启用状态”写明“未启用”，并把真实上游输入放入 `docs/inputs/`。AI 必须先用 `ai/prompts/docs/01-review-inputs.md` 评审输入材料，再用 `ai/prompts/docs/00-generate-or-complete-docs.md` 生成 / 补齐文档体系。
+> 普通用户的真实上游输入默认放入 `docs/inputs/`。AI 必须先用 `ai/prompts/docs/01-review-inputs.md` 评审输入材料是否足以生成 / 更新本文；不足时输出 `docs/inputs/input-review-report.md` 和最小补充清单，补齐后复评，再用 `ai/prompts/docs/00-generate-or-complete-docs.md` 生成 / 补齐文档体系。
 
 ## 0. 启用状态与替换说明
 
-**填写要求**：派生项目创建后先处理本节，二选一：
-- Vision-first：写“已启用”，并确认本文已替换为本项目真实愿景。
-- 非 Vision-first：写“未启用”，说明真实输入位置（如 `docs/inputs/initial-brief.md`、客户 PRD、任务单或现有系统说明）。
+**填写要求**：派生项目创建后先处理本节，按实际入口填写：
+- Inputs-first 提炼：写“已启用”，说明来源输入位置、输入评审结论和仍待确认项。
+- Vision-first 兼容：写“已启用”，并确认本文已替换为本项目真实愿景，且能追溯到输入来源或人工确认。
+- 暂不启用：写“未启用”，说明真实输入位置（如 `docs/inputs/initial-brief.md`、客户 PRD、任务单或现有系统说明），并先回到输入评审闭环。
 
 **模板提示**：不要只在本文件追加真实内容而保留模板占位；应整体替换为项目愿景，或明确未启用。
 

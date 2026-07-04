@@ -29,7 +29,7 @@
 
 ## 3. 阶段规划规则
 
-阶段规划发生在文档体系成型并通过审计之后，通常对应 Scenario A9。
+阶段规划发生在文档体系成型并通过评估 / 审计之后，通常对应 Scenario A9。若刚经历关键阶段转换，建议先用 `ai/prompts/review/19-docs-evaluation.md` 做整体或阶段评估；结论为 `No Go` 时不得进入 Sprint 规划，`Conditional Go` 必须列明条件、风险接受口径和待人工确认项。
 
 1. 输入必须至少包括 `docs/03-prd.md`、`docs/04-architecture.md`、`docs/05-tech-spec.md`、`docs/08-dev-plan.md`、`docs/09-verification.md`。
 2. 若项目涉及持久化或对外接口，还必须读取 `docs/06-db-design.md`、`docs/07-api-spec.md` 的相关章节。

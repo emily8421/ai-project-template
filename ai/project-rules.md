@@ -69,6 +69,7 @@
 - 是否有持久化存储：（如有数据库 / 文件存储 / 无）
 - 是否有对外接口：（如 REST API / SDK / CLI / 无）
 - 演示形态：[消息通道内交互 / 独立 Web 页面 / 移动端 / CLI / 不需演示]（决定 `frontend/` 是否启用、`docs/04-05` 是否体现前端架构）
+- 前端交互设计：需要 / 不需要 / 豁免（若需要，推荐 `docs/design/frontend-interaction.md`；若豁免，说明原因）
 - docs/06-db-design.md：保留 / 省略
 - docs/07-api-spec.md：保留 / 省略
 - 需要保留的代码目录：（如 frontend/ backend/ tests/ scripts/ docker/；不用的目录可删除）
@@ -78,7 +79,9 @@
 - 浏览器端 localStorage / IndexedDB / sessionStorage 等非数据库存储 → 不触发 `docs/06-db-design.md`，其数据结构写在 `docs/05-tech-spec.md`
 - 无对外接口（纯内部库、纯计算模块） → `docs/07-api-spec.md` 省略
 - CLI / 本地脚本 → `docs/07-api-spec.md` 保留，但用于描述命令/参数/输出契约，不强求 RESTful
-- 演示形态为消息通道内交互 / CLI / 不需演示 → 通常不启用 `frontend/`；独立 Web 页面 / 移动端 → 通常启用对应前端目录，并在 `docs/04-05` 体现前端设计
+- 演示形态为消息通道内交互 / CLI / 不需演示 → 通常不启用 `frontend/`；独立 Web 页面 / 移动端 / 小程序 / 桌面端 → 通常启用对应前端目录，并在 `docs/04-05` 体现前端设计
+- 若存在多页面、多角色、复杂表单、状态流、管理页、搜索 / 问答 UI、验收依赖点击路径，或愿景 / PRD 出现“页面 / 界面 / 点击 / 手机 / Web / App / 小程序”等交互信号 → 开发前应补充 `docs/design/frontend-interaction.md` 或按入口拆分的 `docs/design/*interaction*.md`；不补时必须在本节或 `docs/05-tech-spec.md` 写明豁免理由
+- 前端交互设计只细化既有需求的界面呈现、状态、文案、接口依赖和验收路径；不得新增需求、接口或验收目标；前端隐藏 / 禁用 / 路由守卫不是权限边界，权限必须由后端接口和服务层执行
 - frontend/ backend/ tests/ scripts/ docker/ 只保留本项目用得到的目录
 
 ## 4. 目录规范的项目特例

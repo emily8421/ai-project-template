@@ -28,6 +28,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - check-derived-sync：
 - 是否触发 PowerShell fallback（sync / check）：
 - post-sync-cleanup：
+- docs-system-audit（同步后审计）：
+- 项目验证建议 / 已执行验证：
 
 ## 同步结果
 
@@ -36,6 +38,28 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - 项目专属文件是否被误改：
 - 是否新增 / 刷新 `ai/doc-standards/00-09`：
 - 是否残留旧 `docs/_scaffold/`：
+
+## 同步后整理摘要
+
+- 是否执行 `/run post-sync-cleanup`：
+- README / `ai/project-rules.md` / docs 分区是否需整理：
+- 已处理项：
+- 待确认项：
+- 建议回写 / 后续迁移任务：
+
+## 文档体系审计摘要
+
+- 是否执行 `/run docs-system-audit` 同步后审计模式：
+- 规范基线缺口：
+- 可接受兼容差异：
+- 项目事实风险：
+- 回梳计划摘要：
+
+## 项目验证建议
+
+- 建议运行的测试 / lint / 文档检查 / 人工验收：
+- 已执行验证与结果：
+- 未验证项与原因：
 
 ## 遇到的问题
 
@@ -59,5 +83,7 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 
 - 是否需要 `/run post-sync-cleanup`：
 - 是否需要 `/run docs-system-audit`：
+- 是否需要按审计结果回梳 `docs/00-09` / `docs/design` / `docs/env`：
+- 是否需要补项目验证入口：
 - 是否需要人工清理旧目录：
 - 是否需要同步回模板仓库：

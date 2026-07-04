@@ -122,6 +122,15 @@ DOC_STANDARD_DOCS=(
   "docs/09-verification.md"
 )
 
+warn_derived_workflow_migration() {
+  if [[ -f ".github/workflows/template-check.yml" ]]; then
+    echo "⚠️  检测到 .github/workflows/template-check.yml。"
+    echo "   该 workflow 通常属于模板仓自检入口；派生项目普通 PR 不应运行 scripts/check-template.sh。"
+    echo "   建议迁移为派生项目版 .github/workflows/project-check.yml：普通 PR 仅跑 git diff --check，模板同步提交再跑 scripts/check-derived-sync.sh HEAD。"
+    echo
+  fi
+}
+
 SYNC_FILES=()
 
 parse_sync_files_json() {
@@ -183,6 +192,7 @@ fi
 [[ -n "$VERSION" ]] || VERSION="unknown"
 
 echo "==> 模板版本: $VERSION"
+warn_derived_workflow_migration
 echo "==> 同步文件:"
 
 remote_file_matches_local() {
