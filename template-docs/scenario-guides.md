@@ -270,6 +270,22 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 - **下一步**：A9
 - **cmd 指针**：`ai/prompts/review/19-docs-evaluation.md` + `ai/prompts/review/16-docs-system-audit.md` + `ai/prompts/review/10-docs-checklist.md`
 
+#### A8.5 技术路线与环境支撑评估
+- **说明**：真实运行依赖项目在生成 / 修订 05 或进入首个相关 Sprint 前，评估本机 / 团队环境是否支撑技术路线。
+- **触发**：「技术环境评估」「技术路线评估」「评估依赖能不能装」「评估本机能不能跑」「依赖安装验证」「最小运行验证」
+- **cwd·前置**：在派生项目 · 已有或准备生成 `docs/env/local-env.md`、`docs/05-tech-spec.md`
+
+| # | 做什么 | 为什么 | 机器执行 |
+|---|---|---|---|
+| 1 | 区分采集和评估 | `collect-env` 只记录事实，不证明依赖能跑 | 读取 `docs/env/local-env.md` |
+| 2 | 盘点真实运行依赖 | 找出 Python / Node / Docker / DB / 模型 / 外部 API 风险 | `tech-env-evaluation`(20) |
+| 3 | 输出验证计划和 Go 结论 | 安装 / 导入 / 最小运行需确认后执行 | `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`（确认后落盘） |
+| 4 | 回写 05 / 09 建议 | 评估结论要驱动技术方案和验证计划 | `edit-single-doc`(04) |
+
+- **完成判据**：结论为 Go / Conditional Go 且条件明确 · 05/09 修改建议清晰 · 跳过验证时有风险和补做时点
+- **下一步**：A9 / A10
+- **cmd 指针**：`ai/prompts/review/20-tech-env-evaluation.md`
+
 #### A9 阶段规划与路线图
 - **说明**：基于完整设计，规划怎么分阶段实现（先 Demo 可演示 → MVP 可用 → 完整产品）。
 - **触发**：「规划阶段」「Demo 做什么」「划分 MVP」「排路线图」
@@ -292,7 +308,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
-| 1 | 动手前再复查文档、Phase 和验证包 | 确保编码依据充分、不越界 | `docs-checklist`(10) + `implementation-lifecycle-rules` |
+| 1 | 动手前再复查文档、Phase、验证包和技术环境门禁 | 确保编码依据充分、不越界，真实运行依赖已评估 | `docs-checklist`(10) + `implementation-lifecycle-rules` + 必要时 `tech-env-evaluation`(20) |
 | 2 | 实现这个任务（小范围） | 一功能一任务一提交，便于验收 | `run-dev-task`(02)（关联 REQ / Sprint / Task / Test Case，限 1–3 文件） |
 | 3 | 审查实现是否符合设计、有没有越界 | 防止实现偏离设计或越出本阶段 | `project-review`(03)（六维度 + Phase 边界 + 验证闭环） |
 | 4 | 生成提交信息并提交（可选 PR） | 完成式提交信息 + PR 便于审查合并 | `commit-message`(06) + 可选 PR（`git-guide §3.1`） |

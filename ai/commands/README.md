@@ -21,6 +21,7 @@
 更新方法论
 做文档体系审核
 做文档评估
+做技术环境评估 / 技术路线评估
 补前端交互设计 / 补 UI 设计
 同步后整理项目
 执行当前 Sprint
@@ -60,6 +61,7 @@ AI 识别到命令意图后，应：
 | `post-sync-cleanup` | 同步后整理项目 | `ai/prompts/maintainers/15-post-sync-cleanup.md` |
 | `docs-system-audit` | 文档体系审核 / PLM 链路审计 | `ai/prompts/review/16-docs-system-audit.md` |
 | `docs-evaluation` | 文档评估 / 阶段转换评估 / 单文档评估 | `ai/prompts/review/19-docs-evaluation.md` |
+| `tech-env-evaluation` | 技术环境评估 / 技术路线评估 / 依赖安装验证 / 本机能不能跑 | `ai/prompts/review/20-tech-env-evaluation.md` |
 | `template-proposal-summary` | 汇总模板优化提案 | `ai/prompts/maintainers/11-template-proposal-summary.md` |
 | `generate-docs` | 生成文档体系 / 补齐 00-09 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
 | `review-inputs` | 评审输入材料 | `ai/prompts/docs/01-review-inputs.md` |

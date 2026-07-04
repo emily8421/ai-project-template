@@ -62,7 +62,7 @@
 | `docs/vision/` | 可选的整理后产品愿景叙事 / 长期业务图景；通常由 AI 或团队从 `docs/inputs/` 评审、补齐、确认后生成 | `product-vision.md`、`market-notes.md` |
 | `docs/design/` | 子系统 / 模块 / 前端交互详细设计 | `<subsystem>.md`、`auth.md`、`workflow-engine.md`、`frontend-interaction.md` |
 | `docs/decisions/` | 架构决策记录（ADR）和重要取舍 | `ADR-0001-title.md` |
-| `docs/research/` | 技术调研、竞品分析、实验结论 | `topic-summary.md` |
+| `docs/research/` | 技术调研、竞品分析、实验结论、技术环境评估报告 | `topic-summary.md`、`YYYY-MM-DD-tech-env-evaluation-<scope>.md` |
 | `docs/env/` | 本机环境、资源约束、服务器预案 | `local-env.md`、`server-plan.md` |
 | `docs/meetings/` | 会议纪要、访谈记录、评审记录 | `YYYY-MM-DD-topic.md` |
 | `docs/archive/` | 已废弃但需留痕的项目文档 | 保留原名或加日期前缀 |
@@ -117,6 +117,7 @@ AI 判断需要新增文档时，必须按以下顺序处理：
 | 消息通道内交互 / 不需演示 | `docs/04-05` 不强制写前端 | 通常删除 `frontend/` | 若后续变更演示形态，再补前端设计 |
 | 暂无自动化测试 | `docs/09-verification.md` 仍保留 | 可暂删 `tests/` | 09 至少记录人工验证和本机资源验证 |
 | 需要容器 / 外部服务 | `docs/04-05` 写明运行拓扑 | 保留 `docker/` | Demo 优先本机；资源不足再写服务器预案 |
+| 需要真实运行依赖 | `docs/05` 前或首个相关 Sprint 前补 `docs/research/*tech-env-evaluation*.md`，或记录豁免理由 | 按技术栈保留依赖文件 / 启动脚本 | `collect-env` 只采集事实，不等于依赖安装 / 最小运行验证通过 |
 
 ## 9. 轻量项目路径
 

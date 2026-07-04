@@ -1,6 +1,6 @@
 # docs/env 运行环境说明
 
-本目录用于保存项目初始化阶段的本机运行环境与资源约束。
+本目录用于保存项目初始化阶段的本机运行环境与资源约束。`docs/env/local-env.md` 是事实采集输入，不等于技术路线与环境支撑评估通过。
 
 如果机器还没装好基础开发环境，先看 `template-docs/env-setup.md`，并先运行 `scripts/check-prereqs.ps1` / `scripts/bootstrap-dev-env.ps1`。
 
@@ -18,5 +18,6 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 
 - 生成 `docs/04-architecture.md`、`docs/05-tech-spec.md`、`docs/09-verification.md` 前，应读取 `docs/env/local-env.md`。
 - 技术方案必须判断本机 Demo 是否可运行；若不可运行，必须给出降级 / Mock 策略和公司服务器资源需求。
+- 若项目包含 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API 或其他真实运行依赖，生成 / 修订 `docs/05-tech-spec.md` 或进入首个相关编码 Sprint 前，应补充 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md` 或记录豁免理由、风险和补做时点。
 - `local-env.md` 可能包含计算机名、用户名、路径等本机信息；提交到公开仓库前需人工确认是否脱敏。
 

@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.30.0（2026-07-05）
+
+技术路线与环境支撑评估机制：新增 `tech-env-evaluation` 命令与 20 号 Prompt，把运行时版本、依赖安装 / 导入 / 最小运行、Docker / 数据库 / 模型、网络权限和资源约束纳入编码前门禁。
+
+- **新增命令 / Prompt**：新增 `ai/commands/tech-env-evaluation.md` 与 `ai/prompts/review/20-tech-env-evaluation.md`，输出 `Go / Conditional Go / No-Go` 结论和可落盘报告建议。
+- **报告定位**：技术环境评估报告推荐写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。
+- **规则门禁**：`ai/document-lifecycle-rules.md`、`ai/implementation-lifecycle-rules.md`、`ai/project-rules.md` 区分环境事实采集与支撑评估；真实运行依赖项目进入首个相关 Sprint 前需评估或记录跳过风险。
+- **Prompt / 文档模板**：`collect-env`、`generate-docs`、`edit-single-doc`、`docs-checklist`、`run-dev-task`、`docs/05`、`docs/09` 增加技术环境评估落点。
+- **场景与自检**：`template-docs/scenario-guides.md` 增加 A8.5 技术路线与环境支撑评估；`template-sync.json` 与 `scripts/check-template.*` 纳入新增命令 / Prompt 和关键断言。
+- 回流自 `_archive/proposals/TEMPLATE-UPGRADE-tech-env-evaluation.md`，对应 GitHub issue #87。
+
 ## v1.29.0（2026-07-05）
 
 前端交互设计文档规则：新增 UI 型项目的条件性详细设计触发规则、推荐路径和审查口径，避免前端编码阶段临场补交互或把前端可见性误当权限边界。
