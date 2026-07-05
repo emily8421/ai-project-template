@@ -379,6 +379,14 @@ function Invoke-NativeTemplateSync {
   Invoke-Git commit -q -m "sync template $version from ai-project-template" -- @($updatedFiles.ToArray())
   Write-Host "OK committed: sync template $version"
   Write-Host "   Push: git push"
+  Write-Host ""
+  Write-Host "Next steps (do not stop at the sync commit):"
+  Write-Host "  1. Run derived boundary check: powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1"
+  Write-Host "  2. In AI, run: /run post-sync-cleanup"
+  Write-Host "  3. In AI, run: /run docs-system-audit (post-sync audit mode)"
+  Write-Host "  4. Run project tests / lint / build as applicable; record unavailable checks as unverified"
+  Write-Host "  5. Create or update: sync-records/template-sync/YYYY-MM-DD-sync-template-$version.md"
+  Write-Host "     Use: template-docs/derived-sync-report-template.md"
   return 0
 }
 

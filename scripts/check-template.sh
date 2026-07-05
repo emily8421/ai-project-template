@@ -1047,6 +1047,10 @@ require_contains "scripts/sync-template.sh" 'bootstrap latest sync script' "sync
 require_contains "scripts/sync-template.sh" 'remote_file_matches_local' "sync-template dry-run 使用 hash 判断差异"
 require_contains "scripts/sync-template.sh" 'show_local_to_template_stat' "sync-template dry-run 按本地到模板方向统计"
 require_contains "scripts/sync-template.sh" '本地当前文件 -> 模板' "sync-template dry-run 明确统计方向"
+require_contains "template-sync.json" 'scripts/check-github-context\.ps1' "template-sync 同步 GitHub 上下文预检脚本"
+require_contains "scripts/check-github-context.ps1" 'gh auth status' "GitHub 上下文预检检查 gh auth status"
+require_contains "git-guide.md" 'scripts/check-github-context\.ps1' "git-guide 记录 GitHub 上下文预检"
+require_contains "SOP.md" 'check-github-context\.ps1' "SOP 记录 GitHub 上下文预检命令"
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke
