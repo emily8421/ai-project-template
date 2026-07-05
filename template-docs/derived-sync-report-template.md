@@ -79,6 +79,14 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 
 - `_proposals/TEMPLATE-UPGRADE-xxx.md`
 
+## 提案回流收口
+
+- 扫描范围：`_proposals/` / `.ai/session-handoff.md` / `sync-records/template-sync/` / 模板仓 issue 链接
+- 已确认被模板采纳或已有决议的提案：
+- 已归档到 `_archive/proposals/` 的本地提案：
+- 仍需保留在 `_proposals/` 的提案：
+- 无法判断是否已处理的 issue / 提案与待确认项：
+
 ## 后续动作
 
 - 是否需要 `/run post-sync-cleanup`：
