@@ -242,6 +242,8 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/maintainers/17-submit-proposal.md" "半成品 issue" "submit-proposal prompt checks partial issue after failure"
   Require-Contains "scripts/sync-template.ps1" "Invoke-NativeTemplateSync" "sync-template PowerShell fallback exists"
   Require-Contains "scripts/check-derived-sync.ps1" "Invoke-NativeDerivedSyncCheck" "check-derived-sync PowerShell fallback exists"
+  Require-Contains "scripts/sync-template.ps1" "Get-GitUtf8Text" "sync-template PowerShell fallback decodes Git output as UTF-8"
+  Require-Contains "scripts/check-derived-sync.ps1" "Get-GitUtf8Text" "check-derived-sync PowerShell fallback decodes Git output as UTF-8"
   Require-Contains "SOP.md" "PowerShell fallback" "SOP documents PowerShell fallback"
   Require-Contains "MAINTAINERS.md" "PowerShell native fallback" "MAINTAINERS documents PowerShell fallback"
   Require-Contains "template-docs/derived-sync-report-template.md" "PowerShell fallback" "sync report records PowerShell fallback"
