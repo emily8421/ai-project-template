@@ -23,6 +23,25 @@
 - **提交身份**：commit 作者按 `git config user.name/user.email`。只要该邮箱在目标 GitHub 账号上验证过，提交会自动归属该账号；切换 `gh` 活跃账号不一定需要改 git 提交身份。
 
 > ⚠️ Token / OAuth 权限取决于登录方式与授权范围。若 `gh` 报 scope 不足，优先运行 `gh auth status` 确认活跃账号，再按 GitHub 官方流程刷新授权、重新登录或更换具备对应权限的账号。
+
+### 1.1 GitHub 操作前预检（push / PR / merge）
+
+当你同时打开模板仓库和多个派生项目，或多个 AI CLI / 终端并行工作时，在任何 `git push`、`gh pr create`、`gh pr merge`、`git pull` 合并、tag / release 前，先确认当前上下文：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1
+```
+
+如已知目标仓库，可加期望 owner / repo 做只读校验：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1 -ExpectedOwner <owner> -ExpectedRepo <repo>
+```
+
+预检只读输出：当前 repo root、分支、origin、Git 提交身份、工作区状态、`gh auth status` 和 `gh repo view` 权限。它不会切账号、不会改 remote、不会 push / merge。若预检发现账号无权限、remote 不符合预期、工作区有未确认改动或 `gh repo view` 失败，应先停止并说明，不要继续执行远端操作。
+
+> 该预检不能替代 GitHub 授权：`gh auth login`、OAuth scope、SSO 授权、Git Credential Manager 和仓库权限仍需在本机按 GitHub 官方流程处理；模板只提供操作前门禁，避免多仓 / 多会话误操作。
+
 ## 2. 场景速查（你要做哪件事？）
 
 | 你想做 | 你是 | 去哪节 |
@@ -50,6 +69,7 @@
 git status
 git diff
 # 运行项目对应验证命令，例如：bash scripts/check-template.sh / npm test / pytest
+powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1  # push / PR 前只读预检
 git add <文件路径>
 git commit -m "类型: 简短说明"
 git push -u origin <当前分支名>   # 首次推送该分支

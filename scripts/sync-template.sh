@@ -93,6 +93,7 @@ DEFAULT_SYNC_FILES=(
   "scripts/check-template.ps1"
   "scripts/check-derived-sync.sh"
   "scripts/check-derived-sync.ps1"
+  "scripts/check-github-context.ps1"
   "scripts/collect-env.ps1"
   "scripts/check-prereqs.ps1"
   "scripts/bootstrap-dev-env.ps1"
