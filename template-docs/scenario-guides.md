@@ -359,11 +359,12 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 3 | 确认安全后应用更新并做边界验证 | 拿到模板方法论更新，确认没误覆盖项目件 | `--commit` + `scripts/check-derived-sync.ps1` |
 | 4 | 同步后整理项目 | README、`project-rules`、docs 分区等项目事实不会被同步脚本自动迁移 | `post-sync-cleanup`(15)，先出迁移计划 |
 | 5 | 文档体系同步后审计 | 检查旧方法生成的 `docs/00-09` 是否需按新规范回梳 | `docs-system-audit`(16)，同步后审计模式 |
-| 6 | 给项目验证建议并形成同步报告 | 留下命令、结果、风险、未验证项和后续任务 | `template-docs/derived-sync-report-template.md` → `sync-records/template-sync/` |
+| 6 | 做提案回流收口检查 | 派生提案可能已通过模板 issue / PR 被采纳，同步后应判断本地草稿和 issue 记录是否可归档 | 扫描 `_proposals/`、`.ai/session-handoff.md`、`sync-records/template-sync/`、issue 链接；必要时 `gh issue view` |
+| 7 | 给项目验证建议并形成同步报告 | 留下命令、结果、风险、未验证项、提案收口结论和后续任务 | `template-docs/derived-sync-report-template.md` → `sync-records/template-sync/` |
 
 > **同步后续接模式**：若 Git 显示已存在最近的 `sync template vX.Y.Z from ai-project-template` 同步提交，或 `VERSION` 已是目标版本且用户明确说“已同步，只补后续”，不要重新执行 dry-run / commit；先核对最新同步提交和工作区，再从第 3 步的边界验证开始补跑 workflow 检查、`post-sync-cleanup`、`docs-system-audit`、项目验证建议和同步运行记录。
 
-- **完成判据**：同步清单文件更新 · 项目专属文件未被覆盖 · `check-derived-sync` 通过 · 已输出整理 / 审计摘要 · 已给项目验证建议 · 已形成或更新同步报告
+- **完成判据**：同步清单文件更新 · 项目专属文件未被覆盖 · `check-derived-sync` 通过 · 已输出整理 / 审计摘要 · 已完成提案回流收口判断 · 已给项目验证建议 · 已形成或更新同步报告
 - **下一步**：A14 / 回 A10 继续
 - **cmd 指针**：`git-guide.md` §5 + `ai/prompts/maintainers/12-sync-template.md`
 
