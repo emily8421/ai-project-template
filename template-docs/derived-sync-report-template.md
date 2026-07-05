@@ -64,6 +64,7 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 ## 遇到的问题
 
 - Git / gh / Git Bash / PowerShell / 网络问题（如触发 fallback，请记录脚本输出的 fallback 标识与结果）：
+- `gh issue create` / `submit-proposal` 问题（认证、重复 issue、`--body-file`、标签缺失、来源标签降级）：
 - 同步脚本问题：
 - Prompt / 快捷命令理解问题：
 - 文档说明不清：
