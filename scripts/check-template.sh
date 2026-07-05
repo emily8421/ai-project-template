@@ -1051,6 +1051,10 @@ require_contains "template-sync.json" 'scripts/check-github-context\.ps1' "templ
 require_contains "scripts/check-github-context.ps1" 'gh auth status' "GitHub 上下文预检检查 gh auth status"
 require_contains "git-guide.md" 'scripts/check-github-context\.ps1' "git-guide 记录 GitHub 上下文预检"
 require_contains "SOP.md" 'check-github-context\.ps1' "SOP 记录 GitHub 上下文预检命令"
+require_contains "ai/commands/submit-proposal.md" '--body-file' "submit-proposal 使用 body-file 提交 Markdown 正文"
+require_contains "ai/prompts/maintainers/17-submit-proposal.md" '--body-file' "submit-proposal Prompt 使用 body-file"
+require_contains "ai/prompts/maintainers/17-submit-proposal.md" '来源标签缺失' "submit-proposal Prompt 处理来源标签缺失"
+require_contains "ai/prompts/maintainers/17-submit-proposal.md" '半成品 issue' "submit-proposal Prompt 失败后检查半成品 issue"
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke
