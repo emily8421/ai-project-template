@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.32.0（2026-07-07）
+
+Batch 7 文档体系生成引导落地：补全文档体系生成场景、open items 总览命令、专题方案讨论和定稿门禁。
+
+- **场景引导**：`template-docs/scenario-guides.md` 扩展 A17-A19，覆盖待确认事项总览、专题方案讨论和文档定稿门禁；A6 生成文档骨架增加 open items 更新和生成后收口路径。
+- **open items 入口**：新增 `ai/commands/docs-open-items.md`、`ai/prompts/docs/21-docs-open-items.md` 和 `template-docs/docs-open-items.example.md`，并加入 `template-sync.json`，统一待确认项字段、门禁结论和默认落盘路径。
+- **生成 / 评估 / 审计门禁**：`generate-docs`、`00-generate-or-complete-docs`、`docs-evaluation`、`docs-system-audit`、`phase-upgrade` 和 `docs-checklist` 均增加 open items 检查；阻塞项未关闭或未风险接受时不得无条件进入编码或 Phase 升级。
+- **专题讨论边界**：需求层人机交互、总体设计 / 技术选型、交互设计方案先输出多方案、依据、AI 推荐、待确认项和回填位置；人工确认前不得写成正式项目事实。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 Batch 7 关键断言，防止新增命令、Prompt、同步清单、场景和门禁规则被误删。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-7-docs-generation-guidance-open-items.md`。
+
 ## v1.31.0（2026-07-07）
 
 Batch 1 文档治理底座落地：建立提案收件箱远端 issue 本地镜像机制、分批治理原则、横切状态词典、待确认事项总览和文档体系生成总控最低规则。

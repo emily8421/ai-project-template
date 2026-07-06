@@ -1077,6 +1077,21 @@ require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '分阶段确
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '输入充分后批量生成模式' "文档生成 Prompt 提供批量生成模式"
 require_contains "ai/prompts/review/16-docs-system-audit.md" '横切状态冲突' "文档审计 Prompt 输出横切状态冲突"
 require_contains "ai/prompts/review/19-docs-evaluation.md" '状态与待确认项对结论的影响' "文档评估 Prompt 将状态和待确认项纳入 Go 判定"
+require_contains "ai/commands/README.md" 'docs-open-items' "命令索引包含 docs-open-items"
+require_contains "ai/commands/docs-open-items.md" '生成 open items' "docs-open-items 命令存在"
+require_contains "ai/prompts/docs/21-docs-open-items.md" '待确认事项总览' "docs-open-items Prompt 存在"
+require_contains "template-docs/docs-open-items.example.md" '待确认事项总览示例' "open items 示例模板存在"
+require_contains "template-sync.json" 'ai/commands/docs-open-items\.md' "同步清单包含 docs-open-items 命令"
+require_contains "template-sync.json" 'ai/prompts/docs/21-docs-open-items\.md' "同步清单包含 docs-open-items Prompt"
+require_contains "template-sync.json" 'template-docs/docs-open-items\.example\.md' "同步清单包含 open items 示例"
+require_contains "template-docs/scenario-guides.md" 'A17 待确认事项总览' "场景引导包含 A17 open items"
+require_contains "template-docs/scenario-guides.md" 'A18 专题方案讨论' "场景引导包含 A18 专题讨论"
+require_contains "template-docs/scenario-guides.md" 'A19 文档定稿门禁' "场景引导包含 A19 定稿门禁"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '专题讨论优先' "文档生成 Prompt 要求专题讨论先确认"
+require_contains "ai/document-lifecycle-rules.md" '## 10\.2 专题方案讨论边界' "文档生命周期定义专题方案讨论边界"
+require_contains "ai/document-lifecycle-rules.md" 'docs/research/YYYY-MM-DD-docs-open-items\.md' "文档生命周期定义 open items 默认路径"
+require_contains "ai/prompts/review/10-docs-checklist.md" 'open items 中存在阻塞当前 Sprint' "编码前 checklist 检查 open items 阻塞项"
+require_contains "ai/prompts/planning/08-phase-upgrade.md" '阻塞项未关闭或未被风险接受时，不得建议直接升级' "Phase 升级检查 open items 阻塞项"
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke

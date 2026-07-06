@@ -11,7 +11,7 @@
 
 **不适用场景**：当前 Phase 验收尚未完成或核心缺陷未关闭；应先用 `ai/prompts/dev/09-sprint-summary.md` 做验收总结。
 
-**使用前准备**：准备当前 `ai/project-rules.md`、`docs/03-prd.md` 路线图、`docs/08-dev-plan.md` 完成情况和验证结果。
+**使用前准备**：准备当前 `ai/project-rules.md`、`docs/03-prd.md` 路线图、`docs/08-dev-plan.md` 完成情况、验证结果和待确认事项总览（如 `docs/research/*docs-open-items*.md`）。
 
 **预期产出**：当前 Phase 完成情况、下一 Phase 解锁清单、`ai/project-rules.md` §1 更新草稿。
 
@@ -23,10 +23,12 @@
 请阅读：
 - ai/project-rules.md（当前Phase边界）
 - docs/03-prd.md、docs/08-dev-plan.md
+- docs/research/*docs-open-items*.md 或会话中的待确认事项总览（如存在）
 
 输出：
 1. 当前Phase的完成情况核对
 2. 下一Phase可以解锁的功能/技术清单
-3. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
+3. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
+4. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
    （允许/禁止/下一阶段预告三段式），等待人工确认后再实际修改该文件
 ```

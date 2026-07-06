@@ -335,6 +335,21 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "输入充分后批量生成模式" "generate docs prompt offers batch generation mode"
   Require-Contains "ai/prompts/review/16-docs-system-audit.md" "横切状态冲突" "docs system audit reports cross-cutting status conflicts"
   Require-Contains "ai/prompts/review/19-docs-evaluation.md" "状态与待确认项对结论的影响" "docs evaluation links statuses and open items to Go decisions"
+  Require-Contains "ai/commands/README.md" "docs-open-items" "commands README includes docs-open-items"
+  Require-Contains "ai/commands/docs-open-items.md" "生成 open items" "docs-open-items command exists"
+  Require-Contains "ai/prompts/docs/21-docs-open-items.md" "待确认事项总览" "docs-open-items prompt exists"
+  Require-Contains "template-docs/docs-open-items.example.md" "待确认事项总览示例" "open items example template exists"
+  Require-Contains "template-sync.json" "ai/commands/docs-open-items\.md" "template-sync includes docs-open-items command"
+  Require-Contains "template-sync.json" "ai/prompts/docs/21-docs-open-items\.md" "template-sync includes docs-open-items prompt"
+  Require-Contains "template-sync.json" "template-docs/docs-open-items\.example\.md" "template-sync includes open items example"
+  Require-Contains "template-docs/scenario-guides.md" "A17 待确认事项总览" "scenario guides include A17 open items"
+  Require-Contains "template-docs/scenario-guides.md" "A18 专题方案讨论" "scenario guides include A18 topic discussion"
+  Require-Contains "template-docs/scenario-guides.md" "A19 文档定稿门禁" "scenario guides include A19 finalization gate"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "专题讨论优先" "generate docs prompt requires topic discussion before facts"
+  Require-Contains "ai/document-lifecycle-rules.md" "## 10\.2 专题方案讨论边界" "document lifecycle defines topic discussion boundary"
+  Require-Contains "ai/document-lifecycle-rules.md" "docs/research/YYYY-MM-DD-docs-open-items\.md" "document lifecycle defines open items default path"
+  Require-Contains "ai/prompts/review/10-docs-checklist.md" "open items 中存在阻塞当前 Sprint" "docs checklist checks blocking open items"
+  Require-Contains "ai/prompts/planning/08-phase-upgrade.md" "阻塞项未关闭或未被风险接受时，不得建议直接升级" "phase upgrade checks blocking open items"
 
   $syncFiles = Get-SyncFiles
   if ($syncFiles.Count -gt 0) {
