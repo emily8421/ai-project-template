@@ -8,3 +8,9 @@
 - `_archive/proposals/` 是已处理提案的历史记录。
 - 提案归档后，模板变更事实仍以根目录 `VERSION`、README 版本记录和 Git 历史为准。
 - 归档内容不得作为当前待办事项重复执行；若要再次调整，应创建新的 `TEMPLATE-UPGRADE-*.md` 提案。
+
+## 归档批次
+
+| 批次 / 提案 | 归档说明 |
+|---|---|
+| Batch 1：`TEMPLATE-UPGRADE-batch-1-proposal-inbox-governance-status-dictionary.md` | 已在 `v1.31.0` 吸收提案收件箱镜像机制、分批治理、横切状态词典、待确认事项总览和文档体系生成总控最低规则；对应 issue 镜像 `issue-111.md`、`issue-117.md` 已归档到 `_archive/proposals/_remote-issues/`。 |

@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.31.0（2026-07-07）
+
+Batch 1 文档治理底座落地：建立提案收件箱远端 issue 本地镜像机制、分批治理原则、横切状态词典、待确认事项总览和文档体系生成总控最低规则。
+
+- **提案收件箱镜像**：`_proposals/README.md`、`template-proposal-summary` 命令与维护者 Prompt 要求先刷新 `_proposals/_remote-issues/issue-<number>.md`，再基于本地镜像做去重、冲突和分批计划；关闭 issue 前仍以 GitHub 远端状态为准。
+- **分批治理**：C1 场景和提案汇总 Prompt 明确“一批一范围、报告先行、事实与模板分离、去重可审计、可续接”，降低大范围文档体系提案的评审和续接风险。
+- **状态与待确认门禁**：`ai/document-lifecycle-rules.md` 新增横切状态词典、状态传播规则和待确认事项总览；文档审计 / 评估 Prompt 将状态冲突、Mock / 降级 / 默认关闭 / 已验证 / 已启用等状态纳入 Go / Conditional Go / No Go 判断。
+- **文档体系生成总控**：A6 场景与 `00-generate-or-complete-docs` Prompt 要求用户说“生成整个文档体系”时，先说明阶段路线，并在“分阶段确认模式”和“输入充分后批量生成模式”之间确认。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 Batch 1 关键断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-1-proposal-inbox-governance-status-dictionary.md`，对应 GitHub issue #111、#117。
+
 ## v1.30.7（2026-07-07）
 
 模板自检 CI 编码修复：移除关键文件 UTF-8 BOM，避免 GitHub Actions 中 Bash shebang 与版本号解析失败。
