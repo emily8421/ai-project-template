@@ -350,6 +350,16 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/document-lifecycle-rules.md" "docs/research/YYYY-MM-DD-docs-open-items\.md" "document lifecycle defines open items default path"
   Require-Contains "ai/prompts/review/10-docs-checklist.md" "open items 中存在阻塞当前 Sprint" "docs checklist checks blocking open items"
   Require-Contains "ai/prompts/planning/08-phase-upgrade.md" "阻塞项未关闭或未被风险接受时，不得建议直接升级" "phase upgrade checks blocking open items"
+  Require-Contains "ai/doc-standards/README.md" "SC-ID → U-ID → REQ-ID → Phase → AC / TC" "doc-standards README defines 00-03 requirements chain health"
+  Require-Contains "ai/document-lifecycle-rules.md" "00-03 需求链健康度" "document lifecycle defines 00-03 requirements chain health"
+  Require-Contains "docs/00-scenario.md" "边界 / 非目标" "00 scenario includes boundary and non-goal table"
+  Require-Contains "docs/01-user-requirements.md" "AC-ID" "01 user requirements include AC-ID"
+  Require-Contains "docs/02-srs.md" "验证入口" "02 SRS includes verification entry"
+  Require-Contains "docs/03-prd.md" "证据 / 验收引用" "03 PRD includes evidence and acceptance references"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "SC-ID → U-ID → REQ-ID → Phase → AC / TC" "generate docs prompt checks requirements chain health"
+  Require-Contains "ai/prompts/review/16-docs-system-audit.md" "00-03 需求链断点" "docs audit prompt reports 00-03 requirements chain breaks"
+  Require-Contains "ai/prompts/review/19-docs-evaluation.md" "需求链健康度" "docs evaluation prompt checks requirements chain health"
+  Require-Contains "ai/prompts/planning/08-phase-upgrade.md" "Phase 状态传播检查" "phase upgrade prompt checks phase state propagation"
 
   $syncFiles = Get-SyncFiles
   if ($syncFiles.Count -gt 0) {
