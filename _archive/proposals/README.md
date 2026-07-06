@@ -14,3 +14,4 @@
 | 批次 / 提案 | 归档说明 |
 |---|---|
 | Batch 1：`TEMPLATE-UPGRADE-batch-1-proposal-inbox-governance-status-dictionary.md` | 已在 `v1.31.0` 吸收提案收件箱镜像机制、分批治理、横切状态词典、待确认事项总览和文档体系生成总控最低规则；对应 issue 镜像 `issue-111.md`、`issue-117.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
+| Batch 7：`TEMPLATE-UPGRADE-batch-7-docs-generation-guidance-open-items.md` | 已在 `v1.32.0` 吸收文档体系生成引导、open items 命令 / Prompt / 示例、专题方案讨论边界和定稿门禁；该批次来自维护者复核，无直接关联远端 issue。 |
