@@ -1,4 +1,4 @@
-# 场景引导（Scenario Guides）
+﻿# 场景引导（Scenario Guides）
 
 > Sync notice: 本文件由 `ai-project-template` 维护，派生项目同步模板方法论时可能被覆盖。不要在派生项目直接改；通用改进请经 `_proposals/` 回流模板。
 
@@ -350,6 +350,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 #### A13 同步模板到派生项目
 - **说明**：把模板方法论的更新拉到你的派生项目（不回传），并完成同步后的边界验证、整理、文档审计、项目验证建议和同步报告留痕；若已完成同步提交但旧流程未跑后续，则进入“同步后续接模式”，跳过 dry-run / commit，从边界验证开始补完闭环。
 - **触发**：「同步模板」「更新方法论」「sync template」「已同步但没做后续」「补完同步后流程」「同步后续接」
+- **完整闭环说法**：「模板新版已发布，请按 A13 执行完整闭环：sync-methodology → post-sync-cleanup → docs-system-audit → 提案回流收口 → 同步报告留痕。」
 - **cwd·前置**：在派生项目；若缺少 `scripts/sync-template.ps1`、`template-sync.json`，或 `VERSION` 低于 `v1.6.8` / 无法判断脚本是否为新版，仍属于本场景，先按 `git-guide.md` §5.2 走旧派生项目首次同步 bootstrap，再继续完整 A13 闭环。
 
 | # | 做什么 | 为什么 | 机器执行 |

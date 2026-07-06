@@ -1,10 +1,19 @@
-# CHANGELOG
+﻿# CHANGELOG
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+
+## v1.30.6（2026-07-06）
+
+A13 同步闭环说法补充：在同步模板场景中增加可直接复述的完整闭环话术，并让命令索引显式提示 A13 完整闭环。
+
+- **场景引导**：`template-docs/scenario-guides.md` 的 A13 场景新增“完整闭环说法”，明确 `sync-methodology → post-sync-cleanup → docs-system-audit → 提案回流收口 → 同步报告留痕`。
+- **命令索引**：`ai/commands/README.md` 的 `sync-methodology` 入口补充 `A13 完整闭环` 触发提示。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 A13 完整闭环关键断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-0-a13-sync-closure.md`，对应 GitHub issue #118。
 
 ## v1.30.5（2026-07-06）
 
