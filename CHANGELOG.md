@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.33.0（2026-07-07）
+
+Batch 2 需求链规范落地：强化 `00-03` 需求入口、健康度矩阵、Phase 状态传播和兼容补齐规则。
+
+- **00-03 骨架增强**：`docs/00-scenario.md`、`docs/01-user-requirements.md`、`docs/02-srs.md`、`docs/03-prd.md` 补充来源锚点、边界 / 非目标、用户 AC、验证入口、Phase 状态和证据 / 验收引用等字段。
+- **规范镜像说明**：`ai/doc-standards/README.md` 明确 `00-03` 需求链基线和 `SC-ID → U-ID → REQ-ID → Phase → AC / TC` 健康度链路；派生项目仍通过 doc-standards 镜像获得标准文件。
+- **生命周期规则**：`ai/document-lifecycle-rules.md` 增加 00-03 需求链健康度矩阵、P0 / P1 断点输出和旧项目兼容映射策略。
+- **生成 / 审计 / 评估门禁**：`generate-docs`、`edit-single-doc`、`docs-system-audit`、`docs-evaluation`、`phase-upgrade` 强化 `SC-ID → U-ID → REQ-ID → Phase → AC / TC` 检查和 Phase 状态传播。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 00-03 需求链、健康度矩阵、Phase 证据引用和 doc-standards 关键断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-2-requirements-chain-00-03.md`，对应 GitHub issue #105、#112。
+
 ## v1.32.0（2026-07-07）
 
 Batch 7 文档体系生成引导落地：补全文档体系生成场景、open items 总览命令、专题方案讨论和定稿门禁。

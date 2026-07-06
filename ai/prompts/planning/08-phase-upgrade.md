@@ -23,12 +23,14 @@
 请阅读：
 - ai/project-rules.md（当前Phase边界）
 - docs/03-prd.md、docs/08-dev-plan.md
+- docs/09-verification.md（当前 Phase 验收与证据引用）
 - docs/research/*docs-open-items*.md 或会话中的待确认事项总览（如存在）
 
 输出：
 1. 当前Phase的完成情况核对
 2. 下一Phase可以解锁的功能/技术清单
-3. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
-4. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
+3. `03-prd` Phase 状态传播检查：功能范围、交付物形态、进入 / 退出标准、证据 / 验收引用是否已与 `09` 和 Sprint 总结一致
+4. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
+5. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
    （允许/禁止/下一阶段预告三段式），等待人工确认后再实际修改该文件
 ```
