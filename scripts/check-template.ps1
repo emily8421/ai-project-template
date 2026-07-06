@@ -323,6 +323,18 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/dev/02-run-task.md" "git status" "run task prompt asks for git status summary"
   Require-Contains "ai/prompts/dev/05-fix-bug.md" "git status" "fix bug prompt asks for git status summary"
   Require-Contains "ai/project-rules.md" "mermaid" "project-rules includes diagram format preference"
+  Require-Contains "_proposals/README.md" "_proposals/_remote-issues/" "proposal inbox documents remote issue mirror directory"
+  Require-Contains "ai/commands/template-proposal-summary.md" "_proposals/_remote-issues/issue-<number>\.md" "template-proposal-summary command mirrors remote issues before analysis"
+  Require-Contains "ai/prompts/maintainers/11-template-proposal-summary.md" "一批一范围、报告先行、事实与模板分离、去重可审计、可续接" "proposal summary prompt defines Batch governance principles"
+  Require-Contains "template-docs/scenario-guides.md" "生成整个文档体系" "scenario guides route full docs generation through A6"
+  Require-Contains "template-docs/scenario-guides.md" "先镜像 issue" "scenario guides require C1 issue mirroring"
+  Require-Contains "ai/document-lifecycle-rules.md" "## 7\.1 横切状态词典" "document lifecycle defines cross-cutting status dictionary"
+  Require-Contains "ai/document-lifecycle-rules.md" "## 6\.2 待确认事项总览" "document lifecycle defines open item overview"
+  Require-Contains "ai/document-lifecycle-rules.md" "## 10\.1 文档体系生成总控最低规则" "document lifecycle defines docs generation control rule"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "分阶段确认模式" "generate docs prompt offers staged confirmation mode"
+  Require-Contains "ai/prompts/docs/00-generate-or-complete-docs.md" "输入充分后批量生成模式" "generate docs prompt offers batch generation mode"
+  Require-Contains "ai/prompts/review/16-docs-system-audit.md" "横切状态冲突" "docs system audit reports cross-cutting status conflicts"
+  Require-Contains "ai/prompts/review/19-docs-evaluation.md" "状态与待确认项对结论的影响" "docs evaluation links statuses and open items to Go decisions"
 
   $syncFiles = Get-SyncFiles
   if ($syncFiles.Count -gt 0) {

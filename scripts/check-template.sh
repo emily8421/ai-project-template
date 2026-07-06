@@ -1065,6 +1065,18 @@ require_contains "ai/commands/submit-proposal.md" '--body-file' "submit-proposal
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '--body-file' "submit-proposal Prompt 使用 body-file"
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '来源标签缺失' "submit-proposal Prompt 处理来源标签缺失"
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '半成品 issue' "submit-proposal Prompt 失败后检查半成品 issue"
+require_contains "_proposals/README.md" '_proposals/_remote-issues/' "提案收件箱记录远端 issue 镜像目录"
+require_contains "ai/commands/template-proposal-summary.md" '_proposals/_remote-issues/issue-<number>\.md' "template-proposal-summary 先镜像远端 issue"
+require_contains "ai/prompts/maintainers/11-template-proposal-summary.md" '一批一范围、报告先行、事实与模板分离、去重可审计、可续接' "模板优化汇总 Prompt 定义分批治理原则"
+require_contains "template-docs/scenario-guides.md" '生成整个文档体系' "场景引导路由完整文档体系生成"
+require_contains "template-docs/scenario-guides.md" '先镜像 issue' "场景引导要求 C1 先镜像 issue"
+require_contains "ai/document-lifecycle-rules.md" '## 7\.1 横切状态词典' "文档生命周期定义横切状态词典"
+require_contains "ai/document-lifecycle-rules.md" '## 6\.2 待确认事项总览' "文档生命周期定义待确认事项总览"
+require_contains "ai/document-lifecycle-rules.md" '## 10\.1 文档体系生成总控最低规则' "文档生命周期定义文档体系生成总控"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '分阶段确认模式' "文档生成 Prompt 提供分阶段确认模式"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '输入充分后批量生成模式' "文档生成 Prompt 提供批量生成模式"
+require_contains "ai/prompts/review/16-docs-system-audit.md" '横切状态冲突' "文档审计 Prompt 输出横切状态冲突"
+require_contains "ai/prompts/review/19-docs-evaluation.md" '状态与待确认项对结论的影响' "文档评估 Prompt 将状态和待确认项纳入 Go 判定"
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke

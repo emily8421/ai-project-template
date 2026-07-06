@@ -116,7 +116,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 | 场景 | 触发说法 | 一句话 |
 |---|---|---|
-| C1 处理提案收件箱 | 「处理提案」「汇总模板优化」「处理 issue 提案」 | 读 `_proposals` + issue 提案，去重 / 冲突分析 + 落地 |
+| C1 处理提案收件箱 | 「处理提案」「汇总模板优化」「处理 issue 提案」 | 先镜像 issue，再读 `_proposals` + 本地镜像，去重 / 冲突分析 + 分批落地 |
 | C2 版本 bump 与发布 | 「发版本」「bump 版本」「打 tag」 | VERSION / CHANGELOG + check + tag / Release |
 | C3 模板自检 | 「自检模板」「跑 check-template」 | check-template 全过 |
 | C4 维护分支→PR→合并→归档 | 「提 PR」「合并分支」「走 PR 流程」 | 切分支 + 实现 + PR + 合并 + 归档 |
@@ -226,15 +226,16 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 - **cmd 指针**：`ai/prompts/docs/01-review-inputs.md`
 
 #### A6 生成文档骨架
-- **说明**：根据评审结果，先生成 / 更新 product-vision，再铺出 00-09 工程文档骨架（细节留给 A7 打磨）。
-- **触发**：「生成文档」「铺文档骨架」「生成 00-09」「生成 product-vision」
+- **说明**：根据评审结果，先说明阶段路线和生成模式，再生成 / 更新 product-vision，并铺出 00-09 工程文档骨架（细节留给 A7 打磨）。
+- **触发**：「生成文档」「铺文档骨架」「生成 00-09」「生成 product-vision」「生成整个文档体系」
 - **cwd·前置**：在派生项目 · 输入已评审通过，Product Vision 就绪度为 Ready 或 Conditionally Ready
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
-| 1 | 生成 / 更新 product-vision | 让 00-09 有完整愿景锚点和来源链 | `generate-docs`(00) 写 `docs/vision/product-vision.md` |
-| 2 | 铺出工程文档骨架 | 先铺完整框架，细节后续打磨，符合积累式演进 | `generate-docs`(00) 铺 `docs/00-09`（按剖面裁剪 06/07）+ `docs/design/` + README + Sprint1 雏形 |
-| 3 | 提醒骨架要靠 A7 打磨 | 一键生成会有缺口/漂移，必须逐文档精修 | 转 A7 |
+| 1 | 说明阶段路线和生成模式 | “生成整个文档体系”不能直接写文件，先让用户理解阶段与风险 | 输出路线 + 分阶段确认 / 批量生成两种模式 |
+| 2 | 生成 / 更新 product-vision | 让 00-09 有完整愿景锚点和来源链 | `generate-docs`(00) 写 `docs/vision/product-vision.md` |
+| 3 | 铺出工程文档骨架 | 先铺完整框架，细节后续打磨，符合积累式演进 | `generate-docs`(00) 铺 `docs/00-09`（按剖面裁剪 06/07）+ `docs/design/` + README + Sprint1 雏形 |
+| 4 | 提醒骨架要靠 A7 打磨 | 一键生成会有缺口/漂移，必须逐文档精修 | 转 A7 |
 
 - **完成判据**：product-vision 已有来源锚点 · 00-09 骨架齐全 · REQ 全覆盖 · 阶段标签到位
 - **下一步**：A7
@@ -422,15 +423,16 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 > cwd：均在 `ai-project-template` 模板仓库。
 
 #### C1 处理提案收件箱
-- **说明**：汇总和处理模板优化提案，来源包括 `_proposals/TEMPLATE-UPGRADE-*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；处理结果落地、关闭 issue 或决议归档。
+- **说明**：汇总和处理模板优化提案，来源包括 `_proposals/TEMPLATE-UPGRADE-*.md`、`_proposals/_remote-issues/*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；先刷新 issue 镜像，再分批落地、关闭 issue 或决议归档。
 - **触发**：「处理提案」「汇总模板优化」「评审 TEMPLATE-UPGRADE」「处理 issue 提案」
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
-| 1 | 读全部本地提案和 issue 提案 | issue 是派生免 fork 回流入口，不能只看 `_proposals` | `template-proposal-summary`(11) + `gh issue list` |
-| 2 | 做 triage：补标签、去项目化、去重/冲突/依赖分析 | 避免漏掉未打标签的 `TEMPLATE-UPGRADE:` issue，也避免重复落地 | 标签 `proposal` / `feedback` + 分阶段计划 |
-| 3 | 切维护分支，按计划辅助修改 | 模板改动必须走分支 PR | 切分支 + 落地（规则/脚本/文档） |
-| 4 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_archive/proposals/` / `gh issue close` |
+| 1 | 读本地提案和既有 issue 镜像 | 镜像是跨会话稳定输入，不能每次只依赖远端读取 | `_proposals/TEMPLATE-UPGRADE-*.md` + `_proposals/_remote-issues/*.md` |
+| 2 | 查询并刷新远端 issue 镜像 | issue 是派生免 fork 回流入口，关闭 / 评论状态仍以 GitHub 为准 | `template-proposal-summary`(11) + `gh issue list` / `gh issue view` |
+| 3 | 做 triage：补标签、去项目化、去重/冲突/依赖分析 | 避免漏掉未打标签的 `TEMPLATE-UPGRADE:` issue，也避免重复落地 | 标签 `proposal` / `feedback` + Batch 计划 |
+| 4 | 切维护分支，按 Batch 计划辅助修改 | 模板改动必须走分支 PR，一批一范围便于评审和续接 | 切分支 + 落地（规则/脚本/文档） |
+| 5 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_archive/proposals/` / `gh issue close` |
 
 - **完成判据**：提案落地或决议留存 · 已处理本地提案归档 · 已处理 issue 关闭或标记后续状态
 - **下一步**：C2 / C3
