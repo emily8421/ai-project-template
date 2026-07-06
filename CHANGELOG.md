@@ -1,10 +1,18 @@
-﻿# CHANGELOG
+# CHANGELOG
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+
+## v1.30.7（2026-07-07）
+
+模板自检 CI 编码修复：移除关键文件 UTF-8 BOM，避免 GitHub Actions 中 Bash shebang 与版本号解析失败。
+
+- **脚本入口**：移除 `scripts/check-template.sh` 文件开头 BOM，确保 Linux runner 可正确识别 `#!/usr/bin/env bash`。
+- **版本解析**：移除 `VERSION` 与 `CHANGELOG.md` 文件开头 BOM，并将模板版本递增到 `v1.30.7`。
+- **影响范围**：仅修复编码 / CI 自检问题，不改变模板方法论或文档规范内容。
 
 ## v1.30.6（2026-07-06）
 

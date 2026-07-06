@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 # check-template.sh — 检查 ai-project-template 的关键入口、文档骨架与同步清单是否自洽
 #
 # 用法:
