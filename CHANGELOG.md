@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.30.5（2026-07-06）
+
+派生同步边界检查 merge commit 指引加固：补齐 `check-derived-sync` 在 PR merge 后应校验实际同步提交的提示，并避免 PowerShell fallback 使用易与自动变量混淆的参数名。
+
+- **同步提交定位**：`scripts/check-derived-sync.sh` 与 `.ps1` 在 `HEAD` 为 merge commit 时提示显式传入实际 `sync template vX.Y.Z from ai-project-template` 提交，失败输出同步给出 `<sync-commit>` 用法。
+- **PowerShell fallback**：`scripts/check-derived-sync.ps1` 将原生 fallback 参数从 `$Args` 改为 `$CheckArgs`，降低 Windows PowerShell 5.1 参数转发歧义风险。
+- **同步闭环文档**：`sync-methodology` Prompt 与派生同步运行记录模板要求记录实际同步提交，避免把 PR merge commit 当作同步边界检查目标。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加显式同步提交、merge commit 指引和 fallback 参数名断言。
+- 回流自 GitHub issue #102。
+
 ## v1.30.4（2026-07-06）
 
 会话续接运行时元数据边界加固：明确 `读取续接点` 必须按项目 Session Handoff 机制恢复，禁止把 CLI 私有 session、memory、subagent 或 cache 等运行时元数据直接作为项目续接事实。
