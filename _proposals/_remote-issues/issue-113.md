@@ -188,4 +188,3 @@
 
 - 若本提案成熟，按 `/run submit-proposal` 回流到模板仓库 issue。
 - Batch 3 将继续审计 `docs/06-07`，避免把 DB / API 契约问题混入本架构技术提案。
-

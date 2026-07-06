@@ -169,4 +169,3 @@ docs/research/YYYY-MM-DD-docs-evaluation-batch-<N>-<scope>.md
 | C-B0-P-001 | 是否将 Batch 模式做成独立命令 | 建议先扩展现有 `docs-system-audit` / `docs-evaluation`，暂不新增命令 | 现有命令已覆盖审计和评估，新增命令会增加维护面 | 新增 `template-proposal-audit` 命令 | 独立命令更清晰，但需要同步 README、命令索引和 Prompt |
 | C-B0-P-002 | 是否固定 Batch 0~6 的划分 | 建议作为推荐默认，不作为强制 | 不同项目文档剖面不同，需要裁剪空间 | 强制固定划分 | 便于统一，但对 Lean 项目过重 |
 | C-B0-P-003 | 是否要求提案必须引用来源 Batch 报告 | 建议要求 | 便于模板维护者审查动机、去重和影响范围 | 可选引用 | 可减少约束，但跨仓 issue 中上下文更容易丢失 |
-

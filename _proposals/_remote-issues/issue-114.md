@@ -203,4 +203,3 @@
 
 - 若本提案成熟，按 `/run submit-proposal` 回流到模板仓库 issue。
 - Batch 4 将继续审计 `docs/08-09`，避免把计划 / 验证证据问题混入本 DB / API 契约提案。
-

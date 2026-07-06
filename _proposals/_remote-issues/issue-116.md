@@ -232,4 +232,3 @@ design 文档中的待确认项应使用统一结构：
 
 - 若本提案成熟，按 `/run submit-proposal` 回流到模板仓库 issue。
 - Batch 6 将归并 Mock / 降级 / 权限安全 / 高风险能力等横切规范，判断是否独立成提案或并入 Batch 2 / 5。
-

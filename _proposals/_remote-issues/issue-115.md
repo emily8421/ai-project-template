@@ -190,4 +190,3 @@
 
 - 若本提案成熟，按 `/run submit-proposal` 回流到模板仓库 issue。
 - Batch 5 将继续审计 `docs/design/*`，避免把详细设计结构问题混入本计划 / 验证提案。
-
