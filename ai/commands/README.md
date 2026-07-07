@@ -13,6 +13,7 @@
 /run sync-methodology
 /run docs-system-audit
 /run post-sync-cleanup
+/run resume
 ```
 
 也可使用自然语言：
@@ -65,6 +66,7 @@ AI 识别到命令意图后，应：
 | `docs-evaluation` | 文档评估 / 阶段转换评估 / 单文档评估 | `ai/prompts/review/19-docs-evaluation.md` |
 | `docs-open-items` | 汇总待确认事项 / 生成 open items / 编码前自检未决项 / 阶段任务前检查待确认项 | `ai/prompts/docs/21-docs-open-items.md` |
 | `ui-prototype-exploration` | 先看原型 / 先做页面原型确认需求 / Demo 前先确认交互 | `ai/prompts/docs/22-ui-prototype-exploration.md` |
+| `resume` | 读取续接点 / 继续上次 / 恢复上下文 | `ai/session-rules.md` §3.1（快速续接模式） |
 | `tech-env-evaluation` | 技术环境评估 / 技术路线评估 / 依赖安装验证 / 本机能不能跑 | `ai/prompts/review/20-tech-env-evaluation.md` |
 | `template-proposal-summary` | 汇总模板优化提案 | `ai/prompts/maintainers/11-template-proposal-summary.md` |
 | `generate-docs` | 生成文档体系 / 生成整个文档体系 / 补齐 00-09 | `ai/prompts/docs/00-generate-or-complete-docs.md` |
