@@ -141,6 +141,26 @@ function Invoke-NativeTemplateCheck {
     }
   }
 
+  function Require-Absent-Contains {
+    param(
+      [string]$RelativePath,
+      [string]$Pattern,
+      [string]$Message
+    )
+
+    $fullPath = Join-Path $Root $RelativePath
+    if (-not (Test-Path $fullPath -PathType Leaf)) {
+      Fail ($Message + " (missing file: " + $RelativePath + ")")
+      return
+    }
+
+    if (Select-String -Path $fullPath -Pattern $Pattern -Quiet) {
+      Fail $Message
+    } else {
+      Pass $Message
+    }
+  }
+
   function Get-SyncFiles {
     $syncPath = Join-Path $Root "template-sync.json"
     $json = Get-Content $syncPath -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -385,9 +405,15 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/doc-standards/05-tech-spec.md" "Risk-ID" "05 tech spec standard defines Risk-ID"
   Require-Contains "template-sync.json" "ai/doc-standards/06-db-design\.md" "template-sync includes 06 DB standard"
   Require-Contains "template-sync.json" "ai/doc-standards/07-api-spec\.md" "template-sync includes 07 API standard"
+  Require-Contains "template-sync.json" "ai/doc-standards/08-dev-plan\.md" "template-sync includes 08 dev plan standard"
+  Require-Contains "template-sync.json" "ai/doc-standards/09-verification\.md" "template-sync includes 09 verification standard"
   Require-Contains "scripts/sync-template.sh" "ai/doc-standards/06-db-design\.md" "sync-template fallback includes 06 DB standard"
   Require-Contains "scripts/sync-template.sh" "ai/doc-standards/07-api-spec\.md" "sync-template fallback includes 07 API standard"
-  Require-Contains "scripts/sync-template.sh" "00-07 已升级为独立标准文件" "sync-template documents standalone 00-07 standards"
+  Require-Contains "scripts/sync-template.sh" "ai/doc-standards/08-dev-plan\.md" "sync-template fallback includes 08 dev plan standard"
+  Require-Contains "scripts/sync-template.sh" "ai/doc-standards/09-verification\.md" "sync-template fallback includes 09 verification standard"
+  Require-Contains "scripts/sync-template.sh" "00-09 已升级为独立标准文件" "sync-template documents standalone 00-09 standards"
+  Require-Absent-Contains "scripts/sync-template.sh" "DOC_STANDARD_DOCS=\([^)]*docs/08-dev-plan\.md" "sync-template no longer mirrors docs/08 over 08 standard"
+  Require-Absent-Contains "scripts/sync-template.sh" "DOC_STANDARD_DOCS=\([^)]*docs/09-verification\.md" "sync-template no longer mirrors docs/09 over 09 standard"
   Require-Contains "ai/doc-standards/README.md" "REQ / NFR → Phase → COMP-ID / MOD-ID / Flow-ID → Table / Field → API-ID → Error / Permission → TC / Sprint" "doc-standards README defines 06-07 contract chain"
   Require-Contains "ai/doc-standards/06-db-design.md" "字段级契约" "06 DB standard includes field-level contract"
   Require-Contains "ai/doc-standards/06-db-design.md" "目标结构与当前实现对照" "06 DB standard includes target/current comparison"
@@ -403,6 +429,20 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/review/10-docs-checklist.md" "endpoint contract matrix" "docs checklist checks endpoint contract matrix"
   Require-Contains "ai/prompts/planning/08-phase-upgrade.md" "DB / API 契约门槛检查" "phase upgrade prompt checks DB/API contract gate"
   Require-Contains "ai/prompts/dev/02-run-task.md" "表字段、API-ID、错误码、权限边界、契约状态和 TC-ID" "run task prompt checks DB/API contract status"
+  Require-Contains "ai/doc-standards/README.md" "REQ / NFR → Phase → Sprint / Task → TC-ID / 验证包 → Commit / PR → Sprint 验收包 → Phase 验收 / 回写" "doc-standards README defines 08-09 execution evidence chain"
+  Require-Contains "ai/doc-standards/08-dev-plan.md" "Sprint 验证包" "08 dev plan standard defines sprint verification package"
+  Require-Contains "ai/doc-standards/08-dev-plan.md" "Sprint 完成包" "08 dev plan standard defines sprint completion package"
+  Require-Contains "ai/doc-standards/08-dev-plan.md" "Task 模板最低要求" "08 dev plan standard defines task template minimum"
+  Require-Contains "ai/doc-standards/09-verification.md" "TC 状态枚举" "09 verification standard defines TC status enumeration"
+  Require-Contains "ai/doc-standards/09-verification.md" "正式回写与 handoff 边界" "09 verification standard defines formal writeback and handoff boundary"
+  Require-Contains "ai/doc-standards/09-verification.md" "缺陷 / 回归" "09 verification standard includes defect and regression evidence"
+  Require-Contains "docs/08-dev-plan.md" "验证包 / TC" "08 dev plan template includes verification package and TC"
+  Require-Contains "docs/08-dev-plan.md" "Sprint 完成包" "08 dev plan template includes sprint completion package"
+  Require-Contains "docs/09-verification.md" "TC 状态" "09 verification template includes TC status"
+  Require-Contains "docs/09-verification.md" "Sprint 验收包" "09 verification template includes sprint acceptance package"
+  Require-Contains "ai/implementation-lifecycle-rules.md" "Sprint / Task 完成后必须形成最小完成包" "implementation lifecycle requires sprint/task completion package"
+  Require-Contains "ai/session-rules.md" "长期事实必须回写" "session rules keep handoff separate from 08/09 formal records"
+  Require-Contains "ai/prompts/dev/09-sprint-summary.md" "Sprint 验收包" "sprint summary prompt outputs sprint acceptance package"
   Require-Contains "docs/04-architecture.md" "架构视图检查表" "04 architecture template includes view checklist"
   Require-Contains "docs/05-tech-spec.md" "Readiness Gate" "05 tech spec template includes readiness gate"
   Require-Contains "ai/document-lifecycle-rules.md" "04-05 总体设计风险验证规则" "document lifecycle defines 04-05 risk verification"

@@ -22,7 +22,7 @@
 
 上游输入：docs/inputs/ 中已评审通过的输入摘要 + docs/vision/product-vision.md（可替换为 00 / 01 / 02 / 03 / task / 现有系统说明 / 外部接入文档）
 先阅读：ai/index.md 列出的全部规则文件（尤其 `ai/document-lifecycle-rules.md`）+ 该上游输入 + docs/env/local-env.md（如存在）。
-按范围读取标准：生成整个文档体系时读取已存在的 `ai/doc-standards/00-09`；只生成需求阶段时读取 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`；生成 DB / API 详细设计时读取 `ai/doc-standards/06-db-design.md`、`07-api-spec.md`；精修单文档时读取对应 `ai/doc-standards/<doc>.md`。
+按范围读取标准：生成整个文档体系时读取已存在的 `ai/doc-standards/00-09`；只生成需求阶段时读取 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`；生成 DB / API 详细设计时读取 `ai/doc-standards/06-db-design.md`、`07-api-spec.md`；生成计划 / 验证阶段时读取 `ai/doc-standards/08-dev-plan.md`、`09-verification.md`；精修单文档时读取对应 `ai/doc-standards/<doc>.md`。
 
 【前置门槛】
 - 先说明文档体系生成阶段路线：输入材料评审 → 需求确认 → 需求分析 → 总体设计 → 技术选型 / 技术路线评估 → 详细设计 → 验证用例设计 → 执行计划 / Sprint 规划 → 完整文档体系评估与审计 → 待确认事项总览与编码前门禁。
@@ -73,8 +73,8 @@
    - 06-db-design：若保留，按模板结构和 `ai/doc-standards/06-db-design.md` 写保留/省略决策、数据需求、概念模型、目标结构与当前实现对照、字段级契约、索引关系、迁移 / seed / 回滚、数据安全留存、DB / API 交叉追溯和 REQ → 表 / 字段矩阵
    - 07-api-spec：若保留，按模板结构和 `ai/doc-standards/07-api-spec.md` 写保留/省略决策、接口形态、统一约定、API-ID、endpoint contract matrix、输入输出契约、错误码、权限安全、异步状态机、版本演进、API ↔ DB / Service / Test 追溯和 REQ → 接口矩阵
    - docs/design/<子系统>.md：每个非平凡子系统一份（框架 + 当前阶段细节）
-   - 08-dev-plan：按模板结构写当前 Phase 目标、Sprint 总览、Sprint 详情、依赖里程碑、任务拆分规则和进度记录
-   - 09-verification：按模板结构写验证策略、REQ → 用例矩阵、用例详情、分阶段验证范围、本机资源验证、验收记录和未验证风险
+   - 08-dev-plan：按模板结构和 `ai/doc-standards/08-dev-plan.md` 写当前 Phase 目标、Sprint 总览、Sprint 详情、验证包、完成包、依赖里程碑、任务拆分规则和进度记录
+   - 09-verification：按模板结构和 `ai/doc-standards/09-verification.md` 写验证策略、REQ → TC 矩阵、TC 用例详情、TC 状态、分阶段验证范围、本机资源验证、验收记录、Sprint 验收包、缺陷 / 回归记录和未验证风险
 
 5) 项目 README
    - 将根 README 项目化：根据愿景与阶段建议生成项目简介、当前能力、快速开始、文档入口、模板关系与当前进度
