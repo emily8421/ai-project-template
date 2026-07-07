@@ -40,10 +40,11 @@
 - ai/project-rules.md（如存在）
 - docs/README.md
 - 与本次评估范围相关的 docs/00-09、docs/design、docs/env、输入材料
-- ai/doc-standards/README.md 和 ai/doc-standards/00-09（如存在）
+- ai/doc-standards/README.md、ai/doc-standards/00-09 和 `ai/doc-standards/design-doc.md`（如存在；评估 `docs/design/*` 时必读）
 - E1 / E2 或需求阶段评估时，额外逐份对照 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`
 - E2 / E3 或涉及真实依赖时，额外对照 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`、`docs/research/*tech-env-evaluation*.md`（如存在）
 - E3 / E4 或涉及 DB / API 详细设计时，额外对照 `ai/doc-standards/06-db-design.md`、`ai/doc-standards/07-api-spec.md`
+- E3 / E4 或涉及 `docs/design/*` 时，额外对照 `ai/doc-standards/design-doc.md`
 - E4 / E5 / E6 或涉及实现计划、验证证据、Sprint 总结、Phase 升级时，额外对照 `ai/doc-standards/08-dev-plan.md`、`ai/doc-standards/09-verification.md`
 
 评估维度：
@@ -61,7 +62,8 @@
 | 技术风险闭环 | `05` 是否包含技术状态、依赖配置、敏感性、Risk-ID、readiness gate、`05 ↔ 09` 映射和 Sprint 解锁条件 | 输出风险验证矩阵或 P0 / P1 断点 |
 | DB / API 契约健康度 | `06/07` 是否包含字段级契约、endpoint contract matrix、API-ID、错误码、权限边界、迁移 / seed / 回滚、DB / API / TC 追溯和契约状态 | 输出契约健康度矩阵或 P0 / P1 断点 |
 | 执行闭环健康度 | `08/09` 是否包含 Sprint 验证包、完成包、TC 详情、验收证据、缺陷 / 回归记录和正式回写状态 | 输出执行闭环矩阵或 P0 / P1 断点 |
-| 前端交互 | UI 型项目是否已补前端交互设计或写明豁免；是否越过 PRD / API / 验收边界 | 列缺口、越界和权限边界风险 |
+| docs/design/* 通用详细设计 | 触发条件下是否已补通用详细设计或写明豁免；是否具备元信息、职责边界、追溯、流程 / 状态机、失败 / 降级、readiness gate、验收追溯和实现偏差区 | 输出 design 健康度矩阵或 P0 / P1 断点 |
+| 前端交互 | UI 型项目是否已补前端交互设计或写明豁免；是否越过 PRD / API / 验收边界；是否满足通用 design 标准 | 列缺口、越界和权限边界风险 |
 | 阶段边界 | 当前阶段是否混入后续功能 | 标出越界内容 |
 | 可验证性 | 需求和设计是否有可验收口径 | 标出不可测条目 |
 | 维护性 | 文档是否便于后续增量演进 | 标出结构化改进项 |
@@ -98,9 +100,11 @@ E3 / E4 阶段评估必须重点检查：
 - `07` 是否为当前 Phase API 提供稳定 API-ID、endpoint contract matrix、请求 / 响应 / 错误 / 权限 / 兼容契约、异步状态机和 API ↔ DB / Service / Test 追溯。
 - API 输出敏感字段、DB 约束映射错误码、权限隔离、Mock → 真实调用或内部 API → 外部 API 是否有验证项和升阶段门槛。
 - `06/07` 中草案、候选、目标设计、Mock、默认关闭或禁止能力是否被 `08` / `09` 误写成当前可实现、已验证或已启用。
+- 触发 `docs/design/*` 时，是否按 `ai/doc-standards/design-doc.md` 补齐元信息、职责边界、上游依据、流程 / 状态机、数据 / 接口 / 权限契约引用、失败 / 降级路径、readiness gate、验收追溯、实现偏差 / 设计回写和待确认项；缺失且无豁免时不得给出无条件 Go。
+- `docs/design/*` 是否只承接上游已批准需求、架构、技术方案和 `06/07` 契约；是否孤立新增需求、接口、表、TC 或 Phase 外能力。
 
 E4 / E5 / E6 阶段评估必须重点检查：
-- `08` 是否为当前 Sprint / Task 写明 REQ / NFR、输入设计 / 契约、修改范围、验证包、TC-ID、状态、完成包和任务拆分依据。
+- `08` 是否为当前 Sprint / Task 写明 REQ / NFR、输入设计 / 契约（含触发的 `docs/design/*`）、修改范围、验证包、TC-ID、状态、完成包和任务拆分依据。
 - `09` 是否为当前 Phase REQ 提供可复现 TC 详情、TC 状态、证据记录、Sprint / Phase 验收记录、缺陷 / 回归记录和风险与未验证项。
 - Sprint 完成事实、验证结果、Mock / 降级条件通过、残留风险或 Phase 验收是否已从 handoff / 聊天 / PR 回写到正式 `08/09`，或明确暂不落盘原因。
 - Phase 升级前 `03/08/09/ai/project-rules.md/README/.ai/session-handoff.md` 状态是否一致；未确认时不得给出无条件 Go。

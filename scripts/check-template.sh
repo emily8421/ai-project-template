@@ -334,7 +334,7 @@ require_doc_standards_mirror() {
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
     mkdir -p ai/prompts ai/doc-standards
     cp -R "$ROOT/ai/prompts/." ai/prompts/
-    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
+    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification design-doc; do
       printf '# standalone standard %s\n' "$standard" > "ai/doc-standards/$standard.md"
     done
     printf '# docs\n' > docs/README.md
@@ -388,10 +388,10 @@ require_doc_standards_mirror() {
 
   local count
   count="$(find "$derived_dir/ai/doc-standards" -type f 2>/dev/null | wc -l | tr -d ' ')"
-  if [[ "$count" -eq 10 ]]; then
-    pass "doc-standards 生成 10 个独立标准文件"
+  if [[ "$count" -eq 11 ]]; then
+    pass "doc-standards 生成 11 个独立标准文件"
   else
-    fail "doc-standards 应生成 10 个标准文件，实际 $count"
+    fail "doc-standards 应生成 11 个标准文件，实际 $count"
   fi
 
   if grep -q '# standalone standard 08-dev-plan' "$derived_dir/ai/doc-standards/08-dev-plan.md" 2>/dev/null && \
@@ -402,10 +402,11 @@ require_doc_standards_mirror() {
   fi
 
   if grep -q '# standalone standard 00-scenario' "$derived_dir/ai/doc-standards/00-scenario.md" 2>/dev/null && \
-     grep -q '# standalone standard 09-verification' "$derived_dir/ai/doc-standards/09-verification.md" 2>/dev/null; then
-    pass "doc-standards 00-09 使用独立标准文件"
+     grep -q '# standalone standard 09-verification' "$derived_dir/ai/doc-standards/09-verification.md" 2>/dev/null && \
+     grep -q '# standalone standard design-doc' "$derived_dir/ai/doc-standards/design-doc.md" 2>/dev/null; then
+    pass "doc-standards 00-09 与 design-doc 使用独立标准文件"
   else
-    fail "doc-standards 00-09 未使用独立标准文件"
+    fail "doc-standards 00-09 或 design-doc 未使用独立标准文件"
   fi
 
   local drift=0
@@ -1187,6 +1188,17 @@ require_contains "ai/doc-standards/08-dev-plan.md" 'Task 模板最低要求' "08
 require_contains "ai/doc-standards/09-verification.md" 'TC 状态枚举' "09 验证标准定义 TC 状态枚举"
 require_contains "ai/doc-standards/09-verification.md" '正式回写与 handoff 边界' "09 验证标准定义正式回写与 handoff 边界"
 require_contains "ai/doc-standards/09-verification.md" '缺陷 / 回归' "09 验证标准包含缺陷与回归证据"
+require_contains "ai/doc-standards/design-doc.md" '分类 checklist' "design 标准包含分类 checklist"
+require_contains "ai/doc-standards/design-doc.md" '实现偏差 / 设计回写' "design 标准包含实现偏差回写"
+require_contains "ai/doc-standards/design-doc.md" 'readiness gate' "design 标准包含 readiness gate"
+require_contains "ai/doc-standards/README.md" 'docs/design/\* 通用详细设计基线' "doc-standards README 定义 design 基线"
+require_contains "ai/document-lifecycle-rules.md" 'docs/design/\* 通用详细设计触发与回写规则' "文档生命周期定义 design 触发与回写"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'ai/doc-standards/design-doc.md' "文档生成 Prompt 读取 design 标准"
+require_contains "ai/prompts/docs/04-edit-single-doc.md" '实现偏差 / 设计回写' "单文档修订 Prompt 检查 design 回写"
+require_contains "ai/prompts/docs/07-sync-docs-from-code.md" 'docs/design/\*' "代码回写 Prompt 更新 design 偏差"
+require_contains "ai/prompts/review/10-docs-checklist.md" '通用详细设计' "编码前 checklist 检查通用详细设计"
+require_contains "ai/prompts/review/16-docs-system-audit.md" '通用详细设计缺口' "文档审计输出通用详细设计缺口"
+require_contains "ai/prompts/review/19-docs-evaluation.md" 'docs/design/\* 通用详细设计' "文档评估检查通用详细设计"
 require_contains "docs/08-dev-plan.md" '验证包 / TC' "08 开发计划模板包含验证包与 TC"
 require_contains "docs/08-dev-plan.md" 'Sprint 完成包' "08 开发计划模板包含 Sprint 完成包"
 require_contains "docs/09-verification.md" 'TC 状态' "09 验证模板包含 TC 状态"

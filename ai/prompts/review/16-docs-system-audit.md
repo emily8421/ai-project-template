@@ -52,12 +52,13 @@
    - 事实 / 追溯断点：影响需求、设计、计划或验证闭环的实质问题。
    - 横切传播残留：权威源已变更但下游措辞、引用或阶段标签未同步。
    - 横切状态冲突：`ai/document-lifecycle-rules.md` §7.1 中的候选、待确认、待技术验证、Mock、降级、默认关闭、预留、已验证、已启用、禁止等状态被混用或在下游被升级为无证据事实。
-    - 规范基线缺口：对照 `ai/doc-standards/00-09`（旧项目 fallback：`docs/_scaffold/00-09`）发现的章节 / 元信息 / 矩阵结构缺失；不代表业务事实错误。
+    - 规范基线缺口：对照 `ai/doc-standards/00-09` 与 `ai/doc-standards/design-doc.md`（旧项目 fallback：`docs/_scaffold/00-09`）发现的章节 / 元信息 / 矩阵结构缺失；不代表业务事实错误。
     - 04-05 设计门禁缺口：缺少系统上下文、组件 / 模块 / Flow ID、运行拓扑、ADR、技术状态、依赖配置、Risk-ID、readiness gate 或 `05 ↔ 09` 风险验证映射。
    - 06-07 契约门禁缺口：目标结构、当前实现、Mock、草案、候选、默认关闭或稳定契约混用；当前 Phase 表 / API 缺少字段级契约、endpoint contract、API-ID、错误码、权限边界、迁移 / seed / 回滚或 TC 映射。
    - 08-09 执行闭环缺口：Sprint 缺少验证包、TC-ID、完成包、状态或任务拆分依据；`09` 缺少 TC 详情、证据记录、Sprint 验收包、缺陷 / 回归记录，或长期事实只留在 handoff / 聊天 / PR 中。
+   - 通用详细设计缺口：触发 `docs/design/*` 但缺少文档 / 豁免理由；缺少元信息、职责边界、上游追溯、流程 / 状态机、数据 / 接口 / 权限契约引用、失败 / 降级、readiness gate、验收追溯或实现偏差 / 设计回写区。
    - 可行性 / 部署缺口：技术可行性、资源、调度、运行环境或验证入口未说明。
-   - 前端交互缺口：UI 型项目缺少 `docs/design/frontend-interaction.md` / `docs/design/*interaction*.md` 或豁免理由；页面流、状态、接口依赖、验收路径不可追溯，或把前端可见性误写为权限边界。
+   - 前端交互缺口：UI 型项目缺少 `docs/design/frontend-interaction.md` / `docs/design/*interaction*.md` 或豁免理由；页面流、状态、接口依赖、验收路径不可追溯，或把前端可见性误写为权限边界；前端交互文档也必须满足通用 design 标准。
    - 本地续接状态：若存在 `NEXT-STEPS.md`、`.ai/session-handoff.md` 等本地便签，列出需同步的状态项；该类文件不是模板正式文档。
 3. 每个问题给出：类型、严重度、文件:行、权威源、建议修复方式、是否改业务事实。
 4. 回梳计划（按横切事实、状态词典或高优先级断点分组）+ 审计新发现（可行性 / 部署缺口）+ 待人工确认事项总览。
@@ -73,7 +74,7 @@
 3. 专题讨论结果是否先经人工确认再回填正式文档；未确认的方案不得写成已确认事实。
 4. open items 中阻塞项是否已关闭、转任务或被明确风险接受。
 
-00-03 需求链健康度矩阵建议列：`SC-ID / U-ID / REQ-ID / Phase / 用户 AC / 验证入口 TC / 状态 / 断点 / 修复建议`。04-05 总体设计风险矩阵建议列：`REQ / NFR / COMP-ID / MOD-ID / Flow-ID / Risk-ID / readiness gate / TC / Sprint / 状态 / 断点 / 修复建议`。06-07 契约健康度矩阵建议列：`REQ / NFR / Table / Field / API-ID / Error / Permission / TC / 契约状态 / 当前实现 / Mock 差异 / 断点 / 修复建议`。08-09 执行闭环矩阵建议列：`REQ / Sprint / Task / TC-ID / 验证包 / 完成包 / Commit / PR / 验收记录 / 回写状态 / 断点 / 修复建议`。旧项目使用 `F-*` 等自定义编号时，不强制重命名，优先建议新增兼容映射表闭合追溯。
+00-03 需求链健康度矩阵建议列：`SC-ID / U-ID / REQ-ID / Phase / 用户 AC / 验证入口 TC / 状态 / 断点 / 修复建议`。04-05 总体设计风险矩阵建议列：`REQ / NFR / COMP-ID / MOD-ID / Flow-ID / Risk-ID / readiness gate / TC / Sprint / 状态 / 断点 / 修复建议`。06-07 契约健康度矩阵建议列：`REQ / NFR / Table / Field / API-ID / Error / Permission / TC / 契约状态 / 当前实现 / Mock 差异 / 断点 / 修复建议`。docs/design/* 详细设计健康度矩阵建议列：`REQ / NFR / Phase / Design Point / Flow-D / Table / Field / API-ID / Permission / readiness gate / Sprint / TC / 实现偏差 / 断点 / 修复建议`。08-09 执行闭环矩阵建议列：`REQ / Sprint / Task / TC-ID / 验证包 / 完成包 / Commit / PR / 验收记录 / 回写状态 / 断点 / 修复建议`。旧项目使用 `F-*` 等自定义编号时，不强制重命名，优先建议新增兼容映射表闭合追溯。
 
 旧派生文档兼容审计：不要求 `docs/00-09` 逐字重写成 `ai/doc-standards` 示例骨架，但必须检查并报告：同一文档内 H2/H3 标题编号风格是否统一、连续、无明显跳号或重复；是否存在必要但缺失的关键版块；若补充版块，必须保持原项目语义和历史事实，不得机械重写或删除旧内容。若历史项目使用 `F-*` 等自定义需求编号，不要强制全文重命名，优先建议新增 `U-ID ↔ 旧编号` 兼容矩阵以满足追溯闭合。
 

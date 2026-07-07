@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.38.0（2026-07-07）
+
+Batch 6 `docs/design/*` 通用详细设计标准落地：补齐非平凡子系统、复杂 UI、权限 / 安全、AI / 外部服务、导入 / 异步任务和高风险愿景能力的详细设计基线。
+
+- **design 独立标准**：新增 `ai/doc-standards/design-doc.md`，覆盖触发 / 豁免、元信息、职责边界、上游追溯、流程 / 状态机、数据 / 接口 / 权限契约、失败 / 降级、readiness gate、验收追溯、实现偏差 / 设计回写和待确认项。
+- **分类 checklist**：内置服务型、页面 / 交互型、权限 / 安全型、AI / RAG / 外部模型型、导入 / 异步任务 / 外部集成型、策略 / 规则型、配置型和高风险愿景型裁剪要求。
+- **生命周期门禁**：`document-lifecycle-rules`、`global-rules`、`project-rules` 明确 `docs/design/*` 触发、豁免、不得新增需求 / 接口 / 表 / 验收目标，以及实现偏差正式回写边界。
+- **Prompt / command 路由**：生成、单文档修订、代码反向同步、编码前 checklist、文档体系审计和文档评估均读取 design 标准并检查元信息、追溯、readiness gate、验收路径和实现偏差区。
+- **同步与自检**：`template-sync.json`、`sync-template` 和 `check-template` 纳入 `ai/doc-standards/design-doc.md`，并增加 design 标准、Prompt 引用和派生同步烟测断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-6-design-doc-standard.md`，对应 GitHub issue #110、#116。
 ## v1.37.0（2026-07-07）
 
 Batch 5 开发计划、验证证据与正式回写闭环落地：补齐 `08-09` 独立细粒度标准，强化 Sprint 验证包、完成包、TC 详情、验收证据、缺陷 / 回归和 handoff 边界。
