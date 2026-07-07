@@ -13,6 +13,7 @@
 
 | 批次 / 提案 | 归档说明 |
 |---|---|
+| Batch 0：`TEMPLATE-UPGRADE-batch-0-a13-sync-closure.md` | 已在 `v1.30.6` 吸收 A13 同步模板完整闭环说法、命令索引提示和自检断言；对应 issue 镜像 `issue-118.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
 | Batch 1：`TEMPLATE-UPGRADE-batch-1-proposal-inbox-governance-status-dictionary.md` | 已在 `v1.31.0` 吸收提案收件箱镜像机制、分批治理、横切状态词典、待确认事项总览和文档体系生成总控最低规则；对应 issue 镜像 `issue-111.md`、`issue-117.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
 | Batch 2：`TEMPLATE-UPGRADE-batch-2-requirements-chain-00-03.md` | 已在 `v1.33.0` 吸收 `00-03` 需求链规范、健康度矩阵、Phase 状态传播和兼容补齐规则；对应 issue 镜像 `issue-105.md`、`issue-112.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
 | Batch 3：`TEMPLATE-UPGRADE-batch-3-architecture-tech-risk-readiness.md` | 已在 `v1.34.0` 吸收 `04-05` 架构 / 技术方案规范、风险验证闭环、依赖配置矩阵和 readiness gate；对应 issue 镜像 `issue-106.md`、`issue-113.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
