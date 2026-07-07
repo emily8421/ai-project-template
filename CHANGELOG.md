@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.40.0（2026-07-07）
+
+需求探索原型场景与模板：在正式 `00-03` 定稿、架构和技术路线选择前，用低保真 UI 原型、页面流、截图标注或静态 Mock 帮用户确认需求。
+
+- **早期场景**：`template-docs/scenario-guides.md` 新增 A5.5 需求探索原型 / Demo 前原型确认场景，触发说法包括“先看原型”“先做页面原型确认需求”“先别定技术栈，先画界面流程”。
+- **边界规则**：`ai/document-lifecycle-rules.md` 新增 §10.2，明确需求探索原型不是正式需求、架构、技术栈、接口、数据库、任务或验收事实；确认后必须回填 `00-03`。
+- **模板与路由**：新增 `template-docs/ui-prototype-exploration-template.md`、`ai/prompts/docs/22-ui-prototype-exploration.md` 和 `ai/commands/ui-prototype-exploration.md`，默认建议落盘到 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`。
+- **索引与同步**：更新 `ai/commands/README.md`、`ai/prompts/README.md`、`docs/README.md` 和 `template-sync.json`，让派生项目同步获得该场景能力。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 A5.5、探索模板、命令、Prompt、同步清单和 docs 分区关键断言。
+- 回流自 `_archive/proposals/TEMPLATE-UPGRADE-ui-prototype-exploration.md`。
+
 ## v1.39.0（2026-07-07）
 
 UI 原型策略与可视化验收门禁：UI 型项目在进入前端实现前需选择可视化原型策略或写明豁免，减少实现后才暴露页面结构、状态反馈、信息密度和 Demo / Mock / 降级口径问题。
