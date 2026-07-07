@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.38.1（2026-07-07）
+
+GitHub issue / PR 查询鲁棒性补强：降低模板维护者处理提案收件箱时误判远端 open issue、PR 或关闭状态的风险。
+
+- **远端状态核对**：`_proposals/README.md` 明确 GitHub `/issues` API 同时返回 issue 与 PR，PowerShell 需用 `PSObject.Properties['pull_request']` 判断普通 issue，并在关闭 / 改标签 / 评论前执行“列表 + 单项状态复核”。
+- **维护 Prompt**：`template-proposal-summary` 要求 open 列表与单项状态交叉验证；若列表与单项状态冲突，以单项状态和 GitHub 页面为准并先报告。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 GitHub issue 稳定过滤与单项状态复核关键断言。
+- 回流自 `_archive/proposals/TEMPLATE-UPGRADE-github-issue-query-robustness.md`。
+
 ## v1.38.0（2026-07-07）
 
 Batch 6 `docs/design/*` 通用详细设计标准落地：补齐非平凡子系统、复杂 UI、权限 / 安全、AI / 外部服务、导入 / 异步任务和高风险愿景能力的详细设计基线。

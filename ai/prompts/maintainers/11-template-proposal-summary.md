@@ -24,7 +24,7 @@
 > 事实来源：模板变更治理规则以 `CONTRIBUTING.md` 为准；本节只是把该流程整理成可复制给 AI 执行的 Prompt。
 
 ```text
-请读取 _proposals/ 下所有 TEMPLATE-UPGRADE-*.md（提案）与可选 *-patch.md（具体改动建议），**先读取既有 `_proposals/_remote-issues/*.md`，再读取模板仓库带 `proposal` / `feedback` 标签的 issue**（`gh issue list --label proposal` 与 `--label feedback`——派生项目经 `submit-proposal` / `submit-feedback` 开的回流 issue），并覆盖 open issue 中标题匹配 `TEMPLATE-UPGRADE:` 的条目。远端 issue 正文必须先镜像 / 刷新到 `_proposals/_remote-issues/issue-<number>.md`，再与本地提案一并纳入分析，输出一份模板优化计划。issue 处理完后应关闭；转为实施的，落地后关闭对应 issue。
+请读取 _proposals/ 下所有 TEMPLATE-UPGRADE-*.md（提案）与可选 *-patch.md（具体改动建议），**先读取既有 `_proposals/_remote-issues/*.md`，再读取模板仓库带 `proposal` / `feedback` 标签的 issue**（`gh issue list --label proposal` 与 `--label feedback`——派生项目经 `submit-proposal` / `submit-feedback` 开的回流 issue），并覆盖 open issue 中标题匹配 `TEMPLATE-UPGRADE:` 的条目。远端 issue 正文必须先镜像 / 刷新到 `_proposals/_remote-issues/issue-<number>.md`，再与本地提案一并纳入分析，输出一份模板优化计划。查询远端 issue / PR 时必须避免临时过滤误判：GitHub `/issues` API 会同时返回 issue 与 PR，PowerShell 中应通过 `$null -eq $_.PSObject.Properties['pull_request']` 判断普通 issue；关闭、改标签或评论前必须做 open 列表与单项状态复核。issue 处理完后应关闭；转为实施的，落地后关闭对应 issue。
 
 读取前先确认：
 - ai/index.md 列出的全部规则文件
@@ -44,7 +44,7 @@
 6. 边界审查：剔除派生项目专属内容，只保留可通用于多个项目的模板优化。
 7. 验证计划：列出需要运行的脚本、人工审查项和下行同步影响。
 8. 归档计划：列出本次落地完成后应从 `_proposals/` 移动到 `_archive/proposals/` 的已处理提案文件；已关闭且不再参与后续 Batch 的 issue 镜像可归档或在归档说明中列明吸收范围；未处理或延后处理的提案继续留在 `_proposals/` 或 `_proposals/_remote-issues/`。
-9. 远端复核：关闭 issue、改标签或评论前必须重新核对远端状态；本地镜像只作为分析输入，不替代 GitHub 权威状态。
+9. 远端复核：关闭 issue、改标签或评论前必须重新核对远端状态；本地镜像只作为分析输入，不替代 GitHub 权威状态。复核必须包含 open 列表和准备操作对象的单项状态；若列表与单项状态冲突，以单项状态和 GitHub 页面为准，并先向用户说明冲突。
 
 输出格式：
 1. 提案清单
