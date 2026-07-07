@@ -24,7 +24,7 @@
 > 事实来源：模板变更治理规则以 `CONTRIBUTING.md` 为准；本节只是把该流程整理成可复制给 AI 执行的 Prompt。
 
 ```text
-请读取 _proposals/ 下所有 TEMPLATE-UPGRADE-*.md（提案）与可选 *-patch.md（具体改动建议），**先读取既有 `_proposals/_remote-issues/*.md`，再读取模板仓库带 `proposal` / `feedback` 标签的 issue**（`gh issue list --label proposal` 与 `--label feedback`——派生项目经 `submit-proposal` / `submit-feedback` 开的回流 issue），并覆盖 open issue 中标题匹配 `TEMPLATE-UPGRADE:` 的条目。远端 issue 正文必须先镜像 / 刷新到 `_proposals/_remote-issues/issue-<number>.md`，再与本地提案一并纳入分析，输出一份模板优化计划。查询远端 issue / PR 时必须避免临时过滤误判：GitHub `/issues` API 会同时返回 issue 与 PR，PowerShell 中应通过 `$null -eq $_.PSObject.Properties['pull_request']` 判断普通 issue；关闭、改标签或评论前必须做 open 列表与单项状态复核。issue 处理完后应关闭；转为实施的，落地后关闭对应 issue。
+请读取 _proposals/ 下所有 TEMPLATE-UPGRADE-*.md（提案）与可选 *-patch.md（具体改动建议），**先读取既有 `_proposals/_remote-issues/*.md`，再读取模板仓库带 `proposal` / `feedback` 标签的 issue**（`gh issue list --label proposal` 与 `--label feedback`——派生项目经 `submit-proposal` / `submit-feedback` 开的回流 issue），并覆盖 open issue 中标题匹配 `TEMPLATE-UPGRADE:` 的条目。远端 issue 正文必须先镜像 / 刷新到 `_proposals/_remote-issues/issue-<number>.md`，再与本地提案一并纳入分析，输出一份模板优化计划。镜像硬门禁：远端正文只允许用于生成 / 刷新镜像；没有本地镜像路径的 issue 不得进入去重、冲突、依赖、分批计划、拟修改文件或续接记录；若已误读远端正文但尚未落镜像，必须丢弃该轮分析结论，先刷新镜像，再重新读取本地镜像继续。查询远端 issue / PR 时必须避免临时过滤误判：GitHub `/issues` API 会同时返回 issue 与 PR，PowerShell 中应通过 `$null -eq $_.PSObject.Properties['pull_request']` 判断普通 issue；关闭、改标签或评论前必须做 open 列表与单项状态复核。issue 处理完后应关闭；转为实施的，落地后关闭对应 issue。
 
 读取前先确认：
 - ai/index.md 列出的全部规则文件
@@ -34,6 +34,11 @@
 - README.md（普通使用者入口，避免塞入维护细节）
 - _proposals/README.md（提案收件箱规则）
 - _proposals/_remote-issues/*.md（已镜像的远端 issue；若远端更新较新，先刷新镜像）
+
+镜像门禁检查：
+- 列出本轮参与分析的 `_proposals/_remote-issues/issue-<number>.md` 路径、远端 `Updated` 和本地 `Mirrored at`。
+- 对每个准备分析的远端 issue，确认镜像存在且未过期；未通过时只允许刷新镜像，不得输出正文分析。
+- 优化计划中的去重、冲突、依赖、分批计划、拟修改文件、版本影响和续接记录必须引用本地镜像路径作为输入来源。
 
 分析要求：
 1. 去重：识别多个提案是否表达同一优化，合并同类项。
@@ -48,7 +53,7 @@
 
 输出格式：
 1. 提案清单
-2. issue 镜像刷新结果
+2. issue 镜像刷新结果与本地镜像路径清单
 3. 去重 / 冲突 / 依赖分析
 4. 合并或分批计划
 5. 拟修改文件清单与理由

@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.38.2（2026-07-07）
+
+C1 提案收件箱远端 issue 本地镜像硬门禁：防止维护者或 AI 直接基于未落盘远端 issue 正文做提案分析，确保先镜像、后分析。
+
+- **镜像硬门禁**：`_proposals/README.md` 明确远端 issue 正文只允许用于生成 / 刷新 `_proposals/_remote-issues/issue-<number>.md`，不得直接作为去重、冲突、依赖、分批计划、拟修改文件或续接记录依据。
+- **命令 / Prompt 阻断**：`template-proposal-summary` 命令和维护 Prompt 要求输出本轮本地镜像路径、`Updated` 与 `Mirrored at`；没有本地镜像路径的 issue 不得进入正文分析。
+- **误读纠偏**：若 AI 已误读远端正文但尚未落镜像，必须丢弃该轮分析结论，先刷新镜像，再重新读取本地镜像继续。
+- **场景与自检**：C1 场景增加“镜像路径确认后再分析”；`scripts/check-template.sh` / `.ps1` 增加镜像硬门禁、本地镜像路径和未落盘正文不得分析的关键断言。
+- 回流自 `_archive/proposals/TEMPLATE-UPGRADE-issue-mirror-hard-gate.md`。
+
 ## v1.38.1（2026-07-07）
 
 GitHub issue / PR 查询鲁棒性补强：降低模板维护者处理提案收件箱时误判远端 open issue、PR 或关闭状态的风险。
