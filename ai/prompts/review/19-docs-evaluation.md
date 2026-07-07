@@ -41,6 +41,7 @@
 - docs/README.md
 - 与本次评估范围相关的 docs/00-09、docs/design、docs/env、输入材料
 - ai/doc-standards/README.md 和 ai/doc-standards/00-09（如存在）
+- E2 / E3 或涉及真实依赖时，额外对照 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`、`docs/research/*tech-env-evaluation*.md`（如存在）
 
 评估维度：
 
@@ -53,6 +54,8 @@
 | 状态准确性 | 候选、待确认、待技术验证、Mock、降级、默认关闭、预留、已验证、已启用、禁止等状态是否按 `ai/document-lifecycle-rules.md` §7.1 使用 | 标出被错误升级、遗漏证据或状态传播残留 |
 | 追溯性 | 是否能从输入追到需求、设计、计划、验证 | 列断点和悬空 ID |
 | 需求链健康度 | `SC-ID → U-ID → REQ-ID → Phase → AC / TC` 是否闭合 | 输出健康度矩阵或 P0 / P1 断点 |
+| 架构视图健康度 | `04` 是否包含上下文图、COMP / MOD / Flow ID、运行拓扑、ADR 和 REQ / 功能追溯 | 输出 04 视图检查结果 |
+| 技术风险闭环 | `05` 是否包含技术状态、依赖配置、敏感性、Risk-ID、readiness gate、`05 ↔ 09` 映射和 Sprint 解锁条件 | 输出风险验证矩阵或 P0 / P1 断点 |
 | 前端交互 | UI 型项目是否已补前端交互设计或写明豁免；是否越过 PRD / API / 验收边界 | 列缺口、越界和权限边界风险 |
 | 阶段边界 | 当前阶段是否混入后续功能 | 标出越界内容 |
 | 可验证性 | 需求和设计是否有可验收口径 | 标出不可测条目 |
@@ -78,6 +81,12 @@ E1 / E2 阶段评估必须重点检查：
 - `01` U-ID 是否有用户操作流、用户可观察 AC 和下游 REQ。
 - `02` REQ 是否有来源 U-ID、NFR / 约束 / 异常场景和验证入口。
 - `03` Phase 是否有功能范围、交付物形态、进入 / 退出标准、状态和证据 / 验收引用。
+
+E2 / E3 阶段评估必须重点检查：
+- `04` 是否把 `REQ / NFR → Phase → COMP-ID → MOD-ID → Flow-ID` 串起来，并覆盖异常、降级、权限拒绝和外部服务不可用路径。
+- `05` 是否把真实依赖、数据库、外部服务、LLM、Docker / 部署、权限安全和资源约束落到技术状态、依赖配置、Risk-ID、readiness gate 和验证方式。
+- `05 ↔ 09` 是否双向映射关键风险；No-Go 或阻塞 Risk-ID 未关闭时，不得给出无条件 Go。
+- `04/05` 中候选、默认关闭、Mock、降级或禁止能力是否被 `08` / `09` 误写成当前必做或已启用。
 
 问题优先级：
 - P0：阻塞下一阶段或当前 Sprint。

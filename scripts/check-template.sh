@@ -332,8 +332,10 @@ require_doc_standards_mirror() {
     printf '# index\n' > ai/index.md
     printf '# global\n' > ai/global-rules.md
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
-    mkdir -p ai/prompts
+    mkdir -p ai/prompts ai/doc-standards
     cp -R "$ROOT/ai/prompts/." ai/prompts/
+    printf '# standalone standard 04-architecture\n' > ai/doc-standards/04-architecture.md
+    printf '# standalone standard 05-tech-spec\n' > ai/doc-standards/05-tech-spec.md
     printf '# docs\n' > docs/README.md
     printf '# inputs\n' > docs/inputs/README.md
     for d in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
@@ -386,15 +388,22 @@ require_doc_standards_mirror() {
   local count
   count="$(find "$derived_dir/ai/doc-standards" -type f 2>/dev/null | wc -l | tr -d ' ')"
   if [[ "$count" -eq 10 ]]; then
-    pass "doc-standards 生成 10 个规范镜像"
+    pass "doc-standards 生成 10 个标准文件（8 个镜像 + 2 个独立标准）"
   else
-    fail "doc-standards 应生成 10 个规范镜像，实际 $count"
+    fail "doc-standards 应生成 10 个标准文件，实际 $count"
   fi
 
   if grep -q '# template spec 00-scenario' "$derived_dir/ai/doc-standards/00-scenario.md" 2>/dev/null; then
     pass "doc-standards 镜像内容来自模板规范"
   else
     fail "doc-standards 镜像内容不是模板规范"
+  fi
+
+  if grep -q '# standalone standard 04-architecture' "$derived_dir/ai/doc-standards/04-architecture.md" 2>/dev/null && \
+     grep -q '# standalone standard 05-tech-spec' "$derived_dir/ai/doc-standards/05-tech-spec.md" 2>/dev/null; then
+    pass "doc-standards 04/05 使用独立标准文件"
+  else
+    fail "doc-standards 04/05 未使用独立标准文件"
   fi
 
   local drift=0
@@ -559,7 +568,7 @@ require_contains "docs/01-user-requirements.md" 'U-ID' "01 用户需求包含 U-
 require_contains "docs/02-srs.md" 'U-ID → REQ-ID 追溯矩阵' "02 SRS 包含 U 到 REQ 追溯"
 require_contains "docs/03-prd.md" 'REQ 覆盖矩阵' "03 PRD 包含 REQ 覆盖矩阵"
 require_contains "docs/04-architecture.md" 'REQ / 功能 → 模块追溯矩阵' "04 架构包含模块追溯矩阵"
-require_contains "docs/05-tech-spec.md" '已用 / 预留·未启用 / 候选' "05 技术方案区分技术状态"
+require_contains "docs/05-tech-spec.md" '已启用 / 已验证 / 候选 / 默认关闭 / Mock / 降级 / 禁止' "05 技术方案区分技术状态"
 require_contains "docs/06-db-design.md" '保留 / 省略决策' "06 DB 设计包含保留省略决策"
 require_contains "docs/07-api-spec.md" '接口形态' "07 API 设计包含接口形态"
 require_contains "docs/08-dev-plan.md" 'Sprint 总览' "08 开发计划包含 Sprint 总览"
@@ -604,6 +613,8 @@ require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "templ
 require_contains "template-sync.json" '"ai/implementation-lifecycle-rules\.md"' "template-sync 同步实现生命周期规则"
 require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
 require_contains "template-sync.json" '"ai/doc-standards/README\.md"' "template-sync 同步 doc-standards README"
+require_contains "template-sync.json" '"ai/doc-standards/04-architecture\.md"' "template-sync 同步 04 架构标准"
+require_contains "template-sync.json" '"ai/doc-standards/05-tech-spec\.md"' "template-sync 同步 05 技术方案标准"
 require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
 require_contains "template-sync.json" '"ai/commands/docs-evaluation\.md"' "template-sync 同步 docs-evaluation 命令"
 require_contains "template-sync.json" '"ai/prompts/review/19-docs-evaluation\.md"' "template-sync 同步 docs-evaluation Prompt"
@@ -626,6 +637,8 @@ require_file "template-docs/derived-sync-report-template.md"
 require_file "ai/document-lifecycle-rules.md"
 require_file "ai/session-rules.md"
 require_file "ai/doc-standards/README.md"
+require_file "ai/doc-standards/04-architecture.md"
+require_file "ai/doc-standards/05-tech-spec.md"
 require_file "ai/commands/README.md"
 for command_file in \
   ai/commands/sync-methodology.md \
@@ -810,7 +823,7 @@ require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '全链追溯
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'ai/prompts/review/10-docs-checklist\.md' "生成 Prompt 指向 docs checklist"
 require_contains "ai/prompts/docs/04-edit-single-doc.md" '横切事实' "单文档修订 Prompt 要求横切事实传播"
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '声称据实' "生成 Prompt 要求声称据实"
-require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '不得把候选、预留或默认关闭写成已用' "生成 Prompt 禁止过度声称技术状态"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '不得把候选、预留、默认关闭、Mock 或降级写成已启用' "生成 Prompt 禁止过度声称技术状态"
 require_contains "docs/03-prd.md" '交付物形态（Demo/MVP/产品）' "03 PRD 模板要求交付物形态"
 require_contains "docs/08-dev-plan.md" '交付物形态' "08 开发计划模板体现交付物形态"
 require_contains "docs/09-verification.md" '交付物形态' "09 验证计划模板体现交付物形态"
@@ -824,6 +837,10 @@ require_contains "scripts/sync-template.sh" 'template-sync\.json' "sync-template
 require_contains "scripts/sync-template.sh" '"ai/document-lifecycle-rules\.md"' "sync-template 兜底清单含文档生命周期规则"
 require_contains "scripts/sync-template.sh" '"ai/session-rules\.md"' "sync-template 兜底清单含会话续接规则"
 require_contains "scripts/sync-template.sh" '"ai/doc-standards/README\.md"' "sync-template 兜底清单含 doc-standards README"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/04-architecture\.md"' "sync-template 兜底清单含 04 架构标准"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/05-tech-spec\.md"' "sync-template 兜底清单含 05 技术方案标准"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/04-architecture\.md' "sync-template 不再用 docs/04 覆盖 04 标准镜像"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/05-tech-spec\.md' "sync-template 不再用 docs/05 覆盖 05 标准镜像"
 require_contains "scripts/sync-template.sh" '"ai/commands/README\.md"' "sync-template 兜底清单含 AI 快捷命令索引"
 require_contains "scripts/sync-template.sh" '"template-docs/derived-sync-report-template\.md"' "sync-template 兜底清单含派生同步运行记录模板"
 require_contains "scripts/sync-template.sh" '"ai/prompts/README\.md"' "sync-template 兜底清单含 Prompt Library README"
@@ -1102,6 +1119,22 @@ require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'SC-ID → U-
 require_contains "ai/prompts/review/16-docs-system-audit.md" '00-03 需求链断点' "文档审计 Prompt 输出 00-03 需求链断点"
 require_contains "ai/prompts/review/19-docs-evaluation.md" '需求链健康度' "文档评估 Prompt 检查需求链健康度"
 require_contains "ai/prompts/planning/08-phase-upgrade.md" 'Phase 状态传播检查' "Phase 升级 Prompt 检查 Phase 状态传播"
+require_contains "ai/doc-standards/README.md" 'REQ / NFR → Phase → COMP-ID → MOD-ID → Flow-ID → Risk-ID → TC / Sprint' "doc-standards README 定义 04-05 总体设计风险链"
+require_contains "ai/doc-standards/04-architecture.md" '架构视图检查表' "04 架构标准包含视图检查表"
+require_contains "ai/doc-standards/04-architecture.md" 'COMP-ID' "04 架构标准定义组件 ID"
+require_contains "ai/doc-standards/05-tech-spec.md" 'Readiness Gate' "05 技术方案标准定义 readiness gate"
+require_contains "ai/doc-standards/05-tech-spec.md" 'Risk-ID' "05 技术方案标准定义 Risk-ID"
+require_contains "docs/04-architecture.md" '架构视图检查表' "04 架构模板包含视图检查表"
+require_contains "docs/05-tech-spec.md" 'Readiness Gate' "05 技术方案模板包含 readiness gate"
+require_contains "ai/document-lifecycle-rules.md" '04-05 总体设计风险验证规则' "文档生命周期定义 04-05 风险验证"
+require_contains "ai/implementation-lifecycle-rules.md" 'readiness gate' "实现生命周期检查 readiness gate"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'readiness gate' "文档生成 Prompt 要求 readiness gate"
+require_contains "ai/prompts/review/16-docs-system-audit.md" '04-05 设计门禁缺口' "文档审计 Prompt 输出 04-05 门禁缺口"
+require_contains "ai/prompts/review/19-docs-evaluation.md" '架构视图健康度' "文档评估 Prompt 检查架构视图健康度"
+require_contains "ai/prompts/review/20-tech-env-evaluation.md" 'Readiness gate' "技术环境评估 Prompt 输出 readiness gate"
+require_contains "ai/prompts/planning/08-phase-upgrade.md" 'readiness gate 检查' "Phase 升级 Prompt 检查 readiness gate"
+require_contains "ai/commands/tech-env-evaluation.md" 'Risk-ID' "tech-env 命令提及 Risk-ID"
+require_contains "ai/commands/docs-evaluation.md" 'readiness gate' "docs-evaluation 命令提及 readiness gate"
 require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke

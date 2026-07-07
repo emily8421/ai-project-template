@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.34.0（2026-07-07）
+
+Batch 3 架构与技术方案 readiness 规范落地：强化 `04-05` 总体设计、技术风险验证、依赖矩阵和 Phase / Sprint 前门禁。
+
+- **04-05 标准镜像**：新增 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`，明确架构视图、COMP / MOD / Flow ID、ADR、技术状态、依赖配置、Risk-ID、readiness gate 和 `05 ↔ 09` 映射。
+- **模板骨架增强**：`docs/04-architecture.md` 补上下文边界、异常 / 降级 / 权限拒绝路径、部署端口 / 外部依赖和架构视图检查表；`docs/05-tech-spec.md` 补依赖敏感性、验证证据、技术风险矩阵和 readiness gate。
+- **生命周期与执行门禁**：`ai/document-lifecycle-rules.md` 和 `ai/implementation-lifecycle-rules.md` 要求真实依赖进入 Sprint / Phase 前具备 Risk-ID、readiness gate、验证证据和解锁条件。
+- **生成 / 审计 / 评估门禁**：`generate-docs`、`edit-single-doc`、`docs-system-audit`、`docs-evaluation`、`tech-env-evaluation`、`phase-upgrade` 强化 `04/05` 架构视图、依赖配置、技术风险验证和 readiness gate 检查。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 04-05 标准文件、风险矩阵、readiness gate 和 `05 ↔ 09` 映射断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-3-architecture-tech-risk-readiness.md`，对应 GitHub issue #106、#113。
+
 ## v1.33.0（2026-07-07）
 
 Batch 2 需求链规范落地：强化 `00-03` 需求入口、健康度矩阵、Phase 状态传播和兼容补齐规则。

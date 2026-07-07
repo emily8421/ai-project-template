@@ -1,4 +1,4 @@
-<#
+﻿<#
 sync-template.ps1 - Windows PowerShell entrypoint for template sync.
 
 Usage:
@@ -291,8 +291,6 @@ function Invoke-NativeTemplateSync {
     "docs/01-user-requirements.md",
     "docs/02-srs.md",
     "docs/03-prd.md",
-    "docs/04-architecture.md",
-    "docs/05-tech-spec.md",
     "docs/06-db-design.md",
     "docs/07-api-spec.md",
     "docs/08-dev-plan.md",
@@ -364,7 +362,7 @@ function Invoke-NativeTemplateSync {
     }
 
     Write-Host ""
-    Write-Host "==> doc-standards mirror (docs/00-09 -> ai/doc-standards; read-only standards, no project facts overwritten):"
+    Write-Host "==> doc-standards mirror (docs/00-03,06-09 -> ai/doc-standards; 04-05 use standalone standards):"
     foreach ($src in $docStandardDocs) {
       $dest = "ai/doc-standards/" + [System.IO.Path]::GetFileName($src)
       if (Test-GitObject -Ref $ref -Path $src) {
@@ -402,7 +400,7 @@ function Invoke-NativeTemplateSync {
     }
   }
 
-  Write-Host "==> doc-standards mirror (docs/00-09 -> ai/doc-standards; read-only standards, no project facts overwritten):"
+  Write-Host "==> doc-standards mirror (docs/00-03,06-09 -> ai/doc-standards; 04-05 use standalone standards):"
   foreach ($src in $docStandardDocs) {
     $dest = "ai/doc-standards/" + [System.IO.Path]::GetFileName($src)
     if (Test-GitObject -Ref $ref -Path $src) {
