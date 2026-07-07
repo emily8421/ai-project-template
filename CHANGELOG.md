@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.37.0（2026-07-07）
+
+Batch 5 开发计划、验证证据与正式回写闭环落地：补齐 `08-09` 独立细粒度标准，强化 Sprint 验证包、完成包、TC 详情、验收证据、缺陷 / 回归和 handoff 边界。
+
+- **08-09 独立标准**：新增 `ai/doc-standards/08-dev-plan.md`、`09-verification.md`，覆盖 Phase 目标、Sprint 总览、验证包、完成包、任务拆分规则、REQ → TC 追溯、TC 状态、用例详情、验收记录、Sprint 验收包、缺陷 / 回归和风险项。
+- **模板骨架增强**：`docs/08-dev-plan.md` 与 `docs/09-verification.md` 增加更精确的 Sprint / Task / TC / 完成包字段，并明确 `08` 管计划 / 进度摘要、`09` 管验证证据 / 验收记录。
+- **回写与续接边界**：`implementation-lifecycle-rules`、`session-rules`、`sprint-summary`、`run-dev-task`、`phase-upgrade` 和 `sync-docs-from-code` 强调 handoff 不替代正式 `08/09` 记录，长期事实需回写或说明暂不落盘原因。
+- **同步与自检**：`template-sync.json`、`sync-template` 和 `check-template` 更新为 `00-09` 独立标准直接同步，移除 docs→doc-standards 兼容镜像的实际条目。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-5-dev-plan-verification-evidence-handoff.md`，对应 GitHub issue #108、#109、#115。
+
 ## v1.36.0（2026-07-07）
 
 Batch 4 DB / API 契约状态与升阶段门槛落地：补齐 `06-07` 独立细粒度标准，强化字段级、endpoint 级和 DB / API / TC 交叉追溯。

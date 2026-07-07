@@ -48,6 +48,8 @@ DEFAULT_SYNC_FILES=(
   "ai/doc-standards/05-tech-spec.md"
   "ai/doc-standards/06-db-design.md"
   "ai/doc-standards/07-api-spec.md"
+  "ai/doc-standards/08-dev-plan.md"
+  "ai/doc-standards/09-verification.md"
   "ai/commands/README.md"
   "ai/commands/sync-methodology.md"
   "ai/commands/post-sync-cleanup.md"
@@ -115,13 +117,11 @@ DEFAULT_SYNC_FILES=(
   "ai/prompts/maintainers/18-submit-feedback.md"
 )
 
-# doc-standards 兼容镜像：把模板 docs/08-09 撰写规范镜像到派生项目 ai/doc-standards/。
+# doc-standards 兼容镜像：历史保留入口；当前 00-09 均已升级为独立标准文件。
 # 与 SYNC_FILES 不同，这是 src(docs/0X) != dest(ai/doc-standards/0X) 的专用镜像步骤；
-# 00-07 已升级为独立标准文件，由 SYNC_FILES 同步，避免被项目模板骨架覆盖。
+# 00-09 已升级为独立标准文件，由 SYNC_FILES 同步，避免被项目模板骨架覆盖。
 # 产物是只读 AI 文档标准，不是项目事实，绝不覆盖派生项目自己的 docs/0X。
 DOC_STANDARD_DOCS=(
-  "docs/08-dev-plan.md"
-  "docs/09-verification.md"
 )
 
 warn_derived_workflow_migration() {
@@ -255,7 +255,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
   done
 
   echo
-  echo "==> doc-standards 兼容镜像（docs/08-09 → ai/doc-standards/；00-07 用独立标准文件）:"
+  echo "==> doc-standards 兼容镜像（当前无 docs/* 镜像；00-09 用独立标准文件）:"
   for src in "${DOC_STANDARD_DOCS[@]}"; do
     dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then
@@ -288,7 +288,7 @@ else
     fi
   done
 
-  echo "==> doc-standards 兼容镜像（docs/08-09 → ai/doc-standards/；00-07 用独立标准文件）:"
+  echo "==> doc-standards 兼容镜像（当前无 docs/* 镜像；00-09 用独立标准文件）:"
   for src in "${DOC_STANDARD_DOCS[@]}"; do
     dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then
