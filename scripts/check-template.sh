@@ -334,7 +334,7 @@ require_doc_standards_mirror() {
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
     mkdir -p ai/prompts ai/doc-standards
     cp -R "$ROOT/ai/prompts/." ai/prompts/
-    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec; do
+    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec; do
       printf '# standalone standard %s\n' "$standard" > "ai/doc-standards/$standard.md"
     done
     printf '# docs\n' > docs/README.md
@@ -389,22 +389,22 @@ require_doc_standards_mirror() {
   local count
   count="$(find "$derived_dir/ai/doc-standards" -type f 2>/dev/null | wc -l | tr -d ' ')"
   if [[ "$count" -eq 10 ]]; then
-    pass "doc-standards 生成 10 个标准文件（8 个镜像 + 2 个独立标准）"
+    pass "doc-standards 生成 10 个标准文件（8 个独立标准 + 2 个兼容镜像）"
   else
     fail "doc-standards 应生成 10 个标准文件，实际 $count"
   fi
 
-  if grep -q '# template spec 06-db-design' "$derived_dir/ai/doc-standards/06-db-design.md" 2>/dev/null; then
-    pass "doc-standards 06-09 兼容镜像内容来自模板规范"
+  if grep -q '# template spec 08-dev-plan' "$derived_dir/ai/doc-standards/08-dev-plan.md" 2>/dev/null; then
+    pass "doc-standards 08-09 兼容镜像内容来自模板规范"
   else
-    fail "doc-standards 06-09 兼容镜像内容不是模板规范"
+    fail "doc-standards 08-09 兼容镜像内容不是模板规范"
   fi
 
   if grep -q '# standalone standard 00-scenario' "$derived_dir/ai/doc-standards/00-scenario.md" 2>/dev/null && \
-     grep -q '# standalone standard 05-tech-spec' "$derived_dir/ai/doc-standards/05-tech-spec.md" 2>/dev/null; then
-    pass "doc-standards 00-05 使用独立标准文件"
+     grep -q '# standalone standard 07-api-spec' "$derived_dir/ai/doc-standards/07-api-spec.md" 2>/dev/null; then
+    pass "doc-standards 00-07 使用独立标准文件"
   else
-    fail "doc-standards 00-05 未使用独立标准文件"
+    fail "doc-standards 00-07 未使用独立标准文件"
   fi
 
   local drift=0
@@ -1151,6 +1151,28 @@ require_contains "ai/doc-standards/04-architecture.md" '架构视图检查表' "
 require_contains "ai/doc-standards/04-architecture.md" 'COMP-ID' "04 架构标准定义组件 ID"
 require_contains "ai/doc-standards/05-tech-spec.md" 'Readiness Gate' "05 技术方案标准定义 readiness gate"
 require_contains "ai/doc-standards/05-tech-spec.md" 'Risk-ID' "05 技术方案标准定义 Risk-ID"
+require_contains "template-sync.json" 'ai/doc-standards/06-db-design\.md' "同步清单包含 06 DB 独立标准"
+require_contains "template-sync.json" 'ai/doc-standards/07-api-spec\.md' "同步清单包含 07 API 独立标准"
+require_contains "scripts/sync-template.sh" 'ai/doc-standards/06-db-design\.md' "sync-template fallback 包含 06 DB 独立标准"
+require_contains "scripts/sync-template.sh" 'ai/doc-standards/07-api-spec\.md' "sync-template fallback 包含 07 API 独立标准"
+require_contains "scripts/sync-template.sh" '00-07 已升级为独立标准文件' "sync-template 说明 00-07 独立标准"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/06-db-design\.md' "sync-template 不再用 docs/06 覆盖 06 标准"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/07-api-spec\.md' "sync-template 不再用 docs/07 覆盖 07 标准"
+require_contains "ai/doc-standards/README.md" 'REQ / NFR → Phase → COMP-ID / MOD-ID / Flow-ID → Table / Field → API-ID → Error / Permission → TC / Sprint' "doc-standards README 定义 06-07 契约链"
+require_contains "ai/doc-standards/06-db-design.md" '字段级契约' "06 DB 标准包含字段级契约"
+require_contains "ai/doc-standards/06-db-design.md" '目标结构与当前实现对照' "06 DB 标准包含目标与当前实现对照"
+require_contains "ai/doc-standards/06-db-design.md" '迁移 / seed / 回滚' "06 DB 标准包含迁移 seed 回滚"
+require_contains "ai/doc-standards/07-api-spec.md" 'Endpoint contract matrix' "07 API 标准包含 endpoint contract matrix"
+require_contains "ai/doc-standards/07-api-spec.md" 'API-ID' "07 API 标准定义 API-ID"
+require_contains "ai/doc-standards/07-api-spec.md" '请求 / 响应 / 错误 / 权限 / 兼容' "07 API 标准包含接口契约维度"
+require_contains "docs/06-db-design.md" '目标结构与当前实现对照' "06 DB 模板包含目标与当前实现对照"
+require_contains "docs/07-api-spec.md" 'Endpoint contract matrix' "07 API 模板包含 endpoint contract matrix"
+require_contains "ai/document-lifecycle-rules.md" '06-07 DB / API 契约状态与升阶段门槛' "文档生命周期定义 06-07 契约门槛"
+require_contains "ai/prompts/review/16-docs-system-audit.md" '06-07 契约门禁缺口' "文档审计 Prompt 输出 06-07 契约缺口"
+require_contains "ai/prompts/review/19-docs-evaluation.md" 'DB / API 契约健康度' "文档评估 Prompt 检查 DB/API 契约健康度"
+require_contains "ai/prompts/review/10-docs-checklist.md" 'endpoint contract matrix' "编码前 checklist 检查 endpoint contract matrix"
+require_contains "ai/prompts/planning/08-phase-upgrade.md" 'DB / API 契约门槛检查' "Phase 升级 Prompt 检查 DB/API 契约门槛"
+require_contains "ai/prompts/dev/02-run-task.md" '表字段、API-ID、错误码、权限边界、契约状态和 TC-ID' "单任务 Prompt 检查 DB/API 契约状态"
 require_contains "docs/04-architecture.md" '架构视图检查表' "04 架构模板包含视图检查表"
 require_contains "docs/05-tech-spec.md" 'Readiness Gate' "05 技术方案模板包含 readiness gate"
 require_contains "ai/document-lifecycle-rules.md" '04-05 总体设计风险验证规则' "文档生命周期定义 04-05 风险验证"

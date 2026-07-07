@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.36.0（2026-07-07）
+
+Batch 4 DB / API 契约状态与升阶段门槛落地：补齐 `06-07` 独立细粒度标准，强化字段级、endpoint 级和 DB / API / TC 交叉追溯。
+
+- **06-07 独立标准**：新增 `ai/doc-standards/06-db-design.md`、`07-api-spec.md`，覆盖数据对象、概念模型、字段级契约、目标 / 当前实现对照、迁移 / seed / 回滚、API-ID、endpoint contract matrix、请求 / 响应 / 错误 / 权限 / 兼容契约和异步状态机。
+- **模板骨架增强**：`docs/06-db-design.md` 与 `docs/07-api-spec.md` 增加目标结构与当前实现对照、契约状态、DB / API 交叉追溯、API ↔ DB / Service / Test 映射和 Phase 升级所需验证入口。
+- **生命周期与 Prompt 门禁**：生成、修订单文档、体系审计、文档评估、Phase 升级和单任务执行均检查 DB / API 契约状态，防止草案、候选、Mock、默认关闭或目标设计被当成当前实现或稳定契约。
+- **同步与自检**：`template-sync.json`、`sync-template` 和 `check-template` 更新为 `00-07` 独立标准直接同步，`08-09` 暂保留兼容镜像，待 Batch 5 替换。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-4-db-api-contract-status-gates.md`，对应 GitHub issue #107、#114。
+
 ## v1.35.0（2026-07-07）
 
 Batch 3.1 文档标准分层落地：明确 `ai/doc-standards/` 是细粒度标准源，补齐 `00-03` 独立标准，并让 `docs/00-09` 回归项目事实大纲模板。

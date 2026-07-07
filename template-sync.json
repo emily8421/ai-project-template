@@ -30,6 +30,8 @@
     "ai/doc-standards/03-prd.md",
     "ai/doc-standards/04-architecture.md",
     "ai/doc-standards/05-tech-spec.md",
+    "ai/doc-standards/06-db-design.md",
+    "ai/doc-standards/07-api-spec.md",
     "ai/commands/README.md",
     "ai/commands/scenario.md",
     "ai/commands/sync-methodology.md",
