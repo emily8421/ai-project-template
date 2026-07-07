@@ -13,7 +13,7 @@
 
 **不适用场景**：已经进入代码修复或实现细节定位；这种情况用 `ai/prompts/dev/02-run-task.md` / `ai/prompts/dev/05-fix-bug.md`。
 
-**使用前准备**：准备完整的 00-09 文档、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
+**使用前准备**：准备完整的 00-09 文档、对应 `ai/doc-standards/00-09`（当前 `00-05` 为独立标准，`06-09` 兼容镜像待后续 Batch 补齐）、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
 
 **预期产出**：通过 / 未通过项清单，以及需要修订的文档位置。
 

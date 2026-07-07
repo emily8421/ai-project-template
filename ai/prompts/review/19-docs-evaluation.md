@@ -41,6 +41,7 @@
 - docs/README.md
 - 与本次评估范围相关的 docs/00-09、docs/design、docs/env、输入材料
 - ai/doc-standards/README.md 和 ai/doc-standards/00-09（如存在）
+- E1 / E2 或需求阶段评估时，额外逐份对照 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`
 - E2 / E3 或涉及真实依赖时，额外对照 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`、`docs/research/*tech-env-evaluation*.md`（如存在）
 
 评估维度：

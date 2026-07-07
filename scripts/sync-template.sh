@@ -40,6 +40,10 @@ DEFAULT_SYNC_FILES=(
   "ai/implementation-lifecycle-rules.md"
   "ai/session-rules.md"
   "ai/doc-standards/README.md"
+  "ai/doc-standards/00-scenario.md"
+  "ai/doc-standards/01-user-requirements.md"
+  "ai/doc-standards/02-srs.md"
+  "ai/doc-standards/03-prd.md"
   "ai/doc-standards/04-architecture.md"
   "ai/doc-standards/05-tech-spec.md"
   "ai/commands/README.md"
@@ -109,15 +113,11 @@ DEFAULT_SYNC_FILES=(
   "ai/prompts/maintainers/18-submit-feedback.md"
 )
 
-# doc-standards 规范镜像：把模板 docs/00-03、06-09 撰写规范镜像到派生项目 ai/doc-standards/。
+# doc-standards 兼容镜像：把模板 docs/06-09 撰写规范镜像到派生项目 ai/doc-standards/。
 # 与 SYNC_FILES 不同，这是 src(docs/0X) != dest(ai/doc-standards/0X) 的专用镜像步骤；
-# 04-05 已升级为独立标准文件，由 SYNC_FILES 同步，避免被项目模板骨架覆盖。
+# 00-05 已升级为独立标准文件，由 SYNC_FILES 同步，避免被项目模板骨架覆盖。
 # 产物是只读 AI 文档标准，不是项目事实，绝不覆盖派生项目自己的 docs/0X。
 DOC_STANDARD_DOCS=(
-  "docs/00-scenario.md"
-  "docs/01-user-requirements.md"
-  "docs/02-srs.md"
-  "docs/03-prd.md"
   "docs/06-db-design.md"
   "docs/07-api-spec.md"
   "docs/08-dev-plan.md"
@@ -255,7 +255,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
   done
 
   echo
-  echo "==> doc-standards 规范镜像（docs/00-03、06-09 → ai/doc-standards/；04-05 用独立标准文件）:"
+  echo "==> doc-standards 兼容镜像（docs/06-09 → ai/doc-standards/；00-05 用独立标准文件）:"
   for src in "${DOC_STANDARD_DOCS[@]}"; do
     dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then
@@ -288,7 +288,7 @@ else
     fi
   done
 
-  echo "==> doc-standards 规范镜像（docs/00-03、06-09 → ai/doc-standards/；04-05 用独立标准文件）:"
+  echo "==> doc-standards 兼容镜像（docs/06-09 → ai/doc-standards/；00-05 用独立标准文件）:"
   for src in "${DOC_STANDARD_DOCS[@]}"; do
     dest="ai/doc-standards/$(basename "$src")"
     if git cat-file -e "$REF:$src" 2>/dev/null; then

@@ -334,8 +334,9 @@ require_doc_standards_mirror() {
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
     mkdir -p ai/prompts ai/doc-standards
     cp -R "$ROOT/ai/prompts/." ai/prompts/
-    printf '# standalone standard 04-architecture\n' > ai/doc-standards/04-architecture.md
-    printf '# standalone standard 05-tech-spec\n' > ai/doc-standards/05-tech-spec.md
+    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec; do
+      printf '# standalone standard %s\n' "$standard" > "ai/doc-standards/$standard.md"
+    done
     printf '# docs\n' > docs/README.md
     printf '# inputs\n' > docs/inputs/README.md
     for d in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification; do
@@ -393,17 +394,17 @@ require_doc_standards_mirror() {
     fail "doc-standards 应生成 10 个标准文件，实际 $count"
   fi
 
-  if grep -q '# template spec 00-scenario' "$derived_dir/ai/doc-standards/00-scenario.md" 2>/dev/null; then
-    pass "doc-standards 镜像内容来自模板规范"
+  if grep -q '# template spec 06-db-design' "$derived_dir/ai/doc-standards/06-db-design.md" 2>/dev/null; then
+    pass "doc-standards 06-09 兼容镜像内容来自模板规范"
   else
-    fail "doc-standards 镜像内容不是模板规范"
+    fail "doc-standards 06-09 兼容镜像内容不是模板规范"
   fi
 
-  if grep -q '# standalone standard 04-architecture' "$derived_dir/ai/doc-standards/04-architecture.md" 2>/dev/null && \
+  if grep -q '# standalone standard 00-scenario' "$derived_dir/ai/doc-standards/00-scenario.md" 2>/dev/null && \
      grep -q '# standalone standard 05-tech-spec' "$derived_dir/ai/doc-standards/05-tech-spec.md" 2>/dev/null; then
-    pass "doc-standards 04/05 使用独立标准文件"
+    pass "doc-standards 00-05 使用独立标准文件"
   else
-    fail "doc-standards 04/05 未使用独立标准文件"
+    fail "doc-standards 00-05 未使用独立标准文件"
   fi
 
   local drift=0
@@ -430,7 +431,7 @@ check_script_entrypoints() {
   require_contains "scripts/sync-template.ps1" 'sync-template\.sh' "sync-template PowerShell 入口调用 Bash 脚本"
   require_contains "scripts/sync-template.ps1" 'Invoke-NativeTemplateSync' "sync-template PowerShell 入口含原生 fallback"
   require_contains "scripts/sync-template.ps1" 'PowerShell fallback template sync' "sync-template fallback 输出明确标识"
-  require_contains "scripts/sync-template.ps1" 'doc-standards mirror' "sync-template fallback 同步 doc-standards 镜像"
+  require_contains "scripts/sync-template.ps1" 'doc-standards compatibility mirror' "sync-template fallback 同步 doc-standards 兼容镜像"
   require_contains "scripts/check-template.ps1" 'check-template\.sh' "check-template PowerShell 入口调用 Bash 脚本"
   require_contains "scripts/check-derived-sync.ps1" 'check-derived-sync\.sh' "check-derived-sync PowerShell 入口调用 Bash 脚本"
   require_contains "scripts/check-derived-sync.ps1" 'Invoke-NativeDerivedSyncCheck' "check-derived-sync PowerShell 入口含原生 fallback"
@@ -613,6 +614,10 @@ require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "templ
 require_contains "template-sync.json" '"ai/implementation-lifecycle-rules\.md"' "template-sync 同步实现生命周期规则"
 require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
 require_contains "template-sync.json" '"ai/doc-standards/README\.md"' "template-sync 同步 doc-standards README"
+require_contains "template-sync.json" '"ai/doc-standards/00-scenario\.md"' "template-sync 同步 00 场景标准"
+require_contains "template-sync.json" '"ai/doc-standards/01-user-requirements\.md"' "template-sync 同步 01 用户需求标准"
+require_contains "template-sync.json" '"ai/doc-standards/02-srs\.md"' "template-sync 同步 02 SRS 标准"
+require_contains "template-sync.json" '"ai/doc-standards/03-prd\.md"' "template-sync 同步 03 PRD 标准"
 require_contains "template-sync.json" '"ai/doc-standards/04-architecture\.md"' "template-sync 同步 04 架构标准"
 require_contains "template-sync.json" '"ai/doc-standards/05-tech-spec\.md"' "template-sync 同步 05 技术方案标准"
 require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
@@ -637,6 +642,10 @@ require_file "template-docs/derived-sync-report-template.md"
 require_file "ai/document-lifecycle-rules.md"
 require_file "ai/session-rules.md"
 require_file "ai/doc-standards/README.md"
+require_file "ai/doc-standards/00-scenario.md"
+require_file "ai/doc-standards/01-user-requirements.md"
+require_file "ai/doc-standards/02-srs.md"
+require_file "ai/doc-standards/03-prd.md"
 require_file "ai/doc-standards/04-architecture.md"
 require_file "ai/doc-standards/05-tech-spec.md"
 require_file "ai/commands/README.md"
@@ -837,8 +846,16 @@ require_contains "scripts/sync-template.sh" 'template-sync\.json' "sync-template
 require_contains "scripts/sync-template.sh" '"ai/document-lifecycle-rules\.md"' "sync-template 兜底清单含文档生命周期规则"
 require_contains "scripts/sync-template.sh" '"ai/session-rules\.md"' "sync-template 兜底清单含会话续接规则"
 require_contains "scripts/sync-template.sh" '"ai/doc-standards/README\.md"' "sync-template 兜底清单含 doc-standards README"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/00-scenario\.md"' "sync-template 兜底清单含 00 场景标准"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/01-user-requirements\.md"' "sync-template 兜底清单含 01 用户需求标准"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/02-srs\.md"' "sync-template 兜底清单含 02 SRS 标准"
+require_contains "scripts/sync-template.sh" '"ai/doc-standards/03-prd\.md"' "sync-template 兜底清单含 03 PRD 标准"
 require_contains "scripts/sync-template.sh" '"ai/doc-standards/04-architecture\.md"' "sync-template 兜底清单含 04 架构标准"
 require_contains "scripts/sync-template.sh" '"ai/doc-standards/05-tech-spec\.md"' "sync-template 兜底清单含 05 技术方案标准"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/00-scenario\.md' "sync-template 不再用 docs/00 覆盖 00 标准镜像"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/01-user-requirements\.md' "sync-template 不再用 docs/01 覆盖 01 标准镜像"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/02-srs\.md' "sync-template 不再用 docs/02 覆盖 02 标准镜像"
+require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/03-prd\.md' "sync-template 不再用 docs/03 覆盖 03 标准镜像"
 require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/04-architecture\.md' "sync-template 不再用 docs/04 覆盖 04 标准镜像"
 require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/05-tech-spec\.md' "sync-template 不再用 docs/05 覆盖 05 标准镜像"
 require_contains "scripts/sync-template.sh" '"ai/commands/README\.md"' "sync-template 兜底清单含 AI 快捷命令索引"
@@ -1110,14 +1127,24 @@ require_contains "ai/document-lifecycle-rules.md" 'docs/research/YYYY-MM-DD-docs
 require_contains "ai/prompts/review/10-docs-checklist.md" 'open items 中存在阻塞当前 Sprint' "编码前 checklist 检查 open items 阻塞项"
 require_contains "ai/prompts/planning/08-phase-upgrade.md" '阻塞项未关闭或未被风险接受时，不得建议直接升级' "Phase 升级检查 open items 阻塞项"
 require_contains "ai/doc-standards/README.md" 'SC-ID → U-ID → REQ-ID → Phase → AC / TC' "doc-standards README 定义 00-03 需求链健康度"
+require_contains "ai/doc-standards/README.md" '三层分工' "doc-standards README 定义标准分层"
+require_contains "ai/document-lifecycle-rules.md" '文档标准分层与按 scope 读取规则' "文档生命周期定义按 scope 读取标准"
+require_contains "ai/doc-standards/00-scenario.md" 'SC-ID' "00 场景标准定义 SC-ID"
+require_contains "ai/doc-standards/01-user-requirements.md" 'U-ID' "01 用户需求标准定义 U-ID"
+require_contains "ai/doc-standards/02-srs.md" 'REQ-ID' "02 SRS 标准定义 REQ-ID"
+require_contains "ai/doc-standards/03-prd.md" 'Phase' "03 PRD 标准定义 Phase"
 require_contains "ai/document-lifecycle-rules.md" '00-03 需求链健康度' "文档生命周期定义 00-03 需求链健康度"
 require_contains "docs/00-scenario.md" '边界 / 非目标' "00 场景包含边界与非目标表"
 require_contains "docs/01-user-requirements.md" 'AC-ID' "01 用户需求包含用户验收口径 AC-ID"
 require_contains "docs/02-srs.md" '验证入口' "02 SRS 包含验证入口"
 require_contains "docs/03-prd.md" '证据 / 验收引用' "03 PRD 包含 Phase 证据验收引用"
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'SC-ID → U-ID → REQ-ID → Phase → AC / TC' "文档生成 Prompt 检查需求链健康度"
+require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" 'ai/doc-standards/00-scenario\.md' "文档生成 Prompt 读取 00-03 独立标准"
+require_contains "ai/prompts/docs/04-edit-single-doc.md" 'ai/doc-standards/<doc>\.md' "单文档修订 Prompt 读取对应标准"
 require_contains "ai/prompts/review/16-docs-system-audit.md" '00-03 需求链断点' "文档审计 Prompt 输出 00-03 需求链断点"
+require_contains "ai/prompts/review/16-docs-system-audit.md" 'ai/doc-standards/00-scenario\.md' "文档审计 Prompt 对照 00-03 独立标准"
 require_contains "ai/prompts/review/19-docs-evaluation.md" '需求链健康度' "文档评估 Prompt 检查需求链健康度"
+require_contains "ai/prompts/review/19-docs-evaluation.md" 'ai/doc-standards/00-scenario\.md' "文档评估 Prompt 对照 00-03 独立标准"
 require_contains "ai/prompts/planning/08-phase-upgrade.md" 'Phase 状态传播检查' "Phase 升级 Prompt 检查 Phase 状态传播"
 require_contains "ai/doc-standards/README.md" 'REQ / NFR → Phase → COMP-ID → MOD-ID → Flow-ID → Risk-ID → TC / Sprint' "doc-standards README 定义 04-05 总体设计风险链"
 require_contains "ai/doc-standards/04-architecture.md" '架构视图检查表' "04 架构标准包含视图检查表"

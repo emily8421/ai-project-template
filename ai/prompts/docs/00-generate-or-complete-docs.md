@@ -22,6 +22,7 @@
 
 上游输入：docs/inputs/ 中已评审通过的输入摘要 + docs/vision/product-vision.md（可替换为 00 / 01 / 02 / 03 / task / 现有系统说明 / 外部接入文档）
 先阅读：ai/index.md 列出的全部规则文件（尤其 `ai/document-lifecycle-rules.md`）+ 该上游输入 + docs/env/local-env.md（如存在）。
+按范围读取标准：生成整个文档体系时读取已存在的 `ai/doc-standards/00-09`；只生成需求阶段时读取 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`；精修单文档时读取对应 `ai/doc-standards/<doc>.md`。
 
 【前置门槛】
 - 先说明文档体系生成阶段路线：输入材料评审 → 需求确认 → 需求分析 → 总体设计 → 技术选型 / 技术路线评估 → 详细设计 → 验证用例设计 → 执行计划 / Sprint 规划 → 完整文档体系评估与审计 → 待确认事项总览与编码前门禁。
@@ -41,6 +42,7 @@
 - 阶段是 AI 提议、非决定：在 03 §3 提议路线图并标"待人工确认"；每个 Phase 必须同时声明功能范围与交付物形态，所有阶段标签取自该提议。
 - 交付物递进：愿景最终交付物默认为产品；阶段交付物可为 Demo / MVP / 产品，Demo 不得被声称为 MVP 或产品。
 - 文档生命周期：每份文档必须按 `ai/document-lifecycle-rules.md` 说明上游输入、输出职责、追溯关系和下游影响；愿景场景锚点 / 输入来源 → U-ID → REQ-ID → Phase → 设计 / Sprint / 验证必须可追溯。
+- 标准分层：`ai/doc-standards/<doc>.md` 是细粒度规范标准，`docs/<doc>.md` 是项目事实大纲模板；生成时用标准判断字段和禁止项，用 docs 大纲承载项目事实。
 - 需求链健康度：`00-03` 必须能形成 `SC-ID → U-ID → REQ-ID → Phase → AC / TC`；当前 Phase 的 REQ 必须有可观察验收或测试入口，远期 REQ 可保留骨架并标待该阶段细化。
 - 多入口：默认从 `docs/inputs/` 评审闭环开始，不强制所有项目一开始就已有愿景文档；若从 00 / 01 / 02 / 03 / task / 现有系统事实 / 外部文档开始，必须声明入口模式与文档剖面，并为缺失的上游文档生成“轻量摘要·待人工确认”，不得伪装成原始输入。
 - 模板骨架：生成或补齐 `docs/00-09` 时必须保留模板中的“文档定位 / 上游输入 / 下游输出 / 文档元信息 / 撰写提要 / 追溯矩阵 / 待人工确认项”等结构；可以用项目事实替换占位内容，但不得删掉追溯、状态、阶段和下游影响栏目。
@@ -52,11 +54,12 @@
 
 1) 需求层（完整）
    - product-vision：保留“启用状态与替换说明”，确认是否 Vision-first / Inputs-first 提炼；不要保留模板占位当项目事实；若由 `docs/inputs/` 提炼，写明输入评审结论、来源锚点和待确认项
-   - 00-scenario：按模板结构写文档元信息、背景与问题、角色、场景、边界 / 非目标、来源映射和下游影响；无来源场景不得进入 01
-   - 01-user-requirements：按模板结构写 U-ID、操作流、用户可观察验收口径（AC-ID）、优先级建议、排除需求和 `SC-ID → U-ID → REQ-ID` 追溯矩阵
-   - 02-srs：按模板结构写功能需求、非功能需求、约束假设、边界异常、验证入口和 `U-ID → REQ-ID → AC / TC` 追溯矩阵
+   - 00-scenario：按 `ai/doc-standards/00-scenario.md` 和 docs 大纲写文档元信息、背景与问题、角色、场景、边界 / 非目标、来源映射和下游影响；无来源场景不得进入 01
+   - 01-user-requirements：按 `ai/doc-standards/01-user-requirements.md` 和 docs 大纲写 U-ID、操作流、用户可观察验收口径（AC-ID）、优先级建议、排除需求和 `SC-ID → U-ID → REQ-ID` 追溯矩阵
+   - 02-srs：按 `ai/doc-standards/02-srs.md` 和 docs 大纲写功能需求、非功能需求、约束假设、边界异常、验证入口和 `U-ID → REQ-ID → AC / TC` 追溯矩阵
 
 2) 阶段建议 → 写入 03-prd §3（标"AI建议·待确认"）
+   - 03-prd：按 `ai/doc-standards/03-prd.md` 和 docs 大纲聚合功能、Phase 路线图、优先级取舍、非目标、REQ 覆盖和证据 / 验收引用
    - 每个 Phase 同时写：功能范围（覆盖哪些 REQ）+ 交付物形态（Demo/MVP/产品）+ 为什么这样切 + 演示/上线/生产化口径 + 进入/退出标准 + 状态 + 证据 / 验收引用
    - Phase1 通常优先 Demo：能独立演示核心价值的最小连贯子集；不得默认称为 MVP
    - 后续 Phase 可递进为 MVP 或产品；高风险/待技术验证项单列为远期愿景

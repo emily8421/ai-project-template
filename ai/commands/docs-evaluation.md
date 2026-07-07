@@ -33,7 +33,8 @@
 - `ai/prompts/review/19-docs-evaluation.md`
 - `docs/00-scenario.md` 至 `docs/09-verification.md`（按项目形态存在则读取）
 - `docs/design/`、`docs/env/`、`ai/project-rules.md`（如存在）
-- `ai/doc-standards/README.md` 与 `ai/doc-standards/00-09`（如存在，作为规范镜像）
+- `ai/doc-standards/README.md` 与本次评估范围对应的 `ai/doc-standards/<doc>.md`（如存在，作为细粒度标准）
+- `ai/doc-standards/00-scenario.md` 至 `03-prd.md`（E1 / E2 或需求阶段评估必读）
 - `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`（E2 / E3 或真实依赖项目必读）
 
 ## 执行流程

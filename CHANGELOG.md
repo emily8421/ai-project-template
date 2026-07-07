@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.35.0（2026-07-07）
+
+Batch 3.1 文档标准分层落地：明确 `ai/doc-standards/` 是细粒度标准源，补齐 `00-03` 独立标准，并让 `docs/00-09` 回归项目事实大纲模板。
+
+- **00-03 独立标准**：新增 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`，吸收 Batch 2 的需求链细则和 Batch 1 / 7 的状态、待确认与生成门禁规则。
+- **标准分层**：`ai/doc-standards/README.md` 与 `ai/document-lifecycle-rules.md` 明确 lifecycle / doc-standards / docs 大纲三层职责，以及按生成、精修、审计、评估 scope 读取对应标准。
+- **docs 大纲轻量化**：`docs/00-09` 每个 H2 章节统一使用 `【撰写提要：……】`，保留填写提示和占位表格，复杂规则进入 doc-standards。
+- **Prompt / command 路由**：生成、单文档修订、系统审计、文档评估、编码前 checklist 和 docs-evaluation 命令改为按范围读取对应 `ai/doc-standards/<doc>.md`。
+- **同步与自检**：`template-sync.json`、`sync-template` 和 `check-template` 更新为 `00-05` 独立标准直接同步，`06-09` 暂保留兼容镜像，待 Batch 4 / 5 替换。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-batch-3-1-doc-standards-layering.md`。
 ## v1.34.0（2026-07-07）
 
 Batch 3 架构与技术方案 readiness 规范落地：强化 `04-05` 总体设计、技术风险验证、依赖矩阵和 Phase / Sprint 前门禁。
