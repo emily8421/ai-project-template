@@ -7,8 +7,8 @@
 
 ## 定位
 
-- `ai/doc-standards/00-09` 是 AI 使用的文档标准 / 审计基线，不是项目事实文档。
-- 派生项目自己的需求、设计、计划和验证事实仍写在 `docs/00-09`。
+- `ai/doc-standards/00-09` 与 `ai/doc-standards/design-doc.md` 是 AI 使用的文档标准 / 审计基线，不是项目事实文档。
+- 派生项目自己的需求、设计、计划和验证事实仍写在 `docs/00-09` 与 `docs/design/*`。
 - 本目录由 `scripts/sync-template.*` 下行同步刷新；派生项目不应手工修改镜像文件。
 - AI 做文档体系审计、生成回梳或章节完整性检查时，可将本目录作为规范对照。
 
@@ -18,10 +18,10 @@
 | 层级 | 文件 | 职责 |
 |---|---|---|
 | 生命周期总控 | `ai/document-lifecycle-rules.md` | 阶段链路、输入输出职责、追溯、状态传播、变更传播、评估门禁 |
-| 细粒度标准 | `ai/doc-standards/00-09.md`、未来 `ai/doc-standards/design-*.md` | 每份文档的章节、字段、ID、矩阵、状态、审计项、禁止项 |
+| 细粒度标准 | `ai/doc-standards/00-09.md`、`ai/doc-standards/design-doc.md` | 每份核心文档与 `docs/design/*` 的章节、字段、ID、矩阵、状态、审计项、禁止项 |
 | 大纲模板 | `docs/00-09.md` | 派生项目实际填写内容的大纲、占位表格、`【撰写提要：……】` |
 
-路由规则：生成整个文档体系时读取 lifecycle + 已存在的全部 doc-standards；生成 / 审计需求阶段时读取 `ai/doc-standards/00-03`；精修单文档时读取对应 `ai/doc-standards/<doc>.md` 和上下游事实文档。
+路由规则：生成整个文档体系时读取 lifecycle + 已存在的全部 doc-standards；生成 / 审计需求阶段时读取 `ai/doc-standards/00-03`；精修单文档时读取对应 `ai/doc-standards/<doc>.md` 和上下游事实文档；生成、精修、审计或评估 `docs/design/*` 时必须读取 `ai/doc-standards/design-doc.md`。
 
 ## 当前覆盖状态
 
@@ -31,7 +31,7 @@
 | `04-05` 总体设计 | 已有独立细粒度标准 | 随风险验证和 readiness gate 演进维护 |
 | `06-07` DB / API | 已有独立细粒度标准 | 随契约状态和升阶段门槛演进维护 |
 | `08-09` 计划 / 验证 | 已有独立细粒度标准 | 随完成包、证据留痕和回写闭环演进维护 |
-| `docs/design/*` | 暂无统一独立标准 | Batch 6 补通用 design 标准 |
+| `docs/design/*` | 已有通用独立标准 | 随详细设计分类、readiness gate 和实现偏差回写演进维护 |
 
 ## 待人工确认项基线
 
@@ -50,9 +50,20 @@
 
 需求链健康度矩阵默认由 `docs-evaluation` / `docs-system-audit` 输出，不强制每个项目写入正式 `03` 或 `09`；若项目选择落盘，应放入 `docs/research/*docs-evaluation*.md` 或审计报告。
 
+## docs/design/* 通用详细设计基线
+
+`docs/design/*` 是从 `04-07` 总体设计 / 契约进入 `08-09` 实现计划 / 验证前的详细设计承接层。同步后派生项目会得到 `ai/doc-standards/design-doc.md`，用于生成、精修、审计和补齐非平凡子系统、复杂 UI、权限边界、AI / 外部服务、导入 / 异步任务、策略规则、配置和高风险愿景能力的详细设计；它不替代派生项目自己的 `docs/design/*` 事实文档。
+
+最低追溯链为：`REQ / NFR → Phase → COMP-ID / MOD-ID / Flow-ID → Table / Field → API-ID / Permission / Error → Design Point → Sprint / Task → TC-ID / 验收证据`。无 DB / API 的项目可裁剪 `Table / Field` 或 `API-ID`，但必须保留裁剪原因。
+
+- 非平凡子系统、复杂 UI、多角色权限、AI / 外部服务、导入 / 异步任务、跨模块状态机或高风险能力，应新增或补齐 `docs/design/*`；简单项目可豁免，但需说明理由。
+- design 文档必须保留元信息、职责边界、上游依据、流程 / 状态机、数据 / 接口 / 权限契约、失败 / 降级路径、readiness gate、验收追溯、实现偏差 / 设计回写和待确认项。
+- design 文档不得新增 `03` 未批准需求、`06` 未同步表字段、`07` 未同步接口、未批准验收目标或 Phase 外能力；缺口应回写上游文档。
+- Mock / 降级 / Demo、候选、默认关闭、禁止当前阶段实现和高风险愿景能力必须写清状态、解锁条件、验证证据、降级路径和对验收的影响。
+
 ## 前端交互设计基线
 
-UI 型项目的前端交互设计属于条件性 `docs/design/*` 详细设计，推荐路径为 `docs/design/frontend-interaction.md`。其职责是承接 `03/04/05/07/08/09`，细化页面信息架构、路由清单、核心用户流、组件职责、状态 / 空态 / 错误态、表单校验、文案、接口依赖、响应式与可访问性、验收路径和阶段增量。该文档不得新增未授权需求、接口或验收目标；前端隐藏入口、按钮禁用或路由守卫只能作为可见性控制，不能替代后端接口和服务层权限边界。
+UI 型项目的前端交互设计属于条件性 `docs/design/*` 详细设计，推荐路径为 `docs/design/frontend-interaction.md`。其职责是承接 `03/04/05/07/08/09`，细化页面信息架构、路由清单、核心用户流、组件职责、状态 / 空态 / 错误态、表单校验、文案、接口依赖、响应式与可访问性、验收路径和阶段增量。该文档必须满足 `ai/doc-standards/design-doc.md` 的元信息、追溯、验收、readiness gate、实现偏差和待确认项要求；不得新增未授权需求、接口或验收目标；前端隐藏入口、按钮禁用或路由守卫只能作为可见性控制，不能替代后端接口和服务层权限边界。
 
 ## 04-05 总体设计基线
 

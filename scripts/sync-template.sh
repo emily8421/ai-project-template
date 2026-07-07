@@ -50,6 +50,7 @@ DEFAULT_SYNC_FILES=(
   "ai/doc-standards/07-api-spec.md"
   "ai/doc-standards/08-dev-plan.md"
   "ai/doc-standards/09-verification.md"
+  "ai/doc-standards/design-doc.md"
   "ai/commands/README.md"
   "ai/commands/sync-methodology.md"
   "ai/commands/post-sync-cleanup.md"

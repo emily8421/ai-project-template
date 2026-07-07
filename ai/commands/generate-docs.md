@@ -24,6 +24,7 @@
 - `docs/README.md`
 - `ai/prompts/docs/01-review-inputs.md`
 - `ai/prompts/docs/00-generate-or-complete-docs.md`
+- `ai/doc-standards/design-doc.md`（触发 `docs/design/*` 时）
 
 ## 执行流程
 

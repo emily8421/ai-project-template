@@ -13,7 +13,7 @@
 
 **不适用场景**：已经进入代码修复或实现细节定位；这种情况用 `ai/prompts/dev/02-run-task.md` / `ai/prompts/dev/05-fix-bug.md`。
 
-**使用前准备**：准备完整的 00-09 文档、对应 `ai/doc-standards/00-09`（当前 `00-07` 为独立标准，`08-09` 兼容镜像待后续 Batch 补齐）、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
+**使用前准备**：准备完整的 00-09 文档、对应 `ai/doc-standards/00-09`、`ai/doc-standards/design-doc.md`（如触发 `docs/design/*`）、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
 
 **预期产出**：通过 / 未通过项清单，以及需要修订的文档位置。
 
@@ -33,7 +33,8 @@
 - [ ] 技术环境评估：若项目含 backend / frontend / docker / 数据库 / 本机模型 / 外部 API 等真实运行依赖，已存在 `docs/research/*tech-env-evaluation*.md` 或在 `project-rules` / 05 中记录豁免理由、风险和补做时点
 - [ ] 06-db-design（如有）：每张表 / 字段可追溯到 REQ / NFR / 架构约束；已区分目标结构、当前实现、Mock / Demo 差异；当前 Phase 表有字段级契约、迁移 / seed / 回滚和验证入口
 - [ ] 07-api-spec（如有）：每个接口对应一个需求 / 功能 / 约束；当前 Phase API 有稳定 API-ID、endpoint contract matrix、请求 / 响应 / 错误 / 权限 / 兼容契约和 TC-ID；无孤立接口
-- [ ] docs/design/frontend-interaction.md 或 docs/design/*interaction*.md（如触发）：独立 Web / 移动端 / 小程序 / 桌面端、多页面、多角色、复杂表单、状态流或点击路径验收已补前端交互设计；不补时有豁免理由
+- [ ] docs/design/*（如触发）：非平凡子系统、复杂 UI、权限 / 安全、AI / 外部服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异或高风险愿景能力已按 `ai/doc-standards/design-doc.md` 补通用详细设计；不补时有豁免理由
+- [ ] docs/design/frontend-interaction.md 或 docs/design/*interaction*.md（如触发）：独立 Web / 移动端 / 小程序 / 桌面端、多页面、多角色、复杂表单、状态流或点击路径验收已补前端交互设计；该文档满足通用 design 元信息、追溯、readiness gate、验收和实现偏差要求；不补时有豁免理由
 - [ ] 08-dev-plan：Sprint 拆分合理，单 Sprint 限制在 1~3 个文件；验收标准可判断；当前阶段 Sprint 支撑对应交付物形态；每个当前 Sprint 有验证包、TC-ID、完成包字段和状态
 - [ ] 09-verification：REQ → TC 追溯矩阵覆盖当前阶段全部 REQ，包含交付物形态；TC 详情包含前置条件、步骤、输入、期望结果、异常验证、自动化位置和证据记录；包含本机启动、内存 / 显存 / 磁盘 / 端口等资源验证项
 - [ ] 待人工确认项：不是纯问题列表；每项包含 ID、AI 建议、建议依据、备选方案、取舍影响 / 阻塞关系；高风险项未被 AI 建议自动视为已确认
@@ -44,18 +45,20 @@
 - [ ] 每个 `02` REQ-ID 都能回到一个或多个 U-ID。
 - [ ] `03` 覆盖全部 REQ，并给出阶段归属。
 - [ ] `04-07` 的模块、技术决策、表、接口、子系统均能追溯到 REQ 或明确的非功能约束。
+- [ ] 触发 `docs/design/*` 时，Design Point / Flow-D / readiness gate 能追溯到 REQ / NFR、Phase、COMP / MOD / Flow、Table / Field、API-ID / Permission / Error、Sprint / Task 和 TC-ID；无 DB / API 的项目有裁剪说明。
 - [ ] `08/09` 覆盖当前阶段全部 REQ，且未把后续阶段 / 愿景功能作为当前阶段必做项。
 - [ ] 本次上游文档变更已列出下游影响；横切事实 / 约束变更已列出权威源、引用同步范围和聚焦一致性检查结果。
 
 ### C. 交叉一致性（最易出错，单独核一遍）
 - 04 模块 ⊆ 03 功能范围（架构不超出 PRD）
-- 上游输入锚点 → U-ID → REQ-ID → 03 §3 阶段 → 04/05 模块与技术决策 → 08 Sprint → 09 验收用例可追溯，无悬空 ID
+- 上游输入锚点 → U-ID → REQ-ID → 03 §3 阶段 → 04/05 模块与技术决策 → 06/07 契约 → docs/design/* Design Point → 08 Sprint → 09 验收用例可追溯，无悬空 ID
 - README / 03 / 05 / 09 对 Demo / MVP / 产品的说法一致，未把 Demo 声称为 MVP 或产品
 - 横切事实有唯一权威源，其他文档引用权威源而非各自重新声明；权威源变更后引用处已同步
 - 04 / 05 / 09 的运行环境假设一致，且与 `ai/project-rules.md` §2.5、`docs/env/local-env.md` 不冲突
 - 06 表 / 07 接口 ⊆ 04 模块（若有 06/07，其数据与接口都落在架构内）
 - 08-09 ⊆ 05-07 中实际保留的文档（开发计划不引入技术方案外的依赖）
 - Sprint 完成事实不得只留在 `.ai/session-handoff.md`、聊天或 PR 中；长期进度写 `08`，验证证据 / 验收记录写 `09`
+- docs/design/* 只承接 02/03/04/05/06/07/08/09 已授权内容；职责边界、流程 / 状态机、数据 / 接口 / 权限引用、失败 / 降级、readiness gate、实现偏差和验收路径可追溯到 REQ / Sprint / Test Case
 - 前端交互设计只承接 03/04/05/07/08/09 已授权内容；页面 / 路由、状态、文案、接口依赖和验收路径可追溯到 REQ / Sprint / Test Case
 - 前端隐藏入口、按钮禁用、路由守卫只作为可见性控制；权限必须由后端接口和服务层执行
 
@@ -68,6 +71,7 @@
 - 真实运行依赖项目进入首个编码 Sprint 前缺少技术环境评估报告 / 明确跳过记录，或把 collect-env 事实采集写成依赖验证通过 → 退回补评估
 - 待人工确认项只有问题、没有 AI 建议 / 建议依据 / 备选方案 / 取舍影响，或把 AI 建议写成已确认事实 → 退回补齐
 - open items 中存在阻塞当前 Sprint 的事项，且未关闭、未转任务、未回填权威文档或未被明确风险接受 → 不得开始编码
+- 触发 `docs/design/*` 但缺失通用详细设计 / 豁免理由，或 design 文档新增未授权需求、接口、表、验收目标、Phase 外能力 → 退回补设计或同步上游文档
 - UI 型项目触发前端交互设计但缺失文档 / 豁免理由，或在交互设计中新增未授权需求、接口、验收目标 → 退回补设计或同步上游文档
 - 把前端隐藏、按钮禁用或路由守卫写成唯一权限边界 → 退回补后端接口 / 服务层权限设计
 - 任何文档只剩标题、无实质内容 → 要么补全，要么按 project-rules §3 声明省略，不留空壳
