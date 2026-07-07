@@ -13,7 +13,7 @@
 
 **不适用场景**：已经进入代码修复或实现细节定位；这种情况用 `ai/prompts/dev/02-run-task.md` / `ai/prompts/dev/05-fix-bug.md`。
 
-**使用前准备**：准备完整的 00-09 文档、对应 `ai/doc-standards/00-09`（当前 `00-05` 为独立标准，`06-09` 兼容镜像待后续 Batch 补齐）、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
+**使用前准备**：准备完整的 00-09 文档、对应 `ai/doc-standards/00-09`（当前 `00-07` 为独立标准，`08-09` 兼容镜像待后续 Batch 补齐）、`ai/project-rules.md`、`docs/env/local-env.md` 和人工已知的项目边界。
 
 **预期产出**：通过 / 未通过项清单，以及需要修订的文档位置。
 
@@ -31,8 +31,8 @@
 - [ ] 04-architecture：模块划分对应 03 的功能范围；技术选型有理由；部署 / 运行拓扑受 `docs/env/local-env.md` 约束
 - [ ] 05-tech-spec：技术栈与版本明确；Phase 边界与 ai/project-rules.md §1 一致；技术状态区分「已启用 / 已验证 / 候选 / 默认关闭 / Mock / 降级 / 禁止」；已给出本机 Demo 可行性、资源瓶颈、Risk-ID、readiness gate、降级 / Mock 策略和服务器资源预案；若 §5 尚未填写，编码约定处已明确标注待回填
 - [ ] 技术环境评估：若项目含 backend / frontend / docker / 数据库 / 本机模型 / 外部 API 等真实运行依赖，已存在 `docs/research/*tech-env-evaluation*.md` 或在 `project-rules` / 05 中记录豁免理由、风险和补做时点
-- [ ] 06-db-design（如有）：每张表可追溯到某个 REQ；无"看起来有用但没人查"的表
-- [ ] 07-api-spec（如有）：每个接口对应一个需求/功能；无孤立接口
+- [ ] 06-db-design（如有）：每张表 / 字段可追溯到 REQ / NFR / 架构约束；已区分目标结构、当前实现、Mock / Demo 差异；当前 Phase 表有字段级契约、迁移 / seed / 回滚和验证入口
+- [ ] 07-api-spec（如有）：每个接口对应一个需求 / 功能 / 约束；当前 Phase API 有稳定 API-ID、endpoint contract matrix、请求 / 响应 / 错误 / 权限 / 兼容契约和 TC-ID；无孤立接口
 - [ ] docs/design/frontend-interaction.md 或 docs/design/*interaction*.md（如触发）：独立 Web / 移动端 / 小程序 / 桌面端、多页面、多角色、复杂表单、状态流或点击路径验收已补前端交互设计；不补时有豁免理由
 - [ ] 08-dev-plan：Sprint 拆分合理，单 Sprint 限制在 1~3 个文件；验收标准可判断；当前阶段 Sprint 支撑对应交付物形态
 - [ ] 09-verification：REQ → 用例追溯矩阵覆盖当前阶段全部 REQ，包含交付物形态；包含本机启动、内存 / 显存 / 磁盘 / 端口等资源验证项

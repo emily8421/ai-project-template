@@ -43,6 +43,7 @@
 - ai/doc-standards/README.md 和 ai/doc-standards/00-09（如存在）
 - E1 / E2 或需求阶段评估时，额外逐份对照 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`
 - E2 / E3 或涉及真实依赖时，额外对照 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`、`docs/research/*tech-env-evaluation*.md`（如存在）
+- E3 / E4 或涉及 DB / API 详细设计时，额外对照 `ai/doc-standards/06-db-design.md`、`ai/doc-standards/07-api-spec.md`
 
 评估维度：
 
@@ -57,6 +58,7 @@
 | 需求链健康度 | `SC-ID → U-ID → REQ-ID → Phase → AC / TC` 是否闭合 | 输出健康度矩阵或 P0 / P1 断点 |
 | 架构视图健康度 | `04` 是否包含上下文图、COMP / MOD / Flow ID、运行拓扑、ADR 和 REQ / 功能追溯 | 输出 04 视图检查结果 |
 | 技术风险闭环 | `05` 是否包含技术状态、依赖配置、敏感性、Risk-ID、readiness gate、`05 ↔ 09` 映射和 Sprint 解锁条件 | 输出风险验证矩阵或 P0 / P1 断点 |
+| DB / API 契约健康度 | `06/07` 是否包含字段级契约、endpoint contract matrix、API-ID、错误码、权限边界、迁移 / seed / 回滚、DB / API / TC 追溯和契约状态 | 输出契约健康度矩阵或 P0 / P1 断点 |
 | 前端交互 | UI 型项目是否已补前端交互设计或写明豁免；是否越过 PRD / API / 验收边界 | 列缺口、越界和权限边界风险 |
 | 阶段边界 | 当前阶段是否混入后续功能 | 标出越界内容 |
 | 可验证性 | 需求和设计是否有可验收口径 | 标出不可测条目 |
@@ -88,6 +90,12 @@ E2 / E3 阶段评估必须重点检查：
 - `05` 是否把真实依赖、数据库、外部服务、LLM、Docker / 部署、权限安全和资源约束落到技术状态、依赖配置、Risk-ID、readiness gate 和验证方式。
 - `05 ↔ 09` 是否双向映射关键风险；No-Go 或阻塞 Risk-ID 未关闭时，不得给出无条件 Go。
 - `04/05` 中候选、默认关闭、Mock、降级或禁止能力是否被 `08` / `09` 误写成当前必做或已启用。
+
+E3 / E4 阶段评估必须重点检查：
+- `06` 是否把 `REQ / NFR / Phase → COMP / MOD / Flow → 数据对象 → 表 / 字段 / 约束 → 迁移 / seed / 回滚 → TC / Sprint` 串起来，并区分目标设计、当前实现、Mock / Demo 差异和已验证范围。
+- `07` 是否为当前 Phase API 提供稳定 API-ID、endpoint contract matrix、请求 / 响应 / 错误 / 权限 / 兼容契约、异步状态机和 API ↔ DB / Service / Test 追溯。
+- API 输出敏感字段、DB 约束映射错误码、权限隔离、Mock → 真实调用或内部 API → 外部 API 是否有验证项和升阶段门槛。
+- `06/07` 中草案、候选、目标设计、Mock、默认关闭或禁止能力是否被 `08` / `09` 误写成当前可实现、已验证或已启用。
 
 问题优先级：
 - P0：阻塞下一阶段或当前 Sprint。

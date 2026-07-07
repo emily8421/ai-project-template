@@ -25,6 +25,7 @@
 - docs/03-prd.md、docs/04-architecture.md、docs/05-tech-spec.md、docs/08-dev-plan.md
 - docs/09-verification.md（当前 Phase 验收与证据引用）
 - docs/research/*tech-env-evaluation*.md（如下一 Phase 解锁真实依赖、数据库、外部服务、LLM、Docker / 部署或权限安全能力）
+- docs/06-db-design.md、docs/07-api-spec.md（如下一 Phase 解锁持久化、对外接口、Mock → 真实调用、内部 API → 外部 API 或真实隐私 / 业务数据处理）
 - docs/research/*docs-open-items*.md 或会话中的待确认事项总览（如存在）
 
 输出：
@@ -32,7 +33,8 @@
 2. 下一Phase可以解锁的功能/技术清单
 3. `03-prd` Phase 状态传播检查：功能范围、交付物形态、进入 / 退出标准、证据 / 验收引用是否已与 `09` 和 Sprint 总结一致
 4. `04/05` readiness gate 检查：下一 Phase 涉及的真实依赖、数据库、外部服务、LLM、Docker / 部署、权限安全是否有 Risk-ID、验证证据、Go / Conditional Go / No-Go 结论和 `05 ↔ 09` 映射；No-Go 或阻塞 Risk-ID 未关闭时，不得建议直接升级
-5. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
-6. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
+5. `06/07` DB / API 契约门槛检查：当前 Phase 表 / API 是否有字段级契约、endpoint contract、API-ID、错误码、权限边界、迁移 / seed / 回滚、兼容策略、数据留存和验证项；草案、候选、Mock、默认关闭或目标设计未补齐时，不得建议直接升级为 MVP / 对外 / 真实能力
+6. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
+7. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
    （允许/禁止/下一阶段预告三段式），等待人工确认后再实际修改该文件
 ```

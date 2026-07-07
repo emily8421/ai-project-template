@@ -287,8 +287,6 @@ function Invoke-NativeTemplateSync {
 
   $templateRemote = if ($env:TEMPLATE_REMOTE) { $env:TEMPLATE_REMOTE } else { "https://github.com/emily8421/ai-project-template.git" }
   $docStandardDocs = @(
-    "docs/06-db-design.md",
-    "docs/07-api-spec.md",
     "docs/08-dev-plan.md",
     "docs/09-verification.md"
   )
@@ -358,7 +356,7 @@ function Invoke-NativeTemplateSync {
     }
 
     Write-Host ""
-    Write-Host "==> doc-standards compatibility mirror (docs/06-09 -> ai/doc-standards; 00-05 use standalone standards):"
+    Write-Host "==> doc-standards compatibility mirror (docs/08-09 -> ai/doc-standards; 00-07 use standalone standards):"
     foreach ($src in $docStandardDocs) {
       $dest = "ai/doc-standards/" + [System.IO.Path]::GetFileName($src)
       if (Test-GitObject -Ref $ref -Path $src) {
@@ -396,7 +394,7 @@ function Invoke-NativeTemplateSync {
     }
   }
 
-  Write-Host "==> doc-standards compatibility mirror (docs/06-09 -> ai/doc-standards; 00-05 use standalone standards):"
+  Write-Host "==> doc-standards compatibility mirror (docs/08-09 -> ai/doc-standards; 00-07 use standalone standards):"
   foreach ($src in $docStandardDocs) {
     $dest = "ai/doc-standards/" + [System.IO.Path]::GetFileName($src)
     if (Test-GitObject -Ref $ref -Path $src) {

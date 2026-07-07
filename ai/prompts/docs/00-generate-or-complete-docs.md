@@ -22,7 +22,7 @@
 
 上游输入：docs/inputs/ 中已评审通过的输入摘要 + docs/vision/product-vision.md（可替换为 00 / 01 / 02 / 03 / task / 现有系统说明 / 外部接入文档）
 先阅读：ai/index.md 列出的全部规则文件（尤其 `ai/document-lifecycle-rules.md`）+ 该上游输入 + docs/env/local-env.md（如存在）。
-按范围读取标准：生成整个文档体系时读取已存在的 `ai/doc-standards/00-09`；只生成需求阶段时读取 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`；精修单文档时读取对应 `ai/doc-standards/<doc>.md`。
+按范围读取标准：生成整个文档体系时读取已存在的 `ai/doc-standards/00-09`；只生成需求阶段时读取 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`；生成 DB / API 详细设计时读取 `ai/doc-standards/06-db-design.md`、`07-api-spec.md`；精修单文档时读取对应 `ai/doc-standards/<doc>.md`。
 
 【前置门槛】
 - 先说明文档体系生成阶段路线：输入材料评审 → 需求确认 → 需求分析 → 总体设计 → 技术选型 / 技术路线评估 → 详细设计 → 验证用例设计 → 执行计划 / Sprint 规划 → 完整文档体系评估与审计 → 待确认事项总览与编码前门禁。
@@ -70,8 +70,8 @@
    - 05-tech-spec：按模板结构和 `ai/doc-standards/05-tech-spec.md` 写技术栈、关键技术决策、依赖配置、敏感性、资源评估、Phase 技术约束、编码约定、安全合规、Risk-ID、readiness gate 和风险验证
 
 4) 详细设计（完整骨架 + 当前阶段细节）
-   - 06-db-design：若保留，按模板结构写保留/省略决策、数据需求、概念模型、表清单、表结构、索引关系、迁移、安全留存和 REQ → 表矩阵
-   - 07-api-spec：若保留，按模板结构写保留/省略决策、接口形态、统一约定、接口清单、输入输出契约、错误码、权限安全、版本演进和 REQ → 接口矩阵
+   - 06-db-design：若保留，按模板结构和 `ai/doc-standards/06-db-design.md` 写保留/省略决策、数据需求、概念模型、目标结构与当前实现对照、字段级契约、索引关系、迁移 / seed / 回滚、数据安全留存、DB / API 交叉追溯和 REQ → 表 / 字段矩阵
+   - 07-api-spec：若保留，按模板结构和 `ai/doc-standards/07-api-spec.md` 写保留/省略决策、接口形态、统一约定、API-ID、endpoint contract matrix、输入输出契约、错误码、权限安全、异步状态机、版本演进、API ↔ DB / Service / Test 追溯和 REQ → 接口矩阵
    - docs/design/<子系统>.md：每个非平凡子系统一份（框架 + 当前阶段细节）
    - 08-dev-plan：按模板结构写当前 Phase 目标、Sprint 总览、Sprint 详情、依赖里程碑、任务拆分规则和进度记录
    - 09-verification：按模板结构写验证策略、REQ → 用例矩阵、用例详情、分阶段验证范围、本机资源验证、验收记录和未验证风险
@@ -93,7 +93,7 @@
 3. 框架一次完整：04-09 + docs/design/* 铺全部要素（含 P2/愿景骨架），不只写当前阶段
 4. 新增文档必须遵守 `docs/README.md`：根目录只放 00-09 和 README；调研、决策、会议、详细设计等必须进入对应子目录
 5. 只增不删、原位增量（global-rules §8）
-6. 全链追溯：上游输入锚点 → U-ID → REQ-ID → 03 §3 阶段 → 04/05 模块与技术决策 → 06/07 表与接口 → 08 Sprint / task → 09 验收用例；生成后自检无悬空 U-ID / REQ / 设计要素 / Sprint / 验证用例
+6. 全链追溯：上游输入锚点 → U-ID → REQ-ID → 03 §3 阶段 → 04/05 模块与技术决策 → 06/07 表字段 / API-ID / 错误码 / 权限契约 → 08 Sprint / task → 09 验收用例；生成后自检无悬空 U-ID / REQ / 设计要素 / Sprint / 验证用例
 7. 当前阶段 REQ 可验证；远期粗粒度，不硬凑
 8. 产品红线永久有效：不编造事实；Demo 阶段也必须用检索原文 / 明确 Mock / 明确占位保护红线，不得因演示而输出无依据结论
 9. 高风险 AI 项（跨文档推理/矛盾检测/证据地图等）标"愿景·待技术验证"，不进当前阶段
