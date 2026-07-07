@@ -64,6 +64,18 @@
 - 图表格式：`mermaid`（默认）/ `plantuml`
 - 若选 mermaid 以外格式，说明原因（如团队工具链、渲染环境）
 
+## 2.7 UI 原型策略（如适用）
+
+> 本节用于 UI 型项目在前端实现前选择可视化原型策略。触发与边界见 `ai/document-lifecycle-rules.md §5.3`。原型只作为已授权需求的可视化证据，不是需求权威源，不得新增未授权需求、接口、权限行为或验收目标。
+
+- 是否涉及可点击 UI：是 / 否
+- 是否需要开发前可视化原型：需要 / 不需要 / 豁免
+- 原型形式：Figma / Penpot / Balsamiq / Axure / Storybook / 代码原型 / 截图标注 / 其他
+- 原型权威位置：链接或仓库路径（如设计文件、Storybook、代码原型入口、截图目录）
+- 原型覆盖范围：主流程 / 页面状态 / 响应式范围 / 权限与降级状态
+- 原型与文档关系：承接 `docs/design/frontend-interaction.md`，并映射到 `docs/08-dev-plan.md` Sprint 与 `docs/09-verification.md` 验收用例；不得新增未授权需求、接口或验收目标
+- 豁免理由：仅当不需要原型或暂不补原型时填写，并说明风险、影响范围和补做时点
+
 ## 3. 项目形态与文档裁剪
 
 > 本节用于初始化阶段，决定 docs/06、07 是否保留，以及 frontend/backend/tests/scripts/docker
@@ -73,6 +85,7 @@
 - 是否有对外接口：（如 REST API / SDK / CLI / 无）
 - 演示形态：[消息通道内交互 / 独立 Web 页面 / 移动端 / CLI / 不需演示]（决定 `frontend/` 是否启用、`docs/04-05` 是否体现前端架构）
 - 前端交互设计：需要 / 不需要 / 豁免（若需要，推荐 `docs/design/frontend-interaction.md`；若豁免，说明原因）
+- UI 原型策略：需要 / 不需要 / 豁免（若需要，在 §2.7 记录原型形式、位置、覆盖范围和追溯；若豁免，说明原因）
 - 通用详细设计：需要 / 不需要 / 豁免（若存在非平凡子系统、复杂权限 / 安全、AI / 外部服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异或高风险愿景能力，推荐 `docs/design/<subsystem>.md`；若豁免，说明原因、风险和补做时点）
 - docs/06-db-design.md：保留 / 省略
 - docs/07-api-spec.md：保留 / 省略
@@ -87,6 +100,9 @@
 - 非平凡子系统、复杂权限 / 安全边界、AI / RAG / 外部模型、第三方服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异、候选 / 默认关闭 / 高风险愿景能力 → 开发前应补充 `docs/design/<subsystem>.md`，并按 `ai/doc-standards/design-doc.md` 保留元信息、追溯、readiness gate、验收追溯、实现偏差 / 设计回写和待确认项；简单项目可豁免，但必须写明理由
 - 若存在多页面、多角色、复杂表单、状态流、管理页、搜索 / 问答 UI、验收依赖点击路径，或愿景 / PRD 出现“页面 / 界面 / 点击 / 手机 / Web / App / 小程序”等交互信号 → 开发前应补充 `docs/design/frontend-interaction.md` 或按入口拆分的 `docs/design/*interaction*.md`；不补时必须在本节或 `docs/05-tech-spec.md` 写明豁免理由
 - 前端交互设计是 `docs/design/*` 的页面 / 交互型子类型，只细化既有需求的界面呈现、状态、文案、接口依赖和验收路径；不得新增需求、接口或验收目标；前端隐藏 / 禁用 / 路由守卫不是权限边界，权限必须由后端接口和服务层执行
+- 满足前端交互设计触发条件，且用户需实现前预览界面、页面信息密度高、主流程依赖点击验收、存在加载 / 空态 / 错误 / 禁用 / 成功 / 无权限 / 降级 / 风险提示等多状态、多角色 / 多租户 / 权限可见性，或 Demo / Mock / 降级能力需要界面可见口径 → 开发前应在 §2.7、`docs/05-tech-spec.md` 或 `docs/design/frontend-interaction.md` 选择 UI 原型策略；不需要时必须写明豁免理由
+- UI 原型策略可选择 Figma / Penpot / Balsamiq / Axure / Storybook / 代码原型 / 截图标注 / 其他；工程驱动项目可优先代码原型 + Mock 数据 + 截图 / smoke 证据；不强制所有项目使用 Figma 或高保真设计
+- 原型不得替代 `00-09`、不得替代前端交互设计或 `09` 验收；原型发现的新需求、接口、权限规则或验收目标必须回到正式文档链路修订
 - frontend/ backend/ tests/ scripts/ docker/ 只保留本项目用得到的目录
 
 ## 4. 目录规范的项目特例

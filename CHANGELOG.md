@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.39.0（2026-07-07）
+
+UI 原型策略与可视化验收门禁：UI 型项目在进入前端实现前需选择可视化原型策略或写明豁免，减少实现后才暴露页面结构、状态反馈、信息密度和 Demo / Mock / 降级口径问题。
+
+- **生命周期规则**：`ai/document-lifecycle-rules.md` 新增 UI 原型策略触发与边界规则；满足前端交互触发条件且存在实现前预览、点击验收、多状态、多角色、权限可见性或 Demo / Mock / 降级误读风险时，必须选择原型策略或写明豁免。
+- **项目级字段**：`ai/project-rules.md` 新增 §2.7 UI 原型策略，记录是否需要开发前可视化原型、原型形式、权威位置、覆盖范围、与 `frontend-interaction` / `08` / `09` 的关系和豁免理由。
+- **标准与设计链路**：`ai/doc-standards/05-tech-spec.md` 和 `ai/doc-standards/README.md` 增加 UI 原型策略记录位，明确原型不替代 `00-09`、前端交互设计或 `09` 验收，不作为需求权威源。
+- **Prompt / 场景门禁**：文档生成、单文档修订、编码前 checklist、系统审计、文档评估和 A7 场景均检查原型形式、位置、覆盖主流程 / 关键状态 / 权限与降级、设备范围、未覆盖项和豁免理由。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 UI 原型策略、原型证据、项目规则 §2.7、生成 Prompt、checklist、audit 和 evaluation 关键断言。
+- 回流自 GitHub issue #131，镜像归档为 `_archive/proposals/_remote-issues/issue-131.md`，提案归档为 `_archive/proposals/TEMPLATE-UPGRADE-ui-prototype-strategy.md`。
+
 ## v1.38.2（2026-07-07）
 
 C1 提案收件箱远端 issue 本地镜像硬门禁：防止维护者或 AI 直接基于未落盘远端 issue 正文做提案分析，确保先镜像、后分析。
