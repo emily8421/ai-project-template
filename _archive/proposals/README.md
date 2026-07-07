@@ -21,3 +21,4 @@
 | 维护修复：`TEMPLATE-UPGRADE-github-issue-query-robustness.md` | 已在 `v1.38.1` 吸收 GitHub issue / PR 查询稳定过滤、列表 + 单项状态复核和自检断言；来源为 2026-07-07 维护扫描误判复盘。 |
 | 维护修复：`TEMPLATE-UPGRADE-issue-mirror-hard-gate.md` | 已在 `v1.38.2` 吸收 C1 远端 issue 本地镜像硬门禁、镜像路径清单输出和自检断言；来源为 2026-07-07 处理 `#131` 前置分析时未先落本地镜像的流程复盘。 |
 | UI 原型策略：`TEMPLATE-UPGRADE-ui-prototype-strategy.md` | 已在 `v1.39.0` 吸收 UI 型项目原型策略、可视化证据、Prompt / checklist / audit / evaluation 门禁和自检断言；对应 issue 镜像 `issue-131.md` 已归档到 `_archive/proposals/_remote-issues/`。 |
+| 需求探索原型：`TEMPLATE-UPGRADE-ui-prototype-exploration.md` | 已在 `v1.40.0` 吸收 A5.5 需求探索原型场景、探索记录模板、命令 / Prompt 路由、同步清单和自检断言；来源为 2026-07-07 维护会话中对“先看原型再定需求 / 架构”的流程澄清。 |

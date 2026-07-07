@@ -62,7 +62,7 @@
 | `docs/vision/` | 可选的整理后产品愿景叙事 / 长期业务图景；通常由 AI 或团队从 `docs/inputs/` 评审、补齐、确认后生成 | `product-vision.md`、`market-notes.md` |
 | `docs/design/` | 子系统 / 模块 / 前端交互详细设计 | `<subsystem>.md`、`auth.md`、`workflow-engine.md`、`frontend-interaction.md` |
 | `docs/decisions/` | 架构决策记录（ADR）和重要取舍 | `ADR-0001-title.md` |
-| `docs/research/` | 技术调研、竞品分析、实验结论、技术环境评估报告 | `topic-summary.md`、`YYYY-MM-DD-tech-env-evaluation-<scope>.md` |
+| `docs/research/` | 技术调研、竞品分析、实验结论、技术环境评估报告、需求探索原型记录 | `topic-summary.md`、`YYYY-MM-DD-tech-env-evaluation-<scope>.md`、`YYYY-MM-DD-ui-prototype-exploration.md` |
 | `docs/env/` | 本机环境、资源约束、服务器预案 | `local-env.md`、`server-plan.md` |
 | `docs/meetings/` | 会议纪要、访谈记录、评审记录 | `YYYY-MM-DD-topic.md` |
 | `docs/archive/` | 已废弃但需留痕的项目文档 | 保留原名或加日期前缀 |
@@ -90,6 +90,8 @@ docs/workflow-engine-design.md
 前端交互设计也是条件性详细设计文档，推荐放在 `docs/design/frontend-interaction.md`，或按入口拆成 `docs/design/customer-app-interaction.md`、`docs/design/admin-console-interaction.md`、`docs/design/mobile-app-interaction.md`。不要新增 `docs/10-ui-design.md`、`docs/ui-design.md` 或 `docs/design-ui.md`。
 
 独立 Web、移动端、小程序、桌面端等 UI 型项目，若存在多页面、多角色、复杂表单、状态流、验收依赖点击路径，或 Sprint 修改范围包含页面 / 组件 / 管理页 / 搜索问答 UI，应在前端开发前补交互设计，或在 `ai/project-rules.md` §3 / `docs/05-tech-spec.md` 写明豁免理由。该文档只承接 `03/04/05/07/08/09` 已授权内容，写页面流、状态、文案、接口依赖和验收路径，不新增需求、接口或验收目标。
+
+需求探索原型是正式 `00-03` 定稿前的可视化澄清材料，默认放在 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`，模板见 `template-docs/ui-prototype-exploration-template.md`。它用于确认页面结构、主流程、信息密度和用户反馈，不替代 `00-09`、不决定架构 / 技术栈 / 接口 / 数据库 / 验收；用户确认后的内容必须回填到 `00-03` 后，才可进入正式设计和实现链路。
 
 ## 7. AI 新增文档规则
 
