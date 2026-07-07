@@ -475,16 +475,17 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 > cwd：均在 `ai-project-template` 模板仓库。
 
 #### C1 处理提案收件箱
-- **说明**：汇总和处理模板优化提案，来源包括 `_proposals/TEMPLATE-UPGRADE-*.md`、`_proposals/_remote-issues/*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；先刷新 issue 镜像，再分批落地、关闭 issue 或决议归档。
+- **说明**：汇总和处理模板优化提案，来源包括 `_proposals/TEMPLATE-UPGRADE-*.md`、`_proposals/_remote-issues/*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；远端 issue 必须先刷新成本地镜像，镜像路径确认后再分析、分批落地、关闭 issue 或决议归档。
 - **触发**：「处理提案」「汇总模板优化」「评审 TEMPLATE-UPGRADE」「处理 issue 提案」
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
 | 1 | 读本地提案和既有 issue 镜像 | 镜像是跨会话稳定输入，不能每次只依赖远端读取 | `_proposals/TEMPLATE-UPGRADE-*.md` + `_proposals/_remote-issues/*.md` |
-| 2 | 查询并刷新远端 issue 镜像 | issue 是派生免 fork 回流入口，关闭 / 评论状态仍以 GitHub 为准 | `template-proposal-summary`(11) + `gh issue list` / `gh issue view` |
-| 3 | 做 triage：补标签、去项目化、去重/冲突/依赖分析 | 避免漏掉未打标签的 `TEMPLATE-UPGRADE:` issue，也避免重复落地 | 标签 `proposal` / `feedback` + Batch 计划 |
-| 4 | 切维护分支，按 Batch 计划辅助修改 | 模板改动必须走分支 PR，一批一范围便于评审和续接 | 切分支 + 落地（规则/脚本/文档） |
-| 5 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_archive/proposals/` / `gh issue close` |
+| 2 | 查询并刷新远端 issue 镜像 | issue 是派生免 fork 回流入口，远端正文只允许用于生成 / 刷新本地镜像 | `template-proposal-summary`(11) + `gh issue list` / `gh issue view` |
+| 3 | 确认本轮镜像路径清单 | 没有 `_proposals/_remote-issues/issue-<number>.md` 的 issue 不得进入正文分析 | 镜像路径 + `Updated` / `Mirrored at` |
+| 4 | 做 triage：补标签、去项目化、去重/冲突/依赖分析 | 避免漏掉未打标签的 `TEMPLATE-UPGRADE:` issue，也避免重复落地 | 标签 `proposal` / `feedback` + Batch 计划 |
+| 5 | 切维护分支，按 Batch 计划辅助修改 | 模板改动必须走分支 PR，一批一范围便于评审和续接 | 切分支 + 落地（规则/脚本/文档） |
+| 6 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_archive/proposals/` / `gh issue close` |
 
 - **完成判据**：提案落地或决议留存 · 已处理本地提案归档 · 已处理 issue 关闭或标记后续状态
 - **下一步**：C2 / C3

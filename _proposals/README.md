@@ -58,7 +58,9 @@ TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox-patch.md
 - 再查询远端 open issue：`proposal` 标签、`feedback` 标签、标题匹配 `TEMPLATE-UPGRADE:` 的条目。
 - 远端 open issue / PR 统计必须使用稳定过滤：GitHub `/issues` API 会同时返回 issue 与 PR；PowerShell 中应通过 `$null -eq $_.PSObject.Properties['pull_request']` 判断普通 issue，不得只用 `-not $_.pull_request`。若使用 `curl.exe | ConvertFrom-Json`，必须确认顶层数组被正确枚举。
 - 若远端 issue 没有镜像，或远端 `updated_at` 晚于镜像中的 `Updated`，先刷新镜像再分析。
-- 后续去重、冲突、依赖、分批计划和续接记录优先引用本地镜像路径。
+- 镜像硬门禁：远端 issue 正文只允许用于生成 / 刷新 `_proposals/_remote-issues/issue-<number>.md`，不得把未落盘正文直接作为去重、冲突、依赖、分批计划、拟修改文件或续接记录的依据。
+- 后续去重、冲突、依赖、分批计划和续接记录必须引用本地镜像路径；输出优化计划前必须列出本轮参与分析的镜像文件路径与 `Updated` / `Mirrored at`。
+- 若 AI 已误读远端正文但尚未写入镜像，必须丢弃基于该正文形成的分析结论，先刷新镜像，再重新读取本地镜像后继续。
 - 关闭、改标签或评论前必须做“列表 + 单项状态复核”：先查 open 列表，再逐个查询准备操作的 issue / PR 单项状态；本地镜像不替代 GitHub issue 的权威状态。
 
 归档规则：Batch 或 PR 合并后，已完全吸收的本地提案移入 `_archive/proposals/`；已关闭且不再参与后续 Batch 的 issue 镜像可随提案归档或在归档说明中列明吸收范围。延后处理的 issue 镜像继续保留，并在对应 proposal 或续接文件中标注后续 Batch。
@@ -83,7 +85,7 @@ TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox-patch.md
 
 ## AI 汇总要求
 
-模板维护者 AI 处理提案收件箱时，应先读取全部 `TEMPLATE-UPGRADE-*.md`、可选 `*-patch.md`、既有 `_proposals/_remote-issues/*.md`，再查询并刷新带 `proposal` / `feedback` 标签的 issue 以及标题为 `TEMPLATE-UPGRADE:` 的 open issue。镜像完成后再输出优化计划，至少包括：
+模板维护者 AI 处理提案收件箱时，应先读取全部 `TEMPLATE-UPGRADE-*.md`、可选 `*-patch.md`、既有 `_proposals/_remote-issues/*.md`，再查询并刷新带 `proposal` / `feedback` 标签的 issue 以及标题为 `TEMPLATE-UPGRADE:` 的 open issue。镜像完成并列出本地镜像路径后，才允许输出优化计划；没有镜像路径的远端 issue 不得进入分析。优化计划至少包括：
 
 - 去重：多个提案是否表达同一优化。
 - 冲突：是否改同一文件、同一段落或版本号。
