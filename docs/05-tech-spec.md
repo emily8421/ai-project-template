@@ -70,10 +70,12 @@
 
 ## 5.1 前端交互设计边界（如适用）
 
-【撰写提要：若项目包含独立 Web、移动端、小程序、桌面端或其他可点击 UI，判断是否触发 `docs/design/frontend-interaction.md` 或 `docs/design/*interaction*.md`；若豁免，写明理由。技术方案只写技术栈、运行方式、状态管理、权限执行位置和工程约束，不替代页面流、空态 / 错误态、文案和验收路径。】
+【撰写提要：若项目包含独立 Web、移动端、小程序、桌面端或其他可点击 UI，判断是否触发 `docs/design/frontend-interaction.md` 或 `docs/design/*interaction*.md`，以及是否需要 UI 原型策略；若豁免，写明理由。技术方案只写技术栈、运行方式、状态管理、权限执行位置、原型策略位置和工程约束，不替代页面流、空态 / 错误态、文案和验收路径。】
 
 - 前端交互设计：需要 / 不需要 / 豁免（理由：）
 - 交互设计路径：`docs/design/frontend-interaction.md` / `docs/design/...-interaction.md`
+- UI 原型策略：需要 / 不需要 / 豁免（形式：Figma / Penpot / Balsamiq / Axure / Storybook / 代码原型 / 截图标注 / 其他；位置：；覆盖范围：主流程 / 页面状态 / 响应式范围 / 权限与降级状态）
+- 原型与验收关系：原型覆盖项应映射到 `docs/08-dev-plan.md` 前端 Sprint 和 `docs/09-verification.md` 浏览器 smoke / 人工验收 TC；原型不替代正式验收记录
 - 权限边界：前端隐藏 / 禁用 / 路由守卫仅作可见性控制；权限必须由后端接口和服务层执行
 - 接口依赖与验收路径：见 `docs/07-api-spec.md` / `docs/09-verification.md`
 
