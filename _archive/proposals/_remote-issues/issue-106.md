@@ -1,4 +1,4 @@
-﻿# GitHub Issue #106: TEMPLATE-UPGRADE: 细化 04-05 架构与技术方案文档规范
+# GitHub Issue #106: TEMPLATE-UPGRADE: 细化 04-05 架构与技术方案文档规范
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/106
 > State: open

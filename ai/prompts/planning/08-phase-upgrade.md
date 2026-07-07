@@ -1,4 +1,4 @@
-﻿# 08 Phase升级评估
+# 08 Phase升级评估
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
@@ -22,15 +22,17 @@
 
 请阅读：
 - ai/project-rules.md（当前Phase边界）
-- docs/03-prd.md、docs/08-dev-plan.md
+- docs/03-prd.md、docs/04-architecture.md、docs/05-tech-spec.md、docs/08-dev-plan.md
 - docs/09-verification.md（当前 Phase 验收与证据引用）
+- docs/research/*tech-env-evaluation*.md（如下一 Phase 解锁真实依赖、数据库、外部服务、LLM、Docker / 部署或权限安全能力）
 - docs/research/*docs-open-items*.md 或会话中的待确认事项总览（如存在）
 
 输出：
 1. 当前Phase的完成情况核对
 2. 下一Phase可以解锁的功能/技术清单
 3. `03-prd` Phase 状态传播检查：功能范围、交付物形态、进入 / 退出标准、证据 / 验收引用是否已与 `09` 和 Sprint 总结一致
-4. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
-5. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
+4. `04/05` readiness gate 检查：下一 Phase 涉及的真实依赖、数据库、外部服务、LLM、Docker / 部署、权限安全是否有 Risk-ID、验证证据、Go / Conditional Go / No-Go 结论和 `05 ↔ 09` 映射；No-Go 或阻塞 Risk-ID 未关闭时，不得建议直接升级
+5. 待确认事项总览中与下一 Phase 相关的阻塞 / 条件阻塞项；阻塞项未关闭或未被风险接受时，不得建议直接升级
+6. 针对 ai/project-rules.md 的"Phase边界"一节，给出更新后的内容草稿
    （允许/禁止/下一阶段预告三段式），等待人工确认后再实际修改该文件
 ```

@@ -1,4 +1,4 @@
-﻿# 10 docs/03-09 文档验收 checklist
+# 10 docs/03-09 文档验收 checklist
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
@@ -29,7 +29,7 @@
 ### B. 03-09 逐项验收（生成后逐项打钩）
 - [ ] 03-prd：覆盖 02-srs 全部 REQ，无遗漏；无 00-02 未提及的新增功能；§3 每个 Phase 同时声明功能范围、交付物形态（Demo/MVP/产品）和进入/退出标准
 - [ ] 04-architecture：模块划分对应 03 的功能范围；技术选型有理由；部署 / 运行拓扑受 `docs/env/local-env.md` 约束
-- [ ] 05-tech-spec：技术栈与版本明确；Phase 边界与 ai/project-rules.md §1 一致；技术状态区分「已用 / 预留·未启用 / 默认关闭」；已给出本机 Demo 可行性、资源瓶颈、降级 / Mock 策略和服务器资源预案；若 §5 尚未填写，编码约定处已明确标注待回填
+- [ ] 05-tech-spec：技术栈与版本明确；Phase 边界与 ai/project-rules.md §1 一致；技术状态区分「已启用 / 已验证 / 候选 / 默认关闭 / Mock / 降级 / 禁止」；已给出本机 Demo 可行性、资源瓶颈、Risk-ID、readiness gate、降级 / Mock 策略和服务器资源预案；若 §5 尚未填写，编码约定处已明确标注待回填
 - [ ] 技术环境评估：若项目含 backend / frontend / docker / 数据库 / 本机模型 / 外部 API 等真实运行依赖，已存在 `docs/research/*tech-env-evaluation*.md` 或在 `project-rules` / 05 中记录豁免理由、风险和补做时点
 - [ ] 06-db-design（如有）：每张表可追溯到某个 REQ；无"看起来有用但没人查"的表
 - [ ] 07-api-spec（如有）：每个接口对应一个需求/功能；无孤立接口
@@ -63,7 +63,7 @@
 - 出现无上游依据的 U-ID / REQ / 模块 / 表 / 接口 / Sprint / 验证用例 → 退回补追溯或删除
 - 上游文档发生变更但未评估下游影响，或横切事实变更未建立权威源与引用同步计划 → 退回补影响分析
 - 技术方案默认使用本机无法承载的重资源组件，且未给出降级 / Mock 或服务器资源预案 → 退回重写
-- 把候选、预留或默认关闭的技术写成已用，或把未实现集成写成已接入 → 退回核实
+- 把候选、预留、默认关闭、Mock 或降级技术写成已启用，或把已验证误写成已启用 / 已接入 → 退回核实
 - 真实运行依赖项目进入首个编码 Sprint 前缺少技术环境评估报告 / 明确跳过记录，或把 collect-env 事实采集写成依赖验证通过 → 退回补评估
 - 待人工确认项只有问题、没有 AI 建议 / 建议依据 / 备选方案 / 取舍影响，或把 AI 建议写成已确认事实 → 退回补齐
 - open items 中存在阻塞当前 Sprint 的事项，且未关闭、未转任务、未回填权威文档或未被明确风险接受 → 不得开始编码

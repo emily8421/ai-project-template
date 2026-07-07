@@ -1,4 +1,4 @@
-﻿# GitHub Issue #113: TEMPLATE-UPGRADE: 04-05 架构与技术方案风险验证规范
+# GitHub Issue #113: TEMPLATE-UPGRADE: 04-05 架构与技术方案风险验证规范
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/113
 > State: open

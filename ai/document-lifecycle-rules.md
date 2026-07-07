@@ -48,7 +48,7 @@ docs/inputs 原始输入包
 
 关键阶段转换前可使用 `ai/prompts/review/19-docs-evaluation.md` 做文档评估，输出 `Go / Conditional Go / No Go`。评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-docs-evaluation-<scope>.md`，不得写入 `docs/` 根目录，也不得替代 00-09 正式修订。
 
-生成或修订 `docs/05-tech-spec.md` 前，若项目涉及真实运行依赖（如 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API、重型 SDK），应先使用 `ai/prompts/review/20-tech-env-evaluation.md` 做技术路线与环境支撑评估，或在 `ai/project-rules.md` §2.5 / `docs/05-tech-spec.md` 说明跳过理由、风险和补做时点。技术环境评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不得替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。`collect-env` 只采集事实，不等于评估通过。
+生成或修订 `docs/05-tech-spec.md` 前，若项目涉及真实运行依赖（如 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API、重型 SDK），应先使用 `ai/prompts/review/20-tech-env-evaluation.md` 做技术路线与环境支撑评估，或在 `ai/project-rules.md` §2.5 / `docs/05-tech-spec.md` 说明跳过理由、风险和补做时点。技术环境评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不得替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。评估结论应回填或引用到 `05` 的 Risk-ID / readiness gate、`09` 验证项和 `08` Sprint 解锁条件。`collect-env` 只采集事实，不等于评估通过。
 
 | 评估码 | 阶段转换 | 核心问题 |
 |---|---|---|
@@ -115,13 +115,23 @@ docs/inputs 原始输入包
 | `docs/01-user-requirements.md` | 需求 | `00`、`docs/vision/*` | 用户需求全集；每条带来源锚点、阶段标签、状态 | 不丢愿景功能；不写实现方案 | `02`、`03` |
 | `docs/02-srs.md` | 需求 | `01`、`00` | 系统需求规格；REQ 编号；当前阶段可验证口径；后续阶段粗粒度 | 不引入 `01` 没有的功能；不把远期写成当前阶段 | `03`、`09` |
 | `docs/03-prd.md` | 需求 / 产品 | `02`、`01`、`project-rules` | 功能范围、优先级、阶段路线图；阶段标签唯一来源 | 不绕过 REQ 自行定功能；不把 Demo 写成 MVP | `project-rules §1`、`04-09` |
-| `docs/04-architecture.md` | 总体设计 | `03`、`02`、`project-rules`、`docs/env/*` | 系统模块、边界、运行拓扑、子系统划分 | 不新增 PRD 外模块；不忽略资源约束 | `05-09`、`docs/design/*` |
-| `docs/05-tech-spec.md` | 总体设计 | `04`、`03`、`project-rules`、`docs/env/*`、技术环境评估报告（如触发） | 技术选型、版本、资源评估、降级 / Mock、服务器预案 | 不虚构依赖、模型、接口或资源；不把候选写成已用；不把环境采集当作评估通过 | `06-09`、代码 |
+| `docs/04-architecture.md` | 总体设计 | `03`、`02`、`project-rules`、`docs/env/*`、`ai/doc-standards/04-architecture.md` | 架构目标与约束、系统上下文、组件 / 模块 / Flow ID、运行拓扑、ADR、REQ / 功能追溯 | 不新增 PRD 外模块；不忽略资源约束；不把候选 / Mock / 默认关闭能力写成已接入 | `05-09`、`docs/design/*` |
+| `docs/05-tech-spec.md` | 总体设计 | `04`、`03`、`project-rules`、`docs/env/*`、`ai/doc-standards/05-tech-spec.md`、技术环境评估报告（如触发） | 技术栈、依赖配置、资源评估、安全隐私、Risk-ID、readiness gate、降级 / Mock、服务器预案 | 不虚构依赖、模型、接口或资源；不把候选写成已启用；不把已验证写成已启用；不把环境采集当作评估通过 | `06-09`、代码 |
 | `docs/06-db-design.md` | 详细设计 | `02/03`、`04/05` | 表、字段、索引、约束；每张表追溯 REQ / 模块 | 不建无需求来源的表；不提前写死远期字段细节 | 代码、迁移、测试 |
 | `docs/07-api-spec.md` | 详细设计 | `02/03`、`04/05` | 接口契约、请求响应、权限、错误码 | 不建孤立接口；不暴露权限边界外能力 | 代码、集成测试 |
 | `docs/design/*` | 详细设计 | `04/05`、对应 REQ、`06/07` | 非平凡子系统流程、边界、状态机、失败处理；UI 型项目可包含前端交互设计 | 不替代 04/05；不提前实现远期细节；不新增未授权需求 / 接口 / 验收目标 | `08/09`、代码 |
 | `docs/research/*tech-env-evaluation*.md` | 技术评估留痕 | `docs/env/*`、`04/05`、依赖文件、启动脚本、Docker / 模型配置 | 记录技术路线候选、依赖安装 / 导入 / 最小运行验证、资源 / 网络 / 权限风险和 Go / Conditional Go / No-Go 结论 | 不替代 05；不替代 local-env；不把未执行验证写成已通过 | `05/09`、依赖文件、首个编码 Sprint |
 
+
+### 5.2 04-05 总体设计风险验证规则
+
+`04-05` 是需求链进入详细设计、Sprint 和验证前的总体设计门禁。生成、修订或审计 `04-05` 时必须对照 `ai/doc-standards/04-architecture.md`、`ai/doc-standards/05-tech-spec.md`：
+
+- `04` 必须把 `REQ / NFR → Phase → COMP-ID → MOD-ID → Flow-ID` 串起来，并说明上下文边界、外部系统状态、运行拓扑、ADR、异常 / 降级 / 权限拒绝路径。
+- `05` 必须把 `04` 的真实依赖、外部服务、数据库、LLM、Docker / 部署、权限安全和资源约束落到技术状态、依赖配置、Risk-ID、验证方式和 readiness gate。
+- `05 ↔ 09` 必须双向映射关键技术风险：`05` 记录 Risk-ID、触发条件、影响、验证方式和解锁条件；`09` 记录 TC、证据路径和验证结论；`08` 记录 Sprint 前置条件和禁止事项。
+- `候选`、`已验证`、`已启用`、`默认关闭`、`Mock`、`降级`、`禁止` 等状态不得混用；状态变化必须传播到 `04/05/08/09` 和相关详细设计。
+- Readiness gate 条件触发：真实外部服务、数据库、LLM、Docker / 部署、重型 SDK、权限安全或真实数据处理进入 Sprint / Phase 前，必须有 Go / Conditional Go / No-Go 结论；No-Go 阻止相关实现，Conditional Go 必须列限制条件和补做时点。
 ### 5.1 前端交互设计触发规则
 
 前端交互设计是条件性详细设计文档，不新增 `docs/00-09` 固定编号，推荐路径为 `docs/design/frontend-interaction.md`；多入口项目可拆成 `docs/design/*interaction*.md`。满足以下任一条件时，开发前应补充该文档，或在 `ai/project-rules.md` §3 / `docs/05-tech-spec.md` 说明豁免理由：

@@ -24,6 +24,8 @@
     "ai/implementation-lifecycle-rules.md",
     "ai/session-rules.md",
     "ai/doc-standards/README.md",
+    "ai/doc-standards/04-architecture.md",
+    "ai/doc-standards/05-tech-spec.md",
     "ai/commands/README.md",
     "ai/commands/scenario.md",
     "ai/commands/sync-methodology.md",

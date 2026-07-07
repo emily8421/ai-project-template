@@ -1,4 +1,4 @@
-﻿# 00 多入口生成 / 补齐完整文档体系（inputs → docs）
+# 00 多入口生成 / 补齐完整文档体系（inputs → docs）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
@@ -63,8 +63,8 @@
    - 据此给 project-rules §1 允许/禁止草稿，并明确当前 Phase 的交付物形态
 
 3) 总体设计（完整框架）
-   - 04-architecture：按模板结构写架构目标、上下文图、组件视图、模块划分、关键流程、部署拓扑、架构决策和 REQ → 模块矩阵
-   - 05-tech-spec：按模板结构写技术栈、关键技术决策、依赖配置、资源评估、Phase 技术约束、编码约定、安全合规和风险验证
+   - 04-architecture：按模板结构和 `ai/doc-standards/04-architecture.md` 写架构目标、上下文图、COMP / MOD / Flow ID、异常 / 降级 / 权限拒绝路径、部署拓扑、ADR 和 REQ → 模块矩阵
+   - 05-tech-spec：按模板结构和 `ai/doc-standards/05-tech-spec.md` 写技术栈、关键技术决策、依赖配置、敏感性、资源评估、Phase 技术约束、编码约定、安全合规、Risk-ID、readiness gate 和风险验证
 
 4) 详细设计（完整骨架 + 当前阶段细节）
    - 06-db-design：若保留，按模板结构写保留/省略决策、数据需求、概念模型、表清单、表结构、索引关系、迁移、安全留存和 REQ → 表矩阵
@@ -80,9 +80,9 @@
 6) 运行环境与资源评估
    - 若 `docs/env/local-env.md` 不存在，提示先运行 `ai/prompts/setup/13-collect-env.md` 的环境采集 Prompt
    - 04-architecture：说明本地单机 / 公司服务器 / 远程服务的运行拓扑约束
-   - 05-tech-spec：必须输出本机 Demo 可行性、资源瓶颈、降级 / Mock 策略和服务器资源预案
+   - 05-tech-spec：必须输出本机 Demo 可行性、资源瓶颈、依赖配置敏感性、Risk-ID、readiness gate、降级 / Mock 策略和服务器资源预案
    - 09-verification：必须包含本机资源验证项
-   - 若项目保留 backend / frontend / docker / 数据库 / 本机模型 / 外部 API 等真实运行依赖，应建议生成或补做 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`；未评估时不得把依赖安装、导入、最小运行写成已通过
+   - 若项目保留 backend / frontend / docker / 数据库 / 本机模型 / 外部 API / LLM / 重型 SDK / 真实数据 / 权限安全等真实运行依赖，应建议生成或补做 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`；评估结果必须映射回 `05` Risk-ID / readiness gate、`09` 验证项和 `08` Sprint 解锁条件；未评估时不得把依赖安装、导入、最小运行写成已通过
 
 【硬约束】
 1. 完整不裁剪：01/02 装下整个愿景，每条可回锚点为证；不得因阶段而删功能
@@ -96,8 +96,8 @@
 9. 高风险 AI 项（跨文档推理/矛盾检测/证据地图等）标"愿景·待技术验证"，不进当前阶段
 10. 演示形态：据 ai/project-rules.md §3「演示形态」推导 `frontend/` 是否启用、docs/04-05 是否体现前端；解析愿景文档，若含「页面 / 界面 / 点击 / 手机 / 打开」等界面交互词且 §3 标为无前端或不需演示，必须警告并提示人工复核
 11. 前端交互设计：若交付形态包含独立 Web / 移动端 / 小程序 / 桌面端，或存在多页面、多角色、复杂表单、状态流、管理页、搜索 / 问答 UI、验收依赖点击路径，应生成或建议生成 `docs/design/frontend-interaction.md`（或按入口拆分 `docs/design/*interaction*.md`）；若不生成，必须在 `ai/project-rules.md` §3 或 `docs/05-tech-spec.md` 写明豁免理由
-12. 技术方案必须受 `ai/project-rules.md` §2.5 与 `docs/env/local-env.md` 约束；Demo / MVP 优先本机可运行，若本机资源不足，必须明确所需公司服务器资源与触发条件；真实运行依赖项目在生成 / 修订 05 或进入首个编码 Sprint 前，应补技术路线与环境支撑评估或记录跳过理由
-13. 声称据实：技术栈/实现状态必须区分「已用 / 预留·未启用 / 默认关闭」；不得把候选、预留或默认关闭写成已用，无法核实时列为待确认
+12. 技术方案必须受 `ai/project-rules.md` §2.5 与 `docs/env/local-env.md` 约束；Demo / MVP 优先本机可运行，若本机资源不足，必须明确所需公司服务器资源与触发条件；真实运行依赖项目在生成 / 修订 05 或进入首个编码 Sprint 前，应补技术路线与环境支撑评估或记录跳过理由，并在 `05` 建立 Risk-ID / readiness gate 与 `09`、`08` 的映射
+13. 声称据实：技术栈/实现状态必须区分「已启用 / 已验证 / 候选 / 默认关闭 / Mock / 降级 / 禁止」；不得把候选、预留、默认关闭、Mock 或降级写成已启用，无法核实时列为待确认
 14. 横切状态：按 `ai/document-lifecycle-rules.md` §7.1 使用「目标设计 / 草案 / 候选 / 待人工确认 / 待技术验证 / Mock / 降级 / 默认关闭 / 预留·未启用 / 已验证 / 已启用 / 禁止」等状态词；不得把低确定性状态写成已验证或已启用
 15. 每份文档生成前用 1-2 句说结构；全部生成后用 `ai/prompts/review/10-docs-checklist.md` 自查，单列"需人工确认项"，并为每项补齐 AI 建议、建议依据、备选方案、取舍影响和阻塞关系
 16. 多文档生成后必须输出“待确认事项总览”，字段采用 `ID / 提出时间 / 来源 / 待确认事项 / AI 建议 / 建议依据 / 备选方案 / 取舍影响 / 需确认节点 / 阻塞关系 / 回填位置 / 当前状态 / 关闭依据`
