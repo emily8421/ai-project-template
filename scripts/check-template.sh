@@ -1147,6 +1147,62 @@ require_contains "ai/commands/ui-prototype-exploration.md" '先看原型' "ui-pr
 require_contains "ai/prompts/docs/22-ui-prototype-exploration.md" '需求探索原型' "需求探索原型 Prompt 存在"
 require_contains "template-docs/ui-prototype-exploration-template.md" '需求探索原型记录模板' "需求探索原型模板存在"
 require_contains "template-docs/ui-prototype-strategy-template.md" 'UI 原型策略 / 实现前原型记录模板' "UI 原型策略模板存在"
+require_contains "template-docs/README.md" 'glossary\.md' "template-docs README 索引术语表"
+require_contains "template-docs/README.md" 'docs-scaffold/' "template-docs README 索引 docs scaffold"
+require_contains "template-docs/glossary.md" '文档链路' "术语表包含文档链路分类"
+require_contains "template-docs/glossary.md" 'ID / 追溯' "术语表包含 ID 与追溯分类"
+require_contains "template-docs/glossary.md" '状态词典' "术语表包含状态词典分类"
+require_contains "template-docs/glossary.md" '原型 / 前端交互' "术语表包含原型与前端交互分类"
+require_contains "template-docs/glossary.md" '会话续接' "术语表包含会话续接分类"
+require_contains "template-docs/glossary.md" '模板治理 / 同步' "术语表包含模板治理分类"
+require_contains "template-docs/docs-scaffold/README.md" 'docs/00-09.*项目事实' "docs scaffold README 区分项目事实文档"
+require_contains "template-docs/docs-scaffold/README.md" 'template-docs/docs-scaffold/00-09.*结构模板' "docs scaffold README 区分结构模板"
+require_contains "template-docs/docs-scaffold/README.md" 'ai/doc-standards/00-09.*审计基线' "docs scaffold README 区分规范标准"
+require_contains "template-docs/docs-scaffold/README.md" 'design/subsystem-design\.md' "docs scaffold README 索引子系统设计模板"
+require_contains "template-docs/docs-scaffold/README.md" 'research/tech-env-evaluation\.md' "docs scaffold README 索引技术环境评估模板"
+for scaffold_file in \
+  00-scenario.md \
+  01-user-requirements.md \
+  02-srs.md \
+  03-prd.md \
+  04-architecture.md \
+  05-tech-spec.md \
+  06-db-design.md \
+  07-api-spec.md \
+  08-dev-plan.md \
+  09-verification.md; do
+  require_file "template-docs/docs-scaffold/$scaffold_file"
+  require_contains "template-docs/docs-scaffold/$scaffold_file" '撰写提要' "docs scaffold 包含撰写提要: $scaffold_file"
+done
+require_contains "template-docs/docs-scaffold/design/subsystem-design.md" '职责与边界' "子系统设计 scaffold 包含职责边界"
+require_contains "template-docs/docs-scaffold/design/subsystem-design.md" 'readiness gate' "子系统设计 scaffold 包含 readiness gate"
+require_contains "template-docs/docs-scaffold/design/frontend-interaction.md" '页面 / 路由清单与 REQ 追溯' "前端交互 scaffold 包含页面追溯"
+require_contains "template-docs/docs-scaffold/design/frontend-interaction.md" '权限可见性' "前端交互 scaffold 包含权限可见性"
+require_contains "template-docs/docs-scaffold/design/ui-prototype-strategy.md" '与需求探索原型的区别' "UI 原型策略 scaffold 区分需求探索原型"
+require_contains "template-docs/docs-scaffold/design/ui-prototype-strategy.md" '原型形式与权威位置' "UI 原型策略 scaffold 包含原型权威位置"
+require_contains "template-docs/docs-scaffold/research/ui-prototype-exploration.md" '需求探索' "需求探索原型 scaffold 包含需求探索定位"
+require_contains "template-docs/docs-scaffold/research/ui-prototype-exploration.md" '边界声明' "需求探索原型 scaffold 包含边界声明"
+require_contains "template-docs/docs-scaffold/research/tech-env-evaluation.md" 'Readiness Gate 结论' "技术环境评估 scaffold 包含 readiness gate 结论"
+require_contains "template-docs/docs-scaffold/research/tech-env-evaluation.md" 'Go / Conditional Go / No-Go' "技术环境评估 scaffold 包含 Go 判定"
+require_contains "README.md" 'template-docs/docs-scaffold' "README 指向 docs scaffold"
+require_contains "README.md" 'template-docs/glossary' "README 指向 glossary"
+require_contains "docs/README.md" 'template-docs/docs-scaffold/00-09' "docs README 区分结构模板"
+require_contains "docs/README.md" 'ai/doc-standards/00-09' "docs README 区分规范标准"
+require_contains "template-docs/beginner-guide.md" 'template-docs/docs-scaffold/00-09' "新手指南说明 docs scaffold"
+require_contains "template-docs/beginner-guide.md" 'template-docs/glossary.md' "新手指南指向术语表"
+require_contains "template-docs/template-methodology.md" 'template-docs/glossary.md' "方法论手册索引术语表"
+require_contains "template-docs/template-methodology.md" 'template-docs/docs-scaffold/' "方法论手册索引 docs scaffold"
+require_contains "template-sync.json" 'template-docs/glossary\.md' "同步清单包含术语表"
+require_contains "template-sync.json" 'template-docs/docs-scaffold/README\.md' "同步清单包含 docs scaffold README"
+require_contains "template-sync.json" 'template-docs/docs-scaffold/09-verification\.md' "同步清单包含 docs scaffold 00-09"
+require_contains "template-sync.json" 'template-docs/docs-scaffold/design/subsystem-design\.md' "同步清单包含子系统设计 scaffold"
+require_contains "template-sync.json" 'template-docs/docs-scaffold/design/frontend-interaction\.md' "同步清单包含前端交互 scaffold"
+require_contains "template-sync.json" 'template-docs/docs-scaffold/research/tech-env-evaluation\.md' "同步清单包含技术环境评估 scaffold"
+require_contains "scripts/sync-template.sh" 'template-docs/glossary\.md' "sync-template fallback 包含术语表"
+require_contains "scripts/sync-template.sh" 'template-docs/docs-scaffold/09-verification\.md' "sync-template fallback 包含 docs scaffold 00-09"
+require_contains "scripts/sync-template.sh" 'template-docs/docs-scaffold/design/subsystem-design\.md' "sync-template fallback 包含子系统设计 scaffold"
+require_contains "scripts/sync-template.sh" 'template-docs/docs-scaffold/design/frontend-interaction\.md' "sync-template fallback 包含前端交互 scaffold"
+require_contains "scripts/sync-template.sh" 'template-docs/docs-scaffold/research/tech-env-evaluation\.md' "sync-template fallback 包含技术环境评估 scaffold"
 require_contains "template-sync.json" 'ai/commands/ui-prototype-exploration\.md' "同步清单包含需求探索原型命令"
 require_contains "template-sync.json" 'ai/prompts/docs/22-ui-prototype-exploration\.md' "同步清单包含需求探索原型 Prompt"
 require_contains "template-sync.json" 'template-docs/ui-prototype-exploration-template\.md' "同步清单包含需求探索原型模板"

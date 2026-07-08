@@ -389,6 +389,64 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/docs/22-ui-prototype-exploration.md" "需求探索原型" "UI prototype exploration prompt exists"
   Require-Contains "template-docs/ui-prototype-exploration-template.md" "需求探索原型记录模板" "UI prototype exploration template exists"
   Require-Contains "template-docs/ui-prototype-strategy-template.md" "UI 原型策略 / 实现前原型记录模板" "UI prototype strategy template exists"
+  Require-Contains "template-docs/README.md" "glossary\.md" "template-docs README links glossary"
+  Require-Contains "template-docs/README.md" "docs-scaffold/" "template-docs README links docs scaffold"
+  Require-Contains "template-docs/glossary.md" "文档链路" "glossary includes document chain category"
+  Require-Contains "template-docs/glossary.md" "ID / 追溯" "glossary includes ID traceability category"
+  Require-Contains "template-docs/glossary.md" "状态词典" "glossary includes status dictionary category"
+  Require-Contains "template-docs/glossary.md" "原型 / 前端交互" "glossary includes prototype and frontend category"
+  Require-Contains "template-docs/glossary.md" "会话续接" "glossary includes session handoff category"
+  Require-Contains "template-docs/glossary.md" "模板治理 / 同步" "glossary includes template governance category"
+  Require-Contains "template-docs/docs-scaffold/README.md" "docs/00-09.*项目事实" "docs scaffold README distinguishes project facts"
+  Require-Contains "template-docs/docs-scaffold/README.md" "template-docs/docs-scaffold/00-09.*结构模板" "docs scaffold README distinguishes scaffold templates"
+  Require-Contains "template-docs/docs-scaffold/README.md" "ai/doc-standards/00-09.*审计基线" "docs scaffold README distinguishes standards"
+  Require-Contains "template-docs/docs-scaffold/README.md" "design/subsystem-design\.md" "docs scaffold README lists subsystem design scaffold"
+  Require-Contains "template-docs/docs-scaffold/README.md" "research/tech-env-evaluation\.md" "docs scaffold README lists tech env evaluation scaffold"
+  foreach ($scaffoldFile in @(
+      "00-scenario.md",
+      "01-user-requirements.md",
+      "02-srs.md",
+      "03-prd.md",
+      "04-architecture.md",
+      "05-tech-spec.md",
+      "06-db-design.md",
+      "07-api-spec.md",
+      "08-dev-plan.md",
+      "09-verification.md"
+    )) {
+    $scaffoldPath = "template-docs/docs-scaffold/$scaffoldFile"
+    Require-File $scaffoldPath
+    Require-Contains $scaffoldPath "撰写提要" ("docs scaffold includes writing hint: " + $scaffoldFile)
+  }
+  Require-Contains "template-docs/docs-scaffold/design/subsystem-design.md" "职责与边界" "subsystem design scaffold includes responsibility boundary"
+  Require-Contains "template-docs/docs-scaffold/design/subsystem-design.md" "readiness gate" "subsystem design scaffold includes readiness gate"
+  Require-Contains "template-docs/docs-scaffold/design/frontend-interaction.md" "页面 / 路由清单与 REQ 追溯" "frontend interaction scaffold includes page traceability"
+  Require-Contains "template-docs/docs-scaffold/design/frontend-interaction.md" "权限可见性" "frontend interaction scaffold includes permission visibility"
+  Require-Contains "template-docs/docs-scaffold/design/ui-prototype-strategy.md" "与需求探索原型的区别" "UI prototype strategy scaffold distinguishes exploration prototype"
+  Require-Contains "template-docs/docs-scaffold/design/ui-prototype-strategy.md" "原型形式与权威位置" "UI prototype strategy scaffold includes prototype authority"
+  Require-Contains "template-docs/docs-scaffold/research/ui-prototype-exploration.md" "需求探索" "UI prototype exploration scaffold includes exploration positioning"
+  Require-Contains "template-docs/docs-scaffold/research/ui-prototype-exploration.md" "边界声明" "UI prototype exploration scaffold includes boundary statement"
+  Require-Contains "template-docs/docs-scaffold/research/tech-env-evaluation.md" "Readiness Gate 结论" "tech env evaluation scaffold includes readiness gate conclusion"
+  Require-Contains "template-docs/docs-scaffold/research/tech-env-evaluation.md" "Go / Conditional Go / No-Go" "tech env evaluation scaffold includes Go decisions"
+  Require-Contains "README.md" "template-docs/docs-scaffold" "README links docs scaffold"
+  Require-Contains "README.md" "template-docs/glossary" "README links glossary"
+  Require-Contains "docs/README.md" "template-docs/docs-scaffold/00-09" "docs README distinguishes scaffold templates"
+  Require-Contains "docs/README.md" "ai/doc-standards/00-09" "docs README distinguishes doc standards"
+  Require-Contains "template-docs/beginner-guide.md" "template-docs/docs-scaffold/00-09" "beginner guide explains docs scaffold"
+  Require-Contains "template-docs/beginner-guide.md" "template-docs/glossary.md" "beginner guide links glossary"
+  Require-Contains "template-docs/template-methodology.md" "template-docs/glossary.md" "methodology links glossary"
+  Require-Contains "template-docs/template-methodology.md" "template-docs/docs-scaffold/" "methodology links docs scaffold"
+  Require-Contains "template-sync.json" "template-docs/glossary\.md" "template-sync includes glossary"
+  Require-Contains "template-sync.json" "template-docs/docs-scaffold/README\.md" "template-sync includes docs scaffold README"
+  Require-Contains "template-sync.json" "template-docs/docs-scaffold/09-verification\.md" "template-sync includes docs scaffold 00-09"
+  Require-Contains "template-sync.json" "template-docs/docs-scaffold/design/subsystem-design\.md" "template-sync includes subsystem design scaffold"
+  Require-Contains "template-sync.json" "template-docs/docs-scaffold/design/frontend-interaction\.md" "template-sync includes frontend interaction scaffold"
+  Require-Contains "template-sync.json" "template-docs/docs-scaffold/research/tech-env-evaluation\.md" "template-sync includes tech env evaluation scaffold"
+  Require-Contains "scripts/sync-template.sh" "template-docs/glossary\.md" "sync-template fallback includes glossary"
+  Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/09-verification\.md" "sync-template fallback includes docs scaffold 00-09"
+  Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/design/subsystem-design\.md" "sync-template fallback includes subsystem design scaffold"
+  Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/design/frontend-interaction\.md" "sync-template fallback includes frontend interaction scaffold"
+  Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/research/tech-env-evaluation\.md" "sync-template fallback includes tech env evaluation scaffold"
   Require-Contains "template-sync.json" "ai/commands/ui-prototype-exploration\.md" "template-sync includes UI prototype exploration command"
   Require-Contains "template-sync.json" "ai/prompts/docs/22-ui-prototype-exploration\.md" "template-sync includes UI prototype exploration prompt"
   Require-Contains "template-sync.json" "template-docs/ui-prototype-exploration-template\.md" "template-sync includes UI prototype exploration template"

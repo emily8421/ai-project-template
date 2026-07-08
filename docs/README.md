@@ -41,7 +41,8 @@
 - **追溯链**：`U-ID → REQ-ID → Phase → 设计 → Sprint → 测试 → 代码`，不留悬空 ID（权威见 `ai/document-lifecycle-rules.md` §6）。
 - **阶段双维度标签**：功能范围 `[P1]/[P2]/[愿景]` × 交付物形态 `Demo/MVP/产品`；状态 `骨架 → P{N}-已设计 → P{N}-已实现`（权威见 `ai/global-rules.md` §8）。
 - **只增不删**：设计类文档（03-09、design）按积累式演进，不删既有阶段内容（权威见 `ai/global-rules.md` §8.2-3）。
-- **撰写规范**：`00-09` 每份文档的撰写规范见 `ai/doc-standards/00-09`（只读镜像、审计基线、不手改；由 `sync-template` 刷新）。
+- **三层分工**：`docs/00-09` 是项目事实；`template-docs/docs-scaffold/00-09` 是长期参考结构模板；`ai/doc-standards/00-09` 是规则 / 审计基线。
+- **撰写规范**：`00-09` 每份文档的撰写规范见 `ai/doc-standards/00-09`（只读、审计基线、不手改；由 `sync-template` 刷新）。如需查看模板原始大纲、占位表格和 `【撰写提要：...】`，参考 `template-docs/docs-scaffold/`。
 
 ## 4. 根目录只放核心文档
 
@@ -50,7 +51,7 @@
 - `README.md`：本文档。
 - `00-scenario.md` ~ `09-verification.md`：核心工程文档；其中 `06` / `07` 可按项目形态省略。
 
-> 模板 `00-09` 撰写规范镜像在 `ai/doc-standards/00-09`，不属于 `docs/` 项目事实区。
+> 模板 `00-09` 结构副本在 `template-docs/docs-scaffold/`，撰写规范 / 审计基线在 `ai/doc-standards/00-09`；两者都不属于 `docs/` 项目事实区。
 
 除上述外，AI 不得在 `docs/` 根目录新增文档。确需新增时，必须先说明原因、建议路径和影响范围，等待人工确认。
 
@@ -66,7 +67,8 @@
 | `docs/env/` | 本机环境、资源约束、服务器预案 | `local-env.md`、`server-plan.md` |
 | `docs/meetings/` | 会议纪要、访谈记录、评审记录 | `YYYY-MM-DD-topic.md` |
 | `docs/archive/` | 已废弃但需留痕的项目文档 | 保留原名或加日期前缀 |
-| `ai/doc-standards/` | 模板 `docs/00-09` 撰写规范镜像，随模板版本刷新；**只读、非项目事实、不直接驱动开发**；改动须走 `_proposals/` 回流模板 | 由 `sync-template` 自动生成，勿手改；旧项目可能残留 `docs/_scaffold/` |
+| `template-docs/docs-scaffold/` | 模板 `docs/00-09` 长期结构副本，保留原始大纲、占位表格和 `【撰写提要：...】`；**人读参考、非项目事实、不自动覆盖 `docs/00-09`** | 随模板同步；旧项目可能残留 `docs/_scaffold/` |
+| `ai/doc-standards/` | 模板 `docs/00-09` 与详细设计的撰写规范 / 审计基线；**只读、非项目事实、不直接驱动开发**；改动须走 `_proposals/` 回流模板 | 由 `sync-template` 同步，勿手改 |
 
 ## 6. 子系统详细设计
 

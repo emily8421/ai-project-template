@@ -1,8 +1,8 @@
 ﻿# TEMPLATE-UPGRADE: 模板易用性文档补强
 
 > 来源：模板维护者
-> 状态：处理中（Batch 1 落地中；Batch 2 / Batch 3 待后续处理）
-> 目标版本：Batch 1 建议 `v1.42.0`
+> 状态：处理中（Batch 1 / Batch 2 / Batch 3 已落地；Batch 4 扩展 scaffold 模板落地中，待 PR 合并后归档）
+> 目标版本：`v1.42.0`
 
 ## 1. 背景与现状证据
 
@@ -143,7 +143,7 @@
 - 需求探索原型和实现前原型的边界在标准和场景中均明确。
 - 不新增 `docs/10-*` 编号，不改变 `00-09` 编号体系。
 
-### Batch 2：文档结构模板长期保留（后续）
+### Batch 2：文档结构模板长期保留（已落地）
 
 拟改策略：
 
@@ -166,7 +166,7 @@
 - 派生项目同步后，即使 `docs/00-09` 被项目内容覆盖，仍能在 `template-docs/docs-scaffold/` 查到结构模板。
 - README / docs README 能清楚区分三者：事实文档、结构模板、规范标准。
 
-### Batch 3：术语表（后续）
+### Batch 3：术语表（已落地）
 
 拟改策略：
 
@@ -191,6 +191,49 @@
 - 使用者能通过一个入口查到核心术语定义和权威来源。
 - check-template 断言 glossary 存在并包含关键分类。
 
+### Batch 4：详细设计与门禁记录 scaffold 扩展（本轮追加）
+
+拟改策略：
+
+- 扩展 `template-docs/docs-scaffold/`，从仅覆盖 `docs/00-09` 升级为项目文档结构模板库。
+- 新增 `template-docs/docs-scaffold/design/subsystem-design.md`，对应 `docs/design/<subsystem>.md` 与 `ai/doc-standards/design-doc.md`。
+- 新增 `template-docs/docs-scaffold/design/frontend-interaction.md`，对应 `docs/design/frontend-interaction.md` 与 `ai/doc-standards/frontend-interaction.md`。
+- 新增 `template-docs/docs-scaffold/design/ui-prototype-strategy.md`，对应实现前 UI 原型策略记录；保留根部 `template-docs/ui-prototype-strategy-template.md` 作为兼容入口。
+- 新增 `template-docs/docs-scaffold/research/ui-prototype-exploration.md`，对应 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`；保留根部 `template-docs/ui-prototype-exploration-template.md` 作为兼容入口。
+- 新增 `template-docs/docs-scaffold/research/tech-env-evaluation.md`，对应 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md` 与真实运行依赖 readiness gate。
+- 更新 `template-docs/docs-scaffold/README.md`、`template-sync.json`、`scripts/sync-template.sh` 和 `check-template` 断言。
+
+非目标：
+
+- 不一次性补齐所有 P1 / P2 辅助模板，如 ADR、会议纪要、归档说明、task 模板；后续按使用频率单独评估。
+- 不删除既有 `template-docs/ui-prototype-*-template.md` 兼容入口，避免破坏已有链接。
+- 不让 scaffold 替代 `ai/doc-standards/` 规则权威源；若两者冲突，以标准文件为准。
+
+验收标准：
+
+- `docs-scaffold/README.md` 明确 `00-09`、`design/` 与 `research/` 模板职责。
+- `template-sync.json` 与 `scripts/sync-template.sh` 包含新增 scaffold 模板。
+- `check-template` 断言新增模板存在、包含 Sync notice 和关键章节。
+- README / template-docs 入口不产生双重权威，既有根部 UI 原型模板仍可作为兼容入口。
+
+### 后续候选池：本轮未执行的 P1 / P2 scaffold 与机制优化
+
+> 状态：候选 / 待后续评估。以下项目不进入本轮 PR 必做范围，避免继续扩大 `v1.42.0` 的审查面；后续若确认价值，再单独拆 Batch 或新提案。
+
+本轮评估结论：P0 已覆盖，P1 仅落地 `tech-env-evaluation`；其余 P1 / P2 暂不执行。
+
+| 优先级 | 候选项 | 建议落位 | AI 建议 | 暂缓原因 / 后续触发 |
+|---|---|---|---|---|
+| P1 | Product Vision 结构模板 | `template-docs/docs-scaffold/vision/product-vision.md` | 后续补充 | `docs/vision/product-vision.md` 已有模板形态，但未纳入 scaffold；当用户反馈愿景入口不清或 scaffold 要覆盖 vision 时补。 |
+| P1 | 输入评审报告结构模板 | `template-docs/docs-scaffold/inputs/input-review-report.md` | 后续补充 | 当前有 Prompt 流程但缺可复制报告模板；当 review-inputs 输出需要稳定落盘结构时补。 |
+| P1 | 待确认事项总览正式模板 | `template-docs/docs-scaffold/research/docs-open-items.md` 或继续使用 `template-docs/docs-open-items.example.md` | 先评估是否由 example 升级为 template | 已有 example，是否迁入 scaffold 涉及兼容入口与命名取舍。 |
+| P1 | ADR / 决策记录模板 | `template-docs/docs-scaffold/decisions/ADR-template.md` | 后续补充 | 横切事实权威源常用，但当前缺独立标准；宜先评估 ADR 最小字段与 `docs/decisions/` 命名约定。 |
+| P2 | 环境记录 / 服务器预案轻模板 | `template-docs/docs-scaffold/env/local-env.md`、`server-plan.md` | 仅做轻模板或说明 | `local-env` 多由脚本生成，重模板可能误导人工维护；服务器预案项目差异较大。 |
+| P2 | 会议 / 访谈纪要模板 | `template-docs/docs-scaffold/meetings/meeting-notes.md` | 可选 | 留痕价值有，但不直接驱动实现；等实际使用反馈再补。 |
+| P2 | 归档说明模板 | `template-docs/docs-scaffold/archive/archive-note.md` | 可选 | 低频场景，暂不扩大同步清单。 |
+| P2 | Task 文件模板 | `template-docs/task-template.md` 或 `template-docs/docs-scaffold/tasks/task-template.md` | 单独评估路径 | `tasks/` 不在 `docs/` 下，是否归入 docs-scaffold 需要先决定信息架构。 |
+| 机制评估 | 模板版本号策略 | `MAINTAINERS.md` / `CHANGELOG.md` / `template-sync.json` 相关规则 | 单独评估，不混入 scaffold Batch | 最近模板改动频繁，`MINOR` 增长较快；需评估是否引入“日内变更聚合 / prerelease / sync revision”等机制。 |
+
 ## 5. 非目标 / 禁止项
 
 - 不强制所有项目启用前端目录、前端交互设计或 UI 原型策略；触发条件不满足时可豁免，但必须写明理由。
@@ -203,9 +246,7 @@
 
 ## 6. 版本影响
 
-Batch 1 新增同步文件与模板能力，建议 `MINOR`：`v1.42.0`。
-
-Batch 2 / Batch 3 也会新增同步文件；若单独落地，建议各自按 `MINOR` 或合并进后续 `MINOR` 版本，具体由实施范围决定。
+Batch 1 / Batch 2 / Batch 3 均新增同步文件与模板能力，合并为同一个 `MINOR`：`v1.42.0`。
 
 ## 7. 风险与缓解
 
@@ -225,4 +266,9 @@ Batch 1：
 - `powershell.exe -ExecutionPolicy Bypass -File scripts/check-template.ps1`
 - `C:\Program Files\Git\bin\bash.exe scripts/check-template.sh`
 
-Batch 2 / Batch 3 后续实施时，应额外验证同步清单、自检断言、README 入口和派生同步 dry-run 影响。
+Batch 2 / Batch 3：
+
+- `git diff --check`
+- `powershell.exe -ExecutionPolicy Bypass -File scripts/check-template.ps1`
+- `C:\Program Files\Git\bin\bash.exe scripts/check-template.sh`
+- 额外关注同步清单、自检断言、README 入口和派生同步 dry-run 影响。
