@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.41.1（2026-07-08）
+
+快速续接优先路由：明确“读取续接点 / 继续上次 / resume”是纯恢复摘要场景时，可先按最小只读路径输出结论，避免被入口规则误扩展为完整规则审计。
+
+- **入口裁剪**：`ai/index.md`、`AGENTS.md`、`CLAUDE.md` 与 `.cursor/rules/project-rules.mdc` 明确快速续接例外；分析、设计、编码或状态变更仍必须完整读取规则。
+- **续接规则**：`ai/session-rules.md` 增加流程分流，说明快速续接只服务恢复摘要；一旦继续执行任务，立即回到完整规则读取和对应 command。
+- **命令路由**：`ai/commands/README.md` 与 `ai/commands/resume.md` 明确 `resume` 不展开完整规则审计，后续执行再升级。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加快速续接例外与入口裁剪断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-fast-resume-routing.md`。
+
 ## v1.41.0（2026-07-07）
 
 快速续接模式与 handoff stale 裁决：将“读取续接点 / 继续上次”默认限定为本地只读恢复，避免误扩展成完整规则审计、远端 issue / PR 复核或任务继续执行。

@@ -33,7 +33,7 @@
 
 > **场景优先**：当用户说出的是**具体场景意图**（如「帮我新建项目」「帮我准备输入」「帮我规划阶段」「帮我打磨文档」）而非某个具体 command 时，AI 应先走 `/run scenario`（见 `ai/commands/scenario.md`），由 `template-docs/scenario-guides.md` 先产出「做什么 + 为什么」引导计划，确认后再路由到具体 command 执行。新手首次打开 AI CLI 也走此路径。
 
-AI 识别到命令意图后，应：
+AI 识别到命令意图后，应先判断是否为 `resume` 快速续接；若用户只要求“读取续接点 / 继续上次 / 恢复上下文”，按 `ai/session-rules.md` §3.1 的最小只读流程执行，不展开完整规则审计。其他命令，或 `resume` 后继续执行具体任务时，应：
 
 1. 读取 `ai/index.md` 及其列出的规则文件。
 2. 读取本命令索引和对应 `ai/commands/*.md`。
