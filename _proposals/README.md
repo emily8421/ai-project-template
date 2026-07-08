@@ -24,6 +24,23 @@ TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox.md
 TEMPLATE-UPGRADE-vX.Y.Z-proposal-inbox-patch.md
 ```
 
+## 提案头部字段
+
+新提案建议在标题下方写明来源、状态、目标版本和发布判断。提案收件箱增长本身不触发版本递增；只有后续 PR 将改动合并到同步范围内并改变模板行为或下游同步判断时，才判断 `PATCH / MINOR / MAJOR`。
+
+```markdown
+> 来源：模板维护者 / <派生项目名>（<owner>/<repo>）派生项目回流
+> 状态：候选 / 待评估 / 处理中
+> 目标版本：待确认
+> Release impact：none / patch / minor / major（AI 建议，待维护者确认）
+> Release strategy：单独发布 / 同主题聚合 / 延后候选池
+```
+
+- `none`：仅更新 `_proposals/`、本地续接、未纳入同步清单的草案或分析记录，不改 `VERSION`。
+- `patch`：文案澄清、Prompt 小修、自检增强、兼容性脚本修复或治理说明补强。
+- `minor`：新增模板能力、新增同步文件、文档骨架新增章节、用户入口新增场景。
+- `major`：文档编号体系、核心流程或同步机制发生不兼容变化。
+
 ## 回流方式
 
 1. 在派生项目或模板仓库中起草去项目化提案。

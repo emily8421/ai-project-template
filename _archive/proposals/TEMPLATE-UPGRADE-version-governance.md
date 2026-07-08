@@ -1,8 +1,16 @@
 # TEMPLATE-UPGRADE: 模板版本治理与发布节奏优化
 
 > 来源：模板维护者
-> 状态：候选 / 待评估
-> 目标版本：待确认（建议不并入当前 `v1.42.0`，单独评估后决定）
+> 状态：已处理 / 已归档
+> 落地版本：`v1.42.1`
+
+## 0. 处理结果
+
+- 已在 `CONTRIBUTING.md` 补充 release impact 决策表、同主题聚合发布、即时发布 vs 维护窗口和“提案收件箱增长不触发版本递增”规则。
+- 已在 `MAINTAINERS.md` 发布 checklist 中加入 `Release impact` / `Release strategy` 判断。
+- 已在 `_proposals/README.md` 增加新提案头部字段建议。
+- 已在 `CHANGELOG.md` / `VERSION` 发布 `v1.42.1`，并在 `scripts/check-template.sh` / `.ps1` 增加防回归断言。
+- 未引入 prerelease、双版本号或同步提交格式变化；`VERSION` 仍是派生项目同步审计入口。
 
 ## 1. 背景与现状证据
 

@@ -231,6 +231,14 @@ function Invoke-NativeTemplateCheck {
   }
 
   Require-Contains "CHANGELOG.md" ([regex]::Escape($version)) "CHANGELOG includes current VERSION"
+  Require-Contains "CHANGELOG.md" "版本是发布边界，不是提案数量边界" "CHANGELOG explains version as release boundary"
+  Require-Contains "CONTRIBUTING.md" "提案收件箱增长不触发版本递增" "CONTRIBUTING separates proposal inbox from version bumps"
+  Require-Contains "CONTRIBUTING.md" "Release impact" "CONTRIBUTING includes release impact decision"
+  Require-Contains "CONTRIBUTING.md" "同主题小改可聚合为同一个版本发布" "CONTRIBUTING explains themed release aggregation"
+  Require-Contains "MAINTAINERS.md" "Release impact" "MAINTAINERS checks release impact"
+  Require-Contains "MAINTAINERS.md" "Release strategy" "MAINTAINERS checks release strategy"
+  Require-Contains "_proposals/README.md" "Release impact" "_proposals README documents release impact field"
+  Require-Contains "_proposals/README.md" "Release strategy" "_proposals README documents release strategy field"
   Require-Contains "README.md" "scenario-guides" "README quick start points to scenario-guides"
   Require-Contains "README.md" "SOP\.md" "README quick start points to SOP"
   Require-Contains "README.md" "template-docs/beginner-guide\.md" "README quick start points to beginner guide"
