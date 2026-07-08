@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE: docs scaffold 后续模板补强
 
 > 来源：模板维护者
-> 状态：候选 / 待评估
-> 目标版本：待确认（建议不并入当前 `v1.42.0`，单独评估后决定）
-> Release impact：none（本提案仅记录待评估项；若后续新增同步 scaffold 模板，预计为 minor）
-> Release strategy：延后候选池 / 可按 P1、P2 分批处理
+> 状态：P1 落地中；P2 候选 / 待评估
+> 目标版本：`v1.43.0`（P1 批次）
+> Release impact：minor（新增同步 scaffold 模板）
+> Release strategy：同主题聚合；P1 本轮落地，P2 延后候选池
 
 ## 1. 背景与来源
 
@@ -18,10 +18,10 @@
 
 | 优先级 | 候选项 | 建议落位 | AI 建议 | 暂缓原因 / 后续触发 |
 |---|---|---|---|---|
-| P1 | Product Vision 结构模板 | `template-docs/docs-scaffold/vision/product-vision.md` | 后续补充 | `docs/vision/product-vision.md` 已有模板形态，但未纳入 scaffold；当用户反馈愿景入口不清或 scaffold 要覆盖 vision 时补。 |
-| P1 | 输入评审报告结构模板 | `template-docs/docs-scaffold/inputs/input-review-report.md` | 后续补充 | 当前有 Prompt 流程但缺可复制报告模板；当 review-inputs 输出需要稳定落盘结构时补。 |
-| P1 | 待确认事项总览正式模板 | `template-docs/docs-scaffold/research/docs-open-items.md` 或继续使用 `template-docs/docs-open-items.example.md` | 先评估是否由 example 升级为 template | 已有 example，是否迁入 scaffold 涉及兼容入口与命名取舍。 |
-| P1 | ADR / 决策记录模板 | `template-docs/docs-scaffold/decisions/ADR-template.md` | 后续补充 | 横切事实权威源常用，但当前缺独立标准；宜先评估 ADR 最小字段与 `docs/decisions/` 命名约定。 |
+| P1 | Product Vision 结构模板 | `template-docs/docs-scaffold/vision/product-vision.md` | 本轮落地 | `docs/vision/product-vision.md` 已有模板形态，但未纳入 scaffold；当用户反馈愿景入口不清或 scaffold 要覆盖 vision 时补。 |
+| P1 | 输入评审报告结构模板 | `template-docs/docs-scaffold/inputs/input-review-report.md` | 本轮落地 | 当前有 Prompt 流程但缺可复制报告模板；当 review-inputs 输出需要稳定落盘结构时补。 |
+| P1 | 待确认事项总览正式模板 | `template-docs/docs-scaffold/research/docs-open-items.md`，保留 `template-docs/docs-open-items.example.md` 作为兼容示例 | 本轮落地 | 已有 example，迁入 scaffold 后需保留兼容入口并说明 example / template 边界。 |
+| P1 | ADR / 决策记录模板 | `template-docs/docs-scaffold/decisions/ADR-template.md` | 本轮落地 | 横切事实权威源常用，但当前缺独立标准；本轮补最小字段与 `docs/decisions/` 命名约定。 |
 | P2 | 环境记录 / 服务器预案轻模板 | `template-docs/docs-scaffold/env/local-env.md`、`server-plan.md` | 仅做轻模板或说明 | `local-env` 多由脚本生成，重模板可能误导人工维护；服务器预案项目差异较大。 |
 | P2 | 会议 / 访谈纪要模板 | `template-docs/docs-scaffold/meetings/meeting-notes.md` | 可选 | 留痕价值有，但不直接驱动实现；等实际使用反馈再补。 |
 | P2 | 归档说明模板 | `template-docs/docs-scaffold/archive/archive-note.md` | 可选 | 低频场景，暂不扩大同步清单。 |
@@ -30,13 +30,15 @@
 ## 3. 与已完成 docs-scaffold 的关系
 
 - 已完成的 `template-docs/docs-scaffold/00-scenario.md` 至 `09-verification.md` 是 `docs/00-09` 核心文档结构副本。
+- 本轮新增的 `inputs/` 与 `vision/` scaffold 覆盖 `00-09` 上游输入评审与产品愿景结构副本。
 - 已完成的 `template-docs/docs-scaffold/design/*` 和 `research/*` 覆盖实现前原型、前端交互、技术环境评估等 P0 / 高触发频率场景。
+- 本轮新增的 `decisions/ADR-template.md` 和 `research/docs-open-items.md` 覆盖横切事实权威源与待确认事项总览的常用结构。
 - 本提案只评估周边辅助目录模板，不改变 `00-09` 编号体系，不替代 `ai/doc-standards/` 规则权威源。
 - 若后续落地，应同步更新 `template-docs/docs-scaffold/README.md`、`template-sync.json`、`scripts/sync-template.*` 和 `scripts/check-template.*` 的自检断言。
 
 ## 4. 分批建议
 
-### P1：优先评估
+### P1：本轮落地范围
 
 1. `vision/product-vision.md`：补足愿景入口与 scaffold 的可发现性。
 2. `inputs/input-review-report.md`：让输入评审结果有稳定落盘结构。
