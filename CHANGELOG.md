@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.43.0（2026-07-08）
+
+Docs scaffold P1 后续模板补强：补齐输入评审、产品愿景、待确认事项总览和 ADR 结构模板，让 `template-docs/docs-scaffold/` 覆盖主文档链路的上游输入、愿景、决策与 open items 常用入口。
+
+- **输入与愿景模板**：新增 `template-docs/docs-scaffold/inputs/input-review-report.md` 与 `vision/product-vision.md`，对应 `docs/inputs/input-review-report.md` 和 `docs/vision/product-vision.md` 的长期结构副本。
+- **决策与 open items 模板**：新增 `decisions/ADR-template.md` 与 `research/docs-open-items.md`，分别承接横切事实权威源和待确认事项总览。
+- **导航与同步**：更新 `README.md`、`docs/README.md`、`template-docs/README.md`、`template-docs/beginner-guide.md`、`template-docs/template-methodology.md` 和 `template-docs/docs-scaffold/README.md`，统一说明 inputs / vision / decisions / research scaffold 边界。
+- **同步与自检**：更新 `template-sync.json`、`scripts/sync-template.sh`、`scripts/check-template.sh` / `.ps1`，确保新增 P1 scaffold 下行同步并防止入口漂移。
+- **分批治理**：P2 的 env、meetings、archive、task template 继续保留在 `_proposals/TEMPLATE-UPGRADE-docs-scaffold-followups.md` 候选池，不并入本版本。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-docs-scaffold-followups.md` P1 批次。
+
 ## v1.42.1（2026-07-08）
 
 模板版本治理优化：将提案收件箱增长与模板发布边界解耦，明确 release impact / release strategy 判断，避免高频回流提案导致 `MINOR` 过快增长。
