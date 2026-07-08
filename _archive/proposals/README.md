@@ -24,3 +24,4 @@
 | 需求探索原型：`TEMPLATE-UPGRADE-ui-prototype-exploration.md` | 已在 `v1.40.0` 吸收 A5.5 需求探索原型场景、探索记录模板、命令 / Prompt 路由、同步清单和自检断言；来源为 2026-07-07 维护会话中对“先看原型再定需求 / 架构”的流程澄清。 |
 | 快速续接模式：`TEMPLATE-UPGRADE-fast-session-resume.md` | 已在 `v1.41.0` 吸收快速续接模式、`resume` 命令、handoff stale 裁决、续接元数据样例、同步清单和自检断言；来源为 2026-07-07 维护会话中过度恢复复盘。 |
 | 快速续接优先路由：`TEMPLATE-UPGRADE-fast-resume-routing.md` | 已在 `v1.41.1` 吸收快速续接例外、入口裁剪、`resume` 命令路由升级和自检断言；来源为 2026-07-08 维护会话中对“读取续接点”响应过慢的复盘。 |
+| 模板易用性文档补强：`TEMPLATE-UPGRADE-template-usability-docs.md` | 已在 `v1.42.0` 吸收前端交互 / UI 原型策略独立标准、实现前原型场景、`docs-scaffold` 结构模板库、术语表、同步清单和自检断言；未执行的文档模板优化候选已拆到 `_proposals/TEMPLATE-UPGRADE-docs-scaffold-followups.md` 继续评估，版本治理后续候选已拆到 `_proposals/TEMPLATE-UPGRADE-version-governance.md` 继续评估。 |
