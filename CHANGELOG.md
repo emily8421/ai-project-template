@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.41.0（2026-07-07）
+
+快速续接模式与 handoff stale 裁决：将“读取续接点 / 继续上次”默认限定为本地只读恢复，避免误扩展成完整规则审计、远端 issue / PR 复核或任务继续执行。
+
+- **快速恢复**：`ai/session-rules.md` 新增快速续接模式，默认只读 `git status`、最近提交、stash、`VERSION` 和 `.ai/session-handoff.md` 摘要；不联网、不查 GitHub issue / PR、不继续执行任务。
+- **过期裁决**：当 handoff 的分支、HEAD、版本或进度与 Git 客观事实不一致时，立即标记 `handoff stale`，以 Git 与当前用户输入为准，停止深挖旧记录。
+- **命令路由**：新增 `ai/commands/resume.md`，并在 `ai/commands/README.md` 注册 `resume`，统一承接“读取续接点 / 继续上次”。
+- **样例增强**：`template-docs/session-handoff.example.md` 增加 `Updated at`、`Status`、`Branch`、`HEAD`、`VERSION` 和 `Remote snapshot` 元数据头。
+- **同步与自检**：`template-sync.json`、`scripts/check-template.sh` / `.ps1` 增加 `resume` 命令和快速续接关键断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-fast-session-resume.md`。
+
 ## v1.40.0（2026-07-07）
 
 需求探索原型场景与模板：在正式 `00-03` 定稿、架构和技术路线选择前，用低保真 UI 原型、页面流、截图标注或静态 Mock 帮用户确认需求。

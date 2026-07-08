@@ -38,6 +38,7 @@
     "ai/doc-standards/design-doc.md",
     "ai/commands/README.md",
     "ai/commands/scenario.md",
+    "ai/commands/resume.md",
     "ai/commands/sync-methodology.md",
     "ai/commands/post-sync-cleanup.md",
     "ai/commands/docs-system-audit.md",
