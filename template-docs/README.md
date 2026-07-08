@@ -1,6 +1,6 @@
 # template-docs/ 模板手册
 
-本目录放 `ai-project-template` 给**人读**的手册与模板（场景引导、上手指南、环境安装、烟测、方法论说明、运行记录模板）。规则正文（给 AI 读的短 / 准 / 可执行规则）在 `ai/`；项目事实在 `docs/`。
+本目录放 `ai-project-template` 给**人读**的手册与模板（场景引导、上手指南、术语表、结构模板、环境安装、烟测、方法论说明、运行记录模板）。规则正文（给 AI 读的短 / 准 / 可执行规则）在 `ai/`；项目事实在 `docs/`。
 
 ## 手册导航
 
@@ -13,7 +13,10 @@
 | `smoke-test.md` | 新手烟测流程 |
 | `smoke-test-report-template.md` | 烟测结果记录模板 |
 | `template-methodology.md` | 模板为什么这么设计（设计原则与各子系统 why） |
+| `glossary.md` | 模板核心术语索引：文档链路、ID、阶段、状态、原型、handoff、同步治理 |
+| `docs-scaffold/` | 项目文档结构模板库：`docs/00-09`、`docs/design/*`、`docs/research/*` 的原始大纲、占位表格和撰写提要 |
 | `session-handoff.example.md` | 会话续接文件样例 |
 | `derived-sync-report-template.md` | 派生项目同步模板后的运行记录模板 |
+| `ui-prototype-strategy-template.md` | UI 原型策略 / 实现前原型记录模板 |
 
 > 这些手册随模板下行同步（见 `template-sync.json`）；派生项目同步后获得最新版，不要在派生项目直接改，通用改进走 `_proposals/` 回流。操作走 `scenario-guides.md` 场景引导，命令速查看 `SOP.md`。

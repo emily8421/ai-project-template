@@ -6,6 +6,21 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.42.0（2026-07-08）
+
+模板易用性文档补强：将前端交互设计、UI 原型策略 / 实现前原型从分散规则提升为独立细粒度标准，补充实现前原型场景，并新增长期结构模板库与人读术语表。
+
+- **细粒度标准**：新增 `ai/doc-standards/frontend-interaction.md` 与 `ai/doc-standards/ui-prototype-strategy.md`，分别规范前端交互设计和 UI 原型策略 / 实现前原型。
+- **记录模板**：新增 `template-docs/ui-prototype-strategy-template.md`，用于记录原型形式、权威位置、覆盖范围、未覆盖项、Mock / 降级口径和验收映射。
+- **场景路由**：`template-docs/scenario-guides.md` 新增 A7.5 UI 原型策略 / 实现前原型场景，区分 `00-03` 前的需求探索原型与前端实现前的可视化门禁。
+- **规则联动**：更新 `ai/doc-standards/README.md`、`ai/document-lifecycle-rules.md`、`docs/README.md`、`ai/prompts/docs/00-generate-or-complete-docs.md`、`ai/prompts/docs/04-edit-single-doc.md` 和命令索引，统一引用新标准。
+- **结构模板**：新增并扩展 `template-docs/docs-scaffold/`，长期保留 `docs/00-09`、`docs/design/*` 与 `docs/research/*` 的结构模板副本，区分项目事实、结构模板和 `ai/doc-standards/` 规则 / 审计基线。
+- **详细设计 / 门禁模板**：新增子系统详细设计、前端交互设计、UI 原型策略、需求探索原型和技术环境评估 scaffold，覆盖实现前设计与 readiness gate 的常用结构。
+- **术语入口**：新增 `template-docs/glossary.md`，按文档链路、ID / 追溯、阶段 / 交付物、状态词典、原型 / 前端交互、会话续接和模板治理 / 同步分类索引核心术语。
+- **人读导航**：更新 `README.md`、`template-docs/README.md`、`template-docs/beginner-guide.md`、`template-docs/template-methodology.md` 和 `docs/README.md`，增加 scaffold 与 glossary 入口并说明三层边界。
+- **同步与自检**：更新 `template-sync.json`、`scripts/sync-template.sh`、`scripts/check-template.sh` / `.ps1`，确保派生项目可同步新标准并防止入口漂移。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-template-usability-docs.md` Batch 1 / Batch 2 / Batch 3 / Batch 4。
+
 ## v1.41.1（2026-07-08）
 
 快速续接优先路由：明确“读取续接点 / 继续上次 / resume”是纯恢复摘要场景时，可先按最小只读路径输出结论，避免被入口规则误扩展为完整规则审计。

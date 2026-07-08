@@ -33,12 +33,12 @@
 
 | 路径 | 作用 |
 |---|---|
-| `template-docs/` | 手册：scenario-guides（场景引导）、beginner-guide、env-setup、ai-cli-setup、smoke-test、template-methodology 等 |
+| `template-docs/` | 手册与人读模板：scenario-guides（场景引导）、beginner-guide、`template-docs/glossary.md`、`template-docs/docs-scaffold/`（00-09 / design / research 结构模板）、env-setup、ai-cli-setup、smoke-test、template-methodology 等 |
 | `ai/` | AI 行为规范（`index.md` 路由 / `global-rules` / `document-lifecycle-rules` / `session-rules` / `project-rules`）；AI 每次任务先读 `ai/index.md` |
 | `ai/commands/` | AI 快捷命令路由（`/run ...`） |
 | `ai/prompts/` | 详细 Prompt 模板（按场景拆分） |
-| `ai/doc-standards/` | 模板 `docs/00-09` 撰写规范镜像（只读，随模板同步刷新） |
-| `docs/` | 项目事实、需求、设计、计划、验证（分区见 `docs/README.md`） |
+| `ai/doc-standards/` | 规则 / 审计基线：`docs/00-09` 和 `docs/design/*` 应满足什么标准（只读，随模板同步刷新） |
+| `docs/` | 项目事实：需求、设计、计划、验证（分区见 `docs/README.md`） |
 | `sync-records/` | 同步运行记录（派生项目记录模板同步过程，与 `docs/` 项目文档分离） |
 | `tasks/` | 复杂 Sprint 拆分后的任务单（按需启用） |
 | `frontend/` `backend/` `tests/` `docker/` | 代码骨架目录，按项目形态裁剪（见 `ai/project-rules.md §3`） |
