@@ -91,6 +91,8 @@ docs/workflow-engine-design.md
 
 独立 Web、移动端、小程序、桌面端等 UI 型项目，若存在多页面、多角色、复杂表单、状态流、验收依赖点击路径，或 Sprint 修改范围包含页面 / 组件 / 管理页 / 搜索问答 UI，应在前端开发前补交互设计，或在 `ai/project-rules.md` §3 / `docs/05-tech-spec.md` 写明豁免理由。该文档只承接 `03/04/05/07/08/09` 已授权内容，写页面流、状态、文案、接口依赖和验收路径，不新增需求、接口或验收目标。
 
+前端交互设计的细粒度标准见 `ai/doc-standards/frontend-interaction.md`。UI 原型策略 / 实现前原型的细粒度标准见 `ai/doc-standards/ui-prototype-strategy.md`；需要独立记录时可参考 `template-docs/ui-prototype-strategy-template.md`。
+
 需求探索原型是正式 `00-03` 定稿前的可视化澄清材料，默认放在 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`，模板见 `template-docs/ui-prototype-exploration-template.md`。它用于确认页面结构、主流程、信息密度和用户反馈，不替代 `00-09`、不决定架构 / 技术栈 / 接口 / 数据库 / 验收；用户确认后的内容必须回填到 `00-03` 后，才可进入正式设计和实现链路。
 
 ## 7. AI 新增文档规则

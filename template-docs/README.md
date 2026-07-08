@@ -15,5 +15,6 @@
 | `template-methodology.md` | 模板为什么这么设计（设计原则与各子系统 why） |
 | `session-handoff.example.md` | 会话续接文件样例 |
 | `derived-sync-report-template.md` | 派生项目同步模板后的运行记录模板 |
+| `ui-prototype-strategy-template.md` | UI 原型策略 / 实现前原型记录模板 |
 
 > 这些手册随模板下行同步（见 `template-sync.json`）；派生项目同步后获得最新版，不要在派生项目直接改，通用改进走 `_proposals/` 回流。操作走 `scenario-guides.md` 场景引导，命令速查看 `SOP.md`。

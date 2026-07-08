@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.42.0（2026-07-08）
+
+原型与前端交互规范补齐：将前端交互设计、UI 原型策略 / 实现前原型从分散规则提升为独立细粒度标准，并补充实现前原型场景。
+
+- **细粒度标准**：新增 `ai/doc-standards/frontend-interaction.md` 与 `ai/doc-standards/ui-prototype-strategy.md`，分别规范前端交互设计和 UI 原型策略 / 实现前原型。
+- **记录模板**：新增 `template-docs/ui-prototype-strategy-template.md`，用于记录原型形式、权威位置、覆盖范围、未覆盖项、Mock / 降级口径和验收映射。
+- **场景路由**：`template-docs/scenario-guides.md` 新增 A7.5 UI 原型策略 / 实现前原型场景，区分 `00-03` 前的需求探索原型与前端实现前的可视化门禁。
+- **规则联动**：更新 `ai/doc-standards/README.md`、`ai/document-lifecycle-rules.md`、`docs/README.md`、`ai/prompts/docs/00-generate-or-complete-docs.md`、`ai/prompts/docs/04-edit-single-doc.md` 和命令索引，统一引用新标准。
+- **同步与自检**：更新 `template-sync.json`、`scripts/sync-template.sh`、`scripts/check-template.sh` / `.ps1`，确保派生项目可同步新标准并防止入口漂移。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-template-usability-docs.md` Batch 1。
+
 ## v1.41.1（2026-07-08）
 
 快速续接优先路由：明确“读取续接点 / 继续上次 / resume”是纯恢复摘要场景时，可先按最小只读路径输出结论，避免被入口规则误扩展为完整规则审计。
