@@ -4,7 +4,19 @@
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
 
-模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。任何会影响下游同步判断的模板合并都应递增版本；`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+
+## v1.42.1（2026-07-08）
+
+模板版本治理优化：将提案收件箱增长与模板发布边界解耦，明确 release impact / release strategy 判断，避免高频回流提案导致 `MINOR` 过快增长。
+
+- **版本边界**：`CONTRIBUTING.md` 明确版本是发布边界，不是提案数量或编辑次数边界；新增 / 更新 `_proposals/` 默认 `Release impact = none`。
+- **影响分级**：补充 `none / patch / minor / major` 决策表，区分治理文档 / 自检增强、模板能力新增和不兼容变更。
+- **聚合发布**：同一提案、同一 PR、同一维护主题下的多个 Batch 默认聚合为一个版本；后续候选留在提案池，不阻塞当前发布。
+- **维护 checklist**：`MAINTAINERS.md` 增加 release impact、release strategy、即时发布与同主题维护窗口判断。
+- **提案头部**：`_proposals/README.md` 建议新提案声明 `Release impact` 与 `Release strategy`，让版本判断在处理前置化。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加版本治理关键文字断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-version-governance.md`。
 
 ## v1.42.0（2026-07-08）
 
