@@ -272,6 +272,8 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "scripts/check-derived-sync.ps1" "Invoke-NativeDerivedSyncCheck" "check-derived-sync PowerShell fallback exists"
   Require-Contains "scripts/sync-template.ps1" "Get-GitUtf8Text" "sync-template PowerShell fallback decodes Git output as UTF-8"
   Require-Contains "scripts/check-derived-sync.ps1" "Get-GitUtf8Text" "check-derived-sync PowerShell fallback decodes Git output as UTF-8"
+  Require-Contains "scripts/sync-template.ps1" "param\(\[string\[\]\]\`$NativeSyncArgs\)" "sync-template fallback avoids ambiguous Args parameter name"
+  Require-Contains "scripts/sync-template.ps1" "Invoke-NativeTemplateSync -NativeSyncArgs \`$SyncArgs" "sync-template fallback passes sync args explicitly"
   Require-Contains "scripts/check-derived-sync.ps1" "param\(\[string\[\]\]\`$CheckArgs\)" "check-derived-sync fallback avoids ambiguous Args parameter name"
   Require-Contains "scripts/check-derived-sync.ps1" "<sync-commit>" "check-derived-sync PowerShell entry documents explicit sync commit"
   Require-Contains "scripts/check-derived-sync.sh" "<sync-commit>" "check-derived-sync Bash entry documents explicit sync commit"

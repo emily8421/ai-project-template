@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.43.3（2026-07-09）
+
+PowerShell fallback 同步参数修复：修正 `scripts/sync-template.ps1 --commit` 在 Git Bash 不可用 fallback 路径中可能误回默认 dry-run 的问题。
+
+- **参数绑定修复**：`Invoke-NativeTemplateSync` 不再使用易与 PowerShell 自动变量 / 调用语义混淆的 `$Args` 参数名，改为 `$NativeSyncArgs`。
+- **commit 路径保护**：fallback 调用显式传递 `-NativeSyncArgs $SyncArgs`，确保 `--commit` 进入 commit 分支而不是静默回到 `--dry-run`。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 sync-template fallback 参数名与传参断言。
+- 回流自 GitHub issue #148；dry-run 轻量预览模式仍保留为后续候选。
+
 ## v1.43.2（2026-07-09）
 
 A13 同步闭环门禁增强：补齐派生项目模板同步的完成判据矩阵、同步报告真实性记录和提案回流收口矩阵，避免把轻量抽查误写成完整闭环。
