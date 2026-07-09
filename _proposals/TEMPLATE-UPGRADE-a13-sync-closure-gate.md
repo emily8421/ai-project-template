@@ -3,7 +3,7 @@
 > 来源：GitHub issue #148（zhiyan-digital-cs-platform 派生项目回流）
 > 状态：Batch 1 已落地；Batch 2 已落地；Batch 3 设计评估已完成；Batch 3A `--summary` / `--no-stat` 实现中
 > 目标版本：`v1.43.2`（Batch 1）；`v1.43.3`（Batch 2）；`v1.44.0`（Batch 3A）
-> Release impact：Batch 1 / 2 为 patch；Batch 3 design-only 为 none；Batch 3A 为 minor
+> Release impact：Batch 1 / 2 为 patch；Batch 3 design-only 为 none；Batch 3A 已按旧口径发布为 minor；后续同类可选参数增强按新版治理默认判为 patch
 > Release strategy：分批落地；先补 A13 收尾门禁，再修 fallback 参数，最后评估 dry-run 预览增强
 
 ## 1. 背景与来源
@@ -77,6 +77,7 @@
 - 兼容边界：默认 `--dry-run` 仍输出完整 diff stat；`--commit` 行为不变，且不接受 `--no-stat` 修饰。
 - 验证覆盖：`scripts/check-template.sh` 增加 summary/no-stat 烟测和关键断言；临时仓库烟测确认轻量模式不修改工作区。
 - 版本影响：新增同步脚本能力，按 MINOR 发布为 `v1.44.0`。
+- 版本治理备注：`v1.44.0` 保留为旧口径下的历史发布；后续若只新增兼容、可选、默认行为不变的脚本参数，应优先按 patch 判断，不再自动升为 minor。
 
 ## 4. 验收标准
 
