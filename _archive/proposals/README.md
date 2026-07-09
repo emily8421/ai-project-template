@@ -26,3 +26,4 @@
 | 快速续接优先路由：`TEMPLATE-UPGRADE-fast-resume-routing.md` | 已在 `v1.41.1` 吸收快速续接例外、入口裁剪、`resume` 命令路由升级和自检断言；来源为 2026-07-08 维护会话中对“读取续接点”响应过慢的复盘。 |
 | 模板易用性文档补强：`TEMPLATE-UPGRADE-template-usability-docs.md` | 已在 `v1.42.0` 吸收前端交互 / UI 原型策略独立标准、实现前原型场景、`docs-scaffold` 结构模板库、术语表、同步清单和自检断言；未执行的文档模板优化候选已拆到 `_proposals/TEMPLATE-UPGRADE-docs-scaffold-followups.md` 继续评估，版本治理候选已在 `v1.42.1` 处理。 |
 | 模板版本治理：`TEMPLATE-UPGRADE-version-governance.md` | 已在 `v1.42.1` 吸收 release impact / release strategy、提案收件箱不触发版本递增、同主题聚合发布、即时发布 vs 维护窗口判断和自检断言；来源为 2026-07-08 维护会话中对 `MINOR` 增长过快的复盘。 |
+| 版本影响门槛收敛：`TEMPLATE-UPGRADE-version-impact-threshold.md` | 已在 `v1.44.1` 收敛 release impact 判断：兼容、可选、默认行为不变的脚本参数 / 默认关闭能力 / 自检与治理增强默认按 patch；minor 仅用于新增能力层级或新的下游采用面。 |

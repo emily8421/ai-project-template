@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.44.1（2026-07-09）
+
+版本影响门槛收敛：将兼容、可选、默认行为不变的模板增强明确归入默认 `PATCH` 判断，避免 `MINOR` 变成功能次数计数器。
+
+- **PATCH 默认口径**：`CONTRIBUTING.md` 明确可选脚本参数、默认关闭能力、额外自检和治理说明补强，在不改变默认行为、不要求迁移、不新增强制采用面时优先判为 patch。
+- **MINOR 门槛收紧**：`MINOR` 仅用于新增能力层级或新的下游采用面，例如新增同步范围结构、必填入口、用户场景或推荐工作流变化。
+- **维护 checklist**：`MAINTAINERS.md` 同步发布判断口径，PATCH 可包含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修。
+- **提案口径同步**：`_proposals/README.md` 和 A13 提案补充说明，`v1.44.0` 保留为旧口径历史发布；后续同类可选参数增强默认按 patch 论证。
+- **自检防回归**：`scripts/check-template.sh` 增加版本影响门槛关键断言。
+
 ## v1.44.0（2026-07-09）
 
 同步 dry-run 轻量预览增强：为 `scripts/sync-template.sh` 与 PowerShell fallback 增加 `--summary` / `--no-stat`，让大版本模板同步可跳过逐文件 diff stat，同时保留可审计边界。
