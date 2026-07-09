@@ -2,7 +2,8 @@
 sync-template.ps1 - Windows PowerShell entrypoint for template sync.
 
 Usage:
-  powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
+  powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run [--no-stat]
+  powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --summary
   powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
 
 It prefers Git Bash so Windows behavior stays aligned with sync-template.sh.
@@ -273,16 +274,138 @@ function Show-TemplateDiffStat {
   }
 }
 
+function Get-SummaryBucket {
+  param([string]$Path)
+
+  if ($Path -match '/') {
+    return (($Path -split '/', 2)[0] + '/')
+  }
+
+  return './'
+}
+
+function Test-RiskPath {
+  param([string]$Path)
+
+  return ($Path -eq 'README.md' `
+    -or $Path -eq 'ai/project-rules.md' `
+    -or $Path -match '^docs/0[0-9]-[^/]+\.md$' `
+    -or $Path -match '^(frontend|backend|tests|docker)/')
+}
+
+function Add-SummaryEntry {
+  param(
+    [hashtable]$Summary,
+    [System.Collections.Generic.List[string]]$RiskHits,
+    [string]$Path,
+    [string]$Status
+  )
+
+  $bucket = Get-SummaryBucket -Path $Path
+  if (-not $Summary.Buckets.ContainsKey($bucket)) {
+    $Summary.Buckets[$bucket] = @{ added = 0; modified = 0; deleted = 0; skipped = 0 }
+  }
+
+  if ($Summary.Buckets[$bucket].ContainsKey($Status)) {
+    $Summary.Buckets[$bucket][$Status]++
+  }
+
+  if ($Summary.Total.ContainsKey($Status)) {
+    $Summary.Total[$Status]++
+  }
+
+  if ((Test-RiskPath -Path $Path) -and $Status -ne 'unchanged') {
+    $RiskHits.Add(("{0} {1}" -f $Status, $Path)) | Out-Null
+  }
+}
+
+function Write-Summary {
+  param(
+    [hashtable]$Summary,
+    [System.Collections.Generic.List[string]]$RiskHits
+  )
+
+  Write-Host "==> dry-run summary (per-file diff stat omitted)"
+  Write-Host ("   Change counts: added={0}, modified={1}, deleted={2}, skipped={3}" -f $Summary.Total.added, $Summary.Total.modified, $Summary.Total.deleted, $Summary.Total.skipped)
+  Write-Host "   By top-level directory:"
+  if ($Summary.Buckets.Count -eq 0) {
+    Write-Host "    = no changes"
+  } else {
+    foreach ($bucket in @($Summary.Buckets.Keys | Sort-Object)) {
+      $entry = $Summary.Buckets[$bucket]
+      Write-Host ("    - {0} added={1}, modified={2}, deleted={3}, skipped={4}" -f $bucket, $entry.added, $entry.modified, $entry.deleted, $entry.skipped)
+    }
+  }
+
+  Write-Host "   Risk path hits:"
+  if ($RiskHits.Count -eq 0) {
+    Write-Host "    = none"
+  } else {
+    foreach ($hit in $RiskHits) {
+      Write-Host ("    ! " + $hit)
+    }
+  }
+}
+
 function Invoke-NativeTemplateSync {
   param([string[]]$NativeSyncArgs)
 
   $mode = "--dry-run"
+  $modeExplicit = $false
+  $skipStat = $false
+  $summaryExplicit = $false
   if ($NativeSyncArgs -and $NativeSyncArgs.Count -gt 0) {
-    if ($NativeSyncArgs.Count -ne 1 -or ($NativeSyncArgs[0] -notin @("--dry-run", "--commit"))) {
-      Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run|--commit]"
+    foreach ($arg in $NativeSyncArgs) {
+      switch ($arg) {
+        "--dry-run" {
+          if ($modeExplicit -and $mode -ne "--dry-run") {
+            Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run [--no-stat]|--summary|--commit]"
+            return 1
+          }
+          $mode = "--dry-run"
+          $modeExplicit = $true
+        }
+        "--commit" {
+          if ($modeExplicit -and $mode -ne "--commit") {
+            Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run [--no-stat]|--summary|--commit]"
+            return 1
+          }
+          $mode = "--commit"
+          $modeExplicit = $true
+        }
+        "--summary" {
+          if ($modeExplicit -and $mode -eq "--commit") {
+            Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run [--no-stat]|--summary|--commit]"
+            return 1
+          }
+          $mode = "--dry-run"
+          $modeExplicit = $true
+          $skipStat = $true
+          $summaryExplicit = $true
+        }
+        "--no-stat" {
+          $skipStat = $true
+        }
+        default {
+          Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run [--no-stat]|--summary|--commit]"
+          return 1
+        }
+      }
+    }
+
+    if ($mode -eq "--commit" -and $skipStat) {
+      Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run [--no-stat]|--summary|--commit]"
       return 1
     }
-    $mode = $NativeSyncArgs[0]
+  }
+
+  $displayMode = $mode
+  if ($mode -eq "--dry-run" -and $skipStat) {
+    if ($summaryExplicit) {
+      $displayMode = "--summary"
+    } else {
+      $displayMode = "--dry-run --no-stat"
+    }
   }
 
   $templateRemote = if ($env:TEMPLATE_REMOTE) { $env:TEMPLATE_REMOTE } else { "https://github.com/emily8421/ai-project-template.git" }
@@ -291,7 +414,7 @@ function Invoke-NativeTemplateSync {
 
   Write-Host "==> PowerShell fallback template sync"
   Write-Host "Git Bash could not be started from PowerShell on this machine."
-  Write-Host "Using native PowerShell fallback for $mode. Fix Git Bash/MSYS separately if you need Bash entrypoints."
+  Write-Host "Using native PowerShell fallback for $displayMode. Fix Git Bash/MSYS separately if you need Bash entrypoints."
   Write-Host ""
 
   Invoke-Git rev-parse --is-inside-work-tree | Out-Null
@@ -332,24 +455,41 @@ function Invoke-NativeTemplateSync {
   Write-Host "==> Sync files:"
 
   if ($mode -eq "--dry-run") {
+    $summary = @{
+      Buckets = @{}
+      Total   = @{ added = 0; modified = 0; deleted = 0; skipped = 0 }
+    }
+    $riskHits = New-Object System.Collections.Generic.List[string]
+
     foreach ($file in $syncFiles) {
       if (Test-GitObject -Ref $ref -Path $file) {
         if (Test-RemoteMatchesLocal -Ref $ref -RemotePath $file) {
           Write-Host "    = $file (no diff)"
         } else {
           Write-Host "    delta $file"
+          if (Test-Path -LiteralPath $file -PathType Leaf) {
+            Add-SummaryEntry -Summary $summary -RiskHits $riskHits -Path $file -Status "modified"
+          } else {
+            Add-SummaryEntry -Summary $summary -RiskHits $riskHits -Path $file -Status "added"
+          }
         }
       } else {
         Write-Host "    skip $file (not in template)"
+        Add-SummaryEntry -Summary $summary -RiskHits $riskHits -Path $file -Status "skipped"
       }
     }
 
     Write-Host ""
-    Write-Host "INFO dry-run: preview only; workspace and index unchanged. Diff stats:"
+    Write-Host "INFO dry-run: preview only; workspace and index unchanged."
     Write-Host "   Direction: local current files -> template $version (changes that --commit would apply)"
-    foreach ($file in $syncFiles) {
-      if ((Test-GitObject -Ref $ref -Path $file) -and -not (Test-RemoteMatchesLocal -Ref $ref -RemotePath $file)) {
-        Show-TemplateDiffStat -Ref $ref -RemotePath $file -LocalPath $file
+    if ($skipStat) {
+      Write-Summary -Summary $summary -RiskHits $riskHits
+    } else {
+      Write-Host "   Diff stats:"
+      foreach ($file in $syncFiles) {
+        if ((Test-GitObject -Ref $ref -Path $file) -and -not (Test-RemoteMatchesLocal -Ref $ref -RemotePath $file)) {
+          Show-TemplateDiffStat -Ref $ref -RemotePath $file -LocalPath $file
+        }
       }
     }
 

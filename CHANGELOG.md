@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.44.0（2026-07-09）
+
+同步 dry-run 轻量预览增强：为 `scripts/sync-template.sh` 与 PowerShell fallback 增加 `--summary` / `--no-stat`，让大版本模板同步可跳过逐文件 diff stat，同时保留可审计边界。
+
+- **轻量摘要参数**：`--summary` 等价于 dry-run 轻量预览；`--dry-run --no-stat` 保持兼容修饰符语义，均不修改工作区、不 stage、不提交。
+- **可审计输出**：轻量摘要保留同步文件状态、目标版本、变更计数、按顶层目录聚合的新增 / 修改 / 删除 / 跳过数量，以及风险路径命中。
+- **完整 dry-run 保留**：默认 `--dry-run` 仍输出逐文件 `git diff --no-index --stat`，满足需要完整 diff stat 的人工复核场景。
+- **双入口一致**：Bash 入口与 PowerShell native fallback 均支持 `--summary` 和 `--no-stat`；PowerShell 正常路径继续转发到 Bash。
+- **自检防回归**：`scripts/check-template.sh` 增加 summary/no-stat 烟测和关键断言，确保轻量模式不输出逐文件 diff stat。
+- 回流自 GitHub issue #148 Batch 3；`--list-only` 与 `--max-stat-files N` 继续延后。
+
 ## v1.43.3（2026-07-09）
 
 PowerShell fallback 同步参数修复：修正 `scripts/sync-template.ps1 --commit` 在 Git Bash 不可用 fallback 路径中可能误回默认 dry-run 的问题。

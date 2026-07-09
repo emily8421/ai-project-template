@@ -2,20 +2,64 @@
 # sync-template.sh — 在派生项目里下行同步 ai-project-template 的方法论文件
 #
 # 用法（在派生项目根目录执行）:
-#   bash scripts/sync-template.sh [--dry-run|--commit]
+#   bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit]
 #     --dry-run  仅抓取并预览差异，不修改工作区、不 stage（默认）
+#     --no-stat  与 --dry-run 搭配，跳过逐文件 diff stat，仅输出轻量摘要
+#     --summary  等价于 --dry-run --no-stat
 #     --commit   抓取、覆盖、stage 并提交 "sync template vX.Y.Z"
 #   环境变量:
 #     TEMPLATE_REMOTE  模板远端（默认 https://github.com/emily8421/ai-project-template.git）
 # 依赖: git（网络可达模板远端；模板私有，活跃 gh 账号须有访问权限）
 set -euo pipefail
 
+usage() {
+  echo "用法: bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit]" >&2
+}
+
 MODE="--dry-run"
-if [[ $# -gt 0 ]]; then
+MODE_EXPLICIT=0
+SKIP_STAT=0
+while [[ $# -gt 0 ]]; do
   case "$1" in
-    --dry-run|--commit) MODE="$1";;
-    *) echo "用法: bash scripts/sync-template.sh [--dry-run|--commit]" >&2; exit 1;;
+    --dry-run)
+      if [[ "$MODE_EXPLICIT" -eq 1 && "$MODE" != "--dry-run" ]]; then
+        usage
+        exit 1
+      fi
+      MODE="--dry-run"
+      MODE_EXPLICIT=1
+      ;;
+    --commit)
+      if [[ "$MODE_EXPLICIT" -eq 1 && "$MODE" != "--commit" ]]; then
+        usage
+        exit 1
+      fi
+      MODE="--commit"
+      MODE_EXPLICIT=1
+      ;;
+    --summary)
+      if [[ "$MODE_EXPLICIT" -eq 1 && "$MODE" == "--commit" ]]; then
+        usage
+        exit 1
+      fi
+      MODE="--dry-run"
+      MODE_EXPLICIT=1
+      SKIP_STAT=1
+      ;;
+    --no-stat)
+      SKIP_STAT=1
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
   esac
+  shift
+done
+
+if [[ "$MODE" == "--commit" && "$SKIP_STAT" -eq 1 ]]; then
+  usage
+  exit 1
 fi
 
 TEMPLATE_REMOTE="${TEMPLATE_REMOTE:-https://github.com/emily8421/ai-project-template.git}"
@@ -255,29 +299,110 @@ show_local_to_template_stat() {
   rm -rf "$tmp_dir"
 }
 
+summary_bucket_for() {
+  local file="$1"
+  if [[ "$file" == */* ]]; then
+    echo "${file%%/*}/"
+  else
+    echo "./"
+  fi
+}
+
+matches_risk_path() {
+  local file="$1"
+  case "$file" in
+    README.md|ai/project-rules.md|docs/0[0-9]-*.md|frontend/*|backend/*|tests/*|docker/*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+record_summary() {
+  local file="$1"
+  local status="$2"
+  local bucket
+
+  bucket="$(summary_bucket_for "$file")"
+  SUMMARY_BUCKETS["$bucket"]=1
+  case "$status" in
+    added) SUMMARY_ADDED["$bucket"]=$(( ${SUMMARY_ADDED["$bucket"]:-0} + 1 )) ;;
+    modified) SUMMARY_MODIFIED["$bucket"]=$(( ${SUMMARY_MODIFIED["$bucket"]:-0} + 1 )) ;;
+    skipped) SUMMARY_SKIPPED["$bucket"]=$(( ${SUMMARY_SKIPPED["$bucket"]:-0} + 1 )) ;;
+  esac
+  SUMMARY_TOTAL["$status"]=$(( ${SUMMARY_TOTAL["$status"]:-0} + 1 ))
+
+  if matches_risk_path "$file" && [[ "$status" != "unchanged" ]]; then
+    RISK_HITS+=("$status $file")
+  fi
+}
+
+print_summary() {
+  local bucket
+
+  echo "==> dry-run 轻量摘要（未输出逐文件 diff stat）"
+  echo "   变更计数: added=${SUMMARY_TOTAL[added]:-0}, modified=${SUMMARY_TOTAL[modified]:-0}, deleted=${SUMMARY_TOTAL[deleted]:-0}, skipped=${SUMMARY_TOTAL[skipped]:-0}"
+  echo "   按顶层目录聚合:"
+  if [[ "${#SUMMARY_BUCKETS[@]}" -eq 0 ]]; then
+    echo "    = 无变更"
+  else
+    for bucket in $(printf '%s\n' "${!SUMMARY_BUCKETS[@]}" | sort); do
+      echo "    - $bucket added=${SUMMARY_ADDED["$bucket"]:-0}, modified=${SUMMARY_MODIFIED["$bucket"]:-0}, deleted=${SUMMARY_DELETED["$bucket"]:-0}, skipped=${SUMMARY_SKIPPED["$bucket"]:-0}"
+    done
+  fi
+
+  echo "   风险路径命中:"
+  if [[ "${#RISK_HITS[@]}" -eq 0 ]]; then
+    echo "    = 无"
+  else
+    printf '    ! %s\n' "${RISK_HITS[@]}"
+  fi
+}
+
 if [[ "$MODE" == "--dry-run" ]]; then
+  declare -A SUMMARY_BUCKETS=()
+  declare -A SUMMARY_ADDED=()
+  declare -A SUMMARY_MODIFIED=()
+  declare -A SUMMARY_DELETED=()
+  declare -A SUMMARY_SKIPPED=()
+  declare -A SUMMARY_TOTAL=()
+  RISK_HITS=()
+
   for f in "${SYNC_FILES[@]}"; do
     if git cat-file -e "$REF:$f" 2>/dev/null; then
       if remote_file_matches_local "$f"; then
         echo "    = $f（无差异）"
       else
         echo "    Δ $f"
+        if [[ -f "$f" ]]; then
+          record_summary "$f" "modified"
+        else
+          record_summary "$f" "added"
+        fi
       fi
     else
       echo "    · $f （模板无此文件，跳过）"
+      record_summary "$f" "skipped"
     fi
   done
 
   echo
-  echo "ℹ️  dry-run：仅预览，未修改工作区、未 stage。差异统计："
+  echo "ℹ️  dry-run：仅预览，未修改工作区、未 stage。"
   echo "   方向：本地当前文件 -> 模板 $VERSION（即执行 --commit 后的变化）"
-  for f in "${SYNC_FILES[@]}"; do
-    if git cat-file -e "$REF:$f" 2>/dev/null; then
-      if ! remote_file_matches_local "$f"; then
-        show_local_to_template_stat "$f"
+  if [[ "$SKIP_STAT" -eq 1 ]]; then
+    print_summary
+  else
+    echo "   差异统计："
+    for f in "${SYNC_FILES[@]}"; do
+      if git cat-file -e "$REF:$f" 2>/dev/null; then
+        if ! remote_file_matches_local "$f"; then
+          show_local_to_template_stat "$f"
+        fi
       fi
-    fi
-  done
+    done
+  fi
 
   echo
   echo "==> doc-standards 兼容镜像（当前无 docs/* 镜像；00-09 用独立标准文件）:"
