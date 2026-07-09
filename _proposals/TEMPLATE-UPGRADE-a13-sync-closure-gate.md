@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: A13 同步闭环门禁与报告真实性
 
 > 来源：GitHub issue #148（zhiyan-digital-cs-platform 派生项目回流）
-> 状态：Batch 1 已落地；Batch 2 已落地；Batch 3 dry-run 轻量预览设计评估中
-> 目标版本：`v1.43.2`（Batch 1）；`v1.43.3`（Batch 2）；Batch 3 实现版本待定
-> Release impact：Batch 1 / 2 为 patch；Batch 3 本轮仅设计评估为 none，后续实现预计 minor
+> 状态：Batch 1 已落地；Batch 2 已落地；Batch 3 设计评估已完成；Batch 3A `--summary` / `--no-stat` 实现中
+> 目标版本：`v1.43.2`（Batch 1）；`v1.43.3`（Batch 2）；`v1.44.0`（Batch 3A）
+> Release impact：Batch 1 / 2 为 patch；Batch 3 design-only 为 none；Batch 3A 为 minor
 > Release strategy：分批落地；先补 A13 收尾门禁，再修 fallback 参数，最后评估 dry-run 预览增强
 
 ## 1. 背景与来源
@@ -22,8 +22,8 @@
 
 ## 3. 非目标 / 后续候选
 
-- 本轮 Batch 3 只做 dry-run 轻量预览设计评估，不直接修改 `scripts/sync-template.*`。
-- 不关闭 issue #148；dry-run 预览增强实现合并后再判断是否关闭。
+- Batch 3A 仅实现 `--summary` 与 `--no-stat`，不实现 `--list-only` / `--max-stat-files N`。
+- 不关闭 issue #148；Batch 3A 实现合并后再判断是否关闭或继续保留后续增强。
 
 ## 3.1 Batch 2：PowerShell fallback 参数修复（2026-07-09）
 
@@ -70,6 +70,14 @@
 - `--commit` 行为不变，仍只在显式 commit 模式写入和提交。
 - `scripts/check-template.sh` / `.ps1` 增加参数解析与关键输出断言。
 
+## 3.3 Batch 3A：`--summary` / `--no-stat` 实现（2026-07-09）
+
+- 实现范围：`scripts/sync-template.sh` 与 `scripts/sync-template.ps1` native fallback 支持 `--summary` 和 `--dry-run --no-stat`。
+- 输出语义：保留同步文件状态、方向、变更计数、顶层目录聚合和风险路径命中；不输出逐文件 diff stat。
+- 兼容边界：默认 `--dry-run` 仍输出完整 diff stat；`--commit` 行为不变，且不接受 `--no-stat` 修饰。
+- 验证覆盖：`scripts/check-template.sh` 增加 summary/no-stat 烟测和关键断言；临时仓库烟测确认轻量模式不修改工作区。
+- 版本影响：新增同步脚本能力，按 MINOR 发布为 `v1.44.0`。
+
 ## 4. 验收标准
 
 - `sync-methodology` 命令和 12 号 Prompt 均要求输出 A13 完成判据矩阵。
@@ -81,4 +89,4 @@
 
 1. Batch 1 已合并并评论 issue #148，说明已覆盖 A13 门禁 / 报告真实性 / 提案收口矩阵。
 2. Batch 2 合并后，评论 issue #148，说明 `scripts/sync-template.ps1 --commit` fallback 参数修复已覆盖。
-3. Batch 3 设计评估完成后，优先实现 `--summary` 与 `--no-stat`；`--list-only` 和 `--max-stat-files N` 延后到后续小批次。
+3. Batch 3A 合并后，评论 issue #148，说明 `--summary` / `--no-stat` 已覆盖；`--list-only` 和 `--max-stat-files N` 继续延后到后续小批次（如仍需要）。

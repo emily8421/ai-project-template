@@ -196,6 +196,8 @@ require_sync_dry_run_direction() {
   local template_dir
   local derived_dir
   local output
+  local summary_output
+  local no_stat_output
 
   test_root="$(mktemp -d)"
   template_dir="$test_root/template"
@@ -213,6 +215,8 @@ require_sync_dry_run_direction() {
     cp "$ROOT/scripts/collect-env.ps1" scripts/collect-env.ps1
     printf 'v9.9.9\n' > VERSION
     cp "$ROOT/template-sync.json" template-sync.json
+    sed -i '0,/"VERSION"/s//"README.md",\n    "VERSION"/' template-sync.json
+    printf '# template readme\n' > README.md
     printf '# index\n' > ai/index.md
     printf '# global\n' > ai/global-rules.md
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
@@ -238,6 +242,7 @@ require_sync_dry_run_direction() {
     git init -b main >/dev/null
     cp "$ROOT/scripts/sync-template.sh" scripts/sync-template.sh
     printf 'v0.0.1\n' > VERSION
+    printf '# derived readme\n' > README.md
     printf '# index\n' > ai/index.md
     printf '# old global\n' > ai/global-rules.md
     mkdir -p docs
@@ -252,17 +257,32 @@ require_sync_dry_run_direction() {
     git add -A
     git -c user.name=test -c user.email=test@example.com commit -m init >/dev/null
     output="$(TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --dry-run 2>&1)"
+    summary_output=""
+    no_stat_output=""
     if grep -Eq 'scripts/(check-template\.sh|collect-env\.ps1).*\|' <<<"$output" \
       && grep -Eq 'insertions?\(\+\)' <<<"$output" \
       && ! grep -Eq 'scripts/(check-template\.sh|collect-env\.ps1).*deletions?\(-\)' <<<"$output"; then
-      exit 0
+      summary_output="$(TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --summary 2>&1)"
+      no_stat_output="$(TEMPLATE_REMOTE="$template_dir" bash scripts/sync-template.sh --dry-run --no-stat 2>&1)"
+      if grep -Eq 'dry-run 轻量摘要|dry-run summary' <<<"$summary_output" \
+        && grep -Eq '变更计数|Change counts' <<<"$summary_output" \
+        && grep -Eq '风险路径命中|Risk path hits' <<<"$summary_output" \
+        && grep -Eq 'scripts/.*added=' <<<"$summary_output" \
+        && grep -Eq '! modified README\.md' <<<"$summary_output" \
+        && ! grep -Eq '\|' <<<"$summary_output" \
+        && grep -Eq 'dry-run 轻量摘要|dry-run summary' <<<"$no_stat_output" \
+        && ! grep -Eq '\|' <<<"$no_stat_output"; then
+        exit 0
+      fi
     fi
     printf '%s\n' "$output" >&2
+    printf '%s\n' "$summary_output" >&2
+    printf '%s\n' "$no_stat_output" >&2
     exit 1
   ); then
-    pass "sync-template dry-run 对模板新增文件显示为新增"
+    pass "sync-template dry-run/summary 对模板新增文件输出正确"
   else
-    fail "sync-template dry-run 对模板新增文件的方向错误"
+    fail "sync-template dry-run/summary 输出不符合预期"
   fi
 
   rm -rf "$test_root"
@@ -1107,7 +1127,13 @@ require_contains "scripts/sync-template.sh" 'REMOTE_SCRIPT_HASH' "sync-template 
 require_contains "scripts/sync-template.sh" 'bootstrap latest sync script' "sync-template 提示 bootstrap 同步脚本"
 require_contains "scripts/sync-template.sh" 'remote_file_matches_local' "sync-template dry-run 使用 hash 判断差异"
 require_contains "scripts/sync-template.sh" 'show_local_to_template_stat' "sync-template dry-run 按本地到模板方向统计"
+require_contains "scripts/sync-template.sh" '--summary' "sync-template 支持 dry-run 轻量摘要参数"
+require_contains "scripts/sync-template.sh" '--no-stat' "sync-template 支持跳过 diff stat 参数"
+require_contains "scripts/sync-template.sh" '风险路径命中|Risk path hits' "sync-template summary 输出风险路径命中"
 require_contains "scripts/sync-template.sh" '本地当前文件 -> 模板' "sync-template dry-run 明确统计方向"
+require_contains "scripts/sync-template.ps1" '--summary' "sync-template.ps1 支持 dry-run 轻量摘要参数"
+require_contains "scripts/sync-template.ps1" '--no-stat' "sync-template.ps1 支持跳过 diff stat 参数"
+require_contains "scripts/sync-template.ps1" 'Risk path hits' "sync-template.ps1 summary 输出风险路径命中"
 require_contains "template-sync.json" 'scripts/check-github-context\.ps1' "template-sync 同步 GitHub 上下文预检脚本"
 require_contains "scripts/check-github-context.ps1" 'gh auth status' "GitHub 上下文预检检查 gh auth status"
 require_contains "git-guide.md" 'scripts/check-github-context\.ps1' "git-guide 记录 GitHub 上下文预检"
