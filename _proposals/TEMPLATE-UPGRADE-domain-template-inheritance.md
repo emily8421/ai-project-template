@@ -4,7 +4,7 @@
 > 状态：候选 / 待评估
 > 目标版本：待确认
 > Release impact：none（本提案仅定义设计方向；未进入同步范围、未新增 scaffold、未改脚本）
-> Release strategy：分批落地；先明确继承机制，再评估 agent-system scaffold，最后考虑 profile / 独立仓库
+> Release strategy：分批落地；先明确继承机制，再创建独立 `agent-system-template` 仓库，最后评估 profile / 多级同步自动化
 
 ## 1. 背景
 
@@ -77,7 +77,7 @@ ai-project-template（母模板 / base template）
 
 ## 5. 同步 / 继承策略候选
 
-### 方案 A：母模板内置领域 scaffold（推荐先做）
+### 方案 A：母模板内置领域 scaffold（不推荐正式落地）
 
 在母模板中新增：
 
@@ -89,14 +89,16 @@ template-docs/domain-templates/agent-system/
 
 - 成本低，不需要新仓库。
 - 可用现有 `check-template` 和 `template-sync.json` 管理。
-- 方便先验证 agent 专用标准件是否稳定。
 
 缺点：
 
-- 母模板体积增加。
-- 需要明确它是“可选领域 scaffold”，不得影响 base 项目默认路径。
+- 即使只新增独立文件夹，正式纳管也会牵动 `template-sync.json`、`check-template`、`VERSION`、`CHANGELOG.md`。
+- 母模板需要承担 agent 领域模板的生命周期，长期会削弱通用母模板边界。
+- 非 agent 项目会同步到无关领域模板内容。
 
-### 方案 B：独立 `agent-system-template` 仓库
+结论：仅适合作为短期人工草稿或本地探索，不建议作为正式落地路径。
+
+### 方案 B：独立 `agent-system-template` 仓库（推荐）
 
 新建领域模板仓库，先由母模板生成或同步，再叠加 agent 专用文件。
 
@@ -109,7 +111,9 @@ template-docs/domain-templates/agent-system/
 缺点：
 
 - 需要维护跨仓同步机制。
-- 初期成本高，容易过早抽象。
+- 初期成本高于内置 scaffold。
+
+结论：这是推荐正式路线。既然 agent scaffold 需要独立版本、自检、同步清单和后续 eval / trace / tool policy 扩展，就应让这些生命周期留在 `agent-system-template`，而不是让母模板承担领域模板职责。
 
 ### 方案 C：`new-project --profile agent-system`
 
@@ -138,34 +142,35 @@ template-docs/domain-templates/agent-system/
 - 明确职责边界和非目标。
 - 不新增同步文件、不改脚本、不 bump 运行能力版本。
 
-### Batch 2：agent-system scaffold MVP
+### Batch 2：创建独立 `agent-system-template` 仓库
 
-建议最小文件集：
+建议新仓库先从 `ai-project-template` 生成 / 同步，保留母模板通用方法论，再在独立仓库中新增 agent scaffold MVP。建议最小文件集：
 
 ```text
-template-docs/domain-templates/agent-system/README.md
-template-docs/domain-templates/agent-system/agent-system-checklist.md
-template-docs/domain-templates/agent-system/docs/design/agent-architecture.md
-template-docs/domain-templates/agent-system/docs/design/tool-permission-model.md
-template-docs/domain-templates/agent-system/docs/design/memory-and-state.md
-template-docs/domain-templates/agent-system/docs/research/agent-eval-plan.md
+template-docs/agent-system/README.md
+template-docs/agent-system/agent-system-checklist.md
+template-docs/agent-system/docs/design/agent-architecture.md
+template-docs/agent-system/docs/design/tool-permission-model.md
+template-docs/agent-system/docs/design/memory-and-state.md
+template-docs/agent-system/docs/research/agent-eval-plan.md
 ```
 
-MVP 只提供结构模板和检查表，不绑定具体 agent runtime。
+MVP 只提供结构模板和检查表，不绑定具体 agent runtime。母模板不新增这些 scaffold 文件。
 
-### Batch 3：自检与同步清单
+### Batch 3：领域模板自检与同步链路
 
-- 若 Batch 2 文件进入母模板同步范围，则更新 `template-sync.json`。
-- `scripts/check-template.sh` 增加存在性和关键字段断言。
-- 判断版本影响：新增可选 scaffold 大类，预计 `minor`；若仅提案则 `none`。
+- 在 `agent-system-template` 仓库维护自己的 `template-sync.json`、`scripts/check-template.sh`、`VERSION` 和 `CHANGELOG.md`。
+- `agent-system-template` 继续通过母模板 `sync-template` 吸收通用方法论更新。
+- 具体 agent 项目从 `agent-system-template` 派生，并同步 agent 专用 scaffold。
+- 母模板仅保留本提案，不纳入 agent scaffold 同步范围。
 
-### Batch 4：profile / 独立仓库评估
+### Batch 4：profile / 自动化评估
 
-在 agent scaffold 被至少一个真实项目试用后，再评估：
+在独立 `agent-system-template` 被至少一个真实项目试用后，再评估：
 
-- 是否新增 `new-project --profile agent-system`。
-- 是否拆出独立 `agent-system-template` 仓库。
-- 是否需要领域模板自己的 `sync-template` 上游链路。
+- 是否在母模板或 agent 模板中新增 `new-project --profile agent-system`。
+- 是否需要多级同步自动化或专门的领域模板创建脚本。
+- 是否需要 agent 模板自己的发布 / 回流 / 下行同步 SOP。
 
 ## 7. Agent scaffold MVP 内容边界
 
@@ -208,6 +213,6 @@ MVP 只提供结构模板和检查表，不绑定具体 agent runtime。
 
 | ID | 待确认项 | AI 建议 | 建议依据 | 备选方案 | 取舍影响 / 阻塞关系 |
 |---|---|---|---|---|---|
-| C-001 | agent 领域模板首版采用哪种形态 | 先采用方案 A：母模板内置可选 scaffold | 成本低、可用现有自检验证，避免过早跨仓同步 | 直接新建 `agent-system-template` 仓库 | 边界更清晰但维护成本更高 |
+| C-001 | agent 领域模板首版采用哪种形态 | 采用方案 B：独立 `agent-system-template` 仓库 | 正式 scaffold 需要独立版本、自检、同步清单和后续 eval / trace / tool policy 扩展，不应让母模板承担领域生命周期 | 母模板内置可选 scaffold | 初期成本低但会污染母模板治理边界 |
 | C-002 | 是否立刻支持 `new-project --profile agent-system` | 暂不支持，等 scaffold 稳定后再做 | 脚本语义和测试矩阵会扩大 | 直接做 profile 参数 | 使用体验更好但容易过早固化不成熟结构 |
-| C-003 | Batch 2 版本影响 | 若新增同步范围 scaffold，建议按新版治理判断为 minor | 新增可选领域 scaffold 大类，属于新的下游采用面 | 若仅保留提案则 none | 版本判断取决于是否进入同步范围 |
+| C-003 | Batch 2 版本影响 | 母模板保持 none；`agent-system-template` 仓库按自身版本治理判断 | 母模板不新增 scaffold、不改同步清单；领域模板能力在独立仓库发布 | 若母模板内置 scaffold，则按母模板版本治理判断 | 独立仓库避免母模板因领域能力膨胀而频繁发版 |
