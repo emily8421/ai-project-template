@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.43.2（2026-07-09）
+
+A13 同步闭环门禁增强：补齐派生项目模板同步的完成判据矩阵、同步报告真实性记录和提案回流收口矩阵，避免把轻量抽查误写成完整闭环。
+
+- **A13 收尾门禁**：`ai/commands/sync-methodology.md` 与 `ai/prompts/maintainers/12-sync-template.md` 要求最终输出 A13 完成判据矩阵；若存在轻量执行 / 未执行 / 失败项，不得称“A13 完整闭环完成”。
+- **同步报告真实性**：`template-docs/derived-sync-report-template.md` 增加命令真实性记录、A13 完成判据矩阵和提案回流收口矩阵。
+- **提案收口规则**：同步报告模板明确仅有 issue `closed` 不得自动归档，必须结合 VERSION / CHANGELOG / PR / issue 说明判断“归档 / 保留 / follow-up / 等待”。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 A13 收尾门禁和报告真实性关键断言。
+- 回流自 GitHub issue #148；本批不包含 `sync-template.ps1 --commit` fallback 修复和 dry-run 轻量预览模式。
+
 ## v1.43.1（2026-07-08）
 
 Docs scaffold P2 Task 模板落位评估：明确 Task 文件模板若后续落地，应作为独立 `template-docs/task-template.md` 入口，而不是放入 `template-docs/docs-scaffold/`。
