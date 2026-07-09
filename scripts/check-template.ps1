@@ -462,6 +462,7 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/decisions/ADR-template\.md" "template-sync includes ADR scaffold"
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/research/docs-open-items\.md" "template-sync includes open items scaffold"
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/research/tech-env-evaluation\.md" "template-sync includes tech env evaluation scaffold"
+  Require-Contains "template-docs/docs-scaffold/README.md" "template-docs/task-template\.md.*tasks/task-00X" "docs scaffold README defines task template boundary"
   Require-Contains "scripts/sync-template.sh" "template-docs/glossary\.md" "sync-template fallback includes glossary"
   Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/09-verification\.md" "sync-template fallback includes docs scaffold 00-09"
   Require-Contains "scripts/sync-template.sh" "template-docs/docs-scaffold/inputs/input-review-report\.md" "sync-template fallback includes input review scaffold"

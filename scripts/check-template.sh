@@ -1172,6 +1172,7 @@ require_contains "template-docs/docs-scaffold/README.md" 'decisions/ADR-template
 require_contains "template-docs/docs-scaffold/README.md" 'research/docs-open-items\.md' "docs scaffold README 索引 open items 模板"
 require_contains "template-docs/docs-scaffold/README.md" 'design/subsystem-design\.md' "docs scaffold README 索引子系统设计模板"
 require_contains "template-docs/docs-scaffold/README.md" 'research/tech-env-evaluation\.md' "docs scaffold README 索引技术环境评估模板"
+require_contains "template-docs/docs-scaffold/README.md" 'template-docs/task-template\.md.*tasks/task-00X' "docs scaffold README 声明 Task 模板边界"
 for scaffold_file in \
   00-scenario.md \
   01-user-requirements.md \
