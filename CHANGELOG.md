@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.43.1（2026-07-08）
+
+Docs scaffold P2 Task 模板落位评估：明确 Task 文件模板若后续落地，应作为独立 `template-docs/task-template.md` 入口，而不是放入 `template-docs/docs-scaffold/`。
+
+- **信息架构边界**：`template-docs/docs-scaffold/README.md` 明确 `tasks/` 是执行任务单目录，不属于 `docs/` 项目事实链；禁止新增 `template-docs/docs-scaffold/tasks/`。
+- **提案更新**：`_proposals/TEMPLATE-UPGRADE-docs-scaffold-followups.md` 记录 Task 模板推荐落位、同步策略和后续落地前置条件。
+- **自检防回归**：`scripts/check-template.sh` / `.ps1` 增加 docs scaffold README 的 Task 模板边界断言。
+- **版本影响**：本轮仅做同步范围内的边界说明和自检增强，不新增同步文件，按 PATCH 发布。
+
 ## v1.43.0（2026-07-08）
 
 Docs scaffold P1 后续模板补强：补齐输入评审、产品愿景、待确认事项总览和 ADR 结构模板，让 `template-docs/docs-scaffold/` 覆盖主文档链路的上游输入、愿景、决策与 open items 常用入口。

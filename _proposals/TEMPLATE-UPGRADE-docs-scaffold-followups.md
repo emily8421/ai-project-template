@@ -25,7 +25,7 @@
 | P2 | 环境记录 / 服务器预案轻模板 | `template-docs/docs-scaffold/env/local-env.md`、`server-plan.md` | 仅做轻模板或说明 | `local-env` 多由脚本生成，重模板可能误导人工维护；服务器预案项目差异较大。 |
 | P2 | 会议 / 访谈纪要模板 | `template-docs/docs-scaffold/meetings/meeting-notes.md` | 可选 | 留痕价值有，但不直接驱动实现；等实际使用反馈再补。 |
 | P2 | 归档说明模板 | `template-docs/docs-scaffold/archive/archive-note.md` | 可选 | 低频场景，暂不扩大同步清单。 |
-| P2 | Task 文件模板 | `template-docs/task-template.md` 或 `template-docs/docs-scaffold/tasks/task-template.md` | 单独评估路径 | `tasks/` 不在 `docs/` 下，是否归入 docs-scaffold 需要先决定信息架构。 |
+| P2 | Task 文件模板 | `template-docs/task-template.md` | 建议独立于 docs-scaffold 落地 | `tasks/` 不在 `docs/` 下，任务单是执行入口而非项目事实文档；不应新增 `template-docs/docs-scaffold/tasks/`。 |
 
 ## 3. 与已完成 docs-scaffold 的关系
 
@@ -50,7 +50,14 @@
 1. `env/*`：优先说明脚本生成与人工补充的边界，避免把采集事实写成技术评估通过。
 2. `meetings/*`：仅在会议 / 访谈留痕频率提高后补。
 3. `archive/*`：仅在归档场景需要标准化说明时补。
-4. `task-template`：先决定是否放在 `template-docs/` 根部、`template-docs/docs-scaffold/tasks/`，或继续只依赖 `docs/08-dev-plan.md` / `tasks/` 规则。
+4. `task-template`：本轮信息架构评估建议放在 `template-docs/task-template.md`，复制目标为 `tasks/task-00X-*.md`；不纳入 `template-docs/docs-scaffold/`，也不替代 `docs/08-dev-plan.md` 的 Sprint 拆分规则。
+
+### Task 文件模板落位评估（2026-07-08）
+
+- 结论：若后续新增 Task 文件模板，推荐落位 `template-docs/task-template.md`，作为 `tasks/task-00X-*.md` 的人读复制模板。
+- 不推荐：不新增 `template-docs/docs-scaffold/tasks/task-template.md`，因为 docs-scaffold 当前只镜像 `docs/vision/*`、`docs/inputs/*`、`docs/00-09`、`docs/design/*`、`docs/decisions/*` 与 `docs/research/*` 的结构模板。
+- 同步策略：真正落地模板文件时再把 `template-docs/task-template.md` 加入 `template-sync.json`；本轮评估不新增同步文件、不 bump 版本。
+- 自检边界：本轮只断言 docs-scaffold README 明确 `tasks/` 边界；后续新增模板文件时，再补充 `template-sync.json`、`scripts/sync-template.*` fallback 清单和 `scripts/check-template.*` 文件内容断言。
 
 ## 5. 非目标 / 禁止项
 
@@ -59,6 +66,7 @@
 - 不新增 `docs/10-*` 编号或改变 `docs/00-09` 固定编号体系。
 - 不让 scaffold 模板替代 `ai/doc-standards/`、`ai/document-lifecycle-rules.md` 或正式项目事实文档。
 - 不要求派生项目必须启用所有辅助目录；模板应保持可裁剪。
+- 不把 `tasks/` 任务单模板放入 `template-docs/docs-scaffold/`；`task-template` 若落地，应保持为独立模板入口。
 
 ## 6. 风险与缓解
 
@@ -67,7 +75,7 @@
 | scaffold 目录继续膨胀 | 新用户学习成本上升，派生项目同步文件变多 | 按 P1 / P2 分批，只纳入高频且可复用的模板。 |
 | example 与 template 双入口冲突 | 用户不清楚哪个是权威复制入口 | 落地前先决定命名与兼容策略，在 README 中说明。 |
 | `local-env` 模板误导 | 用户可能把环境采集事实当作技术路线评估通过 | env 模板若落地，必须显式区分采集事实、人工确认和 tech-env-evaluation。 |
-| Task 模板位置不清 | `tasks/` 不属于 `docs-scaffold`，目录语义可能混乱 | 先做信息架构决策，再决定是否新增模板。 |
+| Task 模板位置不清 | `tasks/` 不属于 `docs-scaffold`，目录语义可能混乱 | 已建议独立落位 `template-docs/task-template.md`；新增文件前仍需单独 PR 决策模板内容、同步清单和自检断言。 |
 
 ## 7. 验收标准
 
@@ -78,6 +86,6 @@
 
 ## 8. 建议后续步骤
 
-1. 保留本提案为 active 候选，聚焦 P2 候选评估。
-2. 下一轮优先单独评估 Task 文件模板的信息架构与落位路径。
+1. 保留本提案为 active 候选，继续聚焦剩余 P2 候选评估。
+2. 若下一轮落地 Task 文件模板，先新增 `template-docs/task-template.md`，再同步更新 `template-sync.json`、`scripts/sync-template.*` 和 `scripts/check-template.*`。
 3. 若 P2 落地新增同步文件，按当时版本治理规则判断是否 bump minor。
