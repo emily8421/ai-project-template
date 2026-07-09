@@ -274,15 +274,15 @@ function Show-TemplateDiffStat {
 }
 
 function Invoke-NativeTemplateSync {
-  param([string[]]$Args)
+  param([string[]]$NativeSyncArgs)
 
   $mode = "--dry-run"
-  if ($Args -and $Args.Count -gt 0) {
-    if ($Args.Count -ne 1 -or ($Args[0] -notin @("--dry-run", "--commit"))) {
+  if ($NativeSyncArgs -and $NativeSyncArgs.Count -gt 0) {
+    if ($NativeSyncArgs.Count -ne 1 -or ($NativeSyncArgs[0] -notin @("--dry-run", "--commit"))) {
       Write-Error "Usage: powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 [--dry-run|--commit]"
       return 1
     }
-    $mode = $Args[0]
+    $mode = $NativeSyncArgs[0]
   }
 
   $templateRemote = if ($env:TEMPLATE_REMOTE) { $env:TEMPLATE_REMOTE } else { "https://github.com/emily8421/ai-project-template.git" }
@@ -444,7 +444,7 @@ try {
       Write-Warning ("Bash probe exit code: " + $probe.ExitCode)
     }
 
-    $fallbackExit = Invoke-NativeTemplateSync -Args $SyncArgs
+    $fallbackExit = Invoke-NativeTemplateSync -NativeSyncArgs $SyncArgs
     exit $fallbackExit
   }
 

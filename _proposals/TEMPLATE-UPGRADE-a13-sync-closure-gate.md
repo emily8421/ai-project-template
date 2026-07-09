@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: A13 同步闭环门禁与报告真实性
 
 > 来源：GitHub issue #148（zhiyan-digital-cs-platform 派生项目回流）
-> 状态：Batch 1 落地中；脚本 fallback 与 dry-run 预览增强待后续评估
-> 目标版本：`v1.43.2`（Batch 1）
+> 状态：Batch 1 已落地；Batch 2 fallback 参数修复落地中；dry-run 预览增强待后续评估
+> 目标版本：`v1.43.2`（Batch 1）；`v1.43.3`（Batch 2）
 > Release impact：patch（同步流程 Prompt / 报告模板 / 自检增强，不新增同步文件）
 > Release strategy：分批落地；先补 A13 收尾门禁，再评估脚本行为改动
 
@@ -22,9 +22,15 @@
 
 ## 3. 非目标 / 后续候选
 
-- 不在本批次修复 `scripts/sync-template.ps1 --commit` fallback 参数问题。
 - 不在本批次新增 `--list-only` / `--summary` / `--no-stat` 等 dry-run 预览模式。
-- 不关闭 issue #148；Batch 1 合并后应在 issue 中说明已覆盖范围，脚本行为项继续保留。
+- 不关闭 issue #148；Batch 2 合并后应继续在 issue 中说明已覆盖 fallback 参数修复，dry-run 预览增强继续保留。
+
+## 3.1 Batch 2：PowerShell fallback 参数修复（2026-07-09）
+
+- 问题复现：`Invoke-NativeTemplateSync` 使用参数名 `$Args`，在 Windows PowerShell 中与自动变量 / 调用语义冲突；调用 `Invoke-NativeTemplateSync -Args @('--commit')` 时函数内数组为空，导致 fallback 静默回到默认 `--dry-run`。
+- 修复方案：将 fallback 函数参数改为 `$NativeSyncArgs`，调用处改为 `-NativeSyncArgs $SyncArgs`，避免使用易混淆的 `$Args` 名称。
+- 验证要求：用 fake bash 强制 Git Bash probe 失败，运行 `scripts/sync-template.ps1 --commit` 应输出 `Using native PowerShell fallback for --commit`，不得输出 `INFO dry-run`。
+- 版本影响：属于脚本 fallback bugfix，按 PATCH 发布。
 
 ## 4. 验收标准
 
@@ -35,6 +41,6 @@
 
 ## 5. 建议后续步骤
 
-1. Batch 1 合并后，评论 issue #148，说明本 PR 已覆盖 A13 门禁 / 报告真实性 / 提案收口矩阵。
-2. 单独评估 `scripts/sync-template.ps1 --commit` fallback 参数修复。
+1. Batch 1 已合并并评论 issue #148，说明已覆盖 A13 门禁 / 报告真实性 / 提案收口矩阵。
+2. Batch 2 合并后，评论 issue #148，说明 `scripts/sync-template.ps1 --commit` fallback 参数修复已覆盖。
 3. 单独评估大版本同步 `--list-only` / `--summary` / `--no-stat` 轻量预览模式。

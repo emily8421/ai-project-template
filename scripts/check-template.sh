@@ -432,6 +432,8 @@ require_doc_standards_mirror() {
 check_script_entrypoints() {
   require_contains "scripts/sync-template.ps1" 'sync-template\.sh' "sync-template PowerShell 入口调用 Bash 脚本"
   require_contains "scripts/sync-template.ps1" 'Invoke-NativeTemplateSync' "sync-template PowerShell 入口含原生 fallback"
+  require_contains "scripts/sync-template.ps1" 'param\(\[string\[\]\]\$NativeSyncArgs\)' "sync-template fallback 不使用易混淆 Args 参数名"
+  require_contains "scripts/sync-template.ps1" 'Invoke-NativeTemplateSync -NativeSyncArgs \$SyncArgs' "sync-template fallback 显式传递同步参数"
   require_contains "scripts/sync-template.ps1" 'PowerShell fallback template sync' "sync-template fallback 输出明确标识"
   require_contains "scripts/sync-template.ps1" 'doc-standards compatibility mirror' "sync-template fallback 同步 doc-standards 兼容镜像"
   require_contains "scripts/check-template.ps1" 'check-template\.sh' "check-template PowerShell 入口调用 Bash 脚本"
