@@ -963,6 +963,8 @@ require_contains "ai/prompts/planning/19-plan-phases-and-sprints.md" 'docs/08-de
 require_contains "ai/prompts/planning/19-plan-phases-and-sprints.md" 'docs/09-verification\.md' "A9 规划 Prompt 输出 09 草稿"
 require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules 定义新续接文件"
 require_contains "ai/session-rules.md" 'NEXT-STEPS\.md' "session-rules 兼容 NEXT-STEPS"
+require_contains "ai/session-rules.md" 'Token 热点观察触发' "session-rules 定义 token hotspot 主动提醒"
+require_contains "ai/session-rules.md" 'ai-records/token-hotspots/' "session-rules 定义 token hotspot 记录目录"
 require_contains ".gitignore" '\.ai/session-handoff\.md' ".gitignore 排除新续接文件"
 require_contains ".gitignore" 'NEXT-STEPS\.md' ".gitignore 排除旧续接文件"
 require_contains "ai/commands/README.md" '/run sync-methodology' "commands README 包含同步方法论命令"

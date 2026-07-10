@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.45.5（2026-07-10）
+
+Token 热点记录最小自动提醒：把候选机制中的 B+「最小同步可发现入口」落到 `ai/session-rules.md`，让 AI 在长任务收尾时自动识别并询问是否记录 token hotspot，同时保留写入确认和隐私边界。
+
+- **自动提醒触发**：新增 `ai/session-rules.md` §4.1，覆盖完整规则读取后的长任务、模板维护 / 提案 / 文档审计 / PR / CI 闭环、大文件或长日志重复读取、用户询问 token 热点等场景。
+- **写入边界**：默认只自动识别并询问，不静默创建文件；首次创建 `ai-records/token-hotspots/` 或写入记录仍需遵守 `ai/project-rules.md` §6 的确认规则。
+- **隐私边界**：记录只写任务类型、文件路径、命令类别、热点判断、质量影响和优化建议；不得写入密钥、账号密码、客户敏感数据或完整对话正文。
+- **提案状态**：`_proposals/TEMPLATE-UPGRADE-token-hotspot-records.md` 标记 B+ 部分落地，记录模板 / summary / 正式目录规范仍待 3–5 份记录后评估。
+- **自检防回归**：`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加 token hotspot 触发规则和记录路径断言。
+
 ## v1.45.4（2026-07-10）
 
 Windows 新手 smoke-test 真实体验小修：基于 2026-07-10 本地烟测结果，修正 Git Bash / WSL stub 提示、前置检查 next steps 与新建项目完成提示，避免新手在本地最小链路中误判下一步。

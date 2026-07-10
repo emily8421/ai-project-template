@@ -391,6 +391,8 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "template-sync.json" "ai/commands/resume\.md" "template-sync includes resume command"
   Require-Contains "ai/session-rules.md" "快速续接模式" "session rules define fast resume mode"
   Require-Contains "ai/session-rules.md" "场景化裁剪" "session rules define fast resume as scoped routing"
+  Require-Contains "ai/session-rules.md" "Token 热点观察触发" "session rules define token hotspot reminder trigger"
+  Require-Contains "ai/session-rules.md" "ai-records/token-hotspots/" "session rules define token hotspot record path"
   Require-Contains "ai/index.md" "快速续接例外" "ai/index declares fast resume exception"
   Require-Contains "ai/commands/README.md" "不展开完整规则审计" "commands README keeps resume from full rule audit"
   Require-Contains "ai/commands/resume.md" "不展开读取全部规则" "resume command only confirms fast resume exception"
