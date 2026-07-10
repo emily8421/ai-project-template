@@ -6,6 +6,13 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.45.2（2026-07-10）
+
+模板易填性增强与防漂移断言（UX 审核 C+D）：可填模板补范例行降低填写门槛；check-template 加回写一致性断言防未来漂移。
+
+- **批次 C（模板范例）**：`ui-prototype-strategy-template` 各表补 `<示例>` 行 + doc-standards 权威指针；`derived-sync-report-template` 命令真实性表 + A13 判据矩阵补填写范例 + `_proposals/`↔`_archive/proposals/` 归档关系说明。
+- **批次 D（防漂移断言）**：`check-template.sh` 加 7 条断言——验证 show-demo 回写到 scenario A21 / beginner §7、domain-templates 进 beginner §7、implementation-lifecycle / session-rules 进 methodology §2、glossary 含演示 SOP、scenario 索引含 A8.5（防漏场景）。
+
 ## v1.45.1（2026-07-10）
 
 文档体验对齐与正确性修复（UX 审核 A+B）：把 v1.44.3 / v1.45.0 新能力回写到所有核心文档，修正场景码漂移与锚点 / 命令 bug，不新增能力。
