@@ -156,6 +156,6 @@ Remove-Item -Recurse -Force .\smoke-demo
 - Windows 版本
 - 是否需要运行 `bootstrap-dev-env.ps1`
 - 哪一步失败
-- 是否需要补 README / SOP / ENV-SETUP / BEGINNER-GUIDE
+- 是否需要补 README / SOP / template-docs/env-setup.md / template-docs/beginner-guide.md
 
 若希望统一记录格式，直接使用 `template-docs/smoke-test-report-template.md`。

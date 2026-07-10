@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.45.1（2026-07-10）
+
+文档体验对齐与正确性修复（UX 审核 A+B）：把 v1.44.3 / v1.45.0 新能力回写到所有核心文档，修正场景码漂移与锚点 / 命令 bug，不新增能力。
+
+- **新能力回写**：`show-demo` 回写到 scenario-guides（新增 A21 场景，引用命令不双写）、beginner-guide（§3 / §7 入口）、glossary（演示 SOP 条目，演示≠09 验收）；`domain-templates` 进 template-methodology §2 权威源表 + beginner §7 导航。
+- **场景码一致性**：全仓统一「A0–A21（含 .5）/ C1–C8 / M0–M1」，删 "23 场景" 硬编码；scenario 速查索引补 A8.5；SOP 场景表对齐（补 16 漏码 + 修 A5/A6、A8/A10 共享码歧义 + 去三写冗余留待后续）。
+- **正确性 bug**：git-guide 3 处锚点（§7→§8、§1.2 / §1.3→§1 第 2/3 条）+ 场景码桥接列；e2e-regression-checklist 建仓命令重复触发修复 + "bootstrap sync 脚本"改真实命令；ai-cli-setup §8 重号→§9；smoke-test / report 旧根名→template-docs/ + 步骤对齐；INIT-PROMPT 删 v1.22.2 + 补 ai/index.md 自动读取说明。
+- **权威源**：template-methodology §2 补 `implementation-lifecycle-rules` / `session-rules` / `domain-templates`。
+- **README**：术语表入口 + A0–A21 范围。
+
 ## v1.45.0（2026-07-10）
 
 项目演示 SOP 与 AI 触发规则：新增 `show-demo` 命令和 `demo-runbook-template`，约定项目级演示 SOP 默认路径 `docs/env/local-demo-runbook.md`，让「查看演示效果 / 启动 Demo / 二维码 / 检查 Demo」成为一等入口。

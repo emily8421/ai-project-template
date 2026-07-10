@@ -21,11 +21,14 @@
 | `template-docs/beginner-guide.md` | 面向第一次使用者的操作手册 |
 | `template-docs/glossary.md` | 人读术语索引，不替代规则权威源 |
 | `template-docs/docs-scaffold/` | `docs/inputs` / `docs/vision` / `docs/00-09` / `docs/design` / `docs/decisions` / `docs/research` 结构模板副本，不替代项目事实文档 |
+| `template-docs/domain-templates.md` | 领域模板可选中间层方法论（演进中） |
 | `SOP.md` | 场景索引与流程入口 |
 | `ai/index.md` | AI 规则入口 |
 | `ai/global-rules.md` | 跨项目通用规则 |
 | `ai/document-lifecycle-rules.md` | 文档生命周期、追溯、裁剪与传播 |
 | `ai/project-rules.md` | 项目专属边界与禁区模板 |
+| `ai/implementation-lifecycle-rules.md` | 阶段规划、Sprint / Task、编码、验证与验收留痕 |
+| `ai/session-rules.md` | 会话续接与断点恢复 |
 | `docs/README.md` | 派生项目文档分区规则 |
 | `INIT-PROMPT.md`、`ai/prompts/` | 可复制给 AI 的 Prompt Library |
 | `CONTRIBUTING.md`、`MAINTAINERS.md` | 模板治理与维护规则 |

@@ -20,6 +20,7 @@
 | API Spec | `docs/07-api-spec.md`，描述接口、命令、SDK、事件或集成契约。 | `ai/doc-standards/07-api-spec.md` | 只把 REST API 算作接口，忽略 CLI / SDK 契约。 |
 | Dev Plan | `docs/08-dev-plan.md`，把 Phase 拆成 Sprint / Task 和验证包。 | `ai/doc-standards/08-dev-plan.md` | 用 handoff 替代正式进度摘要。 |
 | Verification | `docs/09-verification.md`，记录测试用例、资源验证和验收结果。 | `ai/doc-standards/09-verification.md` | 未运行验证就写“已通过”。 |
+| 演示 SOP / Demo runbook | `docs/env/local-demo-runbook.md`，当前项目演示 SOP（启动 / 检查 / 查看效果），不替代正式验收。 | `ai/commands/show-demo.md`、`template-docs/demo-runbook-template.md` | 把演示查看当成 `09` 验收通过。 |
 
 ## 2. ID / 追溯
 
