@@ -274,5 +274,5 @@ else
 fi
 echo "后续："
 echo "  cd \"$TARGET\""
-echo "  填写 docs/00-scenario.md ~ 02-srs.md，运行 scripts/collect-env.ps1，再按 README 快速开始推进"
+echo "  先运行 scripts/collect-env.ps1，再按 README 准备 docs/inputs/、初填 ai/project-rules.md，并通过 /run review-inputs -> /run generate-docs 进入文档链路"
 echo "  GitHub Actions 已使用派生项目版 .github/workflows/project-check.yml；普通 PR 不运行模板仓 check-template"
