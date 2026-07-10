@@ -522,7 +522,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 - **完成判据**：已明确三层关系（母模板 → 领域模板 → 具体项目）· 已决定独立仓库或不执行 · 已给出可审计创建命令和初始化待办 · 未向母模板新增领域 scaffold
 - **下一步**：执行领域模板创建 / 回 C1 记录模板提案 / 暂停等待人工确认
-- **cmd 指针**：无专用命令；参考 `scripts/new-project.sh`、`_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 和 `CONTRIBUTING.md` §4 版本影响判断
+- **cmd 指针**：无专用命令；方法论定位见 `template-docs/domain-templates.md`；参考 `scripts/new-project.sh`、`_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 和 `CONTRIBUTING.md` §4 版本影响判断
 
 ### C 维护者（C1–C8）
 
