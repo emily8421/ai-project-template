@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.45.4（2026-07-10）
+
+Windows 新手 smoke-test 真实体验小修：基于 2026-07-10 本地烟测结果，修正 Git Bash / WSL stub 提示、前置检查 next steps 与新建项目完成提示，避免新手在本地最小链路中误判下一步。
+
+- **Git Bash fallback**：`template-docs/smoke-test.md` 补充 `bash` 指向 Windows / WSL stub 并报 `E_ACCESSDENIED`、`/bin/bash` 不存在时改用 `C:\Program Files\Git\bin\bash.exe` 全路径。
+- **前置检查提示**：`scripts/check-prereqs.ps1` 检测 `bash` 是否真的可从 PowerShell 启动；Required 全通过时不再默认建议运行 `bootstrap-dev-env.ps1`，而是提示可继续本地项目 / smoke-test。
+- **新建项目完成提示**：`scripts/new-project.sh` 完成后指向 `collect-env`、`docs/inputs/`、`ai/project-rules.md`、`/run review-inputs` 与 `/run generate-docs` 链路，与派生项目 README 保持一致。
+- **提案留痕**：新增 `_proposals/TEMPLATE-UPGRADE-smoke-test-followups.md` 记录本次 smoke-test 发现、非目标、验证方式和待确认项。
+
 ## v1.45.3（2026-07-10）
 
 SOP 去三写（减负）：使用原则 / 文档入口表 / 常见选择三段重复同一组路由（新手 / 环境 / CLI / 烟测 / 方法论）×3，措辞略不同，用户扫三遍、维护改三处。合并去重。
