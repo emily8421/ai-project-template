@@ -69,6 +69,7 @@ AI 会先评审 `docs/inputs/` 是否足以生成 `docs/vision/product-vision.md
 
 - 完整场景目录（使用者 / 维护者 / 元场景，从零起步到 Phase 升级）：`template-docs/scenario-guides.md`。
 - 知道要做什么、想找具体命令：`SOP.md` 场景索引 / `ai/commands/README.md` 命令表。
+- 已有可运行交付物、想看演示效果：`/run show-demo`（路由到项目演示 SOP `docs/env/local-demo-runbook.md`）。
 
 ## 4. 输入材料 → 文档体系 → 实现代码（核心心智）
 
@@ -153,9 +154,11 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 | 第一次整体上手 | 本手册 + `README.md` |
 | 装工具 / 装环境 | `template-docs/env-setup.md` |
 | 装 AI CLI | `template-docs/ai-cli-setup.md` |
-| 具体场景怎么操作 | `template-docs/scenario-guides.md`（23 场景） |
+| 具体场景怎么操作 | `template-docs/scenario-guides.md`（A0–A21 / C1–C8 / 元场景） |
 | 找命令速查 | `SOP.md`、`ai/commands/README.md` |
 | 理解模板为什么这么设计 | `template-docs/template-methodology.md` |
 | 查术语是什么意思 | `template-docs/glossary.md` |
+| 查看领域模板（可选中间层） | `template-docs/domain-templates.md` |
+| 演示 SOP 怎么写 | `template-docs/demo-runbook-template.md`、`ai/commands/show-demo.md` |
 | docs/ 文档怎么放 / 怎么裁剪 | `docs/README.md` |
 | 查看 `docs/inputs/*` / `docs/vision/*` / `docs/00-09` / `docs/design/*` / `docs/decisions/*` / `docs/research/*` 原始结构模板 | `template-docs/docs-scaffold/` |
