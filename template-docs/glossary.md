@@ -98,3 +98,4 @@
 | 下行同步 | 模板方法论文件从模板仓同步到派生项目。 | `template-docs/template-methodology.md` | 误以为会同步派生项目代码或业务文档。 |
 | 回流 | 派生项目的通用经验经提案回到模板仓。 | `CONTRIBUTING.md`、`_proposals/README.md` | 带入客户 / 账号 / 路径等项目敏感细节。 |
 | 归档 | 已处理提案移动到 `_archive/proposals/` 留痕。 | `_proposals/README.md` | 处理完成后仍留在 `_proposals/` 造成重复分析。 |
+| 领域模板（domain template） | 母模板与具体项目之间的**可选中间层**，继承母模板通用方法论并叠加某类系统专用标准件；主线治理仍为两层，非强制。 | `template-docs/domain-templates.md` | 把领域模板当成必经路径，或误以为两层模型被推翻。 |

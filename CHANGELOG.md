@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.44.3（2026-07-10）
+
+领域模板可选中间层方法论独立文档：新增 `template-docs/domain-templates.md` 作为「领域模板（domain template）可选中间层」的单一权威源，主线文件零内容改动、仅加引用指针，明确「两层为默认主路径、三层为可选增强」，消除现有使用者的理解歧义。
+
+- **新增方法论文件**：`template-docs/domain-templates.md` 固化三层模型、何时该用领域模板、三层职责边界（引用 inheritance 提案结论）、同步 / 继承关系、`TEMPLATE-BASE.md` 约定（标注未落地）和演进状态；纳入下行同步清单。
+- **主线仅加引用指针**：`template-methodology.md` §5、`glossary.md` §7（新增「领域模板」术语条目）、`scenario-guides.md` A20（反向引用）、`README.md` 目录速览各加一处指针，不重写两层叙述。
+- **演进中定位**：文档顶部明确领域模板层尚候选 / 演进中（inheritance 提案 Batch 2-4 未落地）、主线治理仍两层、现有派生项目无需迁移、非强制。
+- **自检防回归**：`scripts/check-template.sh` 增加 `domain-templates.md` 存在、可选中间层定位、三层继承模型、主线仍两层与术语表条目断言。
+
 ## v1.44.2（2026-07-09）
 
 领域模板派生场景引导：在 `template-docs/scenario-guides.md` 中新增 A20，用于从母模板派生独立领域模板（如 `agent-system-template`）时的路由、预检和边界判断。

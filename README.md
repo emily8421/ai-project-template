@@ -33,7 +33,7 @@
 
 | 路径 | 作用 |
 |---|---|
-| `template-docs/` | 手册与人读模板：scenario-guides（场景引导）、beginner-guide、`template-docs/glossary.md`、`template-docs/docs-scaffold/`（inputs / vision / 00-09 / design / decisions / research 结构模板）、env-setup、ai-cli-setup、smoke-test、template-methodology 等 |
+| `template-docs/` | 手册与人读模板：scenario-guides（场景引导）、beginner-guide、`template-docs/glossary.md`、`template-docs/docs-scaffold/`（inputs / vision / 00-09 / design / decisions / research 结构模板）、env-setup、ai-cli-setup、smoke-test、template-methodology、domain-templates（可选·领域模板中间层）等 |
 | `ai/` | AI 行为规范（`index.md` 路由 / `global-rules` / `document-lifecycle-rules` / `session-rules` / `project-rules`）；AI 每次任务先读 `ai/index.md` |
 | `ai/commands/` | AI 快捷命令路由（`/run ...`） |
 | `ai/prompts/` | 详细 Prompt 模板（按场景拆分） |
