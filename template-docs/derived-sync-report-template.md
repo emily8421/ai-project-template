@@ -45,6 +45,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 
 > 说明：只读抽查或摘要只能标为“轻量执行”，不得写成“完整执行”。工具异常下采取等价安全动作时，必须记录替代依据和未覆盖项。
 
+> 填写范例（dry-run 行）：实际命令 `bash scripts/sync-template.sh --dry-run`；退出结果 `EXIT=0，预览 12 文件变更（3 新增 / 9 修改）`；是否完整执行 `是`；备注 `无差异时不提交`。
+
 ## A13 完成判据矩阵
 
 | A13 步骤 | 证据 | 状态 | 若非完成，原因 | 下一步 |
@@ -58,6 +60,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 | 同步报告留痕 |  | 完成 / 未完成 |  |  |
 
 > 若仍存在 `轻量执行`、`未执行`、`失败`、`部分完成` 或无法判断项，本次只能标记为“同步主链完成，A13 闭环尚有剩余项”，不得写成“A13 完整闭环完成”。
+
+> 填写范例（dry-run 预览行）：证据 `dry-run 输出摘要 + EXIT=0`；状态 `完成`。（commit + 边界验证行：证据 `同步提交 abc1234 + check-derived-sync 通过`；状态 `完成`。）
 
 ## 同步结果
 
@@ -109,6 +113,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - `_proposals/TEMPLATE-UPGRADE-xxx.md`
 
 ## 提案回流收口
+
+> 目录关系：`_proposals/` 是收件箱（待处理 / 候选）；已被模板采纳或决议的提案应移动到 `_archive/proposals/` 留痕。仅有远端 `closed` 不得自动归档，须能从 VERSION / CHANGELOG / PR 判断处理结果。
 
 - 扫描范围：`_proposals/` / `.ai/session-handoff.md` / `sync-records/template-sync/` / 模板仓 issue 链接
 - 已确认被模板采纳或已有决议的提案：
