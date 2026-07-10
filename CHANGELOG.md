@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.45.0（2026-07-10）
+
+项目演示 SOP 与 AI 触发规则：新增 `show-demo` 命令和 `demo-runbook-template`，约定项目级演示 SOP 默认路径 `docs/env/local-demo-runbook.md`，让「查看演示效果 / 启动 Demo / 二维码 / 检查 Demo」成为一等入口。
+
+- **新增命令**：`ai/commands/show-demo.md`——路由到项目演示 SOP，含 AI 执行边界表（只读说明 vs 启动脚本 vs 健康检查 vs 二维码 vs 安装依赖 / 外部服务）和禁止项。
+- **新增模板**：`template-docs/demo-runbook-template.md`——八节演示 SOP 结构（适用范围 / AI 场景 / 启动前提 / 启动方式 / 访问入口 / 检查验证 / 推荐演示路径 / 安全与边界），明确不替代 `docs/09-verification.md`。
+- **入口与定位**：`ai/commands/README.md` 命令表 + 触发词；`docs/README.md` §5 `docs/env/` 加 `local-demo-runbook.md` 命名。
+- **同步与自检**：`template-sync.json` 纳入两新文件；`scripts/check-template.sh` 加 8 条断言。
+- 回流自 GitHub issue #160（zhiyan-digital-cs-platform）。
+
 ## v1.44.3（2026-07-10）
 
 领域模板可选中间层方法论独立文档：新增 `template-docs/domain-templates.md` 作为「领域模板（domain template）可选中间层」的单一权威源，主线文件零内容改动、仅加引用指针，明确「两层为默认主路径、三层为可选增强」，消除现有使用者的理解歧义。
