@@ -13,17 +13,10 @@
 ## 使用原则
 
 - 不确定该走哪个场景、或想让 AI 先给引导计划再执行：用 `/run scenario`（见 `template-docs/scenario-guides.md` M1）。
-- 新手第一次使用模板：先看 `README.md` 与 `template-docs/beginner-guide.md`。
-- 新手第一次准备开发环境：看 `template-docs/env-setup.md`，先检测再安装。
-- 要单独安装 `Claude CLI` / `Codex CLI`：看 `template-docs/ai-cli-setup.md`。
-- 要验证新手最小链路：看 `template-docs/smoke-test.md`。
-- 要留痕一轮烟测结果：看 `template-docs/smoke-test-report-template.md`。
-- 需要理解模板方法论与设计边界：看 `template-docs/template-methodology.md`。
 - 若 PowerShell 下的 Git Bash 入口报错：先看 `template-docs/env-setup.md` 的脚本边界说明，不要默认判断为模板规则缺失。
-- 操作步骤权威来源：`git-guide.md`。
-- 可复制给 AI 执行的 Prompt：`ai/prompts/README.md`；首次启动入口：`INIT-PROMPT.md`。
-- 模板治理规则：`CONTRIBUTING.md`。
-- 项目快速入口：`README.md`；完整版本记录：`CHANGELOG.md`。
+- 操作步骤权威来源：`git-guide.md`；可复制给 AI 的 Prompt：`ai/prompts/README.md`；首次启动入口：`INIT-PROMPT.md`。
+- 模板治理（提案 / PR / 版本）：`CONTRIBUTING.md`；版本记录：`CHANGELOG.md`；项目入口：`README.md`。
+- 「要看什么 → 看哪」见下方**文档入口**表；「我做 X 该用什么命令」见**场景索引**，口语化决策见**常见选择**。
 
 ## 场景索引
 
@@ -78,6 +71,7 @@
 | 要做什么 | 看哪 |
 |---|---|
 | 第一次使用模板 | `README.md`、`template-docs/beginner-guide.md`（先建立最小路径、文件边界和初始化顺序） |
+| 第一次准备开发环境（A1） | `template-docs/env-setup.md`（先 check-prereqs 再 bootstrap） |
 | 安装 AI CLI 工具（A1 的一部分） | `template-docs/ai-cli-setup.md`（`Claude CLI` / `Codex CLI` 安装 + 公司中转站衔接顺序） |
 | 运行新手烟测 | `template-docs/smoke-test.md`（验证 Windows 下新手最小链路） |
 | 记录新手烟测结果 | `template-docs/smoke-test-report-template.md`（统一格式记录结果与归因） |
@@ -86,13 +80,8 @@
 
 ## 常见选择
 
-- “我不确定该用哪个命令 / 我想让 AI 带我一步步做” → 用 `/run scenario`，AI 按 `template-docs/scenario-guides.md` 先给引导计划再执行。
-- “我是第一次用这套模板” → 先看 `README.md` 与 `template-docs/beginner-guide.md`，再用 `/run new-project`。
-- “我的机器还没装好开发环境” → 先看 `template-docs/env-setup.md`，再运行 `scripts/check-prereqs.ps1`。
-- “我要单独安装 Claude CLI 或 Codex CLI” → 看 `template-docs/ai-cli-setup.md`。
-- “我要验证一个新手能不能从零跑通这套模板” → 看 `template-docs/smoke-test.md`。
-- “我要把烟测结果记下来，方便后续修模板” → 看 `template-docs/smoke-test-report-template.md`。
-- “我想知道这套模板为什么这么分层” → 看 `template-docs/template-methodology.md`。
+> 纯文档路由（看什么）见上方**文档入口**表；本节只列带分支判断的常见决策。
+
 - “我要开一个新项目” → 用 `/run new-project`。
 - “我要把已有项目同步到最新模板” → 用 `/run sync-methodology`；旧派生项目先按 `git-guide.md` §5.2 bootstrap，拿到新版同步流程后继续完整 A13 闭环，不要停在同步提交；同步后用 `/run post-sync-cleanup`。
 - “我已经同步了模板，只想补完后续闭环” → 用 `/run sync-methodology` 的同步后续接模式；不要重新 dry-run / commit，从 `check-derived-sync`、workflow 检查、`post-sync-cleanup`、`docs-system-audit`、项目验证建议和同步运行记录开始。
