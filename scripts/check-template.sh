@@ -685,6 +685,7 @@ for command_file in \
   ai/commands/docs-system-audit.md \
   ai/commands/docs-evaluation.md \
   ai/commands/template-proposal-summary.md \
+  ai/commands/domain-template-lab.md \
   ai/commands/generate-docs.md \
   ai/commands/review-inputs.md \
   ai/commands/project-review.md \
@@ -974,6 +975,14 @@ require_contains "ai/commands/docs-system-audit.md" 'ai/prompts/review/16-docs-s
 require_contains "ai/commands/template-proposal-summary.md" 'ai/prompts/maintainers/11-template-proposal-summary\.md' "template-proposal-summary 路由到提案汇总 Prompt"
 require_contains "ai/commands/template-proposal-summary.md" 'TEMPLATE-UPGRADE:' "template-proposal-summary 覆盖标题型 issue 提案"
 require_contains "ai/commands/template-proposal-summary.md" 'proposal.*/ feedback|proposal.*feedback|feedback.*proposal' "template-proposal-summary 覆盖 proposal / feedback issue 标签"
+require_contains "ai/commands/README.md" 'domain-template-lab' "commands README 包含领域模板实验入口"
+require_contains "ai/commands/domain-template-lab.md" 'ai/prompts/maintainers/23-domain-template-lab\.md' "domain-template-lab 路由到维护者 Prompt"
+require_contains "ai/prompts/maintainers/23-domain-template-lab.md" '只相邻同步，不跨层操作' "domain-template-lab Prompt 定义相邻层同步原则"
+require_contains "template-docs/domain-templates.md" 'domain-template-lab' "domain-templates 指向 AI 可执行实验入口"
+require_contains "template-sync.json" 'ai/commands/domain-template-lab\.md' "template-sync 同步 domain-template-lab 命令"
+require_contains "template-sync.json" 'ai/prompts/maintainers/23-domain-template-lab\.md' "template-sync 同步 domain-template-lab Prompt"
+require_contains "scripts/sync-template.sh" 'ai/commands/domain-template-lab\.md' "sync-template 兜底清单含 domain-template-lab 命令"
+require_contains "scripts/sync-template.sh" 'ai/prompts/maintainers/23-domain-template-lab\.md' "sync-template 兜底清单含 domain-template-lab Prompt"
 require_contains "template-docs/scenario-guides.md" '处理 issue 提案' "scenario C1 包含 issue 提案入口"
 require_contains "template-docs/scenario-guides.md" 'TEMPLATE-UPGRADE:' "scenario C1 覆盖标题型 issue 提案"
 require_contains "CONTRIBUTING.md" 'submit-proposal.*/ submit-feedback|submit-proposal.*submit-feedback|submit-feedback.*submit-proposal' "CONTRIBUTING 说明 issue 回流入口"
