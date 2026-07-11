@@ -2,23 +2,27 @@
 # sync-template.sh — 在派生项目里下行同步 ai-project-template 的方法论文件
 #
 # 用法（在派生项目根目录执行）:
-#   bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit]
+#   bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit] [--preserve-project-version]
 #     --dry-run  仅抓取并预览差异，不修改工作区、不 stage（默认）
 #     --no-stat  与 --dry-run 搭配，跳过逐文件 diff stat，仅输出轻量摘要
 #     --summary  等价于 --dry-run --no-stat
 #     --commit   抓取、覆盖、stage 并提交 "sync template vX.Y.Z"
+#     --preserve-project-version
+#                普通派生项目路线 A：保留项目自己的 VERSION/CHANGELOG，改写 TEMPLATE-BASE.md 记录继承的模板版本
+#                若仓库已存在 TEMPLATE-BASE.md，本模式会自动启用
 #   环境变量:
 #     TEMPLATE_REMOTE  模板远端（默认 https://github.com/emily8421/ai-project-template.git）
 # 依赖: git（网络可达模板远端；模板私有，活跃 gh 账号须有访问权限）
 set -euo pipefail
 
 usage() {
-  echo "用法: bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit]" >&2
+  echo "用法: bash scripts/sync-template.sh [--dry-run [--no-stat]|--summary|--commit] [--preserve-project-version]" >&2
 }
 
 MODE="--dry-run"
 MODE_EXPLICIT=0
 SKIP_STAT=0
+PRESERVE_PROJECT_VERSION=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run)
@@ -48,6 +52,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     --no-stat)
       SKIP_STAT=1
+      ;;
+    --preserve-project-version)
+      PRESERVE_PROJECT_VERSION=1
       ;;
     *)
       usage
@@ -226,6 +233,68 @@ load_sync_files() {
     echo "✗ 无法解析模板同步清单 template-sync.json" >&2
     exit 1
   fi
+
+  if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
+    local filtered=()
+    local file
+    for file in "${SYNC_FILES[@]}"; do
+      case "$file" in
+        VERSION|CHANGELOG.md)
+          ;;
+        *)
+          filtered+=("$file")
+          ;;
+      esac
+    done
+    SYNC_FILES=("${filtered[@]}")
+  fi
+}
+
+template_source_label() {
+  case "$TEMPLATE_REMOTE" in
+    https://github.com/emily8421/ai-project-template.git|git@github.com:emily8421/ai-project-template.git)
+      echo "github.com/emily8421/ai-project-template"
+      ;;
+    *)
+      echo "$TEMPLATE_REMOTE"
+      ;;
+  esac
+}
+
+write_template_base() {
+  local template_version="$1"
+  local synced_at
+  local project_version
+  local base_version
+  local source_label
+
+  synced_at="$(date +%Y-%m-%d)"
+  project_version="$(sed '1s/^\xEF\xBB\xBF//' VERSION 2>/dev/null | tr -d '[:space:]' || true)"
+  base_version="$template_version"
+  if [[ -f TEMPLATE-BASE.md ]]; then
+    base_version="$(grep -E '^\- Base template version:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Base template version:[[:space:]]*//' || true)"
+    [[ -n "$base_version" ]] || base_version="$template_version"
+  fi
+  source_label="$(template_source_label)"
+
+  cat > TEMPLATE-BASE.md <<EOF
+# Template Base
+
+> Records the upstream template lineage for this ordinary derived project. Do not use this file for domain-template inheritance metadata.
+
+- Template repository: $source_label
+- Base template version: $base_version
+- Current synced template version: $template_version
+- Synced at: $synced_at
+- Project version file: VERSION
+- Project version at sync time: ${project_version:-unknown}
+
+## Version Semantics
+
+- \`VERSION\` is owned by this derived project and records the project version.
+- \`TEMPLATE-BASE.md\` records the inherited ai-project-template version used for methodology sync audit.
+- Template sync commits keep the message format \`sync template $template_version from ai-project-template\`.
+EOF
 }
 
 git rev-parse --is-inside-work-tree >/dev/null
@@ -238,6 +307,10 @@ if ! git fetch --no-tags --depth=1 "$TEMPLATE_REMOTE" main; then
   exit 1
 fi
 REF="FETCH_HEAD"
+
+if [[ -f TEMPLATE-BASE.md ]]; then
+  PRESERVE_PROJECT_VERSION=1
+fi
 
 # 自身更新保护：派生项目里的旧脚本可能漏同步新文件或不是真 dry-run。
 # 因此先确认本地脚本与模板远端最新版一致；不一致时停止，让用户先 bootstrap 脚本。
@@ -265,6 +338,9 @@ fi
 [[ -n "$VERSION" ]] || VERSION="unknown"
 
 echo "==> 模板版本: $VERSION"
+if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
+  echo "==> 普通派生项目版本治理: 保留本地 VERSION/CHANGELOG，更新 TEMPLATE-BASE.md 为继承版本记录"
+fi
 warn_derived_workflow_migration
 echo "==> 同步文件:"
 
@@ -393,6 +469,15 @@ if [[ "$MODE" == "--dry-run" ]]; then
   echo
   echo "ℹ️  dry-run：仅预览，未修改工作区、未 stage。"
   echo "   方向：本地当前文件 -> 模板 $VERSION（即执行 --commit 后的变化）"
+  if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
+    if [[ -f TEMPLATE-BASE.md ]]; then
+      echo "    Δ TEMPLATE-BASE.md（继承版本记录，--preserve-project-version）"
+      record_summary "TEMPLATE-BASE.md" "modified"
+    else
+      echo "    Δ TEMPLATE-BASE.md（新增继承版本记录，--preserve-project-version）"
+      record_summary "TEMPLATE-BASE.md" "added"
+    fi
+  fi
   if [[ "$SKIP_STAT" -eq 1 ]]; then
     print_summary
   else
@@ -429,6 +514,12 @@ if [[ "$MODE" == "--dry-run" ]]; then
   echo "   确认后执行: bash scripts/sync-template.sh --commit"
 else
   UPDATED_FILES=()
+  if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
+    write_template_base "$VERSION"
+    git add TEMPLATE-BASE.md
+    UPDATED_FILES+=("TEMPLATE-BASE.md")
+    echo "    ✓ TEMPLATE-BASE.md（继承版本记录）"
+  fi
   for f in "${SYNC_FILES[@]}"; do
     if git cat-file -e "$REF:$f" 2>/dev/null; then
       git checkout "$REF" -- "$f"
@@ -471,4 +562,7 @@ else
   echo "  4. 按项目技术栈运行测试 / lint / build；无法运行的记录为未验证项"
   echo "  5. 生成或更新同步运行记录: sync-records/template-sync/YYYY-MM-DD-sync-template-$VERSION.md"
   echo "     可参考: template-docs/derived-sync-report-template.md"
+  if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
+    echo "  6. 核对项目自身版本仍记录在 VERSION；继承模板版本见 TEMPLATE-BASE.md"
+  fi
 fi

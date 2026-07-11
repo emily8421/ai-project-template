@@ -84,7 +84,7 @@
 - 继承时的母模板 base version（对应母模板 `VERSION`）。
 - 本领域模板叠加的标准件范围。
 
-> **状态：预留 / 未启用**。当前 `TEMPLATE-BASE.md` **仅为约定，仓库内不存在该文件，`scripts/new-project.sh` 也不生成它**。它的生成与字段自检属 inheritance 提案 Batch 2 / Batch 3，待领域模板首个实例（如 `agent-system-template`）创建时落地。在此之前，不得把 `TEMPLATE-BASE.md` 写成已存在或已启用。
+> **状态：预留 / 未启用（领域模板线）**。普通派生项目可由 `scripts/new-project.sh` / `scripts/sync-template.* --preserve-project-version` 生成精简版 `TEMPLATE-BASE.md`，只记录母模板继承版本；领域模板的 `TEMPLATE-BASE.md` 仍是另一条线的约定，需额外记录领域标准件 / 领域继承范围，生成与字段自检属 inheritance 提案 Batch 2 / Batch 3，待领域模板首个实例（如 `agent-system-template`）创建时落地。不得把普通派生项目的精简版语义套用到领域模板。
 
 ## 6. 操作入口（怎么创建领域模板）
 

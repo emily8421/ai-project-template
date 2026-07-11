@@ -106,7 +106,7 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 
 | 层 | 放什么 | 关键内容 |
 |---|---|---|
-| 模板方法层 | 模板自身 + AI 行为规范 + 手册脚本（派生项目里是下行同步的只读件，除根 README） | `README.md`、`SOP.md`、`git-guide.md`、`ai/`、`template-docs/`、`scripts/`、`VERSION` |
+| 模板方法层 | 模板自身 + AI 行为规范 + 手册脚本（派生项目里是下行同步的只读件，除根 README；普通派生项目用 `TEMPLATE-BASE.md` 记录继承模板版本） | `README.md`、`SOP.md`、`git-guide.md`、`ai/`、`template-docs/`、`scripts/`、`VERSION`、`TEMPLATE-BASE.md` |
 | 文档事实层 | 你这个项目的需求 / 设计 / 计划 / 验证（AI 输出，见 §4） | `docs/00-09`、`docs/vision/`、`docs/inputs/`、`docs/design/`、`docs/decisions/` 等 |
 | 代码骨架层 | 实现代码（按项目形态裁剪） | `frontend/`、`backend/`、`tests/`、`scripts/`、`docker/` |
 

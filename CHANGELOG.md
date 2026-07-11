@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.46.0（2026-07-11）
+
+普通派生项目双版本治理：新增可选的路线 A 同步模式，让普通派生项目用 `VERSION` 记录项目自身版本，用 `TEMPLATE-BASE.md` 记录继承的母模板版本，避免每次模板同步覆盖项目版本。
+
+- **同步脚本**：`scripts/sync-template.sh` 与 PowerShell fallback 增加 `--preserve-project-version`；启用后跳过 `VERSION` / `CHANGELOG.md`，并新增 / 更新 `TEMPLATE-BASE.md` 作为继承版本记录，提交信息仍为 `sync template vX.Y.Z from ai-project-template`。
+- **新项目默认**：`scripts/new-project.sh` 为普通派生项目生成精简版 `TEMPLATE-BASE.md`，README 模板关系改为“`VERSION` = 项目自身版本，`TEMPLATE-BASE.md` = 继承模板版本”。
+- **边界验证**：`scripts/check-derived-sync.*` 允许同步提交修改 `TEMPLATE-BASE.md`，并在双版本模式下跳过 README ↔ `VERSION` 的模板版本一致性检查，改查 `TEMPLATE-BASE.md` 的当前同步模板版本。
+- **A13 同步流程**：`ai/prompts/maintainers/12-sync-template.md`、`ai/commands/sync-methodology.md`、`git-guide.md`、`template-docs/scenario-guides.md` 与同步报告模板均补充 `--preserve-project-version`、`VERSION` / `TEMPLATE-BASE.md` 双字段和同步后续接判定。
+- **边界说明**：`template-docs/domain-templates.md` 明确普通派生项目的精简 `TEMPLATE-BASE.md` 不等同于领域模板线的 `TEMPLATE-BASE.md`；领域模板版本治理仍走 inheritance / domain-template-lab 独立线。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-derived-project-version-governance.md`（DV-001 / DV-003 / DV-004 部分落地，试点反馈后再决定归档）。
+
 ## v1.45.7（2026-07-11）
 
 Token 热点候选规则小落地：把首批 token hotspot 记录反复出现的 H-001 / H-003 升级为受限会话规则，减少同一任务链内重复规则读取和成功长日志回灌，同时保留首次完整规则门禁、规则变更重读和失败日志证据。

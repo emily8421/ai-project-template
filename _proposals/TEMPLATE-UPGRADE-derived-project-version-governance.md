@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: 普通派生项目版本治理
 
 > 来源：模板维护者（2026-07-11 B 阶段 agent-system-template 同步试跑 + 派生版本管理设计讨论）
-> 状态：候选 / 待评估（不立即落地）；关键决策已定——DV-001 采用路线 A
-> 目标版本：待定（设计候选）
-> Release impact：待定（落地时按 `version-governance` 决策表判断；可能 minor）
+> 状态：部分落地（DV-001 路线 A 已定；DV-003 / DV-004 最小机制已进入 v1.46.0；试点反馈待补）
+> 目标版本：v1.46.0（普通派生双版本最小机制）
+> Release impact：minor（改变普通派生项目版本语义与同步脚本行为；向后兼容旧语义）
 > Release strategy：**单独一条线**——只管「母模板 → 普通派生项目」；领域模板版本治理在 inheritance Batch 3 / C-004 独立处理，不在本提案混入（避免污染）
 
 ## 1. 背景
@@ -27,11 +27,11 @@
 ## 3. 非目标
 
 - **不处理领域模板的版本治理**（见 inheritance Batch 3 / C-004，独立线）。
-- 不立即落地；作为候选，待设计完善 + 派生项目反馈后评估。
+- 不强制所有现有派生项目立即迁移；v1.46.0 先提供可选兼容机制，试点反馈后再评估是否设为硬默认。
 - 不推翻三段式版本号（`vMAJOR.MINOR.PATCH`）。
 - 不改变 sync 提交格式 `sync template vX.Y.Z`。
 - 不强制历史派生项目重写版本。
-- 不在本提案阶段修改 `scripts/sync-template.sh`、`template-sync.json` 或 `check-template.*` 断言。
+- 不改变领域模板版本治理；普通派生项目的精简 `TEMPLATE-BASE.md` 不等同于领域模板 `TEMPLATE-BASE.md`。
 
 ## 4. 设计候选（普通派生项目线）
 
@@ -54,20 +54,24 @@
 ### 4.3 sync 版本保留（DV-003）
 
 路线 A 下 `VERSION` 记自身版本，sync 不能再覆盖 `VERSION`。机制候选：
-- a. 普通派生项目用专属同步清单（从 `template-sync.json` 派生），不列 `VERSION`/`CHANGELOG`
-- b. sync 脚本识别「普通派生项目」角色，跳过 `VERSION`/`CHANGELOG`
+- v1.46.0 落地：`scripts/sync-template.* --preserve-project-version` 在普通派生项目中跳过 `VERSION` / `CHANGELOG.md`，并新增 / 更新 `TEMPLATE-BASE.md` 记录继承模板版本；提交信息仍保持 `sync template vX.Y.Z from ai-project-template`。
+- 兼容旧语义：不传 `--preserve-project-version` 时，仍按 `template-sync.json` 同步 `VERSION` / `CHANGELOG.md`，用于尚未迁移或人工明确沿用旧语义的项目。
 
 ### 4.4 迁移（DV-004）
 
-现有派生项目（`VERSION` 当前记继承版本）切换到路线 A 的指引，待设计。
+现有派生项目（`VERSION` 当前记继承版本）切换到路线 A 的最小指引：
+- 先确认当前项目是否需要自身版本；若需要，后续同步命令改用 `--preserve-project-version`。
+- 第一次采用路线 A 时，脚本会新增 `TEMPLATE-BASE.md`，将本次目标模板版本写为 `Current synced template version`；`VERSION` 保留为项目自身版本起点，通常可沿用迁移前的三段式值，不强制重写历史。
+- 后续同步报告记录 `VERSION`（项目自身版本）与 `TEMPLATE-BASE.md`（继承模板版本）两个字段。
+- 若项目暂不需要自身版本，可继续旧语义，但应在同步报告中说明。
 
 ## 5. 待确认项
 
 | ID | 待确认项 | AI 建议 | 建议依据 | 备选 | 取舍 |
 |---|---|---|---|---|---|
 | DV-001 ✅ | `VERSION` 语义 | **已定路线 A**：`VERSION` 记自身版本，继承版本用 `TEMPLATE-BASE.md` | 自身版本是项目主权，应占主版本位 | ~~路线 B~~ | 改 `VERSION` 语义影响现有派生项目（见 DV-004） |
-| DV-003 | sync 版本保留机制 | 专属同步清单不列 `VERSION`/`CHANGELOG` | 清单不列就不动，最直接 | sync 角色分支 | 角色分支增加脚本复杂度 |
-| DV-004 | 现有派生项目迁移指引 | `VERSION` 当前值作为自身版本起点；`TEMPLATE-BASE` 补继承版本；sync 切新清单；不强制 | 平滑过渡 | 强制迁移 | 不强制则新旧并存一段 |
+| DV-003 ✅ | sync 版本保留机制 | v1.46.0 已落地：`--preserve-project-version` 跳过 `VERSION`/`CHANGELOG.md` 并维护 `TEMPLATE-BASE.md` | 不拆新清单，脚本行为显式 opt-in，兼容旧项目 | 专属同步清单；自动角色识别 | opt-in 需要 Prompt / 报告提示，避免用户忘加参数 |
+| DV-004 ✅ | 现有派生项目迁移指引 | v1.46.0 已落地最小迁移指引；不强制历史项目立即迁移 | 平滑过渡；减少破坏性版本重写 | 强制迁移 | 不强制则新旧并存一段，需在同步报告中说明 |
 
 ## 6. 与其他提案 / 线的关系（不混）
 
@@ -80,11 +84,10 @@
 - 能说明普通派生项目为何需要双版本，并指出 `version-governance` 盲区。
 - 能给出 `VERSION` 语义（路线 A）+ 继承版本记录位置。
 - 能说明与领域模板版本治理（inheritance）的边界——两条线独立不混。
-- 不立即落地；待设计完善 + 派生项目反馈后评估。
+- v1.46.0 后可通过 `--preserve-project-version` 路径验证 DV-003 / DV-004；试点反馈后再决定是否归档本提案。
 
 ## 8. 建议后续步骤
 
-1. 保留本提案为 active 候选。
-2. 设计 sync 版本保留（DV-003）+ 迁移指引（DV-004）。
-3. 在 1-2 个普通派生项目（如 zhiyan）试点路线 A。
-4. 评估升级为正式落地（可能 minor）。
+1. 在 1-2 个普通派生项目（如 zhiyan）试点 `--preserve-project-version` 路线 A。
+2. 观察 `TEMPLATE-BASE.md` 字段是否足够、同步报告是否能清楚区分项目版本 / 继承版本。
+3. 若试点稳定，再评估是否把普通派生项目同步默认命令永久切到 `--preserve-project-version`，并归档本提案。
