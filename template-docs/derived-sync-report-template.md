@@ -17,6 +17,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - 同步日期：
 - 同步前模板版本：
 - 目标模板版本：
+- 项目自身版本（`VERSION`）：
+- 继承版本记录（`TEMPLATE-BASE.md`）：存在 / 不存在；当前同步到：
 - 同步分支：
 - 实际同步提交（非 PR merge commit）：
 - 操作入口：`/run sync-methodology` / 手动命令
@@ -26,6 +28,7 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 
 - dry-run：
 - commit：
+- 是否使用 `--preserve-project-version`：是 / 否（若否，说明仍沿用旧语义或人工原因）
 - check-derived-sync（记录传入的 `<sync-commit>`；若 `HEAD` 是 PR merge commit，不要用 merge commit 代替同步提交）：
 - 是否触发 PowerShell fallback（sync / check）：
 - post-sync-cleanup：
@@ -67,6 +70,8 @@ sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 
 - 是否成功：
 - 新增 / 修改的方法论文件：
+- `VERSION` / `CHANGELOG.md` 是否保持项目自身版本：
+- `TEMPLATE-BASE.md` 是否新增 / 更新继承模板版本：
 - 项目专属文件是否被误改：
 - 是否新增 / 刷新 `ai/doc-standards/00-09`：
 - 是否残留旧 `docs/_scaffold/`：
