@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: Token 热点观察记录与回流机制
 
 > 来源：模板维护者
-> 状态：部分落地（B+ 最小同步可发现入口已进入 `ai/session-rules.md`；记录模板 / summary 仍候选）
+> 状态：部分落地（B+ 最小同步可发现入口已进入 `ai/session-rules.md`；首份 summary 已生成、达 3 份门槛；记录模板 / 正式目录规范仍候选）
 > 目标版本：v1.45.5（B+ 最小触发规则）；后续汇总能力待确认
 > Release impact：patch（AI 建议，待维护者确认；仅新增自动提醒与写入确认边界，不强制所有项目记录）
 > Release strategy：先落地“自动识别并询问是否记录”的最小入口；记录模板、summary 与正式目录规范仍等 3–5 份记录后再评估
@@ -183,7 +183,7 @@ ai-records/
 - 仍保持“首次触发需用户确认创建目录”，不强制所有项目记录。
 - 适合目标从“模板仓库自测”升级为“派生项目新会话可发现”。
 
-落地状态：v1.45.5 已先将“自动识别并主动询问”的最小触发规则写入 `ai/session-rules.md`，并由 `scripts/check-template.*` 加防回归断言；记录模板文件和 summary 流程仍未正式纳入同步清单。
+落地状态：v1.45.5 已先将“自动识别并主动询问”的最小触发规则写入 `ai/session-rules.md`，并由 `scripts/check-template.*` 加防回归断言；截至 2026-07-11 已累计 3 份记录并生成首份 `summaries/` 汇总（达 §7 门槛），提炼出 same-session rule-reuse 等候选优化（见 §13）；记录模板文件和正式目录规范仍未纳入同步清单。
 
 ### 方案 C：纳入正式协作目录规范
 
@@ -239,3 +239,15 @@ ai-records/
 3. 累计 3–5 份记录，或跨越 3–5 个自然日且至少 2 份记录后生成 summary。
 4. 若在模板仓库中执行，将 summary 提炼为 `_proposals/`；若在派生项目中执行，将 summary 提炼为反馈 issue / `submit-feedback` 输入。
 5. 若 summary 显示稳定热点，再决定是否新增 `ai-records/` 正式目录规范或 `template-docs` 记录模板。
+
+## 13. 来自 hotspot summary 的候选优化（2026-07-11 首份汇总）
+
+首份 `summaries/2026-07-10_to_2026-07-11-summary.md` 覆盖 3 份记录，提炼出以下候选优化。**均为候选 / 待评估，尚未落地为正式同步规则**；待再累计 2–3 份记录后评估是否写入 `ai/session-rules.md` 等正式规则。
+
+| ID | 候选优化 | 证据 | 候选落地位置 | 风险 |
+|---|---|---|---|---|
+| H-001 | same-session rule-reuse：全量规则加载后，同会话后续顺序治理步骤（edit/amend/push/merge/handoff）若无规则文件变更，可复用已加载规则 | 3 份记录均出现“全量规则加载后，后续步骤重复读规则”为可避免读取 | `ai/session-rules.md` §3 或新增小节 | 必须限定“无相关规则文件变更”，否则可能用过期规则；需明确哪些步骤可复用、何时必须重读 |
+| H-002 | multi-AI claim→evidence 表：交叉核对另一 AI 结论时，要求对方输出“结论→证据 file:line”表，核对方按行号定位 | 记录 #3：为核验另一 AI 评估而部分重读 PR 文件，可避免 | `ai/commands/README.md` 维护说明或本提案 | 仅适用于多 AI 协作场景；不阻塞单 AI 任务 |
+| H-003 | 验证证据摘要约定：成功长检查只记命令名 + 退出码，避免把完整成功日志贴进工作上下文 | 记录 #2、#3：`check-template.sh` 成功日志大但退出码已知后低价值 | `ai/session-rules.md` §4.1 或验证约定 | 失败时仍需完整日志定位；约定只针对成功输出 |
+
+Recommendation（首份 summary）：small-doc-clarification —— 先把上述候选登记进本提案评估，不立即升级为正式同步规则；待再累计 2–3 份记录验证 H-001 是否稳定复现，再决定是否提案落地。
