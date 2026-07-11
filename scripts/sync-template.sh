@@ -124,6 +124,7 @@ DEFAULT_SYNC_FILES=(
   "ai/commands/post-sync-cleanup.md"
   "ai/commands/docs-system-audit.md"
   "ai/commands/template-proposal-summary.md"
+  "ai/commands/domain-template-lab.md"
   "ai/commands/generate-docs.md"
   "ai/commands/review-inputs.md"
   "ai/commands/project-review.md"
@@ -184,6 +185,7 @@ DEFAULT_SYNC_FILES=(
   "ai/commands/submit-feedback.md"
   "ai/prompts/maintainers/17-submit-proposal.md"
   "ai/prompts/maintainers/18-submit-feedback.md"
+  "ai/prompts/maintainers/23-domain-template-lab.md"
 )
 
 # doc-standards 兼容镜像：历史保留入口；当前 00-09 均已升级为独立标准文件。

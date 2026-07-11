@@ -90,6 +90,10 @@
 
 创建领域模板的**操作步骤**见 `template-docs/scenario-guides.md` **A20「领域模板派生」**（含：判定是否为领域模板、内置 vs 独立仓、Phase 0 预检、创建命令、初始化待办）。本文件只讲方法论定位，不复制 A20 的操作步骤。
 
+AI 可执行实验入口为 `/run domain-template-lab`（见 `ai/commands/domain-template-lab.md` 与 `ai/prompts/maintainers/23-domain-template-lab.md`）。该入口只服务领域模板独立试验线：AI 自动判定当前仓库是母模板、派生领域模板、领域派生项目还是普通派生项目，先输出计划和写入范围，用户确认后才在目标领域模板仓库生成实验资产。
+
+边界：`domain-template-lab` 不接入 `git-guide.md` §5 的普通派生项目同步主路径，不修改母模板 `sync-template` 语义，不让领域派生项目直接同步母模板。母模板只提供实验启动器和方法论边界；领域 scaffold、领域同步清单、领域自检和领域回流 SOP 应在独立领域模板仓库内试验。
+
 ## 7. 状态与演进
 
 本文件对应 inheritance 提案的落地节奏：
@@ -98,7 +102,7 @@
 |---|---|---|
 | Batch 1 | 三层继承机制设计 + **方法论文档化（本文件）** | ✅ 本文件落地；机制产物待后续 |
 | Batch 2 | 创建独立 `agent-system-template` 仓库 + 领域 scaffold MVP + `TEMPLATE-BASE.md` | 待办 |
-| Batch 3 | 领域模板自检、同步链路、多级同步自动化评估 | 待办 |
+| Batch 3 | 领域模板自检、同步链路、多级同步自动化评估 | 部分启动：母模板已提供 `domain-template-lab` AI 实验入口；具体领域资产仍待独立仓库试验 |
 | Batch 4 | `new-project --profile <domain>` / 领域模板发布回流 SOP | 待办（需至少一个真实项目试用后再评估） |
 
 领域模板层在至少一个真实项目试用、Batch 2-3 落地成熟后，再评估是否提升主线地位（如写进 `template-methodology.md` §5）。当前以本可选增强文档为准。
