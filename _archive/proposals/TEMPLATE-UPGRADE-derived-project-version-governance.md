@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 普通派生项目版本治理
 
 > 来源：模板维护者（2026-07-11 B 阶段 agent-system-template 同步试跑 + 派生版本管理设计讨论）
-> 状态：部分落地（DV-001 路线 A 已定；DV-003 / DV-004 最小机制已进入 v1.46.0；试点反馈待补）
+> 状态：已归档（DV-001 路线 A 已定；DV-003 / DV-004 最小机制已进入 v1.46.0；zhiyan 普通派生同步试点已通过）
 > 目标版本：v1.46.0（普通派生双版本最小机制）
 > Release impact：minor（改变普通派生项目版本语义与同步脚本行为；向后兼容旧语义）
 > Release strategy：**单独一条线**——只管「母模板 → 普通派生项目」；领域模板版本治理在 inheritance Batch 3 / C-004 独立处理，不在本提案混入（避免污染）
@@ -88,6 +88,12 @@
 
 ## 8. 建议后续步骤
 
-1. 在 1-2 个普通派生项目（如 zhiyan）试点 `--preserve-project-version` 路线 A。
-2. 观察 `TEMPLATE-BASE.md` 字段是否足够、同步报告是否能清楚区分项目版本 / 继承版本。
-3. 若试点稳定，再评估是否把普通派生项目同步默认命令永久切到 `--preserve-project-version`，并归档本提案。
+1. 已完成：在普通派生项目 `zhiyan` 试点 `--preserve-project-version` 路线 A。
+2. 已确认：试点通过，`TEMPLATE-BASE.md` 字段、`VERSION` 保留和同步报告双版本口径满足本提案最小验收。
+3. 后续如需把普通派生项目同步默认命令永久切到 `--preserve-project-version`，应另起 follow-up 提案评估默认行为变化与迁移影响。
+
+## 9. 归档说明
+
+- 归档日期：2026-07-12。
+- 归档依据：v1.46.0 已落地 DV-001 / DV-003 / DV-004；当前会话中用户确认 `zhiyan` 普通派生同步试点已通过。
+- 归档边界：本提案只覆盖「母模板 → 普通派生项目」双版本治理最小机制；领域模板版本治理仍保留在 `_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` Batch 3 / C-004。
