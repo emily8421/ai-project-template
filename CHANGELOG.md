@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.47.0（2026-07-12）
+
+领域模板版本治理（inheritance Batch 3 / C-004）：把普通派生项目的双版本保留机制扩展到领域模板线，让领域模板（如 `agent-system-template`）从母模板 sync 时保留自身 `VERSION` / `CHANGELOG.md`，并用领域版 `TEMPLATE-BASE.md` 记录继承的母模板版本与领域标准件范围，解决 2026-07-11 试跑中"每次 sync 覆盖领域版本需手动恢复"的问题。与普通派生项目版本治理（v1.46.0）是两条独立线，互不混用。
+
+- **同步脚本**：`scripts/sync-template.sh` 与 PowerShell fallback 新增 `--domain-template`（与 `--preserve-project-version` 互斥）；启用后跳过 `VERSION` / `CHANGELOG.md`，并新增 / 更新领域版 `TEMPLATE-BASE.md`（`Lineage type: domain template` + `Domain standards scope`，首次生成留 TODO 占位，后续 sync 保留）；仓库存在领域版 `TEMPLATE-BASE.md` 时自动启用，与显式标志冲突时停止并提示。
+- **角色判定**：新增 `detect_lineage_role` / `Get-LineageRole`，按 `TEMPLATE-BASE.md` 的 `Lineage type` 字段判定普通版 / 领域版（兼容 v1.46.0 旧普通版 header 嗅探）；普通派生 `--preserve-project-version` 行为不变。
+- **边界验证**：`scripts/check-derived-sync.*` 按 `Lineage type` 识别角色，领域版额外校验 `Domain standards scope` 字段，仍跳过 README ↔ `VERSION` 一致性检查。
+- **自检防漂移**：`scripts/check-template.sh` 与 `scripts/check-template.ps1` 把旧的 `TEMPLATE-BASE.md` 自动检测断言更新为 `detect_lineage_role` / `Get-LineageRole`，并新增 `--domain-template`、`write_domain_template_base` / `Write-DomainTemplateBase` 与领域版字段断言。
+- **文档与提案**：`template-docs/domain-templates.md` §0 / §4 / §5 / §7 更新 C-004 落地状态；`_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` C-004 标 ✅、Batch 3 标部分落地；`ai/prompts/maintainers/12-sync-template.md`、`ai/commands/sync-methodology.md`、`git-guide.md` §5.5、`template-docs/scenario-guides.md` A13 / A20 与 `template-docs/derived-sync-report-template.md` 均补充领域模板角色口径。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` Batch 3 / C-004；多级同步自动化（领域模板作为领域派生项目上游）仍待后续。
+
 ## v1.46.0（2026-07-11）
 
 普通派生项目双版本治理：新增可选的路线 A 同步模式，让普通派生项目用 `VERSION` 记录项目自身版本，用 `TEMPLATE-BASE.md` 记录继承的母模板版本，避免每次模板同步覆盖项目版本。

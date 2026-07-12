@@ -401,7 +401,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 |---|---|---|---|
 | 1 | 先输出标准闭环计划 | 用户知道同步不只是拉文件，还要整理、审计、验证、留痕；旧派生项目 bootstrap 拿到新版流程后，也不能停在同步提交 | `sync-methodology`(12)；旧项目先按 `git-guide.md` §5.2 bootstrap，再读取新版 `ai/prompts/maintainers/12-sync-template.md` 继续 |
 | 2 | 预览模板有哪些更新、会不会动项目文件 | 先确认安全再改，避免误覆盖 | `--dry-run` |
-| 3 | 确认安全后应用更新并做边界验证 | 拿到模板方法论更新，确认没误覆盖项目件；普通派生项目保留自身版本 | `--commit --preserve-project-version` + `scripts/check-derived-sync.ps1` |
+| 3 | 确认安全后应用更新并做边界验证 | 拿到模板方法论更新，确认没误覆盖项目件；普通派生项目用 `--preserve-project-version` 保留自身版本，领域模板用 `--domain-template` 保留领域版本 | `--commit --preserve-project-version`（普通派生）/ `--domain-template`（领域模板）+ `scripts/check-derived-sync.ps1` |
 | 4 | 同步后整理项目 | README、`project-rules`、docs 分区等项目事实不会被同步脚本自动迁移 | `post-sync-cleanup`(15)，先出迁移计划 |
 | 5 | 文档体系同步后审计 | 检查旧方法生成的 `docs/00-09` 是否需按新规范回梳 | `docs-system-audit`(16)，同步后审计模式 |
 | 6 | 做提案回流收口检查 | 派生提案可能已通过模板 issue / PR 被采纳，同步后应判断本地草稿和 issue 记录是否可归档 | 扫描 `_proposals/`、`.ai/session-handoff.md`、`sync-records/template-sync/`、issue 链接；必要时 `gh issue view` |
@@ -520,7 +520,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 2 | 选择内置还是独立仓库 | 领域模板若需要独立生命周期，应优先独立仓库 | 对比母模板内置 scaffold vs 独立 `*-template` 仓库，列边界和维护成本 |
 | 3 | 做 Phase 0 预检 | 避免创建到错误目录、远端重名或工具不可用 | 只读检查 `new-project.*`、目标目录、远端仓库名、`git` / `gh` / Bash / 权限 |
 | 4 | 输出创建方案 | 创建新仓库前先明确命名、可见性、base version 和初始化范围 | 给出命令、预计修改文件、验证方式和是否需要人工确认 |
-| 5 | 执行创建（需确认） | 新目录 / 新仓库是状态变更，必须确认后再执行 | 从母模板父目录运行 `new-project.sh --local` 或受控复制；创建后写 `TEMPLATE-BASE.md` |
+| 5 | 执行创建（需确认） | 新目录 / 新仓库是状态变更，必须确认后再执行 | 从母模板父目录运行 `new-project.sh --local` 或受控复制；创建后写领域版 `TEMPLATE-BASE.md`（`Lineage type: domain template` + `Domain standards scope`），后续从母模板 sync 用 `--domain-template` |
 
 - **完成判据**：已明确三层关系（母模板 → 领域模板 → 具体项目）· 已决定独立仓库或不执行 · 已给出可审计创建命令和初始化待办 · 未向母模板新增领域 scaffold
 - **下一步**：执行领域模板创建 / 回 C1 记录模板提案 / 暂停等待人工确认
