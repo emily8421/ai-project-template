@@ -276,19 +276,49 @@ template_source_label() {
   esac
 }
 
+extract_template_base_version() {
+  [[ -f TEMPLATE-BASE.md ]] || return 0
+  grep -Ei '^[[:space:]]*-[[:space:]]*(\*\*)?(base template version|base version)' TEMPLATE-BASE.md \
+    | head -1 \
+    | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' \
+    | head -1 || true
+}
+
+extract_legacy_domain_standards_scope() {
+  [[ -f TEMPLATE-BASE.md ]] || return 0
+  awk '
+    /^##[[:space:]]+(叠加的标准件范围|Domain Standards Scope)[[:space:]]*$/ { in_scope=1; next }
+    /^##[[:space:]]+/ && in_scope { exit }
+    in_scope && /^[[:space:]]*-[[:space:]]+/ {
+      line=$0
+      sub(/^[[:space:]]*-[[:space:]]+/, "", line)
+      gsub(/[[:space:]]+/, " ", line)
+      if (line != "") {
+        items[++count]=line
+      }
+    }
+    END {
+      for (i=1; i<=count; i++) {
+        printf "%s%s", (i == 1 ? "" : "；"), items[i]
+      }
+    }
+  ' TEMPLATE-BASE.md
+}
+
 write_template_base() {
   local template_version="$1"
   local synced_at
   local project_version
   local base_version
   local source_label
+  local existing_base_version
 
   synced_at="$(date +%Y-%m-%d)"
   project_version="$(sed '1s/^\xEF\xBB\xBF//' VERSION 2>/dev/null | tr -d '[:space:]' || true)"
   base_version="$template_version"
   if [[ -f TEMPLATE-BASE.md ]]; then
-    base_version="$(grep -E '^\- Base template version:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Base template version:[[:space:]]*//' || true)"
-    [[ -n "$base_version" ]] || base_version="$template_version"
+    existing_base_version="$(extract_template_base_version)"
+    [[ -n "$existing_base_version" ]] && base_version="$existing_base_version"
   fi
   source_label="$(template_source_label)"
 
@@ -321,16 +351,23 @@ write_domain_template_base() {
   local source_label
   local standards_scope
   local existing_scope
+  local existing_base_version
+  local legacy_scope
 
   synced_at="$(date +%Y-%m-%d)"
   domain_version="$(sed '1s/^\xEF\xBB\xBF//' VERSION 2>/dev/null | tr -d '[:space:]' || true)"
   base_version="$template_version"
   standards_scope="(TODO: 领域模板维护者填写叠加的领域标准件范围，例如 agent-system 的 planner/executor、tool permission、memory/state、eval、trace/replay、HITL)"
   if [[ -f TEMPLATE-BASE.md ]]; then
-    base_version="$(grep -E '^\- Base template version:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Base template version:[[:space:]]*//' || true)"
-    [[ -n "$base_version" ]] || base_version="$template_version"
+    existing_base_version="$(extract_template_base_version)"
+    [[ -n "$existing_base_version" ]] && base_version="$existing_base_version"
     existing_scope="$(grep -E '^\- Domain standards scope:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Domain standards scope:[[:space:]]*//' || true)"
-    [[ -n "$existing_scope" ]] && standards_scope="$existing_scope"
+    legacy_scope="$(extract_legacy_domain_standards_scope)"
+    if [[ -n "$existing_scope" && "$existing_scope" != *TODO* ]]; then
+      standards_scope="$existing_scope"
+    elif [[ -n "$legacy_scope" ]]; then
+      standards_scope="$legacy_scope"
+    fi
   fi
   source_label="$(template_source_label)"
 

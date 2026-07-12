@@ -235,6 +235,37 @@ function Get-TemplateSourceLabel {
   return $TemplateRemote
 }
 
+function Get-TemplateBaseVersionFromFile {
+  if (-not (Test-Path -LiteralPath "TEMPLATE-BASE.md" -PathType Leaf)) { return "" }
+
+  foreach ($line in (Get-Content -Encoding UTF8 TEMPLATE-BASE.md)) {
+    if ($line -match '^\s*-\s*(\*\*)?(Base template version|base version)') {
+      $match = [regex]::Match($line, 'v[0-9]+\.[0-9]+\.[0-9]+')
+      if ($match.Success) { return $match.Value }
+    }
+  }
+  return ""
+}
+
+function Get-LegacyDomainStandardsScope {
+  if (-not (Test-Path -LiteralPath "TEMPLATE-BASE.md" -PathType Leaf)) { return "" }
+
+  $items = New-Object System.Collections.Generic.List[string]
+  $inScope = $false
+  foreach ($line in (Get-Content -Encoding UTF8 TEMPLATE-BASE.md)) {
+    if ($line -match '^##\s+(叠加的标准件范围|Domain Standards Scope)\s*$') {
+      $inScope = $true
+      continue
+    }
+    if ($inScope -and $line -match '^##\s+') { break }
+    if ($inScope -and $line -match '^\s*-\s+(.+)$') {
+      $item = ($Matches[1] -replace '\s+', ' ').Trim()
+      if ($item) { [void]$items.Add($item) }
+    }
+  }
+  return ($items -join "；")
+}
+
 function Write-TemplateBase {
   param(
     [string]$TemplateVersion,
@@ -245,12 +276,8 @@ function Write-TemplateBase {
   $projectVersion = if (Test-Path -LiteralPath "VERSION" -PathType Leaf) { (Get-Content -Raw -Encoding UTF8 VERSION).Trim([char]0xFEFF, [char]0x20, [char]0x09, [char]0x0A, [char]0x0D) } else { "unknown" }
   $baseVersion = $TemplateVersion
   if (Test-Path -LiteralPath "TEMPLATE-BASE.md" -PathType Leaf) {
-    foreach ($line in (Get-Content -Encoding UTF8 TEMPLATE-BASE.md)) {
-      if ($line -match '^\- Base template version:\s*(.+)$') {
-        $baseVersion = $Matches[1].Trim()
-        break
-      }
-    }
+    $existingBaseVersion = Get-TemplateBaseVersionFromFile
+    if ($existingBaseVersion) { $baseVersion = $existingBaseVersion }
   }
 
   $sourceLabel = Get-TemplateSourceLabel -TemplateRemote $TemplateRemote
@@ -288,19 +315,17 @@ function Write-DomainTemplateBase {
   $baseVersion = $TemplateVersion
   $standardsScope = "(TODO: 领域模板维护者填写叠加的领域标准件范围，例如 agent-system 的 planner/executor、tool permission、memory/state、eval、trace/replay、HITL)"
   if (Test-Path -LiteralPath "TEMPLATE-BASE.md" -PathType Leaf) {
-    foreach ($line in (Get-Content -Encoding UTF8 TEMPLATE-BASE.md)) {
-      if ($line -match '^\-\s*Base template version:\s*(.+)$') {
-        $baseVersion = $Matches[1].Trim()
-        break
-      }
-    }
+    $existingBaseVersion = Get-TemplateBaseVersionFromFile
+    if ($existingBaseVersion) { $baseVersion = $existingBaseVersion }
     foreach ($line in (Get-Content -Encoding UTF8 TEMPLATE-BASE.md)) {
       if ($line -match '^\-\s*Domain standards scope:\s*(.*)$') {
         $existingScope = $Matches[1].Trim()
-        if ($existingScope) { $standardsScope = $existingScope }
+        if ($existingScope -and ($existingScope -notmatch 'TODO')) { $standardsScope = $existingScope }
         break
       }
     }
+    $legacyScope = Get-LegacyDomainStandardsScope
+    if (($standardsScope -match 'TODO') -and $legacyScope) { $standardsScope = $legacyScope }
   }
 
   $sourceLabel = Get-TemplateSourceLabel -TemplateRemote $TemplateRemote

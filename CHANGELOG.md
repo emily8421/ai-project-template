@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.47.1（2026-07-12）
+
+领域模板 `TEMPLATE-BASE.md` 迁移兼容小修：基于 `agent-system-template` 真实 sync 验证，补齐旧领域溯源格式到新 `Domain standards scope` 字段的迁移，避免旧文件的“叠加的标准件范围”在首次 `--domain-template` 同步后退化为 TODO。
+
+- `scripts/sync-template.sh` 与 PowerShell fallback 现在会识别旧版 `TEMPLATE-BASE.md` 的 `## 叠加的标准件范围` / `## Domain Standards Scope` 小节，把其中 bullet 合并迁移到新字段；若新字段已有非 TODO 内容，则优先保留新字段。
+- 旧版 `base version` 也会迁移为 `Base template version`，继续保持初始母模板溯源锚点。
+- `scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加旧领域范围迁移关键词断言，防止兼容逻辑回退。
+
 ## v1.47.0（2026-07-12）
 
 领域模板版本治理（inheritance Batch 3 / C-004）：把普通派生项目的双版本保留机制扩展到领域模板线，让领域模板（如 `agent-system-template`）从母模板 sync 时保留自身 `VERSION` / `CHANGELOG.md`，并用领域版 `TEMPLATE-BASE.md` 记录继承的母模板版本与领域标准件范围，解决 2026-07-11 试跑中"每次 sync 覆盖领域版本需手动恢复"的问题。与普通派生项目版本治理（v1.46.0）是两条独立线，互不混用。
