@@ -13,7 +13,7 @@
 
 **不适用场景**：替代 `00-03` 正式需求、替代 `docs/design/frontend-interaction.md`、替代 `ai/project-rules.md` §2.7 UI 原型策略、替代 `09` 验收记录，或直接生成生产代码。
 
-**使用前准备**：读取 `ai/index.md`、`ai/document-lifecycle-rules.md §10.2`、`docs/README.md` 和 `template-docs/ui-prototype-exploration-template.md`。若已有输入材料，读取 `docs/inputs/*`、`docs/vision/product-vision.md` 或当前会话中的用户描述。
+**使用前准备**：读取 `ai/index.md`、`ai/document-lifecycle-rules.md §10.2`、`docs/README.md`、`template-docs/ui-brief-intake-template.md` 和 `template-docs/ui-prototype-exploration-template.md`。若已有输入材料，读取 `docs/inputs/*`、`docs/vision/product-vision.md` 或当前会话中的用户描述；若缺参考产品、演示主线、页面结构、信息密度、设备范围或视觉禁区，先转 A25 UI Brief Intake 补齐，不要直接画原型。
 
 **预期产出**：需求探索原型方案、页面 / 流程 / 状态草案、待确认假设、用户反馈记录位、建议回填到 `00-03` 的候选需求和下一步建议。默认不写文件；若用户确认，可落盘到 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`。
 
@@ -30,12 +30,13 @@
 - ai/index.md 列出的全部规则文件
 - ai/document-lifecycle-rules.md §10.2（需求探索原型边界）
 - docs/README.md（文档分区规则）
+- template-docs/ui-brief-intake-template.md
 - template-docs/ui-prototype-exploration-template.md
 - docs/inputs/*、docs/vision/product-vision.md、docs/00-03（如已存在）
 
 执行要求：
 1. 先说明本次原型定位：探索 / 待确认，不是正式需求、架构、技术栈、接口、数据库、任务或验收事实。
-2. 先收敛最小输入：目标用户、核心场景、用户目标、主任务、非目标、成功标准和需要通过原型确认的问题。
+2. 先收敛最小输入：目标用户、核心场景、用户目标、主任务、非目标、成功标准和需要通过原型确认的问题；若 UI brief 缺失，先输出 UI 输入缺口并建议写入 `docs/inputs/ui-brief.md` 或 `docs/research/YYYY-MM-DD-ui-brief-intake.md`。
 3. 输出 2-3 个原型形式选项并推荐一种：低保真草图 / Figma / Penpot / 截图标注 / HTML 静态页 / 代码静态 Mock / 其他。
 4. 生成页面 / 视图清单、主流程草案、关键状态（加载 / 空态 / 错误 / 禁用 / 成功 / 无权限 / 降级 / 风险提示）和文案 / 信息密度注意点。
 5. 明确每个页面、流程和状态的“假设状态”：探索 / 待确认 / 用户已确认 / 不做。
@@ -48,6 +49,7 @@
 - 不要在需求探索原型阶段锁定前端框架、后端框架、数据库、模型、第三方服务或部署方案。
 - 不要把原型作为验收通过证据。
 - 用户确认后的内容必须回填 `00-03`，再进入 `04-05` 和后续设计 / 实现链路。
+- UI brief 只补齐交互输入，不替代需求探索原型；需求探索原型也不替代 UI brief 中的来源锚点和用户确认记录。
 
 请输出：
 1. 原型定位与边界声明。

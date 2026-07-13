@@ -95,6 +95,8 @@ docs/workflow-engine-design.md
 
 前端交互设计的细粒度标准见 `ai/doc-standards/frontend-interaction.md`。UI 原型策略 / 实现前原型的细粒度标准见 `ai/doc-standards/ui-prototype-strategy.md`；需要独立记录时可参考 `template-docs/ui-prototype-strategy-template.md`。
 
+UI Brief Intake 是前端交互输入补齐材料，用于在输入评审、需求探索原型、正式前端交互设计或前端实现前补齐参考产品、演示主线、页面结构、信息密度、设备范围和视觉禁区。若属于用户原始输入补充，推荐写入 `docs/inputs/ui-brief.md`；若属于 AI 与用户共同探索形成的研究记录，推荐写入 `docs/research/YYYY-MM-DD-ui-brief-intake.md`。模板见 `template-docs/ui-brief-intake-template.md`。UI brief 不替代 `docs/design/frontend-interaction.md`、UI 原型策略、`08` 或 `09`。
+
 需求探索原型是正式 `00-03` 定稿前的可视化澄清材料，默认放在 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`，模板见 `template-docs/ui-prototype-exploration-template.md`。它用于确认页面结构、主流程、信息密度和用户反馈，不替代 `00-09`、不决定架构 / 技术栈 / 接口 / 数据库 / 验收；用户确认后的内容必须回填到 `00-03` 后，才可进入正式设计和实现链路。
 
 ## 7. AI 新增文档规则

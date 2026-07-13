@@ -120,6 +120,7 @@ DEFAULT_SYNC_FILES=(
   "template-docs/docs-scaffold/research/tech-env-evaluation.md"
   "template-docs/session-handoff.example.md"
   "template-docs/derived-sync-report-template.md"
+  "template-docs/ui-brief-intake-template.md"
   "template-docs/ui-prototype-strategy-template.md"
   "template-sync.json"
   "ai/index.md"

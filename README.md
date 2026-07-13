@@ -19,7 +19,7 @@
 
 按你需要选一个入口：
 
-- **想让 AI 带我做** → 在项目根目录打开 AI CLI（`Claude CLI` / `Codex CLI`），说一个具体场景或 `/run scenario` ─→ `template-docs/scenario-guides.md`（覆盖 A0–A24 / C1–C8 / 元场景，AI 先给「做什么 + 为什么」引导计划，确认后执行）。
+- **想让 AI 带我做** → 在项目根目录打开 AI CLI（`Claude CLI` / `Codex CLI`），说一个具体场景或 `/run scenario` ─→ `template-docs/scenario-guides.md`（覆盖 A0–A25 / C1–C8 / 元场景，AI 先给「做什么 + 为什么」引导计划，确认后执行）。
 - **我知道要做什么，找命令** → `SOP.md` 场景索引 / `ai/commands/README.md` 命令表 / `git-guide.md` git 操作 SOP。
 - **想理解模板为什么这么设计** → `template-docs/beginner-guide.md` / `template-docs/template-methodology.md`。
 - **查术语什么意思** → `template-docs/glossary.md`（PLM / SRS / REQ-ID / Phase / Sprint 等核心术语短定义 + 权威源指针）。

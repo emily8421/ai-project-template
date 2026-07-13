@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.49.0（2026-07-13）
+
+UI Brief Intake / 前端交互输入补齐：新增 UI brief 模板和 A25 场景，让 AI 在输入评审、需求探索原型或前端实现前主动补齐参考产品、演示主线、页面结构、信息密度、设备范围和视觉禁区，避免直接进入原型或编码后才发现界面方向不足。
+
+- **新增模板**：`template-docs/ui-brief-intake-template.md`，支持 `docs/inputs/ui-brief.md`（用户原始输入补充）和 `docs/research/YYYY-MM-DD-ui-brief-intake.md`（AI 与用户共同探索记录）两类落点，包含交互体验抽取表、参考偏好、演示首屏、信息架构、状态边界和回填建议。
+- **新增场景**：`template-docs/scenario-guides.md` 增加 A25 UI Brief Intake / 前端交互输入补齐，并在 A5 输入评审、A22 需求探索原型、A23 UI 原型策略和 A10 编码前形成衔接。
+- **规则与 Prompt**：`ai/document-lifecycle-rules.md`、`ai/prompts/docs/01-review-inputs.md`、`ai/prompts/docs/22-ui-prototype-exploration.md`、`ai/prompts/dev/02-run-task.md` 与 `ai/commands/README.md` 增加 UI 输入抽取和缺 UI brief 时先补齐的门禁。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入新模板；`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加 UI brief 模板、A25、输入评审、原型探索和编码前门禁断言。
+- 回流自 GitHub issue #192（UI Brief Intake / 前端交互输入补齐）。
+
 ## v1.48.0（2026-07-13）
 
 Scenario Guide 编号治理：重梳使用者场景编号规则，停止新增 `A5.5` / `A7.5` / `A8.5` 这类小数顶层编号，改为顶层整数场景 + 语义化子流程，解决旧编号缺少规律和 `A7.5` 语义冲突问题。

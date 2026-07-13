@@ -231,7 +231,7 @@ shared/
 - 版本影响建议：`MINOR`，因为会调整使用者导航与多处场景引用。
 - 落地记录：v1.48.0 已新增编号规则，迁移 `A5.5` → `A22`、顶层 `A7.5` → `A23`、`A8.5` → `A24`，并将 A7 PLM 子场景改为 `A7-REQ` / `A7-ARCH` / `A7-TC` / `A7-DETAIL` / `A7-PLAN` / `A7-VERIFY` / `A7-BACKFILL`。
 
-### Batch 3：UI Brief Intake / 前端交互输入补齐（来自 #192，minor）
+### Batch 3：UI Brief Intake / 前端交互输入补齐（来自 #192，minor；v1.49.0 已落地）
 
 - 新增或扩展使用者场景：不使用 `A5.6` / `A5.7`；在 Batch 2 的编号规则下新增语义化入口（候选名：`A5-UI-Brief`），并在输入评审、需求探索原型、实现前 UI 原型策略中引用。
 - 在 `ai/prompts/docs/01-review-inputs.md` 中增加 Web / UI 项目的交互体验抽取：参考产品、演示主线、页面结构、信息密度、首屏目标、设备范围、视觉禁区等。
@@ -239,6 +239,7 @@ shared/
 - 在 `ai/document-lifecycle-rules.md`、`ai/commands/README.md`、`ai/prompts/docs/22-ui-prototype-exploration.md`、`ai/prompts/dev/02-run-task.md` 增加“缺 UI brief 时先补齐，不直接实现”的门禁。
 - 与后续批次关系：UI brief 解决“输入够不够 / 用户想要什么体验”，是 #191 / #182 / #186 / #187 的前置输入。
 - 版本影响建议：`MINOR`。
+- 落地记录：v1.49.0 已新增 `template-docs/ui-brief-intake-template.md` 与 A25 场景，并把 UI / UX 输入抽取、UI brief 缺失拦截和编码前 UI 输入门禁接入输入评审、需求探索原型、执行任务、同步清单和自检脚本；PR 合并后可关闭 #192。
 
 ### Batch 4：UI Exploration Pipeline + Prototype Gate（合并 #191 + #182，minor）
 

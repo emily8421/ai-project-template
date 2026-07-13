@@ -8,7 +8,7 @@
 > **与 `scenario-guides` 的分工（场景码对齐，互补不重复）**：
 > - 本文件 = **命令速查**（找快捷命令 / 权威文档 / Prompt）。
 > - `template-docs/scenario-guides.md` = **场景剧本**（「AI 带我做」：引导计划 + 做什么 / 为什么 / 机器执行）。
-> - 两边用**同一套场景码**：A0–A24（使用者）/ C1–C8（维护者）/ M0–M1（元场景）。找命令看本文件；看完整剧本看 scenario-guides 对应码。
+> - 两边用**同一套场景码**：A0–A25（使用者）/ C1–C8（维护者）/ M0–M1（元场景）。找命令看本文件；看完整剧本看 scenario-guides 对应码。
 
 ## 使用原则
 
@@ -36,6 +36,7 @@
 | A6 | 生成文档骨架 | `/run generate-docs` | `README.md` 快速开始 | `ai/prompts/docs/00-generate-or-complete-docs.md` | 先说明阶段路线，再铺 `00-09` 骨架 |
 | A7 | PLM 文档精修（含 A7-REQ / A7-ARCH / A7-TC / A7-DETAIL / A7-PLAN / A7-VERIFY / A7-BACKFILL） | `/run edit-single-doc` | `ai/document-lifecycle-rules.md` §5 | `ai/prompts/docs/04-edit-single-doc.md` | 按 PLM 阶段精修；只改目标文档，不顺手扩需求 |
 | A23 | UI 原型策略 / 实现前原型 | `/run edit-single-doc` | `ai/doc-standards/ui-prototype-strategy.md` | `ai/prompts/docs/04-edit-single-doc.md` | 已有需求链后、前端实现前确认可视化原型门禁 |
+| A25 | UI Brief Intake / 前端交互输入补齐 | `/run review-inputs` | `ai/prompts/docs/01-review-inputs.md` | `template-docs/ui-brief-intake-template.md` | 输入评审、原型或编码前补齐 UI 交互输入 |
 | A7-BACKFILL | 文档反向同步 | `/run sync-docs-from-code` | `ai/global-rules.md` §1 / §8 | `ai/prompts/docs/07-sync-docs-from-code.md` | 代码事实与 docs 不一致时，先补文档事实 |
 | A8 | 文档评估 / 审计 / 检查 | `/run docs-evaluation` / `docs-system-audit` / `docs-checklist` | `ai/document-lifecycle-rules.md`、`ai/doc-standards/` | `ai/prompts/review/19-docs-evaluation.md` / `16-docs-system-audit.md` / `10-docs-checklist.md` | 评估判阶段、审计找断点、checklist 拦编码；旧项目可 fallback 到 `docs/_scaffold/` |
 | A24 | 技术路线与环境支撑评估 | `/run tech-env-evaluation` | `ai/prompts/review/20-tech-env-evaluation.md` | 同左 | 真实运行依赖进入 Sprint 前评估本机环境 |
