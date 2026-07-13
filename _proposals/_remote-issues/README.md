@@ -1,4 +1,4 @@
-﻿# Remote Issue Mirrors
+# Remote Issue Mirrors
 
 This directory stores raw local mirrors of GitHub proposal / feedback issues for template-maintainer triage.
 

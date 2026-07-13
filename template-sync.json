@@ -130,6 +130,7 @@
     "scripts/sync-template.ps1",
     "scripts/check-template.sh",
     "scripts/check-template.ps1",
+    "scripts/check-markdown-clean.ps1",
     "scripts/sync-all-derived.sh",
     "scripts/e2e-sync-check.sh",
     "scripts/check-derived-sync.sh",

@@ -721,6 +721,7 @@ require_files \
   "scripts/sync-template.ps1" \
   "scripts/check-template.sh" \
   "scripts/check-template.ps1" \
+  "scripts/check-markdown-clean.ps1" \
   "scripts/check-derived-sync.sh" \
   "scripts/check-derived-sync.ps1" \
   "scripts/collect-env.ps1" \
@@ -904,6 +905,11 @@ require_contains "scripts/sync-template.sh" '"ai/prompts/review/16-docs-system-a
 require_contains "scripts/sync-template.sh" '"ai/prompts/docs/00-generate-or-complete-docs\.md"' "sync-template 兜底清单含文档生成 Prompt"
 require_contains "scripts/sync-template.sh" '"ai/prompts/planning/19-plan-phases-and-sprints\.md"' "sync-template 兜底清单含 A9 阶段 Sprint 规划 Prompt"
 require_contains "scripts/sync-template.sh" '"docs/inputs/README\.md"' "sync-template 兜底清单含 docs inputs README"
+require_contains "template-sync.json" 'scripts/check-markdown-clean\.ps1' "template-sync 纳入 Markdown 清洁预检脚本"
+require_contains "scripts/sync-template.sh" 'scripts/check-markdown-clean\.ps1' "sync-template 兜底清单含 Markdown 清洁预检脚本"
+require_contains ".github/workflows/template-check.yml" 'check-markdown-clean\.ps1' "template-check CI 运行 Markdown 清洁预检"
+require_contains "MAINTAINERS.md" 'check-markdown-clean\.ps1' "MAINTAINERS 提醒 PR 前运行 Markdown 清洁预检"
+require_contains "git-guide.md" 'check-markdown-clean\.ps1' "git-guide 模板维护流程包含 Markdown 清洁预检"
 check_script_entrypoints
 require_contains "scripts/check-derived-sync.sh" '同步清单外变更' "check-derived-sync 检查同步清单外变更"
 require_contains "scripts/check-derived-sync.sh" 'README 模板版本' "check-derived-sync 含 README 模板版本一致性告警（非阻断）"

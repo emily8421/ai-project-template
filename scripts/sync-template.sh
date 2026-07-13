@@ -193,6 +193,7 @@ DEFAULT_SYNC_FILES=(
   "scripts/sync-template.ps1"
   "scripts/check-template.sh"
   "scripts/check-template.ps1"
+  "scripts/check-markdown-clean.ps1"
   "scripts/check-derived-sync.sh"
   "scripts/check-derived-sync.ps1"
   "scripts/check-github-context.ps1"

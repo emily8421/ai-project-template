@@ -31,5 +31,9 @@ jobs:
             git diff --check "${{ github.event.before }}" "${{ github.sha }}"
           fi
 
+      - name: Check Markdown clean files
+        shell: pwsh
+        run: ./scripts/check-markdown-clean.ps1 _proposals ai-records
+
       - name: Run template self-check
         run: bash scripts/check-template.sh

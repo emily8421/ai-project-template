@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.47.2（2026-07-13）
+
+Markdown 提案 / 记录清洁预检：新增 `scripts/check-markdown-clean.ps1`，在 PR 前和 CI 中检查 `_proposals/`、`ai-records/` Markdown 的 UTF-8 BOM、行尾空格、最终换行和 EOF 多空行，避免远端 issue 镜像或长提案因微小格式问题到 GitHub Actions 后才失败。
+
+- `template-check.yml` 在 `git diff --check` 后运行 Markdown 清洁预检；`template-sync.json` 与 `scripts/sync-template.sh` 兜底清单纳入新脚本。
+- `MAINTAINERS.md`、`git-guide.md`、`SOP.md` 补充模板维护 PR 前预检命令。
+- `scripts/check-template.sh` 与 PowerShell fallback 增加同步清单、CI 和人读文档断言，防止预检入口漂移。
+
 ## v1.47.1（2026-07-12）
 
 领域模板 `TEMPLATE-BASE.md` 迁移兼容小修：基于 `agent-system-template` 真实 sync 验证，补齐旧领域溯源格式到新 `Domain standards scope` 字段的迁移，避免旧文件的“叠加的标准件范围”在首次 `--domain-template` 同步后退化为 TODO。

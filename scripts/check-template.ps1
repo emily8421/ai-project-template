@@ -205,7 +205,8 @@ function Invoke-NativeTemplateCheck {
       "scripts/check-github-context.ps1",
       "scripts/new-project.sh",
       "scripts/sync-template.sh",
-      "scripts/check-template.sh"
+      "scripts/check-template.sh",
+      "scripts/check-markdown-clean.ps1"
     )) {
     Require-File $path
   }
@@ -482,6 +483,11 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/decisions/ADR-template\.md" "template-sync includes ADR scaffold"
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/research/docs-open-items\.md" "template-sync includes open items scaffold"
   Require-Contains "template-sync.json" "template-docs/docs-scaffold/research/tech-env-evaluation\.md" "template-sync includes tech env evaluation scaffold"
+  Require-Contains "template-sync.json" "scripts/check-markdown-clean\.ps1" "template-sync includes Markdown clean preflight"
+  Require-Contains "scripts/sync-template.sh" "scripts/check-markdown-clean\.ps1" "sync-template fallback includes Markdown clean preflight"
+  Require-Contains ".github/workflows/template-check.yml" "check-markdown-clean\.ps1" "template-check CI runs Markdown clean preflight"
+  Require-Contains "MAINTAINERS.md" "check-markdown-clean\.ps1" "MAINTAINERS reminds maintainers to run Markdown clean preflight"
+  Require-Contains "git-guide.md" "check-markdown-clean\.ps1" "git-guide includes Markdown clean preflight in template maintenance flow"
   Require-Contains "template-docs/docs-scaffold/README.md" "template-docs/task-template\.md.*tasks/task-00X" "docs scaffold README defines task template boundary"
   Require-Contains "scripts/sync-template.sh" "--preserve-project-version" "sync-template supports preserving derived project VERSION"
   Require-Contains "scripts/sync-template.sh" "detect_lineage_role" "sync-template auto-detects TEMPLATE-BASE lineage role (ordinary/domain)"

@@ -119,6 +119,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 # 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令）
 bash scripts/new-project.sh smoke-demo --local --no-remote
 # 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行）
+powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records
 powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
 # Bash 完整自检入口（CI 使用同类路径）
 bash scripts/check-template.sh

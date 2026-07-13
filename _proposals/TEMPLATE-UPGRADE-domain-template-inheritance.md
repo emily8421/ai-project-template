@@ -1,4 +1,4 @@
-﻿# TEMPLATE-UPGRADE: 领域模板继承机制与 Agent 系统 Profile
+# TEMPLATE-UPGRADE: 领域模板继承机制与 Agent 系统 Profile
 
 > 来源：2026-07-09 维护会话中关于“母模板 → agent 专用模板”继承关系的设计讨论
 > 状态：部分落地（Batch 1 方法论文档化已完成；Batch 3 母模板侧 AI 实验入口 + C-004 版本保留机制已落地；多级同步自动化与领域 scaffold 资产仍待独立仓库试验）
