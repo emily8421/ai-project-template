@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.48.0（2026-07-13）
+
+Scenario Guide 编号治理：重梳使用者场景编号规则，停止新增 `A5.5` / `A7.5` / `A8.5` 这类小数顶层编号，改为顶层整数场景 + 语义化子流程，解决旧编号缺少规律和 `A7.5` 语义冲突问题。
+
+- **编号规则**：`template-docs/scenario-guides.md` 新增场景编号规则，约定顶层场景只使用角色前缀 + 整数，新增场景追加整数，先后关系由前置 / 下一步 / 触发条件表达。
+- **场景迁移**：旧 `A5.5` → `A22`，顶层 `A7.5 UI 原型策略` → `A23`，旧 `A8.5` → `A24`；A7 PLM 子场景改为 `A7-REQ` / `A7-ARCH` / `A7-TC` / `A7-DETAIL` / `A7-PLAN` / `A7-VERIFY` / `A7-BACKFILL`。
+- **引用同步**：`README.md`、`SOP.md`、`template-docs/beginner-guide.md`、`template-docs/env-setup.md` 与自检脚本同步更新新编号。
+- **自检防回归**：`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加编号规则、A22 / A23 / A24 和 A7 语义化子流程断言。
+
 ## v1.47.3（2026-07-13）
 
 Demo 页面身份与端口漂移检查补强：把派生项目回流的 Demo 可靠性问题落入 `show-demo` 命令和 demo runbook 模板，避免只凭 HTTP 200 把其他本地项目页面误判为当前 Demo ready。

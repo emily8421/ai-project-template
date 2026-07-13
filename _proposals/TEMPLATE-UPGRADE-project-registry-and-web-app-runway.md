@@ -221,7 +221,7 @@ shared/
 - 版本影响建议：`PATCH`。
 - 落地记录：v1.47.3 已补充 strict port / 页面 `identity marker` / `/api` 代理链路检查 / `.ai/local-demo-runtime.json` 忽略口径，并由 `scripts/check-template.*` 增加防回归断言；PR 合并后可关闭 #184。
 
-### Batch 2：Scenario Guide 编号治理（UI/Web 批次前置，minor）
+### Batch 2：Scenario Guide 编号治理（UI/Web 批次前置，minor；v1.48.0 已落地）
 
 - 先重梳 `template-docs/scenario-guides.md` 的场景编号规则，再新增 UI / Web 场景入口。
 - 顶层场景编号只使用角色前缀 + 整数，例如 `A0`、`A1`、`C1`、`M0`；不再新增 `A5.6`、`A5.7` 这类小数编号。
@@ -229,6 +229,7 @@ shared/
 - 迁移现有不规则编号：顶层 `A5.5`、`A7.5`、`A8.5` 以及 A7 PLM 子场景 `A7.1`–`A7.7` 需要统一为“顶层整数场景 + 语义化子流程 / 分支”，并保留旧编号 alias 表用于过渡。
 - 场景先后关系不靠小数表达，改由“前置 / 下一步 / 触发条件 / 转入场景”字段表达，避免后续再插入 `A5.x`。
 - 版本影响建议：`MINOR`，因为会调整使用者导航与多处场景引用。
+- 落地记录：v1.48.0 已新增编号规则，迁移 `A5.5` → `A22`、顶层 `A7.5` → `A23`、`A8.5` → `A24`，并将 A7 PLM 子场景改为 `A7-REQ` / `A7-ARCH` / `A7-TC` / `A7-DETAIL` / `A7-PLAN` / `A7-VERIFY` / `A7-BACKFILL`。
 
 ### Batch 3：UI Brief Intake / 前端交互输入补齐（来自 #192，minor）
 
