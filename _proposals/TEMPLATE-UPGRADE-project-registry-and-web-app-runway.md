@@ -213,12 +213,13 @@ shared/
 - 不修改正式模板规则、同步清单、自检脚本或版本文件；不关闭远端 issue。
 - 版本影响：无功能版本 bump；若单独提交可作为 proposal-only / docs-only 维护提交。
 
-### Batch 1：Demo 展示验证补强（来自 #184，低风险 patch）
+### Batch 1：Demo 展示验证补强（来自 #184，低风险 patch；v1.47.3 已落地）
 
 - 补强 Demo runbook：端口占用预检、实际端口记录、页面身份校验。
 - 补强 `show-demo` / demo 检查口径：不仅确认服务启动，还确认打开的是目标 Demo 页面。
 - 与 Web App runway 关系：#184 解决“演示检查是否可靠”，不解决代码架构；可独立小 PR 落地。
 - 版本影响建议：`PATCH`。
+- 落地记录：v1.47.3 已补充 strict port / 页面 `identity marker` / `/api` 代理链路检查 / `.ai/local-demo-runtime.json` 忽略口径，并由 `scripts/check-template.*` 增加防回归断言；PR 合并后可关闭 #184。
 
 ### Batch 2：Scenario Guide 编号治理（UI/Web 批次前置，minor）
 

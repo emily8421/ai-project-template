@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.47.3（2026-07-13）
+
+Demo 页面身份与端口漂移检查补强：把派生项目回流的 Demo 可靠性问题落入 `show-demo` 命令和 demo runbook 模板，避免只凭 HTTP 200 把其他本地项目页面误判为当前 Demo ready。
+
+- **Demo runbook**：`template-docs/demo-runbook-template.md` 补充端口占用预检、strict port / 等价机制、后端代理地址注入、默认端口 vs 本次实际入口、页面 `identity marker`、`.ai/local-demo-runtime.json` 和二维码 / 临时日志忽略口径。
+- **show-demo 边界**：`ai/commands/show-demo.md` 明确“检查 Demo”必须校验页面身份和关键只读 `/api` 代理链路；identity marker 不匹配、代理失败或实际端口未知时不得输出 `Demo ready`。
+- **自检防回归**：`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加页面身份、前端代理、strict port、运行状态文件和默认端口示例口径断言。
+- 回流自 GitHub issue #184（Demo 端口占用与页面身份校验）。
+
 ## v1.47.2（2026-07-13）
 
 Markdown 提案 / 记录清洁预检：新增 `scripts/check-markdown-clean.ps1`，在 PR 前和 CI 中检查 `_proposals/`、`ai-records/` Markdown 的 UTF-8 BOM、行尾空格、最终换行和 EOF 多空行，避免远端 issue 镜像或长提案因微小格式问题到 GitHub Actions 后才失败。

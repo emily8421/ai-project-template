@@ -652,6 +652,12 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/planning/08-phase-upgrade.md" "readiness gate 检查" "phase upgrade prompt checks readiness gate"
   Require-Contains "ai/commands/tech-env-evaluation.md" "Risk-ID" "tech-env command mentions Risk-ID"
   Require-Contains "ai/commands/docs-evaluation.md" "readiness gate" "docs-evaluation command mentions readiness gate"
+  Require-Contains "ai/commands/show-demo.md" "identity marker" "show-demo command requires page identity checks"
+  Require-Contains "ai/commands/show-demo.md" "/api" "show-demo command requires frontend proxy checks"
+  Require-Contains "ai/commands/show-demo.md" "strict port" "show-demo command avoids implicit port drift"
+  Require-Contains "template-docs/demo-runbook-template.md" "identity marker" "demo runbook template includes page identity marker"
+  Require-Contains "template-docs/demo-runbook-template.md" "local-demo-runtime\.json" "demo runbook template includes runtime state ignore guidance"
+  Require-Contains "template-docs/demo-runbook-template.md" "默认端口只是示例" "demo runbook template distinguishes default and actual ports"
 
   $syncFiles = Get-SyncFiles
   if ($syncFiles.Count -gt 0) {
