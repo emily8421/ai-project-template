@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.0（2026-07-14）
+
+Web App scaffold experiment protocol：为 Batch 6 增加可复用实验协议，用真实项目或独立实验仓验证候选 Web App scaffold，而不是直接把真实脚手架塞进母模板。
+
+- **实验协议**：新增 `template-docs/web-app-scaffold-experiment.md`，定义适用范围、非目标、输入条件、实验步骤、记录模板、Promotion decision matrix 和母模板回流要求。
+- **Profile 衔接**：`template-docs/web-fullstack-profile.md` 明确 Profile 只定义结构基线和 Gate；是否推进 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板，先走实验协议。
+- **领域模板边界**：`template-docs/domain-templates.md` 说明 Web App scaffold 不自动等于领域模板，只有多个同类 Web 项目共享领域标准件、独立版本和自检需求时才进入领域模板评估。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入实验协议；`scripts/check-template.*` 增加实验协议、Promotion matrix 和母模板禁写真实 scaffold 的防漂移断言。
+
 ## v1.51.0（2026-07-14）
 
 Web App Structure Profile + Walking Skeleton Gate：为复杂 Web / 全栈交互项目新增轻量结构 Profile 和 Sprint 0 / Walking Skeleton 门禁，避免首个业务 Sprint 把 App Shell、目录边界、API client、全局样式和 controller / service 持续堆进少数文件。

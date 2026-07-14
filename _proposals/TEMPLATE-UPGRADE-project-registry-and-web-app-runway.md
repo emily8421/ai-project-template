@@ -270,6 +270,8 @@ shared/
 - 决定是否需要 `new-project --profile web-app`、`template-docs/web-app/` 或更具体的领域模板。
 - 不在 Batch 5 之前直接实现真实脚手架，避免母模板过重。
 
+- 落地记录：v1.52.0 已新增 `template-docs/web-app-scaffold-experiment.md`，把 Batch 6 收敛为实验协议与决策矩阵：先在真实项目或独立实验仓记录候选结构、Walking Skeleton 验证、文件膨胀观察和推广结论，再决定是否提议 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板；母模板仍不内置真实 Web scaffold。
+
 ### Batch 7：领域模板迁移评估
 
 - 如果 2–3 个真实 Web 项目反复复用同一结构，再考虑拆出 `web-fullstack-app-template`、`knowledge-workbench-template`、`enterprise-admin-system-template` 或 `plm-management-system-template`。

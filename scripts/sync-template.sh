@@ -124,6 +124,7 @@ DEFAULT_SYNC_FILES=(
   "template-docs/frontend-experience-brief-template.md"
   "template-docs/ui-brief-intake-template.md"
   "template-docs/web-fullstack-profile.md"
+  "template-docs/web-app-scaffold-experiment.md"
   "template-docs/ui-prototype-strategy-template.md"
   "template-sync.json"
   "ai/index.md"
