@@ -250,7 +250,7 @@ shared/
 - 补充 UI 优先 / 后端优先 / 双轨并行判断，避免后续 Web Skeleton 只重代码结构、不重用户体验。
 - 版本影响建议：`MINOR`。
 
-- 落地记录：v1.50.0 已新增 UI Exploration to Delivery Pipeline、A26 UI Interaction Discovery、UI-G-001 到 UI-G-007 晋级 Gate、`template-docs/frontend-experience-brief-template.md` 与 scaffold，并强化 UI 原型策略、需求探索原型、前端交互设计、编码前门禁、文档评估 / 审计和自检断言；PR 合并后可关闭 #191 / #182。
+- 落地记录：v1.50.0 已新增 UI Exploration to Delivery Pipeline、A26 UI Interaction Discovery、UI-G-001 到 UI-G-007 晋级 Gate、`template-docs/frontend-experience-brief-template.md` 与 scaffold，并强化 UI 原型策略、需求探索原型、前端交互设计、编码前门禁、文档评估 / 审计和自检断言；PR #198 已合并，#191 / #182 已关闭，远端镜像已归档。
 
 ### Batch 5：Web App Structure Profile + Walking Skeleton Gate（合并 #186 + #187，minor）
 
@@ -279,11 +279,11 @@ shared/
 
 | 镜像路径 | Updated | Mirrored at | 核心主题 | 建议归属 |
 |---|---|---|---|---|
-| `_proposals/_remote-issues/issue-182.md` | `2026-07-12T16:12:24Z` | `2026-07-13 10:06:53 +08:00` | UI Prototype Gate、默认行业 UI 标准、UI / 后端 / 双轨顺序 | Batch 4 |
+| `_archive/proposals/_remote-issues/issue-182.md` | `2026-07-12T16:12:24Z` | `2026-07-13 10:06:53 +08:00` | UI Prototype Gate、默认行业 UI 标准、UI / 后端 / 双轨顺序 | Batch 4（已落地 / 已归档） |
 | `_proposals/_remote-issues/issue-184.md` | `2026-07-13T02:01:07Z` | `2026-07-13 11:15:52 +08:00` | Demo 端口占用、实际端口记录、页面身份校验 | Batch 1 |
 | `_proposals/_remote-issues/issue-186.md` | `2026-07-13T02:47:10Z` | `2026-07-13 11:15:53 +08:00` | Web App Structure Profile、目录结构、Walking Skeleton | Batch 5 |
 | `_proposals/_remote-issues/issue-187.md` | `2026-07-13T02:47:10Z` | `2026-07-13 11:15:54 +08:00` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | Batch 5 |
-| `_proposals/_remote-issues/issue-191.md` | `2026-07-13T07:16:13Z` | `2026-07-13 15:26:53 +08:00` | UI Exploration to Delivery Pipeline、体验 brief、晋级 Gate | Batch 4 |
+| `_archive/proposals/_remote-issues/issue-191.md` | `2026-07-13T07:16:13Z` | `2026-07-13 15:26:53 +08:00` | UI Exploration to Delivery Pipeline、体验 brief、晋级 Gate | Batch 4（已落地 / 已归档） |
 | `_proposals/_remote-issues/issue-192.md` | `2026-07-13T07:21:59Z` | `2026-07-13 15:26:53 +08:00` | UI Brief Intake、交互体验抽取、输入补齐 | Batch 3 |
 
 ### 8.2 Issue 映射
