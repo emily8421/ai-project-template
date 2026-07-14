@@ -61,9 +61,9 @@
 |---|---|---|
 | `docs/inputs/` | 用户原始材料的统一入口；尚未归类、尚未转成 `product-vision` 或 00-09 的输入包，如愿景草稿、小工具 brief、客户 PRD/SRS、外部需求包、现有系统说明 | `initial-brief.md`、`client-prd.md`、`input-review-report.md`、`<topic>/README.md` |
 | `docs/vision/` | 可选的整理后产品愿景叙事 / 长期业务图景；通常由 AI 或团队从 `docs/inputs/` 评审、补齐、确认后生成 | `product-vision.md`、`market-notes.md` |
-| `docs/design/` | 子系统 / 模块 / 前端交互详细设计 | `<subsystem>.md`、`auth.md`、`workflow-engine.md`、`frontend-interaction.md` |
+| `docs/design/` | 子系统 / 模块 / 前端交互详细设计，以及已确认体验原则等正式设计输入 | `<subsystem>.md`、`auth.md`、`workflow-engine.md`、`frontend-experience-brief.md`、`frontend-interaction.md` |
 | `docs/decisions/` | 架构决策记录（ADR）和重要取舍 | `ADR-0001-title.md` |
-| `docs/research/` | 技术调研、竞品分析、实验结论、技术环境评估报告、需求探索原型记录 | `topic-summary.md`、`YYYY-MM-DD-tech-env-evaluation-<scope>.md`、`YYYY-MM-DD-ui-prototype-exploration.md` |
+| `docs/research/` | 技术调研、竞品 / 参考分析、实验结论、技术环境评估报告、需求探索原型记录、视觉效果探索记录 | `topic-summary.md`、`YYYY-MM-DD-tech-env-evaluation-<scope>.md`、`YYYY-MM-DD-frontend-ui-reference-analysis.md`、`YYYY-MM-DD-ui-prototype-exploration.md`、`YYYY-MM-DD-ui-visual-exploration.md` |
 | `docs/env/` | 本机环境、资源约束、服务器预案、演示 SOP | `local-env.md`、`server-plan.md`、`local-demo-runbook.md` |
 | `docs/meetings/` | 会议纪要、访谈记录、评审记录 | `YYYY-MM-DD-topic.md` |
 | `docs/archive/` | 已废弃但需留痕的项目文档 | 保留原名或加日期前缀 |
@@ -98,6 +98,10 @@ docs/workflow-engine-design.md
 UI Brief Intake 是前端交互输入补齐材料，用于在输入评审、需求探索原型、正式前端交互设计或前端实现前补齐参考产品、演示主线、页面结构、信息密度、设备范围和视觉禁区。若属于用户原始输入补充，推荐写入 `docs/inputs/ui-brief.md`；若属于 AI 与用户共同探索形成的研究记录，推荐写入 `docs/research/YYYY-MM-DD-ui-brief-intake.md`。模板见 `template-docs/ui-brief-intake-template.md`。UI brief 不替代 `docs/design/frontend-interaction.md`、UI 原型策略、`08` 或 `09`。
 
 需求探索原型是正式 `00-03` 定稿前的可视化澄清材料，默认放在 `docs/research/YYYY-MM-DD-ui-prototype-exploration.md`，模板见 `template-docs/ui-prototype-exploration-template.md`。它用于确认页面结构、主流程、信息密度和用户反馈，不替代 `00-09`、不决定架构 / 技术栈 / 接口 / 数据库 / 验收；用户确认后的内容必须回填到 `00-03` 后，才可进入正式设计和实现链路。
+
+UI Exploration to Delivery Pipeline 建议按 `docs/inputs/*` → UI brief / 输入评审 → `docs/research/YYYY-MM-DD-frontend-ui-reference-analysis.md` → `docs/research/YYYY-MM-DD-ui-prototype-exploration.md` → 可选 `docs/research/YYYY-MM-DD-ui-visual-exploration.md` / prototype evidence → `docs/design/frontend-experience-brief.md` → `docs/design/frontend-interaction.md` → UI 原型策略 → `docs/08-dev-plan.md` / `docs/09-verification.md` 推进。`frontend-experience-brief.md` 只记录已确认体验原则、信息架构方向、视觉 / 密度 / 文案方向和阶段边界，不替代正式交互设计、UI 原型策略、`08` 或 `09`；模板见 `template-docs/frontend-experience-brief-template.md`。
+
+视觉效果探索只产生视觉候选、已确认视觉方向或视觉验证失败记录；未确认前不得写入正式设计。可视化原型被用户确认后，也不得直接进入实现，必须先检查是否回填 `frontend-experience-brief`、`frontend-interaction`、UI 原型策略、`08` 和 `09`。
 
 ## 7. AI 新增文档规则
 

@@ -6,6 +6,27 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.50.1（2026-07-14）
+
+规则分层加载与任务路由入口优化：把“任务执行前无条件全量读取规则”改为“核心规则 + 任务路由 + 完整回退包”，降低 PR / CI、编码和续接场景的启动成本，同时保留不确定时全量回退、写入确认和 Git 事实优先门禁。
+
+- **核心规则入口**：新增 `ai/rules-core.md`，沉淀所有任务共同硬规则、规则路由原则、完整回退条件和上下文卫生要求。
+- **路由化入口**：`ai/index.md` 改为规则导航页，按快速续接、命令路由、PR / CI / Git 收尾、编码、文档、UI 探索和模板维护选择规则包；`AGENTS.md`、`CLAUDE.md`、`.cursor/rules/project-rules.mdc` 同步改为指向路由入口。
+- **续接与命令口径**：`ai/session-rules.md`、`ai/commands/README.md`、`ai/commands/resume.md` 将“继续执行任务后全量读取”改为“按任务路由读取；无法判断时读取完整规则回退包”。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入 `ai/rules-core.md`；`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加任务路由、完整回退包和核心规则入口断言。
+- **Markdown 清洁**：移除 6 个既有 `ai/prompts/*` 文件的 UTF-8 BOM，使全量 `ai/` Markdown clean 可通过。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-scoped-rule-loading.md`。
+
+## v1.50.0（2026-07-13）
+
+UI Exploration Pipeline + Prototype Gate：把 UI brief、参考分析、需求探索原型、视觉效果探索、experience brief、正式前端交互设计、实现前 UI 原型和 `08/09` 回填串成可审计链路，避免 UI 型项目把探索稿、视觉候选或实现前原型直接当作需求、设计或验收事实。
+
+- **生命周期规则**：`ai/document-lifecycle-rules.md` 新增 UI Exploration to Delivery Pipeline、UI-G-001 到 UI-G-007 晋级 Gate、默认行业 UI 标准、UI / 后端 / 双轨顺序判断和大规模 IA / 图谱降级规则。
+- **标准与模板**：`ai/doc-standards/frontend-interaction.md`、`ai/doc-standards/ui-prototype-strategy.md`、`template-docs/ui-prototype-exploration-template.md`、`template-docs/ui-prototype-strategy-template.md` 和 docs scaffold 增加用户确认依据、默认 UI 标准基线、视觉候选、experience brief、Gate 与 `08/09` 回填字段；新增 `template-docs/frontend-experience-brief-template.md` 和 scaffold。
+- **场景与 Prompt**：`template-docs/scenario-guides.md` 新增 A26 UI Interaction Discovery，并强化 A22 / A23；`ui-prototype-exploration` 命令、22 号 Prompt、文档生成 / 单文档修订 / 编码前执行 / checklist / audit / evaluation 均增加探索链路、视觉候选和实现前 UI Gate 检查。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入 experience brief 模板和 scaffold；`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加 A26、experience brief、UI-G-004 / UI-G-006 和前端体验链路防回归断言。
+- 回流自 GitHub issue #191（UI Exploration to Delivery Pipeline）与 #182（UI Prototype Gate / 默认行业 UI 标准 / UI 与后端实施顺序）。
+
 ## v1.49.0（2026-07-13）
 
 UI Brief Intake / 前端交互输入补齐：新增 UI brief 模板和 A25 场景，让 AI 在输入评审、需求探索原型或前端实现前主动补齐参考产品、演示主线、页面结构、信息密度、设备范围和视觉禁区，避免直接进入原型或编码后才发现界面方向不足。
