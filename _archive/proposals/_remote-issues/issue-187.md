@@ -1,13 +1,14 @@
 # GitHub Issue #187: TEMPLATE-UPGRADE-web-fullstack-skeleton-gate
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/187
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-07-13T02:47:10Z
-> Updated: 2026-07-13T02:47:10Z
+> Updated: 2026-07-14T06:26:36Z
+> Closed: 2026-07-14T06:26:36Z
 > Mirrored at: 2026-07-13 11:15:54 +08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: archived after PR #200 landed Batch 5 in v1.51.0; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
 

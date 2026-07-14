@@ -283,8 +283,8 @@ shared/
 |---|---|---|---|---|
 | `_archive/proposals/_remote-issues/issue-182.md` | `2026-07-12T16:12:24Z` | `2026-07-13 10:06:53 +08:00` | UI Prototype Gate、默认行业 UI 标准、UI / 后端 / 双轨顺序 | Batch 4（已落地 / 已归档） |
 | `_proposals/_remote-issues/issue-184.md` | `2026-07-13T02:01:07Z` | `2026-07-13 11:15:52 +08:00` | Demo 端口占用、实际端口记录、页面身份校验 | Batch 1 |
-| `_proposals/_remote-issues/issue-186.md` | `2026-07-13T02:47:10Z` | `2026-07-13 11:15:53 +08:00` | Web App Structure Profile、目录结构、Walking Skeleton | Batch 5 |
-| `_proposals/_remote-issues/issue-187.md` | `2026-07-13T02:47:10Z` | `2026-07-13 11:15:54 +08:00` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | Batch 5 |
+| `_archive/proposals/_remote-issues/issue-186.md` | `2026-07-14T06:26:34Z` | `2026-07-13 11:15:53 +08:00` | Web App Structure Profile、目录结构、Walking Skeleton | Batch 5（已落地 / 已归档） |
+| `_archive/proposals/_remote-issues/issue-187.md` | `2026-07-14T06:26:36Z` | `2026-07-13 11:15:54 +08:00` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | Batch 5（已落地 / 已归档） |
 | `_archive/proposals/_remote-issues/issue-191.md` | `2026-07-13T07:16:13Z` | `2026-07-13 15:26:53 +08:00` | UI Exploration to Delivery Pipeline、体验 brief、晋级 Gate | Batch 4（已落地 / 已归档） |
 | `_proposals/_remote-issues/issue-192.md` | `2026-07-13T07:21:59Z` | `2026-07-13 15:26:53 +08:00` | UI Brief Intake、交互体验抽取、输入补齐 | Batch 3 |
 
@@ -294,8 +294,8 @@ shared/
 |---|---|---|---|
 | #182 `ui-prototype-gate` | UI 原型确认、默认行业 UI 标准、UI / 后端 / 双轨顺序 | 与 #191 同属 UI 体验门禁，但 #182 聚焦实现前原型与顺序判断，不应被 Web skeleton 吞并 | Batch 4 |
 | #184 Demo 端口占用与页面身份校验 | Demo runbook、端口漂移、页面身份校验 | 与 Web 架构关系弱，可独立小修 | Batch 1 |
-| #186 Web 交互型系统代码框架与 Walking Skeleton | Web App Structure Profile、目录结构、Walking Skeleton | 与 #187 高度重叠，应合并落地 | Batch 5 |
-| #187 `web-fullstack-skeleton-gate` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | 与 #186 高度重叠，应合并落地 | Batch 5 |
+| #186 Web 交互型系统代码框架与 Walking Skeleton | Web App Structure Profile、目录结构、Walking Skeleton | 与 #187 高度重叠，已通过 PR #200 合并落地 | Batch 5（已关闭） |
+| #187 `web-fullstack-skeleton-gate` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | 与 #186 高度重叠，已通过 PR #200 合并落地 | Batch 5（已关闭） |
 | #191 `ui-exploration-to-delivery-pipeline` | UI brief → reference analysis → exploration prototype → experience brief → frontend-interaction → 08/09 → implementation | 是 #192 与 #182 之间的总线；与 #182 相邻但不重复 | Batch 4 |
 | #192 `ui-brief-intake-guidance-scenario` | UI 输入补齐、交互体验抽取、低门槛问题模板 | 是 #191 / #182 / #186 / #187 的前置输入，不应并入原型或代码骨架门禁 | Batch 3 |
 | 本提案 | project registry、三类派生场景、Web runway 总体评估、scenario 编号治理 | project registry / 三类派生场景为独有；Web runway 与 #186/#187 重叠；UI 主线需纳入 #191/#192；编号治理需先行 | Batch 0 / Batch 2 / Batch 5 |
@@ -333,7 +333,7 @@ shared/
 
 ### 9.1 未发现的遗漏
 
-- 远端 open proposal / `TEMPLATE-UPGRADE:` issue 已纳入：#182、#184、#186、#187、#191、#192。
+- 远端 proposal / `TEMPLATE-UPGRADE:` issue 已纳入：#182、#184、#186、#187、#191、#192；其中 #182/#186/#187/#191 已按落地批次关闭并归档镜像。
 - 本地待处理提案已纳入关系评估：docs scaffold followups、domain template inheritance、project registry / web app runway、token hotspot records。
 - 新增 issue #191 / #192 已先镜像到本地，再进入分析，符合远端 issue 镜像门禁。
 
@@ -341,7 +341,7 @@ shared/
 
 - 场景编号：不再新增 `A5.6` / `A5.7` 这类小数编号；先由 Batch 2 重梳 `scenario-guides` 编号规则。当前已发现顶层 `A7.5 UI 原型策略` 与 A7 PLM 子场景 `A7.5 由详细设计拆 Sprint 和任务` 语义冲突，需统一治理。
 - 产物路径：`docs/inputs/ui-brief.md` 与 `docs/research/YYYY-MM-DD-ui-brief-intake.md` 都有合理性；落地时需在模板中明确“原始输入补充 vs AI 共同探索记录”的判定。
-- 新增模板文件：`template-docs/ui-brief-intake-template.md`、`template-docs/web-fullstack-profile.md` 当前不存在；落地批次需纳入 `template-sync.json` 和 `scripts/check-template.*`。
+- 新增模板文件：`template-docs/ui-brief-intake-template.md`、`template-docs/web-fullstack-profile.md` 已分别随 Batch 3 / Batch 5 落地并纳入 `template-sync.json` 和 `scripts/check-template.*`；后续只需复查是否扩展真实 scaffold / profile 实验。
 - Prompt 触发链：Batch 3/4/5 会同时触及 `ai/prompts/docs/01-review-inputs.md`、`ai/prompts/docs/22-ui-prototype-exploration.md`、`ai/prompts/dev/02-run-task.md`，需要避免重复拦截和互相跳转死循环。
 - 版本节奏：Batch 1 可 `PATCH`；Batch 2/3/4/5 都是场景导航、AI 引导路径或 Profile 级新增 / 调整，倾向 `MINOR`；Batch 0 不 bump。
 - 归档与 issue 关闭：每个 Batch PR 合并后，再关闭对应 issue 或标注后续批次；不要在 Batch 0 关闭 #182/#184/#186/#187/#191/#192。
