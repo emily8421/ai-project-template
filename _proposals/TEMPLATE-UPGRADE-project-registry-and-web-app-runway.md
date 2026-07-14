@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 派生项目登记与 Web App 架构 Runway
 
 > 来源：模板维护者评估（基于 `ai-project-template`、`agent-system-template`、zhiyan / LUMEN / 后续 OA-PLM 类系统使用经验）
-> 状态：候选 / 收件箱汇总完成（Batch 5 已落地；已纳入远端 issue #182/#184/#186/#187/#191/#192）
+> 状态：候选 / 收件箱汇总完成（Batch 6 已落地；已纳入远端 issue #182/#184/#186/#187/#191/#192）
 > 目标版本：分批确认
 > Release impact：patch / minor（按批次拆分；AI 建议，待维护者确认）
 > Release strategy：分批落地；先补收件箱汇总与低风险 Demo 检查，再落 UI 输入 / 原型 / Web Skeleton 主线
@@ -270,7 +270,7 @@ shared/
 - 决定是否需要 `new-project --profile web-app`、`template-docs/web-app/` 或更具体的领域模板。
 - 不在 Batch 5 之前直接实现真实脚手架，避免母模板过重。
 
-- 落地记录：v1.52.0 已新增 `template-docs/web-app-scaffold-experiment.md`，把 Batch 6 收敛为实验协议与决策矩阵：先在真实项目或独立实验仓记录候选结构、Walking Skeleton 验证、文件膨胀观察和推广结论，再决定是否提议 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板；母模板仍不内置真实 Web scaffold。
+- 落地记录：v1.52.0 / PR #202 已新增 `template-docs/web-app-scaffold-experiment.md`，把 Batch 6 收敛为实验协议与决策矩阵：先在真实项目或独立实验仓记录候选结构、Walking Skeleton 验证、文件膨胀观察和推广结论，再决定是否提议 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板；母模板仍不内置真实 Web scaffold。
 
 ### Batch 7：领域模板迁移评估
 
