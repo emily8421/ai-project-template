@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 派生项目登记与 Web App 架构 Runway
 
 > 来源：模板维护者评估（基于 `ai-project-template`、`agent-system-template`、zhiyan / LUMEN / 后续 OA-PLM 类系统使用经验）
-> 状态：候选 / 收件箱汇总完成（已纳入远端 issue #182/#184/#186/#187/#191/#192）
+> 状态：候选 / 收件箱汇总完成（Batch 5 已落地；已纳入远端 issue #182/#184/#186/#187/#191/#192）
 > 目标版本：分批确认
 > Release impact：patch / minor（按批次拆分；AI 建议，待维护者确认）
 > Release strategy：分批落地；先补收件箱汇总与低风险 Demo 检查，再落 UI 输入 / 原型 / Web Skeleton 主线
@@ -261,6 +261,8 @@ shared/
 - 与 #182 / #191 / #192 对齐：UI 输入与原型解决“长什么样 / 体验原则是什么”，Web Skeleton 解决“代码按什么结构长 / 最小纵切如何跑通”。
 - 与 #184 对齐：Walking Skeleton 通过后，Demo runbook 负责验证启动端口和页面身份。
 - 版本影响建议：`MINOR`。
+
+- 落地记录：v1.51.0 已新增 `template-docs/web-fullstack-profile.md`、A27 Web App Structure Profile / Walking Skeleton Gate、WSG-001 到 WSG-006、04/05/08/09 标准与 scaffold 回填位、run-task / checklist / audit / evaluation 门禁、同步清单和自检断言；暂不新增真实 Web 脚手架或领域模板，留给 Batch 6 / 7 验证。
 
 ### Batch 6：候选 profile / scaffold 实验
 

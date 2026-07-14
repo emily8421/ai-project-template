@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.51.0（2026-07-14）
+
+Web App Structure Profile + Walking Skeleton Gate：为复杂 Web / 全栈交互项目新增轻量结构 Profile 和 Sprint 0 / Walking Skeleton 门禁，避免首个业务 Sprint 把 App Shell、目录边界、API client、全局样式和 controller / service 持续堆进少数文件。
+
+- **新增 Profile**：新增 `template-docs/web-fullstack-profile.md`，定义触发条件、非目标、WSG-001 到 WSG-006 Gate、推荐前后端目录边界、文件膨胀阈值和 Sprint 0 / Walking Skeleton 建议。
+- **文档链路**：`ai/global-rules.md`、`ai/implementation-lifecycle-rules.md`、`ai/doc-standards/04-architecture.md`、`05-tech-spec.md`、`08-dev-plan.md`、`09-verification.md` 以及 docs scaffold 增加 App Shell、目录边界、vertical slice、文件阈值和 API / browser smoke 回填口径；全局规则版本递增到 v1.10。
+- **入口与评审**：`template-docs/scenario-guides.md` 新增 A27 Web App Structure Profile / Walking Skeleton Gate；文档生成、编码执行、docs checklist、系统审计和 docs evaluation Prompt 增加复杂 Web / 全栈交互项目门禁检查。
+- **同步与自检**：`docs/README.md` 说明 profile 与 `docs/` 项目事实的边界；`template-sync.json` 与 `scripts/sync-template.sh` 纳入 profile；`scripts/check-template.*` 增加 A27、WSG、同步清单和 README 防漂移断言。
+- 回流自 GitHub issue #186（Web App Structure Profile）与 #187（Web 全栈骨架门禁）。
+
 ## v1.50.1（2026-07-14）
 
 规则分层加载与任务路由入口优化：把“任务执行前无条件全量读取规则”改为“核心规则 + 任务路由 + 完整回退包”，降低 PR / CI、编码和续接场景的启动成本，同时保留不确定时全量回退、写入确认和 Git 事实优先门禁。

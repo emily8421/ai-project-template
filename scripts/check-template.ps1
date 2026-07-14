@@ -183,6 +183,7 @@ function Invoke-NativeTemplateCheck {
       "template-docs/smoke-test.md",
       "template-docs/smoke-test-report-template.md",
       "template-docs/template-methodology.md",
+      "template-docs/web-fullstack-profile.md",
       "CHANGELOG.md",
       "VERSION",
       "template-sync.json",
@@ -529,21 +530,28 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "template-sync.json" "template-docs/ui-prototype-strategy-template\.md" "template-sync includes UI prototype strategy template"
   Require-Contains "template-sync.json" "template-docs/ui-brief-intake-template\.md" "template-sync includes UI Brief Intake template"
   Require-Contains "template-sync.json" "template-docs/frontend-experience-brief-template\.md" "template-sync includes frontend experience brief template"
+  Require-Contains "template-sync.json" "template-docs/web-fullstack-profile\.md" "template-sync includes Web fullstack profile"
   Require-Contains "scripts/sync-template.sh" "template-docs/ui-brief-intake-template\.md" "sync-template fallback includes UI Brief Intake template"
   Require-Contains "scripts/sync-template.sh" "template-docs/frontend-experience-brief-template\.md" "sync-template fallback includes frontend experience brief template"
+  Require-Contains "scripts/sync-template.sh" "template-docs/web-fullstack-profile\.md" "sync-template fallback includes Web fullstack profile"
   Require-File "template-docs/frontend-experience-brief-template.md"
   Require-Contains "template-docs/frontend-experience-brief-template.md" "已确认体验原则" "frontend experience brief template includes confirmed principles"
   Require-File "template-docs/ui-brief-intake-template.md"
   Require-Contains "template-docs/ui-brief-intake-template.md" "交互体验抽取表" "UI Brief Intake template includes interaction extraction table"
+  Require-File "template-docs/web-fullstack-profile.md"
+  Require-Contains "template-docs/web-fullstack-profile.md" "WSG-001" "Web fullstack profile defines WSG gates"
+  Require-Contains "template-docs/web-fullstack-profile.md" "文件膨胀阈值" "Web fullstack profile defines file growth threshold"
   Require-Contains "template-docs/scenario-guides.md" "场景编号规则" "scenario guides define numbering rules"
   Require-Contains "template-docs/scenario-guides.md" "A22 需求探索原型" "scenario guides include A22 UI prototype exploration"
   Require-Contains "template-docs/scenario-guides.md" "A23 UI 原型策略 / 实现前原型" "scenario guides include A23 UI prototype strategy"
   Require-Contains "template-docs/scenario-guides.md" "A25 UI Brief Intake" "scenario guides include A25 UI Brief Intake"
   Require-Contains "template-docs/scenario-guides.md" "A26 UI Interaction Discovery" "scenario guides include A26 UI interaction discovery"
+  Require-Contains "template-docs/scenario-guides.md" "A27 Web App Structure Profile" "scenario guides include A27 Web App Structure Profile"
   Require-Contains "template-docs/scenario-guides.md" "A7-REQ" "scenario guides use semantic A7 subflows"
   Require-Contains "docs/README.md" "YYYY-MM-DD-ui-prototype-exploration\.md" "docs README documents UI prototype exploration report path"
   Require-Contains "docs/README.md" "YYYY-MM-DD-ui-brief-intake\.md" "docs README documents UI brief intake path"
   Require-Contains "docs/README.md" "docs/design/frontend-experience-brief\.md" "docs README documents frontend experience brief path"
+  Require-Contains "docs/README.md" "template-docs/web-fullstack-profile\.md" "docs README documents Web fullstack profile boundary"
   Require-Contains "ai/prompts/docs/01-review-inputs.md" "UI / UX 输入抽取" "review inputs prompt includes UI/UX extraction"
   Require-Contains "ai/prompts/docs/22-ui-prototype-exploration.md" "UI brief 缺失" "UI prototype exploration prompt checks missing UI brief"
   Require-Contains "ai/prompts/docs/22-ui-prototype-exploration.md" "UI-G-004" "UI prototype exploration prompt includes promotion gate"
@@ -659,6 +667,10 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/review/19-docs-evaluation.md" "docs/design/\*" "docs evaluation checks generic design docs"
   Require-Contains "ai/prompts/review/19-docs-evaluation.md" "UI 原型策略" "docs evaluation checks UI prototype strategy"
   Require-Contains "template-docs/scenario-guides.md" "选择原型策略" "scenario guides route UI prototype strategy selection"
+  Require-Contains "ai/prompts/dev/02-run-task.md" "WSG-001" "run task prompt checks Web App Structure gates"
+  Require-Contains "ai/prompts/review/10-docs-checklist.md" "Web App Structure Profile" "docs checklist checks Web App Structure Profile"
+  Require-Contains "ai/prompts/review/16-docs-system-audit.md" "Web App Structure Profile 矩阵" "docs audit reports Web App Structure matrix"
+  Require-Contains "ai/prompts/review/19-docs-evaluation.md" "Web App Structure Profile" "docs evaluation checks Web App Structure Profile"
   Require-Contains "docs/08-dev-plan.md" "验证包 / TC" "08 dev plan template includes verification package and TC"
   Require-Contains "docs/08-dev-plan.md" "Sprint 完成包" "08 dev plan template includes sprint completion package"
   Require-Contains "docs/09-verification.md" "TC 状态" "09 verification template includes TC status"

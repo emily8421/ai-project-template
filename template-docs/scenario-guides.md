@@ -98,7 +98,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 **场景速查索引**（按角色；完整剧本见下方各场景条目）
 
-**A 使用者**（A0–A26）
+**A 使用者**（A0–A27）
 
 | 场景 | 触发说法 | 一句话 |
 |---|---|---|
@@ -129,6 +129,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | A24 技术路线与环境支撑评估 | 「评估依赖能不能装」「本机能不能跑」「技术环境评估」 | 真实运行依赖进入 Sprint 前评估本机环境支撑 |
 | A25 UI Brief Intake / 前端交互输入补齐 | 「界面应该长什么样」「前端交互怎么定」「用户没给 UI 参考」「补 UI 输入材料」 | 输入评审、原型或实现前主动补齐 UI 交互输入 |
 | A26 UI Interaction Discovery / UI 探索到交付 | 「先确认交互原型」「分析参考产品」「视觉效果探索」「前端和后端先做哪个」 | 把 UI brief、参考分析、探索原型、experience brief、正式交互设计、实现前原型和 `08/09` 串成可审计路径 |
+| A27 Web App Structure Profile / Walking Skeleton Gate | 「Web 全栈骨架怎么定」「先搭应用骨架」「避免 App.tsx 越写越大」「前后端目录结构怎么定」 | 在首个业务 Sprint 前确认 App Shell、目录边界、vertical slice、文件阈值和 smoke 验证 |
 
 **C 维护者**（C1–C8）
 
@@ -147,7 +148,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 ---
 
-### A 使用者（A0–A26）
+### A 使用者（A0–A27）
 
 #### A0 冷启动（只有仓库链接）
 - **说明**：你只有模板或项目的仓库链接、本地还没任何文件夹时，从这里起步。⚠️ 此时本地还没有本文件，AI 无法按场景剧本引导——需先手动 `git clone` / `bash new-project.sh`（或让 AI 凭通用知识指导），拿到本地项目后才进入 AI 场景引导。
@@ -341,8 +342,24 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 5 | 回填正式链路 | 可视化确认后先更新文档体系，不直接编码 | `docs/design/frontend-experience-brief.md`、`frontend-interaction`、UI 原型策略、`08`、`09` |
 
 - **完成判据**：UI 链路当前位置明确 · AI 推荐和备选方案清晰 · 用户确认依据可追溯 · 未确认项进入 open items · 回填目标和下一步命令明确。
-- **下一步**：A22 / A23 / A7 / A8 / A10。
+- **下一步**：A22 / A23 / A7 / A8 / A27 / A10。
 - **cmd 指针**：`ai/document-lifecycle-rules.md` §5.2.1 + `ai/prompts/docs/22-ui-prototype-exploration.md` + `ai/prompts/docs/04-edit-single-doc.md`
+
+#### A27 Web App Structure Profile / Walking Skeleton Gate
+- **说明**：当项目是复杂 Web / 全栈交互系统，或用户担心前端主应用文件、全局样式、后端 controller / service 越写越大时，先确认轻量可运行骨架、目录边界和首个 vertical slice，再进入业务功能 Sprint。
+- **触发**：「Web 全栈骨架怎么定」「先搭应用骨架」「前后端目录结构怎么定」「避免 App.tsx 越写越大」「先做 Walking Skeleton」「Web 项目 Sprint 0」
+- **cwd·前置**：在派生项目 · 已有或准备生成 `04/05/08/09`；若 UI 输入 / 体验原则不足，先回 A25 / A26。
+
+| # | 做什么 | 为什么 | 机器执行 |
+|---|---|---|---|
+| 1 | 判断是否触发 Web App Structure Profile | 区分简单 UI 和复杂 Web / 全栈交互项目 | 参考 `template-docs/web-fullstack-profile.md` §1 |
+| 2 | 定义 App Shell 与目录边界 | 防止业务能力堆入单个主应用文件或全局样式 | 回填 `04/05` |
+| 3 | 规划 Sprint 0 / Walking Skeleton | 先跑通最小 vertical slice，再小步实现业务 | 回填 `08` |
+| 4 | 定义 API / browser smoke | 验证前端视图、API client、后端接口和权限 / 降级可见口径 | 回填 `09` |
+
+- **完成判据**：WSG-001 到 WSG-006 状态明确；已在 `04/05/08/09` 记录 App Shell、目录边界、vertical slice、文件膨胀阈值和 smoke 验证，或写明豁免理由。
+- **下一步**：A10 执行 Sprint 0 / 首个业务 Sprint；A8 文档评估；A17 open items。
+- **cmd 指针**：`template-docs/web-fullstack-profile.md` + `ai/prompts/dev/02-run-task.md`
 
 #### A8 文档评估 / 审计 / 检查
 - **说明**：编码前或阶段转换前判断文档是否能继续往下走；评估给 Go / Conditional Go / No Go，审计找断点，checklist 做最后拦截。
