@@ -162,10 +162,14 @@
 - 将重规则从全局默认读取转为按任务路由或 Profile 触发读取。
 - 保持 `README.md` 轻量，只做导航，不承载治理细节。
 
+> Follow-up：已抽出到 `_proposals/TEMPLATE-UPGRADE-capability-packages-and-profile-contracts.md`，作为独立待评估治理提案处理。
+
 ### Batch C：角色化协作与 worktree（后续）
 
 - 增补多 AI 会话 / 多 agent 协作时的 worktree、handoff 和验证记录约束。
 - 不默认并发写同一工作区。
+
+> Follow-up：已抽出到 `_proposals/TEMPLATE-UPGRADE-capability-packages-and-profile-contracts.md`，不随 #195 防卡死 SOP 继续扩大范围。
 
 ## 9. 预期影响面
 
