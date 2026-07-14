@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.1（2026-07-14）
+
+Codex Checkpoint Mode 与远端操作防卡死 SOP：为模板维护、规则改造、PR / CI、GitHub 远端操作和长输出任务增加默认检查点执行协议，降低 Codex CLI / sandbox / network / CI pending 场景下的跑飞与卡死风险。
+
+- **核心入口**：`ai/rules-core.md` 增加高风险任务默认进入 Checkpoint Mode 的触发条件，并定义一步一汇报、失败即停、大范围搜索限制和 CI pending 停止汇报口径。
+- **会话衔接**：`ai/session-rules.md` 新增 Checkpoint Mode 执行中防跑飞协议，覆盖长输出摘要、远端单步确认和中断后可恢复摘要。
+- **远端 SOP**：`git-guide.md` 增加远端 / CI / sandbox 防卡死策略；`SOP.md` 和 `ai/commands/README.md` 将 GitHub 远端、PR / CI、批量搜索、全量自检等高风险命令纳入 Checkpoint Mode。
+- **自检防漂移**：`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加 Checkpoint Mode、远端防卡死策略和 SOP 索引断言。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-codex-checkpoint-mode-and-remote-sop.md`。
+
 ## v1.52.0（2026-07-14）
 
 Web App scaffold experiment protocol：为 Batch 6 增加可复用实验协议，用真实项目或独立实验仓验证候选 Web App scaffold，而不是直接把真实脚手架塞进母模板。
