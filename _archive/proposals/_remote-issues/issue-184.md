@@ -1,13 +1,14 @@
 # GitHub Issue #184: TEMPLATE-UPGRADE: Demo 端口占用与页面身份校验
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/184
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:zhiyan-digital-cs-platform
 > Author: emily8421
 > Created: 2026-07-13T02:01:07Z
-> Updated: 2026-07-13T02:01:07Z
+> Updated: 2026-07-14T07:56:51Z
+> Closed: 2026-07-14T07:56:51Z
 > Mirrored at: 2026-07-13 11:15:52 +08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: archived after v1.47.3 landed the proposal; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
 

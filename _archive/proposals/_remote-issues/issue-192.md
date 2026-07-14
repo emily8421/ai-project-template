@@ -1,13 +1,14 @@
 # GitHub Issue #192: TEMPLATE-UPGRADE-ui-brief-intake-guidance-scenario
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/192
-> State: open
+> State: CLOSED
 > Labels: proposal, from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-07-13T07:21:59Z
-> Updated: 2026-07-13T07:21:59Z
+> Updated: 2026-07-14T07:56:53Z
+> Closed: 2026-07-14T07:56:53Z
 > Mirrored at: 2026-07-13 15:26:53 +08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: archived after v1.49.0 landed the proposal; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
 
