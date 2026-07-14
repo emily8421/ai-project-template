@@ -284,11 +284,11 @@ shared/
 | 镜像路径 | Updated | Mirrored at | 核心主题 | 建议归属 |
 |---|---|---|---|---|
 | `_archive/proposals/_remote-issues/issue-182.md` | `2026-07-12T16:12:24Z` | `2026-07-13 10:06:53 +08:00` | UI Prototype Gate、默认行业 UI 标准、UI / 后端 / 双轨顺序 | Batch 4（已落地 / 已归档） |
-| `_proposals/_remote-issues/issue-184.md` | `2026-07-13T02:01:07Z` | `2026-07-13 11:15:52 +08:00` | Demo 端口占用、实际端口记录、页面身份校验 | Batch 1 |
+| `_archive/proposals/_remote-issues/issue-184.md` | `2026-07-14T07:56:51Z` | `2026-07-13 11:15:52 +08:00` | Demo 端口占用、实际端口记录、页面身份校验 | Batch 1（已落地 / 已归档） |
 | `_archive/proposals/_remote-issues/issue-186.md` | `2026-07-14T06:26:34Z` | `2026-07-13 11:15:53 +08:00` | Web App Structure Profile、目录结构、Walking Skeleton | Batch 5（已落地 / 已归档） |
 | `_archive/proposals/_remote-issues/issue-187.md` | `2026-07-14T06:26:36Z` | `2026-07-13 11:15:54 +08:00` | Web 全栈骨架门禁、目录结构、单文件膨胀阈值 | Batch 5（已落地 / 已归档） |
 | `_archive/proposals/_remote-issues/issue-191.md` | `2026-07-13T07:16:13Z` | `2026-07-13 15:26:53 +08:00` | UI Exploration to Delivery Pipeline、体验 brief、晋级 Gate | Batch 4（已落地 / 已归档） |
-| `_proposals/_remote-issues/issue-192.md` | `2026-07-13T07:21:59Z` | `2026-07-13 15:26:53 +08:00` | UI Brief Intake、交互体验抽取、输入补齐 | Batch 3 |
+| `_archive/proposals/_remote-issues/issue-192.md` | `2026-07-14T07:56:53Z` | `2026-07-13 15:26:53 +08:00` | UI Brief Intake、交互体验抽取、输入补齐 | Batch 3（已落地 / 已归档） |
 
 ### 8.2 Issue 映射
 
@@ -335,7 +335,7 @@ shared/
 
 ### 9.1 未发现的遗漏
 
-- 远端 proposal / `TEMPLATE-UPGRADE:` issue 已纳入：#182、#184、#186、#187、#191、#192；其中 #182/#186/#187/#191 已按落地批次关闭并归档镜像。
+- 远端 proposal / `TEMPLATE-UPGRADE:` issue 已纳入：#182、#184、#186、#187、#191、#192；其中 #182/#184/#186/#187/#191/#192 已按落地批次关闭并归档镜像。
 - 本地待处理提案已纳入关系评估：docs scaffold followups、domain template inheritance、project registry / web app runway、token hotspot records。
 - 新增 issue #191 / #192 已先镜像到本地，再进入分析，符合远端 issue 镜像门禁。
 
