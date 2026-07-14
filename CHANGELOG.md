@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.2（2026-07-14）
+
+Checkpoint Mode 风险分级确认：补充 Checkpoint Mode 的效率边界，明确它不是所有小动作都逐次等待人工确认，而是按风险分级执行。
+
+- **分级确认**：低风险本地只读、限定范围搜索和已授权范围内编辑可合并为小批次执行并短汇报；高风险远端状态变更、破坏性命令、安装依赖和未知范围写入仍保持单步确认。
+- **命令入口**：`ai/commands/README.md` 同步说明高风险命令进入 Checkpoint Mode 后按风险分级确认，避免把普通本地操作也当作远端状态变更处理。
+- **自检防漂移**：`scripts/check-template.*` 增加风险分级确认和高风险单步确认断言。
+
 ## v1.52.1（2026-07-14）
 
 Codex Checkpoint Mode 与远端操作防卡死 SOP：为模板维护、规则改造、PR / CI、GitHub 远端操作和长输出任务增加默认检查点执行协议，降低 Codex CLI / sandbox / network / CI pending 场景下的跑飞与卡死风险。
