@@ -22,7 +22,7 @@
 
 ## 必读文件
 
-- `ai/index.md`（只确认快速续接例外；不展开读取全部规则）
+- `ai/index.md`（只确认快速续接例外；不展开任务规则包）
 - `ai/session-rules.md` §1、§3.1
 - `.ai/session-handoff.md`；若不存在，再读 `NEXT-STEPS.md`
 

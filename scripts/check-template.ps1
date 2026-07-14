@@ -415,7 +415,7 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/session-rules.md" "命令名、退出码 / check 结论" "session rules summarize successful long checks"
   Require-Contains "ai/index.md" "快速续接例外" "ai/index declares fast resume exception"
   Require-Contains "ai/commands/README.md" "不展开完整规则审计" "commands README keeps resume from full rule audit"
-  Require-Contains "ai/commands/resume.md" "不展开读取全部规则" "resume command only confirms fast resume exception"
+  Require-Contains "ai/commands/resume.md" "不展开任务规则包" "resume command only confirms fast resume exception"
   Require-Contains "AGENTS.md" "快速续接模式做最小只读恢复" "AGENTS entry mentions fast resume minimal read-only recovery"
   Require-Contains "CLAUDE.md" "快速续接模式做最小只读恢复" "CLAUDE entry mentions fast resume minimal read-only recovery"
   Require-Contains ".cursor/rules/project-rules.mdc" "快速续接模式做最小只读恢复" "Cursor entry mentions fast resume minimal read-only recovery"
