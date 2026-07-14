@@ -47,6 +47,7 @@
     "template-docs/e2e-report-template.md",
     "template-sync.json",
     "ai/index.md",
+    "ai/rules-core.md",
     "ai/global-rules.md",
     "ai/document-lifecycle-rules.md",
     "ai/implementation-lifecycle-rules.md",

@@ -1,4 +1,4 @@
-﻿# AI Commands（快捷命令路由）
+# AI Commands（快捷命令路由）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
@@ -39,8 +39,8 @@
 
 AI 识别到命令意图后，应先判断是否为 `resume` 快速续接；若用户只要求“读取续接点 / 继续上次 / 恢复上下文”，按 `ai/session-rules.md` §3.1 的最小只读流程执行，不展开完整规则审计。其他命令，或 `resume` 后继续执行具体任务时，应：
 
-1. 读取 `ai/index.md` 及其列出的规则文件。
-2. 读取本命令索引和对应 `ai/commands/*.md`。
+1. 读取 `ai/index.md` 与 `ai/rules-core.md`，按任务路由选择规则包；无法判断时读取完整规则回退包。
+2. 读取本命令索引和对应命令文件。
 3. 读取命令文件列出的权威文档、Prompt 和脚本说明。
 4. 说明将执行的命令、影响范围、是否只读、是否会写文件。
 5. 涉及写入、安装、提交、同步或状态改变时，先取得用户确认。

@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.50.1（2026-07-14）
+
+规则分层加载与任务路由入口优化：把“任务执行前无条件全量读取规则”改为“核心规则 + 任务路由 + 完整回退包”，降低 PR / CI、编码和续接场景的启动成本，同时保留不确定时全量回退、写入确认和 Git 事实优先门禁。
+
+- **核心规则入口**：新增 `ai/rules-core.md`，沉淀所有任务共同硬规则、规则路由原则、完整回退条件和上下文卫生要求。
+- **路由化入口**：`ai/index.md` 改为规则导航页，按快速续接、命令路由、PR / CI / Git 收尾、编码、文档、UI 探索和模板维护选择规则包；`AGENTS.md`、`CLAUDE.md`、`.cursor/rules/project-rules.mdc` 同步改为指向路由入口。
+- **续接与命令口径**：`ai/session-rules.md`、`ai/commands/README.md`、`ai/commands/resume.md` 将“继续执行任务后全量读取”改为“按任务路由读取；无法判断时读取完整规则回退包”。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入 `ai/rules-core.md`；`scripts/check-template.sh` 与 `scripts/check-template.ps1` 增加任务路由、完整回退包和核心规则入口断言。
+- **Markdown 清洁**：移除 6 个既有 `ai/prompts/*` 文件的 UTF-8 BOM，使全量 `ai/` Markdown clean 可通过。
+- 回流自 `_proposals/TEMPLATE-UPGRADE-scoped-rule-loading.md`。
+
 ## v1.50.0（2026-07-13）
 
 UI Exploration Pipeline + Prototype Gate：把 UI brief、参考分析、需求探索原型、视觉效果探索、experience brief、正式前端交互设计、实现前 UI 原型和 `08/09` 回填串成可审计链路，避免 UI 型项目把探索稿、视觉候选或实现前原型直接当作需求、设计或验收事实。

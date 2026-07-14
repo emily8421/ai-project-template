@@ -190,6 +190,7 @@ function Invoke-NativeTemplateCheck {
       "CLAUDE.md",
       ".cursor/rules/project-rules.mdc",
       "ai/index.md",
+      "ai/rules-core.md",
       "ai/global-rules.md",
       "ai/document-lifecycle-rules.md",
       "ai/implementation-lifecycle-rules.md",
@@ -300,6 +301,8 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/prompts/review/19-docs-evaluation.md" "E1" "docs-evaluation prompt defines phase evaluation codes"
   Require-Contains "template-sync.json" "ai/commands/docs-evaluation\.md" "template-sync includes docs-evaluation command"
   Require-Contains "template-sync.json" "ai/prompts/review/19-docs-evaluation\.md" "template-sync includes docs-evaluation prompt"
+  Require-Contains "template-sync.json" "ai/rules-core\.md" "template-sync includes core rules entry"
+  Require-Contains "scripts/sync-template.sh" "ai/rules-core\.md" "sync-template fallback includes core rules entry"
   Require-Contains "template-docs/scenario-guides.md" "docs-evaluation" "scenario guides include docs-evaluation"
   Require-Contains "ai/document-lifecycle-rules.md" "E1" "document lifecycle includes evaluation codes"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Conditional Go" "implementation lifecycle references evaluation result"
@@ -328,6 +331,10 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "docs/09-verification.md" "技术环境评估验证" "09 verification includes tech env evaluation verification"
   Require-Contains "template-docs/scenario-guides.md" "A24 技术路线与环境支撑评估" "scenario guides route tech env evaluation"
   Require-Contains "ai/index.md" "ai/implementation-lifecycle-rules\.md" "ai/index includes implementation lifecycle rules"
+  Require-Contains "ai/index.md" "任务路由表" "ai/index defines task routing table"
+  Require-Contains "ai/index.md" "完整规则回退包" "ai/index defines full fallback package"
+  Require-Contains "ai/index.md" "ai/rules-core\.md" "ai/index includes core rules entry"
+  Require-Contains "ai/rules-core.md" "不确定.*完整规则回退包|完整规则回退包.*不确定" "rules-core falls back to full package when uncertain"
   Require-Contains "ai/global-rules.md" "ai/implementation-lifecycle-rules\.md" "global-rules points to implementation lifecycle rules"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Phase" "implementation lifecycle defines Phase layer"
   Require-Contains "ai/implementation-lifecycle-rules.md" "Test Case" "implementation lifecycle defines test case layer"
@@ -659,7 +666,7 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/implementation-lifecycle-rules.md" "Sprint / Task 完成后必须形成最小完成包" "implementation lifecycle requires sprint/task completion package"
   Require-Contains "ai/session-rules.md" "长期事实必须回写" "session rules keep handoff separate from 08/09 formal records"
   Require-Contains "ai/session-rules.md" "不联网，不查询 GitHub issue / PR / Actions" "fast resume avoids remote lookups by default"
-  Require-Contains "ai/session-rules.md" "默认不展开读取 .* 全部规则文件|默认不展开读取.*全部规则文件" "fast resume avoids full rule reading by default"
+  Require-Contains "ai/session-rules.md" "默认不展开读取任务规则包" "fast resume avoids task rule packages by default"
   Require-Contains "ai/prompts/dev/09-sprint-summary.md" "Sprint 验收包" "sprint summary prompt outputs sprint acceptance package"
   Require-Contains "docs/04-architecture.md" "架构视图检查表" "04 architecture template includes view checklist"
   Require-Contains "docs/05-tech-spec.md" "Readiness Gate" "05 tech spec template includes readiness gate"

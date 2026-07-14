@@ -96,7 +96,7 @@ require_files() {
 }
 
 extract_index_rules() {
-  grep -E '^- ai/.+\.md$' ai/index.md | sed 's/^- //'
+  grep -Eo '`ai/[^`]+\.md`|^- ai/.+\.md$' ai/index.md | sed -E 's/^`//; s/`$//; s/^- //'
 }
 
 extract_sync_files() {
@@ -643,6 +643,8 @@ require_contains "template-sync.json" '"MAINTAINERS\.md"' "template-sync 同步 
 require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "template-sync 同步文档生命周期规则"
 require_contains "template-sync.json" '"ai/implementation-lifecycle-rules\.md"' "template-sync 同步实现生命周期规则"
 require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
+require_contains "template-sync.json" '"ai/rules-core\.md"' "template-sync 同步核心规则入口"
+require_contains "scripts/sync-template.sh" '"ai/rules-core\.md"' "sync-template fallback 同步核心规则入口"
 require_contains "template-sync.json" '"ai/doc-standards/README\.md"' "template-sync 同步 doc-standards README"
 require_contains "template-sync.json" '"ai/doc-standards/00-scenario\.md"' "template-sync 同步 00 场景标准"
 require_contains "template-sync.json" '"ai/doc-standards/01-user-requirements\.md"' "template-sync 同步 01 用户需求标准"
@@ -797,6 +799,10 @@ require_contains "CHANGELOG.md" 'Claude CLI' "CHANGELOG 记录 AI CLI 工具说�
 require_contains "CHANGELOG.md" '中转站说明边界' "CHANGELOG 记录中转站边界修正"
 require_contains "CHANGELOG.md" 'AI-CLI-SETUP\.md' "CHANGELOG 记录 AI CLI 独立文档"
 require_contains "ai/index.md" 'ai/document-lifecycle-rules\.md' "ai/index 读取文档生命周期规则"
+require_contains "ai/index.md" '任务路由表' "ai/index 定义任务路由表"
+require_contains "ai/index.md" '完整规则回退包' "ai/index 定义完整规则回退包"
+require_contains "ai/index.md" 'ai/rules-core\.md' "ai/index 读取核心规则入口"
+require_contains "ai/rules-core.md" '不确定.*完整规则回退包|完整规则回退包.*不确定' "rules-core 定义不确定时回退完整规则"
 require_contains "ai/global-rules.md" 'docs/README\.md' "global-rules 引用 docs 分区规则"
 require_contains "ai/global-rules.md" 'ai/document-lifecycle-rules\.md' "global-rules 引用文档生命周期规则"
 require_contains "ai/global-rules.md" 'ai/prompts/docs/01-review-inputs\.md' "global-rules 指向输入评审 Prompt"

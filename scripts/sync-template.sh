@@ -126,6 +126,7 @@ DEFAULT_SYNC_FILES=(
   "template-docs/ui-prototype-strategy-template.md"
   "template-sync.json"
   "ai/index.md"
+  "ai/rules-core.md"
   "ai/global-rules.md"
   "ai/document-lifecycle-rules.md"
   "ai/implementation-lifecycle-rules.md"

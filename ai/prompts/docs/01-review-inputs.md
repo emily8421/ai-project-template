@@ -1,4 +1,4 @@
-﻿# 01 输入材料评审与入口判定（生成前）
+# 01 输入材料评审与入口判定（生成前）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
