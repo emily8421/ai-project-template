@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: Capability Packages 与 Profile 契约化治理
 
 > 来源：从 `_proposals/TEMPLATE-UPGRADE-codex-checkpoint-mode-and-remote-sop.md` 的 Batch B / C 抽出；2026-07-15 维护者重新评估，主线 B 经两轮调整后重新聚焦
-> 状态：已评估（2026-07-15），分批落地中 —— Batch 1 ✅、1.5 ✅（`11d8b2c`）、2.5 ✅（`96a19e2`）、2 ✅（`e178a79` 方案A）、3 ✅（`c1c6603`）全部完成；剩 Batch 4（等 3 结论）/ 5（暂缓）。主线 B 重新聚焦为「AI 上下文定位效率」
-> 目标版本：待确认
-> Release impact：none（本提案仅文档 / 分析；后续落地为 patch / minor，待维护者确认）
+> 状态：主体已落地并发布（v1.52.4）—— Batch 1 ✅、1.5 ✅（`11d8b2c`）、2.5 ✅（`96a19e2`）、2 ✅（`e178a79` 方案A）、3 ✅（`c1c6603`）全部完成；仅 Batch 4（等 CAP-007 真实任务观察结论）/ 5（暂缓）待后续，因此暂不归档。
+> 目标版本：v1.52.4（主体已发布；Batch 4 / 5 待后续另议）
+> Release impact：none（本次仅文档状态收口；主体落地已随 v1.52.4 发布）
 > 一句话：模板变重后用「两条同根因主线」治理——**A 防跑飞**（管"读后不跑飞"：Batch 1.5 传递加固 + 最小必读）、**B AI 定位效率**（管"读前少读定向"：给 AI 配分诊台 = 分层地图 + 路由表执行加固，省 token 防跑飞）。预防性的"给人维护影响域清单"已砍；自检减负保留。
 
 ---
@@ -48,7 +48,7 @@
 | 主线 | 解决什么 | 现状 | 承载 | 批次 |
 |---|---|---|---|---|
 | **A 防跑飞**（读后） | 长任务失忆、搜索丢锚点、CI / 沙箱失败、codex 易跑飞、大上下文 | ✅ Checkpoint Mode（PR #205/#206）+ Batch 1.5 已落地（`11d8b2c`）：传递 / 触发 / 搜索回锚点 / 最小必读 | Batch 1.5 传递加固 + 最小必读 | Batch 1.5 ✅ |
-| **B AI 定位效率**（读前） | AI 每次翻全模板才定位 → 慢、费 token、易跑飞 | 🟡 2026-07-15 重新聚焦（原"给人结构治理"是预防性已砍；真实动机是给 AI 省 token） | 分层地图（人 + AI 共用）+ 路由表执行加固 + 自检减负 | Batch 2.5 ✅（`96a19e2`）/ Batch 2（待）/ Batch 3（待） |
+| **B AI 定位效率**（读前） | AI 每次翻全模板才定位 → 慢、费 token、易跑飞 | ✅ 主体已随 v1.52.4 发布；CAP-007 仍需真实任务观察 | 分层地图（人 + AI 共用）+ 路由表执行加固 + 自检减负 | Batch 2.5 ✅（`96a19e2`）/ Batch 2 ✅（`e178a79`）/ Batch 3 ✅（`c1c6603`） |
 
 **分治原则**：A 管"读后不跑飞"，B 管"读前少读定向"——同根因、不同阶段，各自独立 PR。本阶段**不推进多 agent / worktree / 角色化并发**（见 §8）。
 
@@ -280,7 +280,6 @@ Remote / CI SOP Profile 契约草案：
 ## 12. 下一步
 
 1. ~~Batch 1.5 / 2.5 / 2 / 3~~ ✅ 全部落地（`11d8b2c` / `96a19e2` / `e178a79` / `c1c6603`）。
-2. **四个分支 push + PR**（capability-packages-index / ai-execution-hardening / remote-ci-sop-profile / check-template-slim-fallback），各自正交——下一步。
-3. **版本 bump**：Batch 1.5 / 2 / 2.5 / 3 是规则 + 脚本 + 文档增强，建议 patch（PR 合并时定）。
-4. **观察项**：Batch 1.5 / 2.5 的 AI 行为强化效果（传递加固）、Batch 3 分诊是否真省 token（CAP-007）、Batch 2 fallback 路径（建议 CI matrix 补验）。
-5. 暂不推进目录重组和真正多 agent 并发（Batch 5）；Batch 4 等 Batch 3 观察结论。
+2. **发布收口**：主体已随 v1.52.4 发布；本提案保留为观察 / 后续项载体，不归档。
+3. **观察项**：Batch 1.5 / 2.5 的 AI 行为强化效果（传递加固）、Batch 3 分诊是否真省 token（CAP-007）、Batch 2 fallback 路径（建议 CI matrix 补验）。
+4. **后续项**：Batch 4 等 CAP-007 真实任务观察结论；暂不推进目录重组和真正多 agent 并发（Batch 5）。
