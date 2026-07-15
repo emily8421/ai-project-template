@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.3（2026-07-14）
+
+Capability Packages 与 Profile 契约索引：为模板继续变重后的能力治理新增人读索引，先以 Remote / CI SOP Profile 作为低风险试点，明确能力包契约、影响域和后续 Profile 试点评估口径。
+
+- **新增索引**：新增 `template-docs/capability-packages.md`，定义 Capability / Profile 的适用场景、必读文件、输入输出契约、消费者、验证、自检断言和禁止项。
+- **Remote / CI 试点**：沉淀 Remote / CI SOP Profile 契约，连接 `ai/session-rules.md`、`git-guide.md`、`SOP.md`、`scripts/check-github-context.ps1` 与 PR / CI 收尾流程。
+- **边界控制**：明确该索引不是 AI 每次任务的默认必读规则包，不改 `ai/index.md` 任务路由，不默认启用目录级重组或真正多 agent 并发。
+- **同步与自检**：`template-sync.json`、`scripts/sync-template.sh` 纳入新索引；`scripts/check-template.*` 增加同步清单、fallback、Remote / CI Profile 和非默认必读边界断言。
+
 ## v1.52.2（2026-07-14）
 
 Checkpoint Mode 风险分级确认：补充 Checkpoint Mode 的效率边界，明确它不是所有小动作都逐次等待人工确认，而是按风险分级执行。
