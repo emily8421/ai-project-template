@@ -5,6 +5,8 @@
 
 本目录提供 AI CLI 的快捷命令路由。命令文件只负责把“用户意图”映射到权威 SOP、Prompt 和脚本说明；完整执行细节仍以 `ai/prompts/`、`SOP.md`、`git-guide.md`、`docs/` 与项目规则为准。
 
+> ⏸️ Checkpoint 节拍（所有命令执行先遵守）：搜索批次后回锚点汇报；失败即停；高风险（push / PR / merge / close / delete / 发布 / 装依赖 / 破坏性命令）单步等确认；低风险合并批次末 1–3 行汇报。详见 `AGENTS.md` Checkpoint 节拍段。
+
 ## 使用方式
 
 用户可显式输入：
