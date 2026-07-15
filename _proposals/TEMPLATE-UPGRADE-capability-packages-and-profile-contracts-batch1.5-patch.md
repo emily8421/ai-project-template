@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE Batch 1.5 Patch：防跑飞传递加固（瘦身版）
 
 > 来源：模板维护者 2026-07-15 重新评估 `TEMPLATE-UPGRADE-capability-packages-and-profile-contracts.md` 后补充
-> 状态：patch 建议（待审批落地），**未实际改动规则文件**
+> 状态：✅ 已实施于 commit `11d8b2c`（feat/ai-execution-hardening，Batch 1.5）；规则文件已改（AGENTS.md / rules-core.md §2·§4 / commands/README.md）。本文保留为 old→new 审计记录。
 > 关联提案：`_proposals/TEMPLATE-UPGRADE-capability-packages-and-profile-contracts.md` §9 Batch 1.5
 > Release impact：none（落地后为 patch，不改默认行为、不进同步清单；版本待维护者确认）
 > 范围说明：本 patch 是**瘦身版**。经效率评估砍掉了「每写入动作强制汇报」和「连续无汇报 ≤3 硬上限」两条——它们会打断低风险已授权批量任务、与 PR #206 的「灵活小批次」冲突。只保留零降效、直击痛点的四项。
