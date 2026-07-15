@@ -6,6 +6,18 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.4（2026-07-15）
+
+Capability Package 治理分批落地：主线 A 防跑飞（读后不晕）+ 主线 B AI 定位效率（读前少读定向）+ 自检减负。
+
+- **Batch 1.5 防跑飞传递加固**（#210）：`AGENTS.md` / `ai/commands/README.md` 入口前置 Checkpoint 节拍；`ai/rules-core.md` §2 大上下文 / 长任务自动触发、§4 搜索回锚点 + 每层最小必读。瘦身版，不改 PR #206 高风险确认规则。
+- **Batch 2.5 分诊强化**（#210）：`ai/rules-core.md` §4「先查 `ai/index.md` 路由定位、禁止未定位全局 grep」。
+- **Batch 2 自检减负（方案 A）**（#212）：`scripts/check-template.ps1` fallback 删 ~508 行内容断言，只留结构检查；新增断言只改 `.sh`，消除双镜像联动（CAP-008）。
+- **Batch 3 分诊用例**（#211）：新增 `template-docs/remote-ci-sop-profile.md`（实验阶段不进同步），验证分诊是否真省 token。
+- **提案重新聚焦**（#209）：主线 B 聚焦为「AI 上下文定位效率」+ 状态同步。
+
+注：Batch 1 索引正式化已在 v1.52.3。
+
 ## v1.52.3（2026-07-14）
 
 Capability Packages 与 Profile 契约索引：为模板继续变重后的能力治理新增人读索引，先以 Remote / CI SOP Profile 作为低风险试点，明确能力包契约、影响域和后续 Profile 试点评估口径。
