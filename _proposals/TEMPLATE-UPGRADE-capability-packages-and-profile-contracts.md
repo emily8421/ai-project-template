@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: Capability Packages 与 Profile 契约化治理
 
 > 来源：从 `_proposals/TEMPLATE-UPGRADE-codex-checkpoint-mode-and-remote-sop.md` 的 Batch B / C 抽出；2026-07-15 维护者重新评估，主线 B 经两轮调整后重新聚焦
-> 状态：已评估（2026-07-15），分批落地中 —— Batch 1 ✅、Batch 1.5 ✅（`11d8b2c`）、Batch 2.5 ✅（`96a19e2`）已完成（feat/ai-execution-hardening 分支）；下一步 Batch 2 / 3。主线 B 重新聚焦为「AI 上下文定位效率」
+> 状态：已评估（2026-07-15），分批落地中 —— Batch 1 ✅、1.5 ✅（`11d8b2c`）、2.5 ✅（`96a19e2`）、2 ✅（`e178a79` 方案A）、3 ✅（`c1c6603`）全部完成；剩 Batch 4（等 3 结论）/ 5（暂缓）。主线 B 重新聚焦为「AI 上下文定位效率」
 > 目标版本：待确认
 > Release impact：none（本提案仅文档 / 分析；后续落地为 patch / minor，待维护者确认）
 > 一句话：模板变重后用「两条同根因主线」治理——**A 防跑飞**（管"读后不跑飞"：Batch 1.5 传递加固 + 最小必读）、**B AI 定位效率**（管"读前少读定向"：给 AI 配分诊台 = 分层地图 + 路由表执行加固，省 token 防跑飞）。预防性的"给人维护影响域清单"已砍；自检减负保留。
@@ -234,9 +234,9 @@ Remote / CI SOP Profile 契约草案：
 |---|---|---|---|---|
 | Batch 1 | 报告化索引 | — | ✅ 已完成（`5e80e8f`） | none |
 | Batch 1.5 | 防跑飞传递加固 + 最小必读（瘦身版） | A | ✅ 已完成（`11d8b2c`） | none |
-| Batch 2 | 自检减负（`check-template.*` 双镜像） | B | 待启动 | low |
+| Batch 2 | 自检减负（fallback 收窄，方案 A） | B | ✅ 已完成（`e178a79`） | low |
 | Batch 2.5 | 分诊强化（地图升级 + 路由表执行加固） | B | ✅ 已完成（`96a19e2`） | none |
-| Batch 3 | Remote / CI SOP 分诊首个用例 | B | 待启动 | low |
+| Batch 3 | Remote / CI SOP 分诊首个用例 | B | ✅ 已完成（`c1c6603`） | low |
 | Batch 4 | Web App Profile | B | ⏸️ 等 Batch 3 结论 | low |
 | Batch 5 | 目录重组 / 多 agent | — | ⏸️ 暂缓 | high |
 
@@ -244,9 +244,9 @@ Remote / CI SOP Profile 契约草案：
 
 - **Batch 1 ✅**：人读 Profile / Capability contract 索引；不改任务路由 / 同步清单 / 默认行为。已落地于 `feat/capability-packages-index` 分支 commit `5e80e8f`（VERSION v1.52.3），待合并 main。
 - **Batch 1.5 ✅**：见 §4。已落地于 feat/ai-execution-hardening `11d8b2c`（AGENTS.md / rules-core §2·§4 / commands/README）；patch 文件为 old→new 记录。含从主线 B 并入的"最小必读"。
-- **Batch 2（自检减负）**：消除 `scripts/check-template.sh` / `.ps1` 双脚本镜像重复（git 数据：各被改 16 次，最大耦合热点）；单源生成双镜像（CAP-008）。
+- **Batch 2 ✅（自检减负，方案 A）**：已落地于 chore/check-template-slim-fallback `e178a79`——`check-template.ps1` fallback 删 ~502 行内容断言，只留结构检查（文件/目录/VERSION/sync 清单）；新增断言只改 .sh、不再改 .ps1，双镜像联动消除（CAP-008 解决）。bash 路径 / CI 不变。隐患：fallback（无 bash）覆盖下降，建议 CI matrix 补验。
 - **Batch 2.5 ✅（分诊强化）**：已落地于 feat/ai-execution-hardening `96a19e2`——rules-core §4「先查 index.md 路由定位、禁止未定位全局 grep」+ commands/README 引用补分诊（CAP-009 已实施）。注：地图升级（§5.2）属文档层，分诊功能已由规则覆盖，地图保持参考。
-- **Batch 3（分诊用例）**：将 `git-guide.md` §1.1 / §1.2、`SOP.md` A10/C4、`ai/session-rules.md` §3.3 写成 Remote / CI SOP 契约（见 §7 草案）；用 CAP-007 标准观察"分诊 + 最小必读"是否真省 token / 提速定位，再决定是否继续（Batch 4）。
+- **Batch 3 ✅（分诊用例）**：已落地于 feat/remote-ci-sop-profile `c1c6603`——新增 `template-docs/remote-ci-sop-profile.md`（Remote / CI SOP 契约，§7 草案填充）；实验阶段不进同步清单、不加 check-template 断言（避免触发 Batch 2 痛点）。按 CAP-007 标准观察是否真省 token，再决定 Batch 4。
 - **Batch 4**：基于 `template-docs/web-fullstack-profile.md` 和 `web-app-scaffold-experiment.md` 定义 Web App Profile。**等 Batch 3 结论再启动**。
 - **Batch 5**：基于用例效果再决定是否目录重组；若需多 agent，先落 worktree 和角色化边界。
 
@@ -259,7 +259,7 @@ Remote / CI SOP Profile 契约草案：
 - 若只新增人读 contract 文档，运行 Markdown 清洁检查即可。
 - 若修改 `ai/`、`SOP.md`、`git-guide.md` 或自检脚本，运行 `scripts/check-template.*`。
 - 若修改 `template-sync.json` 或新增同步范围文件，必须同步更新 Bash / PowerShell 自检断言。
-- Batch 2 自检减负本身改自检脚本——需保证双镜像断言一致、CI 不回归。
+- Batch 2 自检减负（方案 A）已改 `check-template.ps1` fallback——bash 路径 exit 0、CI 不回归；fallback（无 bash）路径建议 CI matrix 补验。
 
 ## 11. 待确认项
 
@@ -267,8 +267,8 @@ Remote / CI SOP Profile 契约草案：
 |---|---|---|---|---|
 | CAP-001 | Batch 1.5（含最小必读）是否落地 | ✅ 已落地（`11d8b2c`） | 零降效，直击跑飞痛点 | 传递 + 触发 + 搜索汇报 + 最小必读 |
 | CAP-002 | ~~给人维护的影响域清单~~ | ❌ 已砍 | 预防性、与自检重叠、会腐烂 | 不再加人工清单层 |
-| CAP-007 | Batch 3 分诊用例成功 / 失败标准 | 见下 | 用例替代假设 | 决定是否继续铺（Batch 4） |
-| CAP-008 | `check-template.*` 双镜像减负方案 | 单源生成双镜像 | git 数据：自检是最大热点 | 降自检维护成本 |
+| CAP-007 | Batch 3 分诊用例成功 / 失败标准 | 用例已落地（`c1c6603`），按标准观察中 | 用例替代假设 | 决定是否继续铺（Batch 4） |
+| CAP-008 | `check-template.*` 双镜像减负方案 | ✅ 已落地（`e178a79` 方案 A：收窄 fallback） | git 数据：自检是最大热点 | 新增断言不再改 .ps1 |
 | CAP-009 | 分诊执行强化落地形式 | ✅ 已落地（`96a19e2`）：rules-core §4 + commands/README | 与主线 A 同套手段；规则要进执行流 | 强制力 vs 上下文重量 |
 | CAP-006 | Batch 1.5 落地分支策略 | 单独 PR | 与 capability package 主题正交 | 避免 feat 分支混杂 |
 
@@ -279,9 +279,8 @@ Remote / CI SOP Profile 契约草案：
 
 ## 12. 下一步
 
-1. ~~Batch 1.5 / 2.5~~ ✅ 已落地（`11d8b2c` / `96a19e2`，feat/ai-execution-hardening 分支）。
-2. **Batch 2（自检减负）**：定 `check-template.*` 双镜像减负方案（CAP-008）——下一步。
-3. **Batch 3（分诊用例）**：落地 Remote / CI SOP 契约，按 CAP-007 观察——下一步。
-4. 两个分支（capability-packages-index / ai-execution-hardening）push + PR 时机，待维护者定。
-5. 版本 bump：Batch 1.5 / 2.5 是规则增强，建议 patch（PR 合并时定）。
-6. 暂不推进目录重组和真正多 agent 并发（Batch 5）；Batch 4 等 Batch 3 结论。
+1. ~~Batch 1.5 / 2.5 / 2 / 3~~ ✅ 全部落地（`11d8b2c` / `96a19e2` / `e178a79` / `c1c6603`）。
+2. **四个分支 push + PR**（capability-packages-index / ai-execution-hardening / remote-ci-sop-profile / check-template-slim-fallback），各自正交——下一步。
+3. **版本 bump**：Batch 1.5 / 2 / 2.5 / 3 是规则 + 脚本 + 文档增强，建议 patch（PR 合并时定）。
+4. **观察项**：Batch 1.5 / 2.5 的 AI 行为强化效果（传递加固）、Batch 3 分诊是否真省 token（CAP-007）、Batch 2 fallback 路径（建议 CI matrix 补验）。
+5. 暂不推进目录重组和真正多 agent 并发（Batch 5）；Batch 4 等 Batch 3 观察结论。
