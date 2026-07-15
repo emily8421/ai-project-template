@@ -6,6 +6,13 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.52.5（2026-07-15）
+
+Windows / PowerShell 兼容性 PATCH：补强中文规则显式 UTF-8 读取路径，并修复同步脚本 fallback 提交时的超长 pathspec 风险。
+
+- **中文规则 UTF-8 读取**（#216 / #207）：`ai/rules-core.md`、`ai/session-rules.md` 与 `ai/commands/resume.md` 明确 Windows / PowerShell 输出乱码时先用显式 UTF-8 重读最小必要规则，不得基于乱码推断规则、续接状态或项目事实。
+- **PowerShell fallback 提交稳健性**（#219 / #217）：`scripts/sync-template.ps1` 改用 staged diff 判断同步提交需求，并避免把全部同步文件作为 `git commit` pathspec 传入；commit 失败后输出可恢复步骤。
+
 ## v1.52.4（2026-07-15）
 
 Capability Package 治理分批落地：主线 A 防跑飞（读后不晕）+ 主线 B AI 定位效率（读前少读定向）+ 自检减负。
