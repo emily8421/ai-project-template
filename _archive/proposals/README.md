@@ -28,3 +28,4 @@
 | 模板版本治理：`TEMPLATE-UPGRADE-version-governance.md` | 已在 `v1.42.1` 吸收 release impact / release strategy、提案收件箱不触发版本递增、同主题聚合发布、即时发布 vs 维护窗口判断和自检断言；来源为 2026-07-08 维护会话中对 `MINOR` 增长过快的复盘。 |
 | 版本影响门槛收敛：`TEMPLATE-UPGRADE-version-impact-threshold.md` | 已在 `v1.44.1` 收敛 release impact 判断：兼容、可选、默认行为不变的脚本参数 / 默认关闭能力 / 自检与治理增强默认按 patch；minor 仅用于新增能力层级或新的下游采用面。 |
 | 普通派生项目版本治理：`TEMPLATE-UPGRADE-derived-project-version-governance.md` | 已在 `v1.46.0` 吸收普通派生项目双版本治理最小机制：`VERSION` 记录项目自身版本，`TEMPLATE-BASE.md` 记录继承模板版本，`sync-template.* --preserve-project-version` 保留项目版本；`zhiyan` 普通派生同步试点已确认通过。 |
+| 派生项目版本机制默认启用与存量迁移：`TEMPLATE-UPGRADE-derived-version-mechanism.md` | 已在 `v1.53.0`（阶段 A，新建项目默认启用版本机制：VERSION v0.1.0 + CHANGELOG + project-check.yml 校验 + project-rules §2.8）+ `v1.54.0`（阶段 B，存量派生项目版本机制启用状态非阻断检测 + 迁移引导 + 防回归断言）吸收；阶段 C（MAINTAINERS / CONTRIBUTING 文档治理）评估后不做；对应 issue #221 已关闭，镜像 `issue-221.md` 已归档到 `_archive/proposals/_remote-issues/`。 |

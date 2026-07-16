@@ -78,4 +78,4 @@ C-004 落定（修正本表原「对照 TEMPLATE-BASE `Current synced template v
 
 ## 6. 归档计划
 
-阶段 A 已合并（v1.53.0）；阶段 B 已实现并本地验证（v1.54.0，待提交 PR）。本提案**保留在 `_proposals/`**（阶段 C 未完成）。待阶段 B PR 合并 + 阶段 C 完成后再移 `_archive/proposals/`。issue #221 按 C-005 处理关闭时机（阶段 B 合并后关闭，或拆新 issue 跟踪阶段 C）。
+阶段 A 已合并（v1.53.0，PR #223）；阶段 B 已合并（v1.54.0，PR #224）；issue #221 已关闭。本提案**已归档到 `_archive/proposals/`**。阶段 C（MAINTAINERS / CONTRIBUTING 文档治理）评估后不做——派生版本机制非模板维护者直接关心，A+B 的种子 / 检测 / 引导已覆盖全部用户路径；如后续需要，另开新提案。
