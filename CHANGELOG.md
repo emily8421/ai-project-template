@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.54.0（2026-07-16）
+
+派生项目版本机制第二阶段：为存量派生项目提供版本机制启用状态的自动检测与迁移引导（非阻断）。
+
+- **版本机制启用状态检测**（#221 阶段 B）：`scripts/check-derived-sync.sh` / `.ps1` 在版本一致性段后增加非阻断检测段：领域模板（domain lineage）豁免；主信号为 `.github/workflows/project-check.yml` 是否含 `Check project version consistency`，辅信号为 `ai/project-rules.md` 是否含「项目版本管理」，按双信号在 / 缺给四类引导，并指向同步后整理 Prompt。
+- **迁移引导**（#221 阶段 B）：`ai/prompts/maintainers/15-post-sync-cleanup.md` 第一段审计步追加「审计版本机制启用状态」，给出主 / 辅信号判据、四类状态迁移建议和自动化参考。
+- **防回归**（#221 阶段 B）：`scripts/check-template.sh` 增加 5 条断言，覆盖双脚本检测关键词与 post-sync-cleanup 引导关键词。
+
 ## v1.53.0（2026-07-16）
 
 派生项目版本机制第一阶段：新建普通派生项目默认启用项目自有版本起点和一致性校验。

@@ -952,6 +952,12 @@ require_contains "scripts/sync-template.ps1" 'Get-LegacyDomainStandardsScope' "s
 require_contains "scripts/sync-template.ps1" '叠加的标准件范围' "sync-template PowerShell fallback 兼容旧领域版 TEMPLATE-BASE.md 中文范围标题"
 require_contains "scripts/check-derived-sync.sh" 'ai/doc-standards/\*' "check-derived-sync 放行 doc-standards 规范镜像"
 require_contains "scripts/check-derived-sync.sh" 'docs/_scaffold/\*' "check-derived-sync 迁移期兼容旧 _scaffold 规范镜像"
+# 阶段 B：派生项目版本机制启用状态检测（check-derived-sync 双脚本）+ post-sync-cleanup 引导，防回归。
+require_contains "scripts/check-derived-sync.sh" '版本机制启用状态' "check-derived-sync Bash 含版本机制启用状态检测（非阻断）"
+require_contains "scripts/check-derived-sync.ps1" 'version mechanism enablement' "check-derived-sync PowerShell fallback 含版本机制启用状态检测（非阻断）"
+require_contains "scripts/check-derived-sync.sh" 'Check project version consistency' "check-derived-sync 主信号检测派生 workflow 版本校验"
+require_contains "scripts/check-derived-sync.ps1" 'Check project version consistency' "check-derived-sync PowerShell fallback 主信号检测派生 workflow 版本校验"
+require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '版本机制启用状态' "同步后整理 Prompt 引导审计版本机制启用状态"
 require_contains "ai/doc-standards/README.md" 'Document Standards' "doc-standards README 说明规范镜像定位"
 
 # AI CLI 使用体验入口：快捷命令与会话续接必须贯穿规则、Prompt、同步清单和人读文档。
