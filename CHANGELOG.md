@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.53.0（2026-07-16）
+
+派生项目版本机制第一阶段：新建普通派生项目默认启用项目自有版本起点和一致性校验。
+
+- **新建项目版本默认值**（#221 阶段 A）：`scripts/new-project.sh` 将新派生项目 `VERSION` 初始化为项目自有 `v0.1.0`，并生成项目 `CHANGELOG.md` 初始版本段；`TEMPLATE-BASE.md` 继续记录继承的模板版本和创建时项目版本。
+- **项目版本校验**：新生成的 `.github/workflows/project-check.yml` 增加 `Check project version consistency`，校验 `VERSION` 三段式格式以及 `CHANGELOG.md` 顶部项目版本与 `VERSION` 一致。
+- **项目规则种子**：`ai/project-rules.md` 增加 `§2.8 项目版本管理`，提供 PATCH / MINOR / MAJOR 默认语义和可覆盖提示；`new-project` Prompt 同步提醒初始化版本规则。
+
 ## v1.52.5（2026-07-15）
 
 Windows / PowerShell 兼容性 PATCH：补强中文规则显式 UTF-8 读取路径，并修复同步脚本 fallback 提交时的超长 pathspec 风险。
