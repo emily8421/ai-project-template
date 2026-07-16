@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: Codex Checkpoint Mode 与远端操作防卡死 SOP
 
 > 来源：模板维护者当前会话评估；本地续接记录指向 GitHub issue #195（远端状态本轮未复核）
-> 状态：候选 / 待评估
+> 状态：已归档（Batch A「Checkpoint Mode + 远端防卡死 SOP」已落地于 ai/rules-core.md §2 / ai/session-rules.md §3.3 + git-guide.md / SOP.md；#195 已关闭；Batch B/C 已拆到 capability-packages-and-profile-contracts 提案）
 > 目标版本：待确认
 > Release impact：none（仅新增提案；后续落地预计 patch，待维护者确认）
 > Release strategy：先以 #195 最小 Batch 单独落地 Codex CLI / sandbox / 远端操作防卡死规则；模板分层治理与多 agent 协作作为后续候选
