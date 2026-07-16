@@ -76,6 +76,8 @@
 
 建议先采用 A 或 B，且不加入 `template-sync.json`。
 
+**C-001 落定（2026-07-16，v1.54.1）**：采用方案 A `ai-records/project-registry/`（与 `ai-records/token-hotspots/` 同区，入版本控制，不下行同步）；已落地 README（定位/字段/不下行同步声明）+ registry.md（登记 digital-cs-demo / zhiyan / agent-system-template / LUMEN-DEMO 4 个派生项目）+ check-template 断言。动机：派生单向继承，母模板无派生清单导致 LUMEN-DEMO 遗漏（直到人工指出才发现）。
+
 ## 4. 提案 B：三类派生场景分流
 
 ### 4.1 需要明确的三类场景
@@ -377,7 +379,7 @@ shared/
 
 | ID | 待确认项 | AI 建议 | 备选方案 | 影响 |
 |---|---|---|---|---|
-| C-001 | project registry 放在哪里 | 先放非同步的 `ai-records/project-registry/` 或独立 `template-records/` | 放 `.ai/` 或暂不落盘 | 影响是否版本控制、是否同步给下游 |
+| C-001 | project registry 放在哪里 | **落定 A：`ai-records/project-registry/`（v1.54.1）** | 放 `.ai/` 或暂不落盘（未采） | 已落地：入版本控制、不入 `template-sync.json`、不下行同步 |
 | C-002 | Web App 目录结构是否作为默认推荐 | 作为触发式推荐，不强制所有项目 | 只写原则，不给目录 | 不给目录会降低 AI 编程与 review 一致性 |
 | C-003 | 是否新增 `web-app` profile | 暂缓，先规则化 + 真实项目验证 | 立即实现 | 立即实现可能让母模板变重 |
 | C-004 | #182 与本提案是否合并落地 | 与 #191 合并为 Batch 4，避免体验门禁碎片化 | 完全分开 | 分开会重复修改 UI 原型相关规则 |

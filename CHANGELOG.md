@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.54.1（2026-07-16）
+
+派生项目登记（project registry）落地：母模板维护者侧可选的派生项目谱系索引（C-001 落定）。
+
+- **新增 `ai-records/project-registry/`**：README（定位 / 字段 / 不下行同步声明）+ registry.md（登记 digital-cs-demo / zhiyan / agent-system-template / LUMEN-DEMO 4 个派生项目）。不进入 `template-sync.json`，不下行同步（派生单向继承，registry 只做母模板侧索引，不替代项目内 `TEMPLATE-BASE.md`）。
+- **动机**：派生是单向继承，母模板无派生项目清单导致遗漏（LUMEN-DEMO 直到人工指出才发现）；registry 补这个缺口。
+- **自检**：`scripts/check-template.sh` 增加 2 条断言（registry README 存在 + 含「不下行同步」声明）。
+- 提案 `_proposals/TEMPLATE-UPGRADE-project-registry-and-web-app-runway.md` §3.4 / §11 C-001 落定 A。
+
 ## v1.54.0（2026-07-16）
 
 派生项目版本机制第二阶段：为存量派生项目提供版本机制启用状态的自动检测与迁移引导（非阻断）。
