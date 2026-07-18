@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.54.3（2026-07-19）
+
+check-derived-sync 容忍 squash 合并 `(#N)` 后缀（派生项目 sync PR squash 合并到 main 后的假阳性回流）。
+
+- **`check-derived-sync.sh` / `.ps1`**：sync-commit 识别正则放宽，结尾 `$` 前允许可选 ` (#N)` 后缀（Bash `([[:space:]]\(#[0-9]+\))?` / PowerShell `(\s+\(#[0-9]+\))?`）；标准 sync 提交仍匹配，任意其他后缀仍拒绝。
+- **`new-project.sh`**：生成的 `project-check.yml` 模板同款正则同步放宽（新派生项目自动获得）。
+- 背景：`gh pr merge --squash` 在 sync PR 标题后追加 ` (#<PR 号>)`，旧严格正则对合并到 main 的 HEAD 误报「提交信息不像模板同步提交」（EXIT 1 假阳性）；脚本自身已提示改传 sync-commit，本修复消除该噪音。
+- 不改 `check-template.sh` / `.ps1`：其 `require_doc_standards_mirror` 构造标准 sync 提交（无 (#N)），放宽后仍匹配，自检不受影响。
+- 提案 `_proposals/TEMPLATE-UPGRADE-check-derived-sync-squash-suffix.md`。
+
 ## v1.54.2（2026-07-18）
 
 sync-template 受限网络代理配置提示 + git-guide §5.7（派生项目国内网络同步踩坑回流）。

@@ -263,7 +263,7 @@ function Invoke-NativeDerivedSyncCheck {
     $subject = ""
   }
 
-  if ($subject -match '^sync\s+template\s+v[0-9]+\.[0-9]+\.[0-9]+\s+from\s+ai-project-template$') {
+  if ($subject -match '^sync\s+template\s+v[0-9]+\.[0-9]+\.[0-9]+\s+from\s+ai-project-template(\s+\(#[0-9]+\))?$') {
     Pass "commit message is a template sync commit"
   } else {
     Fail "commit message does not look like a template sync commit: $subject"

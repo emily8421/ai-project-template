@@ -111,7 +111,7 @@ if [[ "$COMMIT" == "HEAD" && "${parent_count:-0}" -gt 1 ]]; then
 fi
 
 subject="$(git log -1 --format=%s "$COMMIT" 2>/dev/null || true)"
-if [[ "$subject" =~ ^sync[[:space:]]template[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+[[:space:]]from[[:space:]]ai-project-template$ ]]; then
+if [[ "$subject" =~ ^sync[[:space:]]template[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+[[:space:]]from[[:space:]]ai-project-template([[:space:]]\(#[0-9]+\))?$ ]]; then
   pass "提交信息是模板同步提交"
 else
   fail "提交信息不像模板同步提交: $subject"
