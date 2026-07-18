@@ -425,9 +425,16 @@ git rev-parse --is-inside-work-tree >/dev/null
 
 echo "==> 抓取模板: $TEMPLATE_REMOTE (main)"
 if ! git fetch --no-tags --depth=1 "$TEMPLATE_REMOTE" main; then
-  echo "✗ 抓取失败。模板仓库是私有的——确保活跃 gh 账号有访问权限：" >&2
-  echo "    gh auth status" >&2
-  echo "    gh auth switch -u <有模板仓库访问权限的账号>" >&2
+  echo "✗ 抓取失败。常见两类原因：" >&2
+  echo "  1) 模板仓库私有——确保活跃 gh 账号有访问权限：" >&2
+  echo "       gh auth status" >&2
+  echo "       gh auth switch -u <有模板仓库访问权限的账号>" >&2
+  echo "  2) 网络——受限网络（如国内直连 GitHub）需走代理；git fetch/push 走 git 代理，gh 另带环境变量：" >&2
+  echo "       git config --local http.proxy http://127.0.0.1:<代理端口>" >&2
+  echo "       git config --local https.proxy http://127.0.0.1:<代理端口>" >&2
+  echo "       # gh 不读 git http.proxy，命令需单独带：" >&2
+  echo "       HTTPS_PROXY=http://127.0.0.1:<代理端口> HTTP_PROXY=http://127.0.0.1:<代理端口> gh ..." >&2
+  echo "  直连症状：HTTPS 被 reset（curl 16 framing / curl 52 empty reply）。详见 git-guide.md §5.7。" >&2
   exit 1
 fi
 REF="FETCH_HEAD"

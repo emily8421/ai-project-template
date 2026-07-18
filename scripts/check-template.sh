@@ -953,6 +953,8 @@ require_contains "scripts/sync-template.ps1" '--domain-template' "sync-template 
 require_contains "scripts/sync-template.ps1" 'Write-DomainTemplateBase' "sync-template PowerShell fallback 维护领域版 TEMPLATE-BASE.md"
 require_contains "scripts/sync-template.ps1" 'Get-LegacyDomainStandardsScope' "sync-template PowerShell fallback 迁移旧领域版 TEMPLATE-BASE.md 标准件范围"
 require_contains "scripts/sync-template.ps1" '叠加的标准件范围' "sync-template PowerShell fallback 兼容旧领域版 TEMPLATE-BASE.md 中文范围标题"
+require_contains "scripts/sync-template.sh" 'http\.proxy|HTTPS_PROXY' "sync-template fetch 失败提示受限网络代理配置（git http.proxy + gh HTTPS_PROXY）"
+require_contains "scripts/sync-template.ps1" 'http\.proxy|HTTPS_PROXY' "sync-template PowerShell fallback fetch 失败提示受限网络代理配置"
 require_contains "scripts/check-derived-sync.sh" 'ai/doc-standards/\*' "check-derived-sync 放行 doc-standards 规范镜像"
 require_contains "scripts/check-derived-sync.sh" 'docs/_scaffold/\*' "check-derived-sync 迁移期兼容旧 _scaffold 规范镜像"
 # 阶段 B：派生项目版本机制启用状态检测（check-derived-sync 双脚本）+ post-sync-cleanup 引导，防回归。

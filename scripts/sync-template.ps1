@@ -608,7 +608,14 @@ function Invoke-NativeTemplateSync {
   Write-Host "==> Fetch template: $templateRemote (main)"
   & git fetch --no-tags --depth=1 $templateRemote main
   if ($LASTEXITCODE -ne 0) {
-    Write-Error "Fetch failed. If the template repo is private, check gh auth status or switch to an account with access."
+    Write-Warning "Fetch failed. Two common causes:"
+    Write-Warning "  1) Template repo is private — check gh auth status or switch to an account with access."
+    Write-Warning "  2) Network — restricted networks (e.g. direct GitHub from some regions) need a proxy. git fetch/push use the git proxy; gh needs separate env vars:"
+    Write-Warning "       git config --local http.proxy http://127.0.0.1:<proxy-port>"
+    Write-Warning "       git config --local https.proxy http://127.0.0.1:<proxy-port>"
+    Write-Warning "       # gh does not read git http.proxy; pass env vars explicitly:"
+    Write-Warning "       HTTPS_PROXY=http://127.0.0.1:<proxy-port> HTTP_PROXY=http://127.0.0.1:<proxy-port> gh ..."
+    Write-Warning "  Direct-connect symptom: HTTPS reset (curl 16 framing / curl 52 empty reply). See git-guide.md section 5.7."
     return 1
   }
 
