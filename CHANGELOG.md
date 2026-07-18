@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.54.2（2026-07-18）
+
+sync-template 受限网络代理配置提示 + git-guide §5.7（派生项目国内网络同步踩坑回流）。
+
+- **`git-guide.md` §5.7**：新增「网络与代理配置（受限网络环境）」——git fetch/push 走 `http.proxy` / `https.proxy`；`gh` 不读 `git http.proxy`，命令带 `HTTPS_PROXY` / `HTTP_PROXY`；失败症状（curl 16 framing / curl 52）；端口占位。
+- **`sync-template.sh` / `.ps1`**：fetch 失败提示从「私有仓库」扩展为「①私有/账号 ②网络/代理」两类，附配置命令 + 指向 git-guide §5.7（双脚本对称，`.ps1` 英文复刻）。
+- **`check-template.sh`**：加 2 条断言，确保 sync-template 双脚本含代理提示关键词（`http.proxy` / `HTTPS_PROXY`），防回归。`check-template.ps1` 是简化 fallback（不逐条检查 sync-template 内容），不镜像。
+- 提案 `_proposals/TEMPLATE-UPGRADE-sync-proxy-guidance.md`。
+
 ## v1.54.1（2026-07-16）
 
 派生项目登记（project registry）落地：母模板维护者侧可选的派生项目谱系索引（C-001 落定）。
