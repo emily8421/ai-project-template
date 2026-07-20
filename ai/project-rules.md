@@ -89,6 +89,18 @@
 - `MAJOR`：不兼容变更、对外契约破坏、首上线。
 - 是否使用 git tag / GitHub Release：（待确认；默认不强制）
 
+## 2.9 运行时版本锁定
+
+> 本节约束语言 / 运行时版本与切换工具，与 §2.5「运行环境与资源约束」（硬件资源：CPU / 内存 / GPU / 磁盘）正交：§2.5 管“机器跑得动吗”，§2.9 管“用哪个 Node / Python 版本、怎么切换、CI 怎么校验”。工具推荐与声明文件标准见 `template-docs/env-setup.md`「运行时版本管理」；声明落点在 `docs/05-tech-spec.md` §1 / §1.1。
+
+- 是否启用运行时版本锁定：是 / 否 / 豁免
+- 锁定的运行时与版本：（如 Node 16.13.0 / Python 3.11 / 多运行时）
+- 版本声明文件：（如 `package.json` 的 `volta` 字段 / `.node-version` / `.python-version` / `.tool-versions` / `package.json#engines` / `pyproject.toml#requires-python`）
+- 切换工具：（如 Volta / fnm / pyenv-win / asdf / Dev Container / 无）
+- CI 校验方式：（如 `volta run` / `pyenv local` / Dev Container 自动切 / CI 显式断言 / 无）
+- 锁定原因：（为什么必须锁这个版本，如“米家插件运行时要求 Node 16.x”）
+- 豁免理由：仅当不启用或暂不补声明时填写，并说明风险、影响范围和补做时点
+
 ## 3. 项目形态与文档裁剪
 
 > 本节用于初始化阶段，决定 docs/06、07 是否保留，以及 frontend/backend/tests/scripts/docker
