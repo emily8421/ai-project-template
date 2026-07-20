@@ -6,6 +6,20 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.55.0（2026-07-20）
+
+运行时版本锁定通用机制（Node 首实例）：建立跨语言的「声明层 + 工具层」分离机制，Node 作为首个实例先走通，未来 Python / Java 可复用同一套。本次是 v1.6.0「运行环境资源约束」（硬件资源）的版本锁定互补——v1.6.0 解决“机器跑得动吗”，本次解决“用哪个运行时版本、怎么切换、CI 怎么校验”。
+
+- **规则层**：`ai/project-rules.md` 新增 `§2.9 运行时版本锁定`（§2.8 项目版本管理之后、§3 之前），仿 §2.7 范式给 7 字段（是否启用 / 锁定的运行时与版本 / 版本声明文件 / 切换工具 / CI 校验方式 / 锁定原因 / 豁免理由）；§2.9 开头点明与 §2.5「运行环境与资源约束」（硬件资源）的区分，避免“运行时 / 运行环境”混淆。
+- **声明层（规则权威 + 人读骨架配套）**：`ai/doc-standards/05-tech-spec.md` §2 最低结构表「技术栈与版本」行扩充，纳入运行时版本锁定子维度；`template-docs/docs-scaffold/05-tech-spec.md` §1 撰写提要扩充 + 新增 `§1.1 运行时版本锁定（如启用）`子节（声明表 + 与 `local-env.md` 对照行）。
+- **文档层**：`template-docs/env-setup.md` 新增 `§6. 运行时版本管理`（原 §6–§10 顺延为 §7–§11），含声明文件标准表、Windows 友好工具推荐表（Node→Volta / Python→pyenv-win / 多语言→Dev Container）、**Volta 的 `package.json` `volta` 字段精确 pin 机制**（区别于 `engines` 兼容范围、`.node-version` 仅 fnm/nvm/asdf 识别）与按工具分操作指引、asdf Windows 需 WSL 限制。遵循“非最小工具先文档、不脚本化”先例，不在 `bootstrap-dev-env.ps1` 装版本管理器。
+- **评估层**：`ai/prompts/review/20-tech-env-evaluation.md`「运行时版本」维度追加“若项目声明运行时版本锁定，优先以声明锁定版本为对照基线并对照 `local-env.md`”。
+- **路由层**：`ai/global-rules.md` §5 追加 §2.9 路由句（与既有 §3 / §2.7 / Web App Profile 句式平行），全局规则版本递增到 v1.11。
+- **执行层（中立）**：母模板不预置任何版本声明文件；派生项目按需在仓库根放 `.node-version` 等。领域模板未来可在 `TEMPLATE-BASE.md` `Domain standards scope` 字段预置领域锁定规则（本轮不做）。
+- **自检**：`scripts/check-template.sh` 增加 18 条断言（规则 / 声明 / 文档 / 评估 / 路由层关键词防漂移）；`check-template.ps1` 是简化 fallback，不镜像。
+- **未动**：`scripts/collect-env.ps1`（本机事实采集职责不变）；`scripts/sync-template.sh` / `.ps1` / `template-sync.json`（不新增同步件，3 处清单零改动）。
+- 提案 `_proposals/TEMPLATE-UPGRADE-v1.55.0-runtime-version-locking.md`；米家插件项目作为首个派生实例将锁 Node 16.13.0。
+
 ## v1.54.3（2026-07-19）
 
 check-derived-sync 容忍 squash 合并 `(#N)` 后缀（派生项目 sync PR squash 合并到 main 后的假阳性回流）。

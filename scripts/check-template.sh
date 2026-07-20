@@ -991,6 +991,28 @@ require_contains "ai/prompts/setup/13-collect-env.md" '不替代技术路线' "c
 require_contains "docs/05-tech-spec.md" '技术环境评估结论' "05 技术方案包含技术环境评估结论"
 require_contains "docs/09-verification.md" '技术环境评估验证' "09 验证计划包含技术环境评估验证"
 require_contains "template-docs/scenario-guides.md" 'A24 技术路线与环境支撑评估' "scenario-guides 路由技术环境评估"
+
+# 运行时版本锁定机制（v1.55.0）：规则层 project-rules §2.9、声明层 05-tech-spec 标准 + scaffold §1.1、
+# 文档层 env-setup「运行时版本管理」、评估层 20-tech-env-evaluation、路由层 global-rules §5。
+# PS1 fallback 显式收窄、不镜像内容断言（见 check-template.ps1 顶部注释），故断言只在此维护。
+require_contains "ai/project-rules.md" '^## 2\.9 运行时版本锁定' "project-rules 含运行时版本锁定小节"
+require_contains "ai/project-rules.md" '§2\.5.*运行环境与资源约束' "project-rules §2.9 与 §2.5 运行环境与资源约束区分"
+require_contains "ai/project-rules.md" '版本声明文件' "project-rules §2.9 标明版本声明文件字段"
+require_contains "ai/project-rules.md" '切换工具' "project-rules §2.9 标明切换工具字段"
+require_contains "ai/project-rules.md" '豁免理由' "project-rules §2.9 含豁免理由字段"
+require_contains "ai/project-rules.md" 'docs/05-tech-spec\.md' "project-rules §2.9 指向 05-tech-spec 声明落点"
+require_contains "ai/doc-standards/05-tech-spec.md" '运行时版本锁定' "05 技术方案标准纳入运行时版本锁定维度"
+require_contains "template-docs/docs-scaffold/05-tech-spec.md" '运行时版本锁定' "05 scaffold 提示运行时版本锁定"
+require_contains "template-docs/docs-scaffold/05-tech-spec.md" '版本声明文件' "05 scaffold 含版本声明文件字段"
+require_contains "template-docs/docs-scaffold/05-tech-spec.md" '切换工具' "05 scaffold 含切换工具字段"
+require_contains "template-docs/env-setup.md" '运行时版本管理' "env-setup 含运行时版本管理小节"
+require_contains "template-docs/env-setup.md" 'Volta' "env-setup 推荐 Windows 友好 Node 版本管理器"
+require_contains "template-docs/env-setup.md" '"volta"' "env-setup 说明 Volta 的 package.json volta 字段 pin 机制"
+require_contains "template-docs/env-setup.md" 'pyenv-win' "env-setup 推荐 Windows 友好 Python 版本管理器"
+require_contains "template-docs/env-setup.md" '\.node-version|\.python-version|\.tool-versions' "env-setup 列举标准声明文件"
+require_contains "template-docs/env-setup.md" 'asdf.*WSL|WSL.*asdf' "env-setup 注明 asdf Windows 需 WSL"
+require_contains "ai/prompts/review/20-tech-env-evaluation.md" '声明锁定版本|声明运行时版本锁定' "tech-env-evaluation 比对项目声明锁定版本"
+require_contains "ai/global-rules.md" '§2\.9' "global-rules 路由到 project-rules §2.9"
 require_contains "ai/global-rules.md" 'ai/commands/README\.md' "global-rules 指向快捷命令路由"
 require_contains "ai/global-rules.md" 'ai/session-rules\.md' "global-rules 指向会话续接规则"
 require_contains "ai/global-rules.md" 'ai/implementation-lifecycle-rules\.md' "global-rules 指向实现生命周期规则"
