@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.55.1（2026-07-21）
+
+check-prereqs 运行时版本软检测（阶段 1，吸收自 issue #238 / v1.56.0 提案阶段 1）：Node 检测项从"报告版本"升级到"声明版本 vs 实际版本"软对比，把 v1.55.0 的声明层升级为可感知的漂移提醒。
+
+- **`scripts/check-prereqs.ps1`**：新增 `Get-DeclaredNodeVersion`，按 v1.55.0 声明文件优先级读期望 Node 版本（`package.json` `volta.node` → `.node-version`；**不读 `.nvmrc`**，因 Volta 不认）；Node 检测项在实际主版本与声明主版本不符时输出 warning（Details 标注 + `Write-Warning`），**不改退出码、不 fail**；无声明文件时维持原行为（模板仓自身即如此，保持中立）。
+- **`scripts/check-template.sh`**：新增 2 条断言（check-prereqs 含 `Get-DeclaredNodeVersion` / `major version drift`），防回归；`check-template.ps1` 为简化 fallback，不镜像。
+- **非目标（延续）**：不改 `collect-env.ps1`（本机事实职责不变，v1.55.0 SoC）；不引入 `engine-strict`；不在版本管理器迁移途中阻塞；不自动安装 / 切换版本。
+- 边界：模板无法控制用户机器，本检测只把"静默漂移"变成响亮、可诊断的 warning，不保证在任意被搅乱的机器上正确运行（见 env-setup §9）。
+- 这是 `_proposals/TEMPLATE-UPGRADE-v1.56.0-runtime-health-detection.md` 的阶段 1（PATCH）；阶段 2（深度解析路径诊断 `check-runtime.ps1` + 混合 manager 口径，MINOR）后续独立发布。吸收 issue #238（LUMEN_demo_T2.1 回流）。
+
 ## v1.55.0（2026-07-20）
 
 运行时版本锁定通用机制（Node 首实例）：建立跨语言的「声明层 + 工具层」分离机制，Node 作为首个实例先走通，未来 Python / Java 可复用同一套。本次是 v1.6.0「运行环境资源约束」（硬件资源）的版本锁定互补——v1.6.0 解决“机器跑得动吗”，本次解决“用哪个运行时版本、怎么切换、CI 怎么校验”。

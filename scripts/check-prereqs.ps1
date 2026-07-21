@@ -39,6 +39,27 @@ function Get-CommandVersion {
   }
 }
 
+function Get-DeclaredNodeVersion {
+  # Read the project's declared Node version from the v1.55.0 declaration files.
+  # Priority: package.json "volta".node (Volta authoritative) -> .node-version.
+  # .nvmrc is intentionally NOT read: Volta ignores it; this template standardizes
+  # on .node-version + package.json#volta (see template-docs/env-setup.md §6).
+  # Returns the version string (e.g. "16.13.0"), or $null when no declaration exists.
+  if (Test-Path "package.json") {
+    try {
+      $json = Get-Content "package.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+      if ($json.volta -and $json.volta.node) {
+        return ([string]$json.volta.node)
+      }
+    } catch { }
+  }
+  if (Test-Path ".node-version") {
+    $line = (Get-Content ".node-version" -TotalCount 1 -Encoding UTF8).Trim()
+    if ($line) { return $line }
+  }
+  return $null
+}
+
 function Find-GitBash {
   $programFilesX86 = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
   $candidates = @($env:GIT_BASH)
@@ -121,7 +142,22 @@ Add-Result $results "Git Bash" "Required" ($null -ne $gitBashPath) $(if ($gitBas
 Add-Result $results "bash command in PATH" "Conditional" ($bashCommandInstalled -and $bashCommandCallable) $(if ($bashCommandInstalled -and $bashCommandCallable) { (Get-Command bash).Source } elseif ($bashCommandInstalled) { "bash exists but cannot be started from PowerShell; use Git Bash full path" } else { "Git Bash is installed, but 'bash' is not directly callable from PowerShell PATH" })
 Add-Result $results "PowerShell" "Required" $true $powerShellDetails
 Add-Result $results "GitHub CLI (gh)" "Conditional" $ghInstalled $(if ($ghInstalled) { Get-CommandVersion "gh" } else { "Required for remote repo creation and some sync flows; not required for local smoke tests" })
-Add-Result $results "Node.js" "Recommended" $nodeInstalled (Get-CommandVersion "node")
+$nodeVersionRaw = Get-CommandVersion "node"
+$nodeDetails = $nodeVersionRaw
+if ($nodeInstalled -and ($nodeVersionRaw -match '^v?\d+\.\d+')) {
+  $declaredNode = Get-DeclaredNodeVersion
+  if ($declaredNode) {
+    $actualMajor = ([regex]::Match($nodeVersionRaw, '\d+')).Value
+    $declaredMajor = ([regex]::Match($declaredNode, '\d+')).Value
+    if ($actualMajor -ne $declaredMajor) {
+      $nodeDetails = "$nodeVersionRaw  (warning: declared Node $declaredNode; actual major $actualMajor != declared $declaredMajor; align to avoid dependency/toolchain drift)"
+      Write-Warning "Node major version drift: declared $declaredNode, actual $nodeVersionRaw"
+    } else {
+      $nodeDetails = "$nodeVersionRaw  (declared ${declaredNode}: major aligned)"
+    }
+  }
+}
+Add-Result $results "Node.js" "Recommended" $nodeInstalled $nodeDetails
 Add-Result $results "npm" "Recommended" $npmInstalled (Get-CommandVersion "npm")
 Add-Result $results "Python" "Recommended" $pythonInstalled (Get-CommandVersion "python")
 Add-Result $results "VS Code" "Recommended" $codeInstalled $(if ($codeInstalled) { "Installed (CLI entry available)" } else { "Not installed or code is not in PATH" })
