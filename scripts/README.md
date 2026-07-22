@@ -12,6 +12,7 @@
 | `check-derived-sync.sh` / `.ps1` | **派生项目**同步边界检查（**仅派生**用） | 派生项目 | 只读 | 使用者 |
 | `collect-env.ps1` | 采集本机环境 → `docs/env/local-env.md` | 派生项目 | 写入（生成文件） | 使用者 |
 | `check-prereqs.ps1` | 检查基础工具是否齐 | 任意 | 只读 | 使用者 |
+| `check-runtime.ps1` | Node 运行时健康深度诊断（解析路径 / manager / 声明 vs 实际漂移） | 任意 | 只读 | 使用者 |
 | `bootstrap-dev-env.ps1` | 一键安装基础工具 | 本地 | 写入（安装软件） | 使用者 |
 | `sync-all-derived.sh` | 批量同步父目录下所有派生项目 | 父目录 | 写入（各派生项目） | 维护者 |
 | `e2e-sync-check.sh` | L3 端到端回归检查门 | 模板仓 | 只读 | 维护者 |

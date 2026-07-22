@@ -155,3 +155,13 @@ issue #238（LUMEN_demo_T2.1 回流）独立撞到同一缺口，并精确描述
 9. 本轮**不纳入**可选扩展：`ai/commands/check-runtime.md`、AI CLI smoke、`check-runtime.sh` 可移植子集、`check-prereqs` Bash fallback —— 作为后续候选。
 10. 本轮**不加** CI `setup-node`（独立提案）；**不扩** Python / Java 同框架（Node 走通后再说）。
 11. 混合 manager 口径：`.node-version` + `package.json#volta` 并用 + check-runtime 断言一致；在 env-setup §6 写明分境（单 manager=单文件 / 混合团队=双文件+断言）。
+
+## 9. L3 端到端回归结果（2026-07-21）
+
+阶段 2 是 MINOR，按 `MAINTAINERS.md` §3 跑 L3 端到端回归：
+
+- **R1/R2/R3（自动，`e2e-sync-check.sh`）**：✅ 全过（check-template 含同步链路 + doc-standards 镜像 + 新项目烟测；sync-all-derived 批量 dry-run 烟测），覆盖 `scripts/check-runtime.ps1` 经 `template-sync.json` 下行同步链路不破坏同步判断。
+- **R4/R5/R6（人工）**：**豁免（维护者确认）** — 本次改动不触及 scenario 路由 / 文档生成 / PowerShell fallback（零代码改动）；本次改动唯一相关的端到端风险是新增同步件下行链路，已由 R1/R2/R3 全过覆盖。详见 `ai-records/e2e-reports/2026-07-21-v1.56.0-runtime-health.md`。
+- **附带验证**：`check-runtime.ps1` 本机实跑命中 issue #238 真病灶（Volta image 绕过 shim + Volta/nvm-windows 共存 + session-only PATH 注入），证明阶段 2 诊断能力有效。
+
+结论：可发布。

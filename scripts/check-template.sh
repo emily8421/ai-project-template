@@ -513,6 +513,14 @@ check_project_bootstrap_scripts() {
   require_contains "scripts/check-prereqs.ps1" 'bootstrap-dev-env\.ps1' "check-prereqs 提示一键安装脚本"
   require_contains "scripts/check-prereqs.ps1" 'Get-DeclaredNodeVersion' "check-prereqs 含运行时声明版本读取（阶段 1 声明 vs 实际对比）"
   require_contains "scripts/check-prereqs.ps1" 'major version drift' "check-prereqs 含 Node 主版本漂移告警"
+  require_contains "scripts/check-prereqs.ps1" 'Get-NodeResolutionHint' "check-prereqs 含阶段 2 node 解析路径健康提示"
+  require_contains "scripts/check-prereqs.ps1" 'bypassing shim' "check-prereqs 阶段 2 告警提示 Volta image 绕过 shim"
+  require_contains "scripts/check-runtime.ps1" 'Resolve-NodeSource' "check-runtime 含 node 解析来源判定"
+  require_contains "scripts/check-runtime.ps1" 'major drift' "check-runtime 含声明 vs 实际主版本漂移判定"
+  require_contains "scripts/check-runtime.ps1" 'persistent' "check-runtime 区分会话注入 vs 持久 PATH 污染"
+  require_contains "scripts/check-runtime.ps1" 'declaration consistency' "check-runtime 含混合 manager 双声明文件一致性诊断"
+  require_contains "template-docs/env-setup.md" '混合 manager 团队' "env-setup §6 含混合 manager 团队声明口径"
+  require_contains "template-docs/env-setup.md" '运行时健康检测' "env-setup §6 含运行时健康检测小节"
   require_contains "scripts/bootstrap-dev-env.ps1" 'Git\.Git' "bootstrap 脚本安装 Git for Windows"
   require_contains "scripts/bootstrap-dev-env.ps1" 'GitHub\.cli' "bootstrap 脚本安装 GitHub CLI"
   require_contains "scripts/bootstrap-dev-env.ps1" 'OpenJS\.NodeJS\.LTS' "bootstrap 脚本安装 Node.js LTS"
@@ -739,6 +747,7 @@ require_files \
   "scripts/check-derived-sync.ps1" \
   "scripts/collect-env.ps1" \
   "scripts/check-prereqs.ps1" \
+  "scripts/check-runtime.ps1" \
   "scripts/bootstrap-dev-env.ps1"
 require_file "template-docs/e2e-regression-checklist.md"
 require_file "template-docs/e2e-report-template.md"
@@ -926,6 +935,7 @@ require_contains "scripts/sync-template.sh" '"ai/prompts/docs/00-generate-or-com
 require_contains "scripts/sync-template.sh" '"ai/prompts/planning/19-plan-phases-and-sprints\.md"' "sync-template 兜底清单含 A9 阶段 Sprint 规划 Prompt"
 require_contains "scripts/sync-template.sh" '"docs/inputs/README\.md"' "sync-template 兜底清单含 docs inputs README"
 require_contains "template-sync.json" 'scripts/check-markdown-clean\.ps1' "template-sync 纳入 Markdown 清洁预检脚本"
+require_contains "template-sync.json" 'scripts/check-runtime\.ps1' "template-sync 纳入运行时健康诊断脚本"
 require_contains "scripts/sync-template.sh" 'scripts/check-markdown-clean\.ps1' "sync-template 兜底清单含 Markdown 清洁预检脚本"
 require_contains ".github/workflows/template-check.yml" 'check-markdown-clean\.ps1' "template-check CI 运行 Markdown 清洁预检"
 require_contains "MAINTAINERS.md" 'check-markdown-clean\.ps1' "MAINTAINERS 提醒 PR 前运行 Markdown 清洁预检"
