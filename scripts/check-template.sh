@@ -26,6 +26,16 @@ fail() {
   FAILURES=$((FAILURES + 1))
 }
 
+print_pattern_hint() {
+  local file="$1"
+  local pattern="$2"
+  echo "  file: $file" >&2
+  echo "  expected ERE pattern: $pattern" >&2
+  echo "  reproduce: grep -En -- <pattern> \"$file\"" >&2
+  echo "  file head:" >&2
+  sed -n '1,5p' "$file" | sed 's/^/    /' >&2
+}
+
 require_file() {
   local file="$1"
   if [[ -f "$file" ]]; then
@@ -44,7 +54,10 @@ require_contains() {
   elif grep -Eq -- "$pattern" "$file"; then
     pass "$message"
   else
-    fail "$message"
+    fail "$message（文件: $file；pattern: $pattern）"
+    # grep -Eq uses Extended Regular Expressions (ERE): use `|` for OR;
+    # escape regex metacharacters only when matching them literally.
+    print_pattern_hint "$file" "$pattern"
   fi
 }
 
@@ -459,6 +472,11 @@ require_doc_standards_mirror() {
 }
 
 check_script_entrypoints() {
+  require_contains "scripts/check-template.sh" 'expected ERE pattern' "check-template Bash 失败输出包含 ERE pattern"
+  require_contains "scripts/check-template.sh" 'reproduce: grep -En' "check-template Bash 失败输出包含复现命令"
+  require_contains "scripts/check-template.sh" 'Extended Regular Expressions' "check-template Bash helper 注明 grep -Eq 使用 ERE"
+  require_contains "scripts/check-template.ps1" 'Select-String uses \.NET regular expressions' "check-template PowerShell helper 注明 regex 风格"
+  require_contains "scripts/check-template.ps1" 'expected .NET regex pattern' "check-template PowerShell fallback 失败输出包含 pattern"
   require_contains "scripts/sync-template.ps1" 'sync-template\.sh' "sync-template PowerShell 入口调用 Bash 脚本"
   require_contains "scripts/sync-template.ps1" 'Invoke-NativeTemplateSync' "sync-template PowerShell 入口含原生 fallback"
   require_contains "scripts/sync-template.ps1" 'param\(\[string\[\]\]\$NativeSyncArgs\)' "sync-template fallback 不使用易混淆 Args 参数名"

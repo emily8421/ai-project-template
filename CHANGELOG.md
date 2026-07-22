@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.2（2026-07-22）
+
+check-template 失败诊断输出增强：自检断言失败时打印匹配文件、正则风格与复现命令，把「失败但无法定位」升级为可自调试。
+
+- **`scripts/check-template.sh`**：`require_contains` 失败分支追加 `file` / `expected ERE pattern` / `reproduce: grep -En -- <pattern> <file>` / 文件头预览（新增 `print_pattern_hint` helper）；上方注释明确 `grep -Eq` 使用 ERE（`|` 表或，仅按字面匹配元字符时才转义）。`check_script_entrypoints` +5 自检断言锁定上述输出关键词（防回归）。
+- **`scripts/check-template.ps1`**：`Invoke-NativeTemplateCheck` 失败分支追加 `(file: <相对路径>; expected .NET regex pattern: <pattern>)`；注释明确 `Select-String -Pattern` 使用 .NET regex（与 Bash ERE 风格不同）。
+- **非目标**：不改通过 / 失败判定逻辑、不改 `template-sync.json` 结构、不新增命令入口 / 文档；`.ps1` 仍为简化 fallback（不镜像 `.sh` 全部断言，既定边界）。不处理 `require_new_project_local_smoke` 本地 Windows 耗时问题（独立议题）。
+- 提案 `_proposals/TEMPLATE-UPGRADE-check-template-failure-diagnostics.md`（PATCH）。
+
 ## v1.56.1（2026-07-22）
 
 Token hotspot 累计 summary 触发（rollup）第二阶段闭环：单条记录收集升级为累计阈值后主动提示汇总。
