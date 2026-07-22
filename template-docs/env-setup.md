@@ -292,6 +292,8 @@ bash scripts/new-project.sh smoke-demo --local --no-remote
 
 Volta 项目用 `package.json` 的 `volta` 字段；fnm / nvm / asdf 项目用 `.node-version` / `.tool-versions`。建议单语言项目只选一个声明文件，避免多文件漂移。
 
+**混合 manager 团队**（成员 Volta + nvm/fnm 共存）：在仓库根同时放 `.node-version`（fnm/nvm 读）与 `package.json` 的 `volta` 字段（Volta 读），两者必须写同一个版本，由 `scripts/check-runtime.ps1` 断言一致——任一方偏离即报漂移。单 manager 团队保持单文件即可。
+
 ### 切换工具推荐（Windows 友好优先）
 
 | 运行时 | 推荐工具（Windows） | 备选 | 不推荐（Windows） |
@@ -325,6 +327,18 @@ Volta 项目用 `package.json` 的 `volta` 字段；fnm / nvm / asdf 项目用 `
 **asdf**：读 `.tool-versions`，Windows 需 WSL（见上方限制说明）。
 
 **Dev Container**：随 Docker Desktop + VS Code Dev Containers 扩展自动可用，在容器内锁定整个运行时。
+
+### 运行时健康检测
+
+声明层（本节声明文件）回答“想要哪个版本”；`scripts/check-prereqs.ps1`（v1.55.1）做轻量“声明 vs 实际主版本”对比 warning；`scripts/check-runtime.ps1`（v1.56.0）做深度诊断：
+
+- node 的**解析来源**（Volta shim / Volta image 直连绕过 shim / nvm symlink / 系统安装 / 未知）；
+- 检测到的**版本管理器**（Volta / nvm-windows / fnm / 无）；
+- **声明 vs 实际**主版本是否漂移；
+- 路径污染来自**持久 PATH**（User/Machine）还是**仅会话注入**——区分“重启终端即恢复”与“需改系统环境变量”；
+- 按诊断组合给出可操作修复提示。
+
+`check-runtime.ps1` **退出码恒为 0**（纯诊断、只读、不改 PATH）；是否把“漂移 / 异常解析”当作失败由调用方 opt-in 决定——派生项目可自行接入 CI / smoke / build 前预检（解析输出里的 `major drift` 与 `node resolution` 字段）。模板不替项目决定“版本漂移就是错误”（见 §9 跨平台边界）。
 
 ## 7. AI CLI 与公司中转站
 

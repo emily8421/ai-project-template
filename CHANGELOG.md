@@ -6,6 +6,20 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.0（2026-07-21）
+
+运行时版本健康检测阶段 2（深度诊断 + 门禁层）：在 v1.55.0 声明层 + v1.55.1 check-prereqs 软检测之上，新增 manager 中立的运行时健康诊断脚本，把“版本漂移”从版本号对比深入到解析路径 / manager 健康 / 会话 vs 持久污染的根因定位。
+
+- **新增 `scripts/check-runtime.ps1`**：manager 中立、只读、退出码恒 0 的 Node 运行时健康诊断。定位 node 解析来源（Volta shim / Volta image 直连绕过 shim / nvm symlink / fnm / 系统安装 / 未知）、检测到的 manager（Volta / nvm-windows / fnm / 无）、声明 vs 实际主版本漂移、路径污染来自持久 PATH 还是仅会话注入（区分“重启即恢复”与“需改系统变量”），按组合给可操作修复提示。门禁语义 opt-in：退出码不替项目决定“漂移即失败”，由调用方解析输出字段（`major drift` / `node resolution`）。
+- **`scripts/check-prereqs.ps1`**：阶段 1 版本对比 warning 块扩展，node 解析到非 shim 固定路径（Volta image 直连）或未检测到 manager 时追加 warning（纯告警，不改退出码，与阶段 1 同处合并），并指向 `check-runtime.ps1` 做深度诊断。
+- **`template-docs/env-setup.md` §6**：追加“混合 manager 团队”声明口径（`.node-version` + `package.json#volta` 双文件并用、由 check-runtime 断言一致）+ 新增“运行时健康检测”小节（check-runtime 输出语义与 opt-in 门禁口径）。
+- **`ai/project-rules.md` §2.9**：增一行指向 `scripts/check-runtime.ps1`。
+- **`scripts/README.md`**：脚本表登记 `check-runtime.ps1`（只读、运行位置=任意、用途=运行时健康诊断）。
+- **`template-sync.json`**：files 清单新增 `scripts/check-runtime.ps1`（派生项目经同步获得）。
+- **`scripts/check-template.sh`**：追加断言（check-runtime.ps1 存在、check-prereqs 含阶段 2 告警关键词、env-setup §6 混合 manager 口径）；`check-template.ps1` 为简化 fallback，不镜像。
+- **非目标（延续）**：不改 `collect-env.ps1`（本机事实职责不变，v1.55.0 SoC）；不自动修 PATH / 不自动切版本（只诊断 + 提示）；本轮不做 `ai/commands/check-runtime.md`、AI CLI smoke、`check-runtime.sh` 可移植子集、`check-prereqs` Bash fallback、CI `setup-node`、Python/Java 同框架（均留作后续候选）。
+- 提案 `_proposals/TEMPLATE-UPGRADE-v1.56.0-runtime-health-detection.md` 阶段 2（MINOR）；阶段 1（PATCH v1.55.1）已先行合并。吸收 issue #238（LUMEN_demo_T2.1 回流）。
+
 ## v1.55.1（2026-07-21）
 
 check-prereqs 运行时版本软检测（阶段 1，吸收自 issue #238 / v1.56.0 提案阶段 1）：Node 检测项从"报告版本"升级到"声明版本 vs 实际版本"软对比，把 v1.55.0 的声明层升级为可感知的漂移提醒。

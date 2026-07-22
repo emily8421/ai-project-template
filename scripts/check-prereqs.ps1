@@ -60,6 +60,26 @@ function Get-DeclaredNodeVersion {
   return $null
 }
 
+function Get-NodeResolutionHint {
+  # v1.56.0 阶段 2：node 解析路径健康提示（与 check-runtime.ps1 深度诊断同源，
+  # 此处只做轻量判定并在 prereqs Details 追加 warning；深度诊断用 check-runtime.ps1）。
+  # 返回提示字符串（已含 "warning:" 前缀），健康时返回空串。
+  param([string]$Path)
+  if (-not $Path) { return "" }
+  $p = $Path -replace '/', '\'
+  if ($p -match '\\Volta\\bin\\') { return "" }  # Volta shim，健康
+  if ($p -match '\\Volta\\tools\\image\\node\\') {
+    return "warning: node resolves to Volta image dir, bypassing shim; a PATH entry may sit before Volta\bin — run scripts/check-runtime.ps1"
+  }
+  $hasManager = (Test-CommandExists "volta") `
+    -or ($null -ne [Environment]::GetEnvironmentVariable("NVM_HOME")) `
+    -or (Test-CommandExists "fnm")
+  if (-not $hasManager) {
+    return "warning: node resolves to `"$Path`" with no version manager detected; pinning recommended — run scripts/check-runtime.ps1"
+  }
+  return ""
+}
+
 function Find-GitBash {
   $programFilesX86 = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
   $candidates = @($env:GIT_BASH)
@@ -155,6 +175,15 @@ if ($nodeInstalled -and ($nodeVersionRaw -match '^v?\d+\.\d+')) {
     } else {
       $nodeDetails = "$nodeVersionRaw  (declared ${declaredNode}: major aligned)"
     }
+  }
+}
+# v1.56.0 阶段 2：node 解析路径健康（与阶段 1 版本 warning 合并到同一 Details；
+# 深度诊断用 scripts/check-runtime.ps1）。
+if ($nodeInstalled) {
+  $resHint = Get-NodeResolutionHint -Path (Get-Command "node").Source
+  if ($resHint) {
+    $nodeDetails = "$nodeDetails  ($resHint)"
+    Write-Warning $resHint
   }
 }
 Add-Result $results "Node.js" "Recommended" $nodeInstalled $nodeDetails
