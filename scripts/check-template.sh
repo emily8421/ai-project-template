@@ -1049,6 +1049,8 @@ require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules
 require_contains "ai/session-rules.md" 'NEXT-STEPS\.md' "session-rules 兼容 NEXT-STEPS"
 require_contains "ai/session-rules.md" 'Token 热点观察触发' "session-rules 定义 token hotspot 主动提醒"
 require_contains "ai/session-rules.md" 'ai-records/token-hotspots/' "session-rules 定义 token hotspot 记录目录"
+require_contains "ai/session-rules.md" '累计 summary 触发' "session-rules 定义 token hotspot 累计 summary 触发"
+require_contains "ai/session-rules.md" 'ai-records/token-hotspots/SUMMARY.md' "session-rules 定义 token hotspot summary 文件"
 require_contains "ai/session-rules.md" '同会话规则复用边界' "session-rules 定义同会话规则复用边界"
 require_contains "ai/session-rules.md" '后续顺序治理步骤可复用已加载规则' "session-rules 限定同会话复用规则"
 require_contains "ai/session-rules.md" '验证证据摘要约定' "session-rules 定义成功验证摘要约定"
