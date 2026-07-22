@@ -90,6 +90,7 @@ TEMPLATE_REMOTE="${TEMPLATE_REMOTE:-https://github.com/emily8421/ai-project-temp
 DEFAULT_SYNC_FILES=(
   "VERSION"
   "CHANGELOG.md"
+  "CHANGELOG-PLAIN.md"
   "MAINTAINERS.md"
   "template-docs/beginner-guide.md"
   "template-docs/env-setup.md"

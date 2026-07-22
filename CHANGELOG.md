@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.5（2026-07-22）
+
+新增大白话版 changelog 同步文件：为正式 `CHANGELOG.md` 配套一份面向人读的解释版，让使用者快速理解每个模板版本的实际影响。
+
+- **新增 `CHANGELOG-PLAIN.md`**：位于仓库根目录，与 `CHANGELOG.md` 同级；按同一版本顺序用大白话概括每版“到底改善了什么”。文件顶部声明它不是权威版本源，权威仍以 `VERSION`、`CHANGELOG.md` 与 Git 历史为准。
+- **同步范围**：`template-sync.json` 纳入 `CHANGELOG-PLAIN.md`；`scripts/sync-template.sh` fallback 清单同步补齐，确保派生项目可获得该解释版。
+- **自检防漂移**：`scripts/check-template.sh` / `.ps1` 增加根文件存在、Sync notice 与同步清单断言。
+- **非目标**：不替代正式 `CHANGELOG.md`；不改变版本治理规则；不要求派生项目维护自己的大白话 changelog。
+- 提案 `_proposals/TEMPLATE-UPGRADE-plain-language-changelog.md`（PATCH）。
+
 ## v1.56.4（2026-07-22）
 
 Windows 大同步输出降噪与超时策略（文档 / prompt，吸收 windows-sync-output-noise 提案文档部分）。
