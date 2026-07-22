@@ -4,6 +4,7 @@
   "files": [
     "VERSION",
     "CHANGELOG.md",
+    "CHANGELOG-PLAIN.md",
     "MAINTAINERS.md",
     "template-docs/beginner-guide.md",
     "template-docs/scenario-guides.md",
