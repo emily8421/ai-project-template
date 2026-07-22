@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.4（2026-07-22）
+
+Windows 大同步输出降噪与超时策略（文档 / prompt，吸收 windows-sync-output-noise 提案文档部分）。
+
+- **`git-guide.md` §5.8**：新增「Windows 大同步输出与超时」——重定向 log、长超时（300s+）、grep 摘要（禁止路径 + 版本机制）、CRLF warning 不判失败、失败才展开；`check-derived-sync` 成功路径摘要化。
+- **`ai/prompts/maintainers/12-sync-template.md`**：A13 SOP 第 8 步加 log 重定向 + 长超时 + CRLF 不判失败提示；第 9 步加 grep 摘要策略（项目专属误触及 + 版本机制 + 摘要计数，不回灌完整列表）。
+- **非目标**：不改脚本输出（`sync-template` quiet/summary、`check-derived-sync` 摘要收敛留后续 PR）；不改 `core.autocrlf` / `.gitattributes`；不吞真实错误。
+- 提案 `_proposals/TEMPLATE-UPGRADE-windows-sync-output-noise.md` 文档 / prompt 部分落地；脚本降噪留后续（提案不归档）。
+
 ## v1.56.3（2026-07-22）
 
 Web App Structure Profile 补充主应用文件职责边界与业务下沉约束（吸收 issue #232）。

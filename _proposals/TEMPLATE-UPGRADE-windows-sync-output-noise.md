@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE: Windows sync-template 输出降噪与大同步摘要
 
 > 来源：模板维护者（token-hotspot records：digital-cs-demo 大同步、sync 代理回流）
-> 状态：候选 / 待评估
-> 目标版本：待确认
-> Release impact：patch（AI 建议；默认同步语义不变，仅减少成功路径噪音与补充操作提示）
-> Release strategy：优先文档 / prompt 指引；脚本侧降噪可同主题单独 PR 落地
+> 状态：**文档 / prompt 部分已落地（v1.56.4）**；脚本侧降噪（sync-template quiet/summary、check-derived-sync 摘要收敛）留后续 PR，候选
+> 目标版本：文档 / prompt = v1.56.4（已发布）；脚本降噪待确认
+> Release impact：patch（文档 / prompt v1.56.4 已落地；脚本降噪后续 patch）
+> Release strategy：优先文档 / prompt（✅ v1.56.4）；脚本侧降噪同主题单独 PR（待办）
 
 ## 1. 背景
 
