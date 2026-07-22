@@ -56,7 +56,7 @@
 |---|---|---|---|---|---|
 | **B0 清理**（低风险）| 归档已落地提案：batch1.5-patch、sync-proxy、**project-registry**（Batch 0-6 全落地）；capability **留剩余标记不归档**（Batch 4 真待办）；归档 #238 过期镜像 | `git mv` → `_archive/proposals/` | check-template | 归档 #238 过期镜像（远端已 CLOSED）| 待执行 |
 | **B1 token hotspot rollup** | 落地 summary / rollup 触发闭环（合并 #234+#235 + token-hotspot-records）| `ai/session-rules.md` §4.1、可能新增 summary 模板、`check-template.*` 断言、`template-sync.json`（若新增模板）| check-template + 行为抽样 | 合并 #234 + #235 → 关闭 | 待执行 |
-| **B2 sync 体验** | `windows-sync-output-noise`（#9）| `git-guide §5.7`、`sync-template.*`、`check-derived-sync.*` | dry-run 行为抽样 | — | 候选 |
+| **B2 sync 体验** | `windows-sync-output-noise`（#9）| `git-guide §5.8`、`12-sync-template.md`（文档 / prompt）；`sync-template.*`、`check-derived-sync.*`（脚本降噪留后续）| dry-run 行为抽样 | — | **文档 / prompt ✅ 完成（v1.56.4）；脚本降噪候选** |
 | **B3 check-template 维护** | `template-check-maintainability`（失败诊断增强 P1）| `check-template.sh` / `.ps1` | 失败用例抽样 | — | **P1 ✅ 完成（#244, v1.56.2）** |
 | **B4 web 主文件膨胀** | issue **#232**（阈值 + 业务下沉 + 自检）| `ai/global-rules.md` §5 / `template-docs/web-fullstack-profile.md` / 自检 | 派生项目阈值验证 | 关闭 #232 | 候选 |
 
@@ -90,6 +90,7 @@
 |---|---|---|---|---|---|
 | B0 | ✅ 完成（2026-07-22）| chore/archive-c1-b0-proposals（已删）| #242 | 5eab88c | issue-238 镜像归档（#238 远端已 CLOSED）|
 | B1 | ✅ 完成（2026-07-22，v1.56.1）| chore/c1-b1-token-hotspot-rollup | 本 PR | v1.56.1 | 合并 #234 + #235（rollup 触发落地 §4.2）|
-| B2 | 候选 | — | — | — | — |
+| B2（文档 / prompt）| ✅ 完成（2026-07-22, v1.56.4）| chore/windows-sync-output-noise | 本 PR | v1.56.4 | — |
+| B2（脚本降噪）| 候选 | — | — | — | — |
 | B3（P1）| ✅ 完成（2026-07-22, v1.56.2）| fix/check-template-failure-diagnostics（已删）| #244 | 29e1ee9（v1.56.2）| — |
 | B4 | 候选 | — | — | — | — |
