@@ -139,10 +139,12 @@ function Invoke-NativeTemplateCheck {
       return
     }
 
+    # Select-String uses .NET regular expressions: use | for alternation and
+    # escape regex metacharacters only when matching them literally.
     if (Select-String -Path $fullPath -Pattern $Pattern -Quiet) {
       Pass $Message
     } else {
-      Fail $Message
+      Fail ($Message + " (file: " + $RelativePath + "; expected .NET regex pattern: " + $Pattern + ")")
     }
   }
 
