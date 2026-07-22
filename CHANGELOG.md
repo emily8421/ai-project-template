@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.1（2026-07-22）
+
+Token hotspot 累计 summary 触发（rollup）第二阶段闭环：单条记录收集升级为累计阈值后主动提示汇总。
+
+- **`ai/session-rules.md` §4.2**：新增累计 summary 触发（`ai-records/token-hotspots/` 下 ≥3 份未汇总记录 / 已有 SUMMARY 后再增 ≥3 份 / 用户显式询问 → 提示生成更新 `SUMMARY.md`）；内嵌最小 summary 结构 + 单份记录可选汇总状态字段；写入边界与 §4.1 一致（不静默写、首次创建前说明路径 / 类别 / 隐私口径）。
+- **`scripts/check-template.sh`**：+2 断言（session-rules 含「累计 summary 触发」+ `SUMMARY.md`）；`check-template.ps1` fallback 不镜像（既定）。
+- 合并 issue #234（LUMEN_demo_T2.1）/ #235（zhiyan-digital-cs-platform）：两 issue 独立撞到同一缺口（累计后无汇总触发），B1 一次落地；吸收 `_proposals/TEMPLATE-UPGRADE-token-hotspot-records.md` 的 summary 闭环部分。
+- 非目标：不新增 `template-docs/token-hotspot-summary.example.md`、不动 `template-sync.json`、不新增命令入口（最小方案；先内嵌结构验证，汇总多了再评估升级）。
+
 ## v1.56.0（2026-07-21）
 
 运行时版本健康检测阶段 2（深度诊断 + 门禁层）：在 v1.55.0 声明层 + v1.55.1 check-prereqs 软检测之上，新增 manager 中立的运行时健康诊断脚本，把“版本漂移”从版本号对比深入到解析路径 / manager 健康 / 会话 vs 持久污染的根因定位。
