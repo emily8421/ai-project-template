@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE: check-template 诊断与脚本维护性优化
 
 > 来源：模板维护者（token-hotspot records：capability batches、derived version stage A/B、sync proxy debug、domain sync closure）
-> 状态：候选 / 待评估
-> 目标版本：待确认
-> Release impact：patch / minor 待定（诊断增强为 patch；结构拆分或新增工具可能为 minor）
-> Release strategy：P1 小修诊断与注释；P2 再评估结构拆分和 `.sh`↔`.ps1` 对照工具
+> 状态：**P1 已落地（v1.56.2, #244）**；P2 候选 / 待评估
+> 目标版本：P1 = v1.56.2（已发布）；P2 待确认
+> Release impact：P1 = patch（v1.56.2，已落地）；P2 结构拆分 / 双语言对照可能为 minor
+> Release strategy：P1 小修诊断与注释（✅ v1.56.2）；P2 再评估结构拆分和 `.sh`↔`.ps1` 对照工具
 
 ## 1. 背景
 

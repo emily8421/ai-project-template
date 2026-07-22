@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.3（2026-07-22）
+
+Web App Structure Profile 补充主应用文件职责边界与业务下沉约束（吸收 issue #232）。
+
+- **`template-docs/web-fullstack-profile.md` §5.1**：新增「主应用文件职责边界与业务下沉」——主文件只做组合 / 跨域 orchestration / cross-cutting / render，业务状态 / handler / 副作用下沉域 hook；state / handler ~10–15 软上限；业务 hook 不持有跨域 setter（经回调交回主文件，防循环依赖 / 闭包过期）。与 §5 阈值一致的软性治理提醒。
+- **triage 修正**：#232 §1 描述「模板未给膨胀阈值数值」已过时——阈值已于 capability batches（Web App Profile）落地于 §5；本版只补职责边界增量。
+- **非目标**：不加脚本自检（`check-template` 跑在模板仓，无法检查派生 `App.tsx`，保持 AI / 人工软性）；不改 global-rules §5（已引用）；不规定框架 / 状态库。
+- **B3 记录回写**（随本 PR）：C1 triage batch plan / template-check-maintainability / token-hotspot-records 三份记录更新（PR #244 = B3 P1 落地，v1.56.2）。
+- 提案 `_proposals/TEMPLATE-UPGRADE-app-main-file-size-rule.md`（PATCH，吸收 #232）。
+
 ## v1.56.2（2026-07-22）
 
 check-template 失败诊断输出增强：自检断言失败时打印匹配文件、正则风格与复现命令，把「失败但无法定位」升级为可自调试。
