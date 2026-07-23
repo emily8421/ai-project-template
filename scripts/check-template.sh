@@ -12,13 +12,41 @@
 #   3. 主流程：按入口、文档、治理、脚本、同步清单、样例分组调度。
 set -euo pipefail
 
+# 参数（opt-in）：--summary / --quiet 只输出计数与失败项，不逐条打印 ✓；默认仍全量，CI 不受影响。
+# 退出码约定：0 通过 / 1 内容失败 / 2 环境守卫触发（CI 仍把任何非零当失败）。
+SUMMARY=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --summary|--quiet) SUMMARY=1; shift ;;
+    -h|--help) echo "用法: bash scripts/check-template.sh [--summary|--quiet]"; exit 0 ;;
+    *) echo "未知参数: $1（可用: --summary / --quiet）" >&2; exit 2 ;;
+  esac
+done
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# early-exit 守卫：ROOT 不像模板根 或 核心前置文件缺失时早退，避免一次环境 / 入口故障引爆上千条假 ✗（token 炸弹）。
+if [[ ! -d "$ROOT/.git" || ! -f "$ROOT/VERSION" ]]; then
+  echo "✗ 环境守卫: ROOT($ROOT) 不像模板仓库根目录（缺 .git 或 VERSION），多为 bash 入口 / PATH 环境问题，非模板内容失败。" >&2
+  echo "  复现诊断: bash --version; command -v dirname grep sed; echo ROOT=$ROOT" >&2
+  exit 2
+fi
+for _prereq in README.md VERSION template-sync.json ai/index.md; do
+  if [[ ! -e "$ROOT/$_prereq" ]]; then
+    echo "✗ 环境守卫: 核心前置文件缺失 $ROOT/$_prereq；若非有意删除，多为 ROOT / 入口环境问题。不再继续断言以免批量误报。" >&2
+    exit 2
+  fi
+done
+
 FAILURES=0
+PASSES=0
 
 pass() {
-  echo "✓ $1"
+  PASSES=$((PASSES + 1))
+  if [[ $SUMMARY -eq 0 ]]; then
+    echo "✓ $1"
+  fi
 }
 
 fail() {
@@ -492,7 +520,16 @@ check_script_entrypoints() {
   require_contains "scripts/check-derived-sync.sh" '<sync-commit>' "check-derived-sync Bash 入口提示显式同步提交"
   require_contains "scripts/check-derived-sync.sh" 'merge commit' "check-derived-sync Bash 入口提示 merge commit 场景"
   require_contains "SOP.md" 'PowerShell fallback' "SOP 常用命令说明 PowerShell fallback"
+  require_contains "SOP.md" 'Windows fallback 最短判断链' "SOP 包含 Windows fallback 最短判断链"
+  require_contains "SOP.md" '成功路径只记命令、退出码' "SOP 说明 check-template 成功路径摘要"
+  require_contains "SOP.md" '失败路径只保留失败断言块' "SOP 说明 check-template 失败路径最小证据"
   require_contains "git-guide.md" 'PowerShell fallback' "git-guide 说明同步 fallback"
+  require_contains "MAINTAINERS.md" 'Windows fallback 最短判断链' "MAINTAINERS 包含 Windows fallback 最短判断链"
+  require_contains "MAINTAINERS.md" 'fallback 通过只代表结构检查通过' "MAINTAINERS 说明 fallback 不等于完整自检"
+  require_contains "MAINTAINERS.md" '成功路径只记命令、退出码' "MAINTAINERS 说明 check-template 成功路径摘要"
+  require_contains "MAINTAINERS.md" '失败路径只保留失败断言块' "MAINTAINERS 说明 check-template 失败路径最小证据"
+  require_contains "SOP.md" 'check-template.sh --summary' "SOP 说明本地快速自检可用 --summary"
+  require_contains "MAINTAINERS.md" 'check-template.sh --summary' "MAINTAINERS 说明本地快速自检可用 --summary"
   require_contains "template-docs/env-setup.md" 'PowerShell fallback' "环境准备文档说明 fallback 边界"
   require_contains "template-docs/derived-sync-report-template.md" 'PowerShell fallback' "同步运行记录模板记录 fallback"
 }
@@ -1684,8 +1721,8 @@ require_example_deliverable_shape "_examples/todo-api"
 
 echo
 if [[ "$FAILURES" -eq 0 ]]; then
-  echo "✅ 模板自检通过"
+  echo "✅ 模板自检通过（$PASSES 项 / 0 失败）"
 else
-  echo "❌ 模板自检失败：$FAILURES 项" >&2
+  echo "❌ 模板自检失败：$FAILURES 项失败 / $PASSES 项通过" >&2
   exit 1
 fi
