@@ -23,6 +23,15 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# 静默集成断言（sync dry-run / new-project smoke）在 Windows 下经 git 子进程吐的 CRLF 警告：
+# 这些断言在一次性临时项目里跑 git；禁用 autocrlf 不影响任何断言结果（查结构 / 方向，不查换行）。
+# Linux CI 上 autocrlf 本就为 false，此处为 no-op。
+export GIT_CONFIG_COUNT=2
+export GIT_CONFIG_KEY_0=core.autocrlf
+export GIT_CONFIG_VALUE_0=false
+export GIT_CONFIG_KEY_1=core.safecrlf
+export GIT_CONFIG_VALUE_1=false
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 

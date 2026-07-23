@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.9（2026-07-23）
+
+`check-template.sh` 静默集成断言在 Windows 下的 git CRLF stderr 警告。
+
+- 集成断言（sync dry-run / new-project smoke）在一次性临时项目里跑 git；脚本顶部经 `GIT_CONFIG_COUNT` 给子 git 进程设 `core.autocrlf=false` / `core.safecrlf=false`，消除 "LF will be replaced by CRLF" 警告（本机实测 76 → 0）。
+- 不影响断言结果（查结构 / 方向，不查换行）；Linux CI 上 autocrlf 本就为 false，此处为 no-op。实测 `--summary` 仍 1826/0，总输出 89 → 13 行。
+- 非目标：不改断言覆盖；不改默认输出模式。
+
 ## v1.56.8（2026-07-23）
 
 `check-template.sh` 增加 opt-in 摘要模式与环境守卫，降低 AI / 本地运行时的 token 与误报成本（P2.4，承接 5.4；覆盖 v1.56.7 P2.3 的非目标「不新增 quiet / summary 参数」）。
