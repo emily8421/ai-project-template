@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE: Windows sync-template 输出降噪与大同步摘要
 
 > 来源：模板维护者（token-hotspot records：digital-cs-demo 大同步、sync 代理回流）
-> 状态：**文档 / prompt 部分已落地（v1.56.4）**；脚本侧降噪（sync-template quiet/summary、check-derived-sync 摘要收敛）留后续 PR，候选
-> 目标版本：文档 / prompt = v1.56.4（已发布）；脚本降噪待确认
-> Release impact：patch（文档 / prompt v1.56.4 已落地；脚本降噪后续 patch）
-> Release strategy：优先文档 / prompt（✅ v1.56.4）；脚本侧降噪同主题单独 PR（待办）
+> 状态：文档 / prompt 已落地（v1.56.4）；脚本侧降噪重新评估（2026-07-24）：sync-template `--summary` / `--no-stat` 早已有（v1.44.0+，成功路径轻量摘要已满足），**真剩余 = check-derived-sync 成功路径摘要化 + sync diff/stat 阶段 CRLF 更窄过滤**
+> 目标版本：文档 / prompt = v1.56.4（已发布）；脚本降噪余项待确认
+> Release impact：patch（文档 / prompt v1.56.4 已落地；脚本降噪余项后续 patch）
+> Release strategy：文档 / prompt（✅ v1.56.4）；脚本余项同主题单独 PR（check-derived-sync 摘要 + CRLF 更窄过滤）
 
 ## 1. 背景
 
@@ -28,14 +28,16 @@
 
 ## 4. 拟改
 
-| 文件 | 改动 |
-|---|---|
-| `git-guide.md` | §5.7 或派生同步章节补充 Windows 大同步输出说明：dry-run / commit 建议重定向到 log、使用较长超时、用 grep 检查项目专属触及 / 版本机制 / 变化规模。 |
-| `ai/prompts/maintainers/12-sync-template.md` | 在 A13 同步 SOP 中增加“大同步输出处理”步骤：成功输出摘要化，失败日志最小定位，CRLF 噪音不直接判失败。 |
-| `scripts/sync-template.sh` | 评估是否在 diff / stat 阶段过滤已知 CRLF warning，或新增成功路径摘要 / quiet 选项；过滤必须仅针对明确的 `LF will be replaced by CRLF` 噪音。 |
-| `scripts/sync-template.ps1` | PowerShell fallback 评估对称提示或摘要策略；不要求与 Bash 完全同输出，但需保留同等诊断信息。 |
-| `scripts/check-derived-sync.sh` / `.ps1` | 评估成功路径只输出同步文件计数、越界检查摘要和版本机制结果；失败、删除、越界或可疑文件时再展开逐文件列表。 |
-| `scripts/check-template.sh` | 若改脚本输出，增加防回归断言：失败信息仍可见，成功摘要包含关键计数 / 状态。 |
+| 文件 | 改动 | 状态 |
+|---|---|---|
+| `git-guide.md` | §5.8 Windows 大同步输出：重定向 log、长超时、grep 摘要、CRLF 不判失败、失败才展开。 | ✅ 已落地 v1.56.4 |
+| `ai/prompts/maintainers/12-sync-template.md` | A13 SOP 大同步输出处理步骤（成功摘要化、失败最小定位、CRLF 不判失败）。 | ✅ 已落地 v1.56.4 |
+| `scripts/sync-template.sh` | `--summary` / `--no-stat` **已存在（v1.44.0+，成功路径轻量摘要已满足）**；剩余仅评估 diff/stat 阶段过滤精确 `LF will be replaced by CRLF` 噪音。 | 部分满足；CRLF 过滤 = 真余项 |
+| `scripts/sync-template.ps1` | PowerShell fallback 对称提示 / 摘要策略评估。 | 候选 |
+| `scripts/check-derived-sync.sh` / `.ps1` | 成功路径只输出同步文件计数、越界检查摘要和版本机制结果；失败 / 删除 / 越界 / 可疑时再展开逐文件列表。 | **真余项** |
+| `scripts/check-template.sh` | 若改脚本输出，增加防回归断言（失败信息可见、成功摘要含关键计数 / 状态）。 | 随余项 |
+
+> 2026-07-24 重新评估：原 §4 把「sync-template quiet/summary」列为待办，但 `--summary` / `--no-stat` 早在 v1.44.0+ 已具备（等价 `--dry-run --no-stat`，只出轻量摘要）。故脚本侧降噪收窄为上述 2 项真余项，不再含 sync-template summary。
 
 ## 5. 大同步审查 checklist 候选
 
@@ -69,5 +71,6 @@
 
 ## 9. 后续
 
-- 可先落地文档 / prompt 指引，再评估脚本侧 quiet / summary 选项。
+- 文档 / prompt 已落地（v1.56.4）；sync-template `--summary` 早已满足，不再列为待办。
+- 真剩余 2 项（2026-07-24 重新评估）：① `check-derived-sync` 成功路径摘要化（计数 + 越界 + 版本机制结果，失败 / 可疑再展开逐文件）；② sync diff/stat 阶段对精确 CRLF warning 的更窄过滤。落地前先给改动方案 + 回滚方式。
 - 若后续出现非 Windows 环境的大同步输出问题，再扩展为通用 sync-output profile。
