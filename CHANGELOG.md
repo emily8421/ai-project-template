@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.10（2026-07-24）
+
+同步后整理 Prompt 补充「启用项目自有版本机制 checklist」操作段：原 Prompt 已能**审计**版本机制启用状态（双信号），但「怎么启用」的操作步骤仍靠参考项目现场推断；现沉淀为前置判断 + 普通派生启用 7 步 + 领域模板差异 + 双信号验收，减少每次重复拼装。
+
+- **`ai/prompts/maintainers/15-post-sync-cleanup.md`**：第一段第 5 步审计后新增「启用项目自有版本机制 checklist」操作段（版本号必须人工确认）。
+- **防漂移断言**：`scripts/check-template.sh` 增加关键词断言锁「启用项目自有版本机制 checklist」。
+- **非目标**：不改 `check-derived-sync` 版本机制启用检测逻辑（双信号不变）；不改默认同步行为；项目版本号仍由人工确认。
+- 提案 `_proposals/TEMPLATE-UPGRADE-post-sync-version-checklist.md`（PATCH）落地后归档。
+
 ## v1.56.9（2026-07-23）
 
 `check-template.sh` 静默集成断言在 Windows 下的 git CRLF stderr 警告。
