@@ -6,6 +6,18 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.8（2026-07-23）
+
+`check-template.sh` 增加 opt-in 摘要模式与环境守卫，降低 AI / 本地运行时的 token 与误报成本（P2.4，承接 5.4；覆盖 v1.56.7 P2.3 的非目标「不新增 quiet / summary 参数」）。
+
+- **摘要模式**：新增 `--summary` / `--quiet`（opt-in，默认与 CI 行为不变），成功只输出计数与总结果，不再逐条打印 1800+ 行 ✓；失败沿用 P1 最小证据格式。
+- **环境守卫**：`ROOT` 不像模板根 或 核心前置文件（README / VERSION / template-sync.json / ai/index.md）缺失时早退（退出码 2），避免一次环境 / 入口故障引爆上千条假 ✗ 的 token 炸弹。
+- **退出码约定**：0 通过 / 1 内容失败 / 2 环境守卫触发（CI 仍把任何非零当失败）。
+- **验证分层**：`.ps1` fallback = 结构兜底；`check-template.sh --summary` = 本地快速完整自检；CI 全量 = 发布权威。
+- **防漂移**：SOP / MAINTAINERS 增加 `--summary` 短锚点断言。
+- **非目标**：不减少检查项；不改默认输出模式与退出语义（仅新增退出码 2）；不做 P2.1 断言分区（`--summary` 计数输出为分区预留接口）。
+- **已知后续**：Windows 本地 `--summary` 仍可能经集成断言的 git 子进程吐 CRLF 警告到 stderr（CI 无此问题），单列评估是否静默。
+
 ## v1.56.7（2026-07-23）
 
 Windows 本地 `check-template` fallback 判断链补强：把 C-002 并入 `template-check-maintainability` P2.3，并给模板维护者一条最短排障路径，降低 Git Bash / PowerShell fallback 失败时的上下文读取成本。

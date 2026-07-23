@@ -96,7 +96,7 @@ Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-t
 
 1. 模板仓本地先跑 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
 2. 若进入 fallback，先看 Bash 启动错误与 fallback 结果；fallback 通过只代表结构检查通过，不代表完整自检通过。
-3. 发布前仍以 `bash scripts/check-template.sh` 或 CI 为准；必要时用 Git Bash 全路径重跑。
+3. 发布前仍以 `bash scripts/check-template.sh` 或 CI 为准；本地快速自检可用 `bash scripts/check-template.sh --summary`（只输出计数与失败项，避免回灌完整成功日志）；必要时用 Git Bash 全路径重跑。
 4. 成功路径只记命令、退出码 / check 结论和通过摘要，不回灌完整成功日志。
 5. 失败路径只保留失败断言块、文件、expected pattern、复现命令和必要的 Bash / fallback 错误。
 
