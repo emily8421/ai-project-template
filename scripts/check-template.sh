@@ -1044,6 +1044,7 @@ require_contains "scripts/check-derived-sync.ps1" 'version mechanism enablement'
 require_contains "scripts/check-derived-sync.sh" 'Check project version consistency' "check-derived-sync 主信号检测派生 workflow 版本校验"
 require_contains "scripts/check-derived-sync.ps1" 'Check project version consistency' "check-derived-sync PowerShell fallback 主信号检测派生 workflow 版本校验"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '版本机制启用状态' "同步后整理 Prompt 引导审计版本机制启用状态"
+require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '启用项目自有版本机制 checklist' "同步后整理 Prompt 含启用项目自有版本机制操作 checklist（审计→启用步骤）"
 require_contains "ai/doc-standards/README.md" 'Document Standards' "doc-standards README 说明规范镜像定位"
 
 # AI CLI 使用体验入口：快捷命令与会话续接必须贯穿规则、Prompt、同步清单和人读文档。

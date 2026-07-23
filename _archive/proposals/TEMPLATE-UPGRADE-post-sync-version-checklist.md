@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: post-sync 项目自有版本机制启用 checklist
 
 > 来源：模板维护者（zhiyan / LUMEN-DEMO / digital-cs-demo 派生项目同步后版本机制启用经验去项目化）
-> 状态：候选 / 待评估
-> 目标版本：待确认
+> 状态：已落地（v1.56.10，2026-07-24）；启用 checklist 已补入 `15-post-sync-cleanup.md` 第 5 步后，本提案归档
+> 目标版本：v1.56.10
 > Release impact：patch（AI 建议；补充 SOP / Prompt，不改变默认同步行为）
 > Release strategy：优先补 `15-post-sync-cleanup` 操作清单；必要时同步补 `git-guide.md` 与同步记录模板
 
