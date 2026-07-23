@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.6（2026-07-23）
+
+PR / CI 闭环速查 Profile 转正：把既有 Remote / CI SOP Profile 从实验文档升级为同步范围内的最小必读入口，减少 push / PR / checks / merge / 分支清理时重复全文读取长治理文档。
+
+- **`template-docs/remote-ci-sop-profile.md` 转正**：移除实验阶段口径，新增 `PR / CI 闭环 Checklist`，覆盖动作前预检、提交与推送、创建 PR、checks / CI、merge / close / delete 和收尾复查。
+- **任务路由可发现**：`ai/index.md` 的 PR / CI / Git 收尾任务路由加入该 Profile；`ai/commands/README.md` 增加自然语言触发与最小必读分诊提示。
+- **同步与自检**：`template-sync.json` 和 `scripts/sync-template.sh` fallback 纳入 `template-docs/remote-ci-sop-profile.md`；`scripts/check-template.sh` 增加 profile、路由、同步清单和 fallback 防漂移断言。
+- **边界保持**：不改变 push / merge / close issue / delete branch / release 的单步确认要求；CI pending 仍只汇报 pending，不长时间等待；失败日志仍最小摘取。
+- 提案 `_proposals/TEMPLATE-UPGRADE-pr-ci-closure-profile.md`（PATCH），承接 `_proposals/TEMPLATE-UPGRADE-ai-coding-context-budget.md` 的 PR 闭环 checklist 候选。
+
 ## v1.56.5（2026-07-22）
 
 新增大白话版 changelog 同步文件：为正式 `CHANGELOG.md` 配套一份面向人读的解释版，让使用者快速理解每个模板版本的实际影响。
