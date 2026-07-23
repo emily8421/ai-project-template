@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: C1 提案收件箱 triage 与分批计划
 
 > 来源：模板维护者（C1 提案收件箱处理，2026-07-22）
-> 状态：进行中（B0 / B1 / B3(P1) 已完成；B2 / B4 候选；延后池另列）
+> 状态：已完结（归档 2026-07-24）：B0 / B1 / B2 文档 / B3(P1 + P2.3/P2.4 + CRLF) / B4 全部完成或吸收；剩余项转独立提案 / 观察项（见 §6 去向）
 > 目标版本：分批确认（见各 Batch）
 > Release impact：none（本文件为 triage / 分批治理总纲，不直接改同步范围；各 Batch 落地时各自判断 patch / minor）
 > Release strategy：分批（B0 清理 → B1 token hotspot rollup → B2 sync 体验 → B3 check-template 维护 → B4 web 主文件膨胀；延后池另列）
@@ -89,8 +89,19 @@
 | Batch | 状态 | 分支 | PR | 合并提交 | issue 关闭 |
 |---|---|---|---|---|---|
 | B0 | ✅ 完成（2026-07-22）| chore/archive-c1-b0-proposals（已删）| #242 | 5eab88c | issue-238 镜像归档（#238 远端已 CLOSED）|
-| B1 | ✅ 完成（2026-07-22，v1.56.1）| chore/c1-b1-token-hotspot-rollup | 本 PR | v1.56.1 | 合并 #234 + #235（rollup 触发落地 §4.2）|
-| B2（文档 / prompt）| ✅ 完成（2026-07-22, v1.56.4）| chore/windows-sync-output-noise | 本 PR | v1.56.4 | — |
-| B2（脚本降噪）| 候选 | — | — | — | — |
+| B1 | ✅ 完成（2026-07-22，v1.56.1）| chore/c1-b1-token-hotspot-rollup | #243 | v1.56.1 | 合并 #234 + #235（rollup 触发落地 §4.2）|
+| B2（文档 / prompt）| ✅ 完成（2026-07-22, v1.56.4）| chore/windows-sync-output-noise | #246 | v1.56.4 | — |
+| B2（脚本降噪）| 转余项 | — | — | — | sync-template `--summary` 早已有；真剩余 = check-derived-sync 成功摘要 + CRLF 更窄过滤，见 `windows-sync-output-noise` 余项 |
 | B3（P1）| ✅ 完成（2026-07-22, v1.56.2）| fix/check-template-failure-diagnostics（已删）| #244 | 29e1ee9（v1.56.2）| — |
-| B4 | 候选 | — | — | — | — |
+| B3（P2.3 / P2.4）| ✅ 完成（2026-07-23, v1.56.7 / v1.56.8）| 见 #252 | #252 | 668f9f5 | Windows fallback checklist + `--summary` / early-exit；CRLF 静默见下行 |
+| B3（CRLF 静默）| ✅ 完成（2026-07-23, v1.56.9）| 见 #253 | #253 | 73f1c12 | 集成断言 CRLF stderr 静默 |
+| B4 | ✅ 已吸收关闭（2026-07-22, v1.56.3）| feat/web-fullstack-profile | #245 | 68157bd | #232 远端 2026-07-22 CLOSED（主应用文件膨胀约束：阈值 + 业务下沉 + 自检）|
+
+**剩余项去向（2026-07-24 归档时确认）**：远端 open issue 为空（收件箱无遗漏）。本总纲归档后，active 收件箱剩余项各自独立承载：
+
+- `capability-…-contracts`：Batch 4（CAP-007）/ Batch 5 观察项，留剩余标记不归档。
+- `template-check-maintainability`：P2.1 断言分区 / P2.2 双语言对照，观察中。
+- `windows-sync-output-noise`：改写为 check-derived-sync 成功摘要 + CRLF 更窄过滤两项余项。
+- `token-hotspot-records`：机制已落地，降为观察项。
+- `post-sync-version-checklist`：可做小 PATCH（主体不依赖 `--domain-template`）。
+- `domain-template-inheritance` / `docs-scaffold-followups` P2：延后池。
