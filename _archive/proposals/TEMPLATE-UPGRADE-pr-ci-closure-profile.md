@@ -1,10 +1,11 @@
 # TEMPLATE-UPGRADE: PR / CI 闭环速查 Profile 转正
 
 > 来源：模板维护者；承接 `_proposals/TEMPLATE-UPGRADE-ai-coding-context-budget.md` §5.1
-> 状态：处理中
+> 状态：已落地 / 已归档（v1.56.6；PR #249；落地提交 `d62bafb`，合并后 main 见 `cca7f73`）
 > 目标版本：v1.56.6
 > Release impact：patch（AI 建议，待维护者确认；把既有实验 Profile 转为同步范围内的可发现入口）
 > Release strategy：单独发布
+> 收口证据：`template-docs/remote-ci-sop-profile.md` 已转为 PR / CI 闭环速查入口，并进入 `template-sync.json` 与自检断言。
 
 ## 1. 背景
 
