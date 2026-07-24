@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: Windows sync-template 输出降噪与大同步摘要
 
 > 来源：模板维护者（token-hotspot records：digital-cs-demo 大同步、sync 代理回流）
-> 状态：文档 / prompt 已落地（v1.56.4）；脚本侧降噪重新评估（2026-07-24）：sync-template `--summary` / `--no-stat` 早已有（v1.44.0+，成功路径轻量摘要已满足），**真剩余 = check-derived-sync 成功路径摘要化 + sync diff/stat 阶段 CRLF 更窄过滤**
+> 状态：已完结（归档 2026-07-24）：文档/prompt v1.56.4 + 余项 1 check-derived-sync 成功摘要化 v1.56.11（#257）+ 余项 2 sync dry-run CRLF 过滤 v1.56.12，全部落地
 > 目标版本：文档 / prompt = v1.56.4（已发布）；脚本降噪余项待确认
 > Release impact：patch（文档 / prompt v1.56.4 已落地；脚本降噪余项后续 patch）
 > Release strategy：文档 / prompt（✅ v1.56.4）；脚本余项同主题单独 PR（check-derived-sync 摘要 + CRLF 更窄过滤）

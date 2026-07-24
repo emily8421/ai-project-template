@@ -513,19 +513,22 @@ show_local_to_template_stat() {
   local tmp_dir
   local local_file
   local remote_file
+  # 仅 dry-run diff：临时关 autocrlf/safecrlf 消 Windows 临时文件 CRLF 噪音；
+  # git -c 内联只作用于下面 git show/diff，不影响 --commit 的 git checkout 写入（v1.56.12）。
+  local -a NOCRLF=(-c core.autocrlf=false -c core.safecrlf=false)
 
   tmp_dir="$(mktemp -d)"
   local_file="$tmp_dir/local/$file"
   remote_file="$tmp_dir/template/$file"
   mkdir -p "$(dirname "$local_file")"
   mkdir -p "$(dirname "$remote_file")"
-  git show "$REF:$file" > "$remote_file"
+  git "${NOCRLF[@]}" show "$REF:$file" > "$remote_file"
 
   if [[ -f "$file" ]]; then
     cp "$file" "$local_file"
-    git diff --no-index --stat -- "$local_file" "$remote_file" || true
+    git "${NOCRLF[@]}" diff --no-index --stat -- "$local_file" "$remote_file" || true
   else
-    git diff --no-index --stat -- /dev/null "$remote_file" | sed "s#${tmp_dir//\/\\}/##g" || true
+    git "${NOCRLF[@]}" diff --no-index --stat -- /dev/null "$remote_file" | sed "s#${tmp_dir//\/\\}/##g" || true
   fi
 
   rm -rf "$tmp_dir"
