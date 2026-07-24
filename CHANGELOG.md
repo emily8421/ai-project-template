@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.12（2026-07-24）
+
+sync-template dry-run 的 diff 阶段消除 Windows CRLF 警告噪音：原 `show_local_to_template_stat` 把模板文件 `git show` 到临时目录比较时，Windows autocrlf 触发 `LF will be replaced by CRLF` 警告（digital-cs-demo 实测 22 条）。现给 dry-run 的 git show/diff 内联 `core.autocrlf=false`，警告消除，且**不影响 `--commit` 的 `git checkout` 写入**。
+
+- **`scripts/sync-template.sh` / `.ps1`**：`show_local_to_template_stat`（.ps1 `Show-TemplateDiffStat`）的 git show/diff 加 `git -c core.autocrlf=false -c core.safecrlf=false`（内联，只作用于该命令）。
+- **防漂移断言**：`scripts/check-template.sh` 增加断言锁 `core.autocrlf=false`。
+- **非目标**：不改 `--commit` 写入换行（`git checkout` 不受内联配置影响）；不改 sync 文件选择 / 版本机制；digital-cs-demo 实测验证 22 → 0。
+- 承接 `_proposals/TEMPLATE-UPGRADE-windows-sync-output-noise.md` 余项 2；与 PR4a 余项 1 一起，提案归档。
+
 ## v1.56.11（2026-07-24）
 
 `check-derived-sync` 成功路径摘要化：原成功时逐文件列 `✓ 同步清单内变更`（大同步 119 文件 ≈ 119 行），现合规文件只计数、循环后输出一句摘要；只有清单外 / 受保护等异常项才逐条列出。同时 `git show` 去掉 `--stat`，减少逐文件 stat 噪音。
