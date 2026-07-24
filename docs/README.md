@@ -104,7 +104,7 @@ UI Exploration to Delivery Pipeline 建议按 `docs/inputs/*` → UI brief / 输
 
 视觉效果探索只产生视觉候选、已确认视觉方向或视觉验证失败记录；未确认前不得写入正式设计。可视化原型被用户确认后，也不得直接进入实现，必须先检查是否回填 `frontend-experience-brief`、`frontend-interaction`、UI 原型策略、`08` 和 `09`。
 
-复杂 Web / 全栈交互项目若触发 `template-docs/web-fullstack-profile.md`，应在首个业务 Sprint 前完成或豁免 Web App Structure Profile + Walking Skeleton Gate，并把 App Shell、前后端目录边界、最小 vertical slice、文件膨胀阈值、API / browser smoke 回填到 `04/05/08/09`；该 profile 不替代 UI brief、前端交互设计、UI 原型策略或正式验收记录。
+复杂 Web / 全栈交互项目若触发 `template-docs/web-fullstack-profile.md`，应在首个业务 Sprint 前完成或豁免通用 System Skeleton Gate + Web App Structure Profile（Web 特化），并把 App Shell、前后端目录边界、最小 vertical slice、文件膨胀阈值、API / browser smoke 回填到 `04/05/08/09`；该 profile 是通用 Gate 的 Web 特化扩展，不替代 UI brief、前端交互设计、UI 原型策略或正式验收记录。
 
 ## 7. AI 新增文档规则
 
