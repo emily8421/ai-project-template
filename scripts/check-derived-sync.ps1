@@ -233,7 +233,7 @@ function Invoke-NativeDerivedSyncCheck {
 
   Write-Host ""
   Write-Host "==> Sync commit under validation"
-  & git show --name-only --stat --oneline --no-renames $commit | ForEach-Object { Write-Host $_ }
+  & git show --name-only --oneline --no-renames $commit | ForEach-Object { Write-Host $_ }
   Write-Host ""
 
   $changedFiles = @(Get-GitText diff-tree --no-commit-id --name-only -r $commit | Where-Object { $_ })
@@ -269,9 +269,10 @@ function Invoke-NativeDerivedSyncCheck {
     Fail "commit message does not look like a template sync commit: $subject"
   }
 
+  $inSyncCount = 0
   foreach ($changedFile in $changedFiles) {
     if (Test-SyncFile -ChangedFile $changedFile -SyncFiles $syncFiles) {
-      Pass "sync-list change: $changedFile"
+      $inSyncCount++
     } else {
       Fail "outside sync-list change: $changedFile"
     }
@@ -279,6 +280,9 @@ function Invoke-NativeDerivedSyncCheck {
     if (Test-ProtectedProjectFile -ChangedFile $changedFile) {
       Fail "project-specific file appears in sync commit: $changedFile"
     }
+  }
+  if ($inSyncCount -gt 0) {
+    Pass "sync-list change: $inSyncCount file(s) all in sync (success path counts only; outside/protected items shown above)"
   }
 
   Write-Host ""

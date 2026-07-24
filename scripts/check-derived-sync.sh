@@ -95,7 +95,7 @@ fi
 
 echo
 echo "==> 正在验证的同步提交"
-git show --name-only --stat --oneline --no-renames "$COMMIT"
+git show --name-only --oneline --no-renames "$COMMIT"
 echo
 
 mapfile -t CHANGED_FILES < <(git diff-tree --no-commit-id --name-only -r "$COMMIT")
@@ -117,9 +117,10 @@ else
   fail "提交信息不像模板同步提交: $subject"
 fi
 
+IN_SYNC_COUNT=0
 for changed_file in "${CHANGED_FILES[@]}"; do
   if is_sync_file "$changed_file"; then
-    pass "同步清单内变更: $changed_file"
+    IN_SYNC_COUNT=$((IN_SYNC_COUNT + 1))
   else
     fail "同步清单外变更: $changed_file"
   fi
@@ -128,6 +129,9 @@ for changed_file in "${CHANGED_FILES[@]}"; do
     fail "疑似项目专属文件被同步提交修改: $changed_file"
   fi
 done
+if [[ "$IN_SYNC_COUNT" -gt 0 ]]; then
+  pass "同步清单内变更: $IN_SYNC_COUNT 个文件，全部合规（成功路径不逐文件列，仅计数；清单外 / 受保护项见上 ✗）"
+fi
 
 echo
 echo "==> 根 README 模板版本号一致性（非阻断）"
