@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE: docs scaffold 后续模板补强
 
 > 来源：模板维护者
-> 状态：P1 已落地；P2 候选 / 待评估
+> 状态：已归档（2026-07-24：P1 已落地；P2 低频候选关闭，Task 文件模板如需推进另起窄提案）
 > 目标版本：`v1.43.0`（P1 批次）
-> Release impact：minor（新增同步 scaffold 模板）
-> Release strategy：同主题聚合；P1 已在 `v1.43.0` 落地，P2 延后候选池
+> Release impact：none（归档与状态收口；P1 历史发布为 minor）
+> Release strategy：关闭本提案；不继续补 `env/meetings/archive` 低频模板，`task-template` 仅在真实使用触发时另起单主题提案
 
 ## 1. 背景与来源
 
@@ -89,3 +89,9 @@
 1. 保留本提案为 active 候选，继续聚焦剩余 P2 候选评估。
 2. 若下一轮落地 Task 文件模板，先新增 `template-docs/task-template.md`，再同步更新 `template-sync.json`、`scripts/sync-template.*` 和 `scripts/check-template.*`。
 3. 若 P2 落地新增同步文件，按当时版本治理规则判断是否 bump minor。
+
+## 9. 归档裁决（2026-07-24）
+
+- 归档原因：P1 scaffold 已在 v1.43.0 落地并进入同步清单；当前正式边界已写入 `template-docs/docs-scaffold/README.md`。
+- 关闭项：`env/local-env.md`、`server-plan.md`、`meetings/meeting-notes.md`、`archive/archive-note.md` 暂不补模板，避免为低频场景扩大同步清单。
+- 单列项：`template-docs/task-template.md` 仍是可能有价值的候选，但应在真实任务单复用需求出现时另起窄提案，不继续挂在本 follow-up 大提案下。

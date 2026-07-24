@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.13（2026-07-24）
+
+`check-template.sh --summary` 增加分区小计：保持单文件脚本与默认 CI 全量输出不变，只在摘要模式下按主流程分区输出通过 / 失败计数，方便维护者定位失败大类，并为后续断言分区继续收敛预留接口。
+
+- **`scripts/check-template.sh`**：新增 `begin_section` / `finish_sections` 分区计数；现有检查流程按 AI 入口、规则索引、核心文档骨架、版本治理、场景 / 同步 / Prompt、docs scaffold / Profile、同步清单、参考样例分区。
+- **提案清理**：归档 `token-hotspot-records`、`capability-packages-and-profile-contracts`、`docs-scaffold-followups`；其中 token hotspot 与 capability/profile 已由正式规则 / 文档承接，docs scaffold P2 低频候选关闭，Task 模板后续另起窄提案。
+- **防漂移断言**：`scripts/check-template.sh` 自检自身分区入口与 `分区小计` 输出关键词。
+- **非目标**：不拆 `scripts/check-template.sh` 文件；不新增 `scripts/checks/*.sh`；不做 Bash / PowerShell 自动对照工具；不改默认无参数输出。
+- 承接 `_proposals/TEMPLATE-UPGRADE-template-check-maintainability.md` P2.1 的保守版；P2.2 继续观察。
+
 ## v1.56.12（2026-07-24）
 
 sync-template dry-run 的 diff 阶段消除 Windows CRLF 警告噪音：原 `show_local_to_template_stat` 把模板文件 `git show` 到临时目录比较时，Windows autocrlf 触发 `LF will be replaced by CRLF` 警告（digital-cs-demo 实测 22 条）。现给 dry-run 的 git show/diff 内联 `core.autocrlf=false`，警告消除，且**不影响 `--commit` 的 `git checkout` 写入**。

@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: Capability Packages 与 Profile 契约化治理
 
 > 来源：从 `_proposals/TEMPLATE-UPGRADE-codex-checkpoint-mode-and-remote-sop.md` 的 Batch B / C 抽出；2026-07-15 维护者重新评估，主线 B 经两轮调整后重新聚焦
-> 状态：主体已落地并发布（v1.52.4）—— Batch 1 ✅、1.5 ✅（`11d8b2c`）、2.5 ✅（`96a19e2`）、2 ✅（`e178a79` 方案A）、3 ✅（`c1c6603`）全部完成；仅 Batch 4（等 CAP-007 真实任务观察结论）/ 5（暂缓）待后续，因此暂不归档。
-> 目标版本：v1.52.4（主体已发布；Batch 4 / 5 待后续另议）
-> Release impact：none（本次仅文档状态收口；主体落地已随 v1.52.4 发布）
+> 状态：已归档（2026-07-24：主体已落地；Remote / CI SOP Profile 已于 v1.56.6 转正；后续候选 Profile 已转由 `template-docs/capability-packages.md` 承接）
+> 目标版本：v1.52.4（主体发布）；v1.56.6（Remote / CI SOP Profile 转正）
+> Release impact：none（归档与状态收口；历史落地版本见上）
 > 一句话：模板变重后用「两条同根因主线」治理——**A 防跑飞**（管"读后不跑飞"：Batch 1.5 传递加固 + 最小必读）、**B AI 定位效率**（管"读前少读定向"：给 AI 配分诊台 = 分层地图 + 路由表执行加固，省 token 防跑飞）。预防性的"给人维护影响域清单"已砍；自检减负保留。
 
 ---
@@ -283,3 +283,9 @@ Remote / CI SOP Profile 契约草案：
 2. **发布收口**：主体已随 v1.52.4 发布；本提案保留为观察 / 后续项载体，不归档。
 3. **观察项**：Batch 1.5 / 2.5 的 AI 行为强化效果（传递加固）、Batch 3 分诊是否真省 token（CAP-007）、Batch 2 fallback 路径（建议 CI matrix 补验）。
 4. **后续项**：Batch 4 等 CAP-007 真实任务观察结论；暂不推进目录重组和真正多 agent 并发（Batch 5）。
+
+## 13. 归档裁决（2026-07-24）
+
+- 归档原因：主体批次已发布；Remote / CI SOP Profile 后续已在 v1.56.6 转正并进入 `template-sync.json`；正式长期入口为 `template-docs/remote-ci-sop-profile.md` 与 `template-docs/capability-packages.md`。
+- 候选承接：Web App Profile、Domain Template Profile、UI Prototype Profile、目录级重组与多 agent 边界继续由 `template-docs/capability-packages.md` 作为人读索引承接，不再把本大提案作为 active 收件箱状态源。
+- 后续入口：新增或转正某个 Profile 时，另起单主题提案，避免旧大提案重复进入 C1 triage。
