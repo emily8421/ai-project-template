@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.56.11（2026-07-24）
+
+`check-derived-sync` 成功路径摘要化：原成功时逐文件列 `✓ 同步清单内变更`（大同步 119 文件 ≈ 119 行），现合规文件只计数、循环后输出一句摘要；只有清单外 / 受保护等异常项才逐条列出。同时 `git show` 去掉 `--stat`，减少逐文件 stat 噪音。
+
+- **`scripts/check-derived-sync.sh` / `.ps1`**：for 循环合规项计数化 + 循环后摘要 pass；`git show --name-only --stat` → `--name-only`（保留文件名供核对）。
+- **防漂移断言**：`scripts/check-template.sh` 增加关键词断言锁成功路径摘要化（`全部合规` / `all in sync`）。
+- **非目标**：不改同步边界检查逻辑（清单内 / 外、受保护判定不变）；不改失败项逐条输出（保证可定位）；不处理 sync-template 的 CRLF 过滤（单列 PR4b，需先实测派生项目）。
+- 承接 `_proposals/TEMPLATE-UPGRADE-windows-sync-output-noise.md` 余项 1（check-derived-sync 成功摘要化）；余项 2（CRLF 更窄过滤）待 PR4b。
+
 ## v1.56.10（2026-07-24）
 
 同步后整理 Prompt 补充「启用项目自有版本机制 checklist」操作段：原 Prompt 已能**审计**版本机制启用状态（双信号），但「怎么启用」的操作步骤仍靠参考项目现场推断；现沉淀为前置判断 + 普通派生启用 7 步 + 领域模板差异 + 双信号验收，减少每次重复拼装。
