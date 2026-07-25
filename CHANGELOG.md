@@ -6,6 +6,21 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.57.0（2026-07-25）
+
+新增通用 **System Skeleton Gate**（可运行系统框架实现 + 验收门禁）：把「可运行系统框架先行」从复杂 Web / 全栈旁路 Profile 提升为通用阶段门禁，适用所有 non-trivial 项目（quick-script / 纯计算库 / 单文件工具可豁免）；消除「骨架」命名碰撞；验收新增层次化大纲维度。向后兼容（豁免机制保证旧项目可不变）。
+
+- **命名消碰撞（SS-2）**：状态机第一态「骨架」统一改为「设计骨架」（`ai/global-rules.md` §8.1 + `design-doc` + `template-methodology` + `docs/README` + scaffold/docs 占位，共 16 处枚举值），并加「设计骨架 vs System Skeleton」消歧说明。
+- **通用 Gate（SS-1）**：`ai/implementation-lifecycle-rules.md` §2 层级模型加 System Skeleton 层、§3 新增通用 Gate 定义（触发 / 豁免）、§6 测试分层补系统框架 smoke；`ai/project-rules.md` §3 加三态写法。
+- **验收层次化（SS-4）**：`docs/09-verification.md` 新增 §1.2 验收大纲层次（需求验收 → 系统框架 → 集成 → 单元，与测试等级矩阵正交，只增不删）；四层同步 09。
+- **Sprint 0 通用化**：四层同步 08，Sprint 0 / Walking Skeleton 从 Web 专用通用化为 System Skeleton + Web 特化。
+- **web-fullstack 合并（SS-3 方案 A）**：`template-docs/web-fullstack-profile.md` 改定位为通用 Gate 的 Web 特化扩展（WSG-001~006 保留为 Web 特化条款）；`global-rules` §5 / `docs/README` / `review/19` / `dev/02` 对齐。
+- **命令与场景**：`commands/docs-evaluation` + `docs-checklist` 加 System Skeleton Gate 检查项；`scenario-guides` 新增 A28 通用场景 + A27 标注 Web 特化互引。
+- **防漂移断言**：`scripts/check-template.sh` 增加 System Skeleton 关键字断言（四层 + A28 场景）。
+- **drift 修复**：补齐 `docs/08`、`docs/09` 实例层与 scaffold 的既有 Walking Skeleton 脱节。
+- **非目标**：不引入 web-app-scaffold 代码脚手架（实验协议不动）；不改 00-09 编号（非 major）；不删既有内容（只增）；不改同步协议。
+- 承接 `_proposals/TEMPLATE-UPGRADE-system-skeleton-gate.md`（P0，SS-1~SS-5 全实施）+ `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`（提案 6）；Release impact minor（新增能力层级 + 下游采用面 + 触及核心流程）。
+
 ## v1.56.13（2026-07-24）
 
 `check-template.sh --summary` 增加分区小计：保持单文件脚本与默认 CI 全量输出不变，只在摘要模式下按主流程分区输出通过 / 失败计数，方便维护者定位失败大类，并为后续断言分区继续收敛预留接口。

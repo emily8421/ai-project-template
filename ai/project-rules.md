@@ -112,6 +112,7 @@
 - 前端交互设计：需要 / 不需要 / 豁免（若需要，推荐 `docs/design/frontend-interaction.md`；若豁免，说明原因）
 - UI 原型策略：需要 / 不需要 / 豁免（若需要，在 §2.7 记录原型形式、位置、覆盖范围和追溯；若豁免，说明原因）
 - 通用详细设计：需要 / 不需要 / 豁免（若存在非平凡子系统、复杂权限 / 安全、AI / 外部服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异或高风险愿景能力，推荐 `docs/design/<subsystem>.md`；若豁免，说明原因、风险和补做时点）
+- System Skeleton Gate：需要 / 不需要 / 豁免（non-trivial 项目——多模块 / 有对外接口 / 有运行依赖——默认需要，首个业务 Sprint 前在 `docs/08-dev-plan.md` Sprint 0 + `docs/09-verification.md` 系统框架测试大纲落地框架验收；quick-script / 纯计算库 / 单文件工具可豁免，须说明原因、风险和补做时点；规则见 `ai/implementation-lifecycle-rules.md` §3）
 - docs/06-db-design.md：保留 / 省略
 - docs/07-api-spec.md：保留 / 省略
 - 需要保留的代码目录：（如 frontend/ backend/ tests/ scripts/ docker/；不用的目录可删除）
