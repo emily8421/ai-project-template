@@ -6,6 +6,58 @@
 
 > **两类读者**：使用者（基于模板做派生项目）看本 `README.md` + `template-docs/beginner-guide.md`；模板维护者（维护本仓库）看 `MAINTAINERS.md`。
 
+## 模板一览
+
+**分层架构**（规则层约束事实层与代码层；手册层引导；治理层双向闭环）：
+
+```mermaid
+flowchart TB
+  subgraph 手册["template-docs/ 手册层"]
+    M["scenario-guides / beginner-guide / glossary"]
+  end
+  subgraph 规则["ai/ 规则层"]
+    A["index → global / document / implementation / session-rules"]
+  end
+  subgraph 事实["docs/ 项目事实层"]
+    D["00-09 / design / inputs / decisions"]
+  end
+  subgraph 代码["代码层"]
+    C["frontend / backend / tests / scripts"]
+  end
+  subgraph 治理["治理与双向闭环"]
+    G["_proposals ↔ PR ↔ VERSION/CHANGELOG ↔ sync"]
+  end
+  A -->|约束| D -->|约束| C
+  M -.引导.-> A
+  G <-->|回流 / 下行同步| D
+```
+
+**文档驱动设计流程**（输入 → 需求 → 设计 → 计划 → 验证 → 代码，对齐 `ai/document-lifecycle-rules.md` §2）：
+
+```mermaid
+flowchart LR
+  I["inputs / 愿景"] --> V["vision"]
+  V --> R["00-03 需求"]
+  R --> S["04-07 设计"]
+  S --> P["08 计划"]
+  P --> T["09 验证"]
+  T --> C["代码 / 测试"]
+```
+
+**使用 / 维护双向闭环**（使用者：场景→文档→实现→验证；维护者：提案→PR→同步；优化回流，见 `CONTRIBUTING.md` §2）：
+
+```mermaid
+flowchart LR
+  subgraph 使用者
+    U1["场景 / 命令"] --> U2["生成文档"] --> U3["Sprint 实现"] --> U4["验证"]
+  end
+  subgraph 维护者
+    W1["提案"] --> W2["分支 / PR"] --> W3["合并 / 版本"] --> W4["下行同步"]
+  end
+  U4 -.优化回流.-> W1
+  W4 -.方法论下行.-> U1
+```
+
 ## 它能做什么
 
 - **生成工程文档体系**：给 AI 你的需求 / 愿景 / 想法，它按软件工程规范生成需求 → 架构 → 技术方案 →（数据库 → 接口）→ 开发计划 → 验证各阶段文档；支持多种输入起步（愿景 / PRD / SRS / 任务单 / 小工具 brief）。
