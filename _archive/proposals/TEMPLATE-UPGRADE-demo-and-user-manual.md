@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：演示手册扩展 + 用户手册分区
 
 > 来源：模板维护者（双 AI 综合评估 P1，见 `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`）
-> 状态：候选（待评估 → 处理中）
+> 状态：已实施（PR #264，v1.57.1，2026-07-25；demo-runbook 回滚 + user-guide-template 全落地；场景质量剔除项确认）
 > 目标版本：待确认（建议 patch；若决定新增必填 docs 分区则 minor）
 > Release impact：patch（AI 建议，待维护者确认）—— 模板补强 + 可选指南，不改默认行为
 > Release strategy：同主题聚合

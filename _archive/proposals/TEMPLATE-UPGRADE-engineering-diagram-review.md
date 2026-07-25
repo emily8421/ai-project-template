@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：图纸审核准则（可审 / 可追溯 / 可验收）
 
 > 来源：模板维护者（双 AI 综合评估 P1，见 `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`）
-> 状态：候选（待评估 → 处理中）
+> 状态：已实施（PR #264，v1.57.1，2026-07-25；图纸审核四维度 + 07 时序图/06 ER/04 审计基线全落地）
 > 目标版本：待确认（建议 patch）
 > Release impact：patch（AI 建议，待维护者确认）—— 文档审计基线增强，不改默认行为、不要求派生项目迁移
 > Release strategy：同主题聚合（可与 `readme-visual-navigation` 等文档补强 patch 同窗口发布）

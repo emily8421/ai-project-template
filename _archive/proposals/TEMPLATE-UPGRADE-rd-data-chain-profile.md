@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：研发数据链 Profile（轻量索引 / 分类）
 
 > 来源：模板维护者（双 AI 综合评估 P2，见 `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`）
-> 状态：候选（待评估 → 处理中）
+> 状态：已实施（PR #264，v1.57.1，2026-07-25；rd-data-chain.md 索引/分类 + 导航全落地）
 > 目标版本：待确认（建议 patch）
 > Release impact：patch（AI 建议，待维护者确认）—— 治理说明补强，不改默认行为
 > Release strategy：同主题聚合
