@@ -6,6 +6,18 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.57.1（2026-07-25）
+
+P1/P2 文档增强聚合（4 提案，全 patch）：图纸审核准则、演示手册扩展 + 用户手册、README 可视化导航、研发数据链 Profile。不改默认行为、不要求派生项目迁移。
+
+- **图纸审核（P1 engineering-diagram-review）**：图纸从「有没有」升级为「可审 / 可追溯 / 可验收」四维度（可渲染 / 有图 ID `DIAG-<DOC>-<TYPE>-<NN>` / 可追溯 / 覆盖关键路径）；doc-standards 07 补关键接口时序图字段、06 ER 图对齐 §13「应含」、04 加架构图审核维度；design-doc 鼓励 mermaid；docs-system-audit + docs-checklist 加图纸审核；scaffold/04 补 mermaid 示例；§13 补图 ID 命名 + 四维度（不改柔性）。
+- **演示 + 用户手册（P1 demo-and-user-manual）**：demo-runbook §7 阶段演示要点 + 新增 §9 回滚与清理；新增 `template-docs/user-guide-template.md`（how-to 任务→权威入口导航表）；beginner-guide 导航。剔除「场景质量」无效项（scenario-guides 现状已满足）。
+- **README 可视化（P2 readme-visual-navigation）**：根 README 加「模板一览」3 mermaid（分层架构 / 文档驱动设计流程 / 使用维护双向闭环）；可同步图源并入 template-methodology（不新增 template-architecture.md）。
+- **研发数据链（P2 rd-data-chain-profile）**：新增 `template-docs/rd-data-chain.md`（数据类别→载体→主链关系→生命周期索引 + 流转规则 + 门禁现状 + 边界）；beginner-guide + MAINTAINERS §7 导航。
+- **防漂移断言**：check-template.sh 加 user-guide / rd-data-chain / 图纸维度 / README mermaid 断言（13 条）。
+- **非目标**：不为 ADR / research / meetings 加强制门禁（RC-2）；todo-api 是文档闭环示例不实例化 demo runbook；不改 00-09 编号、不改默认行为、不改同步协议。
+- 承接 `_proposals/TEMPLATE-UPGRADE-2026-07-24-batch-overview.md` P1/P2（engineering-diagram-review / demo-and-user-manual / readme-visual-navigation / rd-data-chain-profile）；Release impact patch（文档 / 审计基线 / 自检补强，兼容）。
+
 ## v1.57.0（2026-07-25）
 
 新增通用 **System Skeleton Gate**（可运行系统框架实现 + 验收门禁）：把「可运行系统框架先行」从复杂 Web / 全栈旁路 Profile 提升为通用阶段门禁，适用所有 non-trivial 项目（quick-script / 纯计算库 / 单文件工具可豁免）；消除「骨架」命名碰撞；验收新增层次化大纲维度。向后兼容（豁免机制保证旧项目可不变）。
