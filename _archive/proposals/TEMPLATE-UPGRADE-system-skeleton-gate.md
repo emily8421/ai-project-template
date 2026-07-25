@@ -1,10 +1,10 @@
 # TEMPLATE-UPGRADE：通用「可运行系统框架实现 + 验收」门禁（System Skeleton Gate）
 
 > 来源：模板维护者（双 AI 综合评估 P0，见 `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`）
-> 状态：候选（待评估 → 处理中）
-> 目标版本：待确认（建议下一个 minor）
-> Release impact：minor（AI 建议，待维护者确认）—— 新增一类能力层级（通用阶段门禁）+ 新的下游采用面 + 触及核心流程（阶段状态机 / 验收结构）
-> Release strategy：单独发布（独立 PR，不与其他批次提案混改）
+> 状态：已实施（PR #262，v1.57.0，2026-07-25；SS-1~SS-5 全落地，四层同步 + drift 修复）
+> 目标版本：v1.57.0（已发布）
+> Release impact：minor —— 新增一类能力层级（通用阶段门禁）+ 新的下游采用面 + 触及核心流程（阶段状态机 / 验收结构）
+> Release strategy：单独发布（PR #262，已合并）
 
 ## 1. 动机（WHY）
 
