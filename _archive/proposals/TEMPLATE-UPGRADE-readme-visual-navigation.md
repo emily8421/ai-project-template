@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：README 轻量可视化导航（mermaid）
 
 > 来源：模板维护者（双 AI 综合评估 P2，见 `TEMPLATE-UPGRADE-2026-07-24-batch-overview.md`）
-> 状态：候选（待评估 → 处理中）
+> 状态：已实施（PR #264，v1.57.1，2026-07-25；README 模板一览 3 mermaid + methodology 图源全落地）
 > 目标版本：待确认（建议 patch）
 > Release impact：patch（AI 建议，待维护者确认）—— 文档导航补强，不改默认行为
 > Release strategy：同主题聚合（可与 `engineering-diagram-review` 同窗口）
