@@ -27,6 +27,7 @@ Thumbs.db
 # 本地会话 / 临时续接记录
 NEXT-STEPS.md
 .ai/session-handoff.md
+.ai/token-hotspots/
 
 # 构建产物
 dist/

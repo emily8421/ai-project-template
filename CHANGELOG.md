@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.57.2（2026-07-26）
+
+token hotspot 观察记录本地化与生命周期治理：单条记录默认走本地（gitignore，不问不上传），汇总（SUMMARY/summaries）入库；明确“不提交≠删除”硬规则、汇总状态字段必填（写入时自觉，不加自检门禁）、SUMMARY 覆盖清单；历史 20 条单条记录移出 git 至本地 `.ai/token-hotspots/`，汇总保留入库。不改默认行为、不要求派生项目迁移（派生启用此机制需自行补 `.gitignore`）。
+
+- **单条本地化（P2 激活）**：`ai/session-rules.md` §4.1 引入路径分层——单条 `.ai/token-hotspots/`（gitignore，纯本地、不询问、不上传）vs 汇总 `ai-records/token-hotspots/`（入库走 PR）；`.gitignore` 加 `.ai/token-hotspots/`。
+- **写入后处置协议（P0）**：去掉“每次三选一”，改默认本地直接写入；保留“不提交≠删除”兜底硬规则；三选一仅用于入库决策。
+- **汇总循环（P1 保留）**：§4.2 改为“本地攒若干条 → 提炼 SUMMARY 入库 → 本地可清”；汇总状态字段从可选改新记录必填（状态集扩展 + 可选处置状态）；SUMMARY 最小结构加 `## 0. 覆盖清单`；已汇总/已转提案不重复计数；明确“字段必填≠自检门禁”。
+- **数据链同步**：`template-docs/rd-data-chain.md` §2 token-hotspots 生命周期细化为“本地观察 / 提炼汇总入库 / 转提案 / 归档”；§4 措辞协调（字段级必填属写入自觉，不构成自检门禁）。
+- **历史记录迁移**：`ai-records/token-hotspots/` 下 20 条单条记录移至本地 `.ai/token-hotspots/`（从当前快照移出，git 历史保留）；`SUMMARY.md` + `summaries/`（4 份）+ `project-registry` + `e2e-reports` 保留入库；SUMMARY 顶部加单条去向自洽说明。
+- 承接 `_proposals/TEMPLATE-UPGRADE-ai-record-lifecycle.md`；Release impact patch（治理说明补强 + 可选观察材料路径调整，不改默认行为、不要求派生迁移）。
+
 ## v1.57.1（2026-07-25）
 
 P1/P2 文档增强聚合（4 提案，全 patch）：图纸审核准则、演示手册扩展 + 用户手册、README 可视化导航、研发数据链 Profile。不改默认行为、不要求派生项目迁移。

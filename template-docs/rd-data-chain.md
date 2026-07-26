@@ -21,7 +21,7 @@
 | 验证证据 / 验收记录 | `docs/09-verification.md` | 主链验收层 | 只增不删 |
 | 会议 / 评审 / 访谈 | `docs/meetings/` | 输入 00-03 | 留痕，结论回写需求 |
 | 版本变更 | `CHANGELOG.md` | 发布边界 | 长期 |
-| AI 开发过程成本 | `ai-records/token-hotspots/` | meta（非领域知识） | 观察，rollup |
+| AI 开发过程成本 | 单条 `.ai/token-hotspots/`（本地）/ 汇总 `ai-records/token-hotspots/`（入库） | meta（非领域知识） | 本地观察 / 提炼汇总入库 / 转提案 / 归档 |
 | 派生项目谱系 / 同步 | `ai-records/project-registry/`（维护者侧）、`sync-records/`（派生侧） | 维护者侧 | 长期 |
 | 会话续接 | `.ai/session-handoff.md` | 临时，须回写 08/09 | gitignored |
 
@@ -34,7 +34,7 @@
 ## 4. 自检门禁现状
 
 - **有门禁**：文档事实链（00-09 / doc-standards）、运行时机制、同步清单（`template-sync.json`）有 `scripts/check-template.sh` 守卫。
-- **无门禁（依赖自觉）**：ADR / research / meetings / handoff / token-hotspots 无强制自检硬门禁。本 Profile 只做索引，**不为它们新增强制必填或门禁**（避免过度治理；强制化另案讨论）。
+- **无自检门禁（依赖自觉）**：ADR / research / meetings / handoff / token-hotspots 无 `check-template` 自检硬门禁。本 Profile 只做索引，**不为它们新增自检断言或 CI 门禁**（避免过度治理；强制化另案讨论）。其中 token-hotspot 记录的「汇总状态」等字段级必填属写入时自觉（见 `ai/session-rules.md` §4.2），不构成自检门禁。
 
 ## 5. 边界
 
