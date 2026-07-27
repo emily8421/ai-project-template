@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.57.3（2026-07-27）
+
+registry 驱动的派生项目下行同步流程：维护者在模板仓目录下主动触发“同步至派生项目 / 同步 4 派生”时，AI 必须先读取维护者侧 `ai-records/project-registry/`，用登记表解析目标、别名、本地路径和同步模式，再进入每个派生仓库做 A13 同步闭环。修复此前 registry 已存在但不会被同步 SOP 主动读取的问题。
+
+- **registry 字段补强**：`ai-records/project-registry/README.md` 增加 aliases、local path、path status、sync mode 字段说明；`registry.md` 扩表，明确 LUMEN / agent-system 的已验证本地路径，digital-cs / zhiyan 的路径状态为 missing。
+- **模板仓发起模式**：`ai/commands/sync-methodology.md` 与 `ai/prompts/maintainers/12-sync-template.md` 增加“当前在模板仓发起同步”分支：先读 registry，不先全盘递归；路径缺失或 stale-risk 时先停下列待确认项。
+- **维护者 SOP 对齐**：`git-guide.md` / `MAINTAINERS.md` 把批量同步从单纯父目录扫描改为 registry 优先、父目录扫描 fallback；live 事实仍以各派生项目 `git status`、`VERSION`、`TEMPLATE-BASE.md` 为准。
+- **防漂移断言**：`scripts/check-template.sh` 加 registry 驱动同步关键词断言，锁住 registry README、同步命令、同步 Prompt、git-guide 和 MAINTAINERS 的关键路径。
+- 承接 `_proposals/TEMPLATE-UPGRADE-registry-driven-derived-sync.md`；Release impact patch（治理说明与 SOP 补强，不改同步脚本协议、不要求派生项目迁移）。
+
 ## v1.57.2（2026-07-26）
 
 token hotspot 观察记录本地化与生命周期治理：单条记录默认走本地（gitignore，不问不上传），汇总（SUMMARY/summaries）入库；明确“不提交≠删除”硬规则、汇总状态字段必填（写入时自觉，不加自检门禁）、SUMMARY 覆盖清单；历史 20 条单条记录移出 git 至本地 `.ai/token-hotspots/`，汇总保留入库。不改默认行为、不要求派生项目迁移（派生启用此机制需自行补 `.gitignore`）。
