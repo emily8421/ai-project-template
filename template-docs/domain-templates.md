@@ -86,7 +86,7 @@ Web App scaffold 也不自动等于领域模板。复杂 Web / 全栈交互项�
 - 继承时的母模板 base version（对应母模板 `VERSION`）。
 - 本领域模板叠加的标准件范围。
 
-> **状态：机制已落地（v1.47.0，C-004）**。普通派生项目由 `scripts/new-project.sh` / `scripts/sync-template.* --preserve-project-version` 生成**精简版** `TEMPLATE-BASE.md`（`Lineage type: ordinary derived project`，只记母模板继承版本）；领域模板由 `scripts/sync-template.* --domain-template` 生成 / 维护**领域版** `TEMPLATE-BASE.md`（`Lineage type: domain template`，额外记 `Domain standards scope` 领域标准件范围；首次生成留 TODO 占位由维护者填，后续 sync 保留）。`check-derived-sync.*` 按 `Lineage type` 识别角色，领域版额外校验 `Domain standards scope`。两条线互不混用：不得把普通派生精简版套用到领域模板，反之亦然；`--preserve-project-version` 与 `--domain-template` 互斥。
+> **状态：机制已落地（v1.47.0，C-004；v1.57.4 补齐 `CHANGELOG-PLAIN.md` 归属）**。普通派生项目由 `scripts/new-project.sh` / `scripts/sync-template.* --preserve-project-version` 生成**精简版** `TEMPLATE-BASE.md`（`Lineage type: ordinary derived project`，只记母模板继承版本）；领域模板由 `scripts/sync-template.* --domain-template` 生成 / 维护**领域版** `TEMPLATE-BASE.md`（`Lineage type: domain template`，额外记 `Domain standards scope` 领域标准件范围；首次生成留 TODO 占位由维护者填，后续 sync 保留）。普通派生项目和领域模板的根 `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md` 均归自身所有，模板同步不覆盖；母模板继承版本见 `TEMPLATE-BASE.md`。`check-derived-sync.*` 按 `Lineage type` 识别角色，领域版额外校验 `Domain standards scope`。两条线互不混用：不得把普通派生精简版套用到领域模板，反之亦然；`--preserve-project-version` 与 `--domain-template` 互斥。
 
 ## 6. 操作入口（怎么创建领域模板）
 

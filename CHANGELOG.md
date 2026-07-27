@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.57.4（2026-07-27）
+
+派生项目 changelog 归属修复：普通派生项目和领域模板同步母模板时，根目录 `CHANGELOG-PLAIN.md` 与 `VERSION` / `CHANGELOG.md` 一样归项目自有，不再被母模板覆盖；新建派生项目也会初始化自己的大白话 changelog。存量派生项目若仍保留母模板版 `CHANGELOG-PLAIN.md`，同步脚本给出非阻断迁移提示。
+
+- **保留过滤补齐**：`scripts/sync-template.sh` / `.ps1` 的 `--preserve-project-version` 与 `--domain-template` 路径同时过滤 `CHANGELOG-PLAIN.md`，派生根 changelog 对（正式 + 大白话）均归项目自有。
+- **新项目初始化**：`scripts/new-project.sh` 在初始化 `VERSION` / `CHANGELOG.md` 后同步生成项目自有 `CHANGELOG-PLAIN.md`（`v0.1.0`）。
+- **存量迁移提示**：同步脚本检测到根 `CHANGELOG-PLAIN.md` 缺失、等同母模板内容，或顶部版本与项目 `VERSION` 不一致时，只提示派生维护者改写，不中断同步、不自动覆盖。
+- **说明与自检**：`CHANGELOG-PLAIN.md` 顶部说明改为母模板自身大白话 changelog；`check-template.*` 增加保留过滤和 new-project 初始化断言；模板说明文档补充派生 changelog 对归属。
+- 承接 `_proposals/TEMPLATE-UPGRADE-derived-changelog-ownership.md`（Batch 1 / issue #273 归属修复部分）；Release impact patch（同步脚本归属 bug 修复，不新增 `upstream/` 同步结构）。
+
 ## v1.57.3（2026-07-27）
 
 registry 驱动的派生项目下行同步流程：维护者在模板仓目录下主动触发“同步至派生项目 / 同步 4 派生”时，AI 必须先读取维护者侧 `ai-records/project-registry/`，用登记表解析目标、别名、本地路径和同步模式，再进入每个派生仓库做 A13 同步闭环。修复此前 registry 已存在但不会被同步 SOP 主动读取的问题。

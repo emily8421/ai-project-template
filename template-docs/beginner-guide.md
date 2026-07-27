@@ -146,6 +146,7 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 - 什么时候需要 `docs/design/`：当某个子系统非平凡，光靠 `docs/04` / `docs/05` 不够表达内部逻辑。
 - 什么时候需要服务器预案：本机资源撑不住当前阶段 Demo / MVP，且不能靠降级或 Mock 解决。
 - 切换 AI 工具怎么办：规则不变，先记录当前进度（`.ai/session-handoff.md`），再让新工具从 `ai/index.md` 和当前 Sprint 继续。
+- 派生项目的版本记录看哪里：根 `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md` 记录项目自己；`TEMPLATE-BASE.md` 记录继承到的母模板版本。
 
 ## 7. 去哪看什么（导航）
 

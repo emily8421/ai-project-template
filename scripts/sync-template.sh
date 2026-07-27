@@ -8,10 +8,10 @@
 #     --summary  等价于 --dry-run --no-stat
 #     --commit   抓取、覆盖、stage 并提交 "sync template vX.Y.Z"
 #     --preserve-project-version
-#                普通派生项目路线 A：保留项目自己的 VERSION/CHANGELOG，改写 TEMPLATE-BASE.md 记录继承的模板版本
+#                普通派生项目路线 A：保留项目自己的 VERSION/CHANGELOG/CHANGELOG-PLAIN，改写 TEMPLATE-BASE.md 记录继承的模板版本
 #                若仓库已存在 TEMPLATE-BASE.md，本模式会自动启用
 #     --domain-template
-#                领域模板角色（如 agent-system-template）：保留领域模板自己的 VERSION/CHANGELOG，
+#                领域模板角色（如 agent-system-template）：保留领域模板自己的 VERSION/CHANGELOG/CHANGELOG-PLAIN，
 #                改写 TEMPLATE-BASE.md 为领域版（Lineage type: domain template，含领域标准件范围字段）
 #                若仓库已存在领域版 TEMPLATE-BASE.md，本模式会自动启用；与 --preserve-project-version 互斥
 #   环境变量:
@@ -264,7 +264,7 @@ load_sync_files() {
     local file
     for file in "${SYNC_FILES[@]}"; do
       case "$file" in
-        VERSION|CHANGELOG.md)
+        VERSION|CHANGELOG.md|CHANGELOG-PLAIN.md)
           ;;
         *)
           filtered+=("$file")
@@ -348,6 +348,7 @@ write_template_base() {
 ## Version Semantics
 
 - \`VERSION\` is owned by this derived project and records the project version.
+- \`CHANGELOG.md\` and \`CHANGELOG-PLAIN.md\` are owned by this derived project and record project evolution; template sync does not overwrite them.
 - \`TEMPLATE-BASE.md\` records the inherited ai-project-template version used for methodology sync audit.
 - Template sync commits keep the message format \`sync template $template_version from ai-project-template\`.
 EOF
@@ -398,10 +399,51 @@ write_domain_template_base() {
 ## Version Semantics
 
 - \`VERSION\` is owned by this domain template and records the domain template version.
-- \`CHANGELOG.md\` is owned by this domain template and records domain template evolution; template sync does not overwrite it.
+- \`CHANGELOG.md\` and \`CHANGELOG-PLAIN.md\` are owned by this domain template and record domain template evolution; template sync does not overwrite them.
 - \`TEMPLATE-BASE.md\` records the inherited ai-project-template version used for methodology sync audit.
 - Template sync commits keep the message format \`sync template $template_version from ai-project-template\`.
 EOF
+}
+
+first_changelog_plain_version() {
+  [[ -f CHANGELOG-PLAIN.md ]] || return 0
+  grep -E '^## v[0-9]+\.[0-9]+\.[0-9]+（' CHANGELOG-PLAIN.md \
+    | head -1 \
+    | sed -E 's/^## (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/' || true
+}
+
+warn_if_changelog_plain_needs_project_rewrite() {
+  [[ "$PRESERVE_PROJECT_VERSION" -eq 1 || "$DOMAIN_TEMPLATE_MODE" -eq 1 ]] || return 0
+
+  local owner_label="派生项目"
+  [[ "$DOMAIN_TEMPLATE_MODE" -eq 1 ]] && owner_label="领域模板"
+
+  if [[ ! -f CHANGELOG-PLAIN.md ]]; then
+    echo "⚠️  根 CHANGELOG-PLAIN.md 不存在；从本版起模板同步不会覆盖该文件，请补 $owner_label 自有大白话 changelog。"
+    return 0
+  fi
+
+  local project_version
+  local plain_version
+  local template_hash
+  local local_hash
+  local reason=""
+
+  project_version="$(sed '1s/^\xEF\xBB\xBF//' VERSION 2>/dev/null | tr -d '[:space:]' || true)"
+  plain_version="$(first_changelog_plain_version)"
+  template_hash="$(git rev-parse "$REF:CHANGELOG-PLAIN.md" 2>/dev/null || true)"
+  local_hash="$(git hash-object --path=CHANGELOG-PLAIN.md CHANGELOG-PLAIN.md 2>/dev/null || true)"
+
+  if [[ -n "$template_hash" && -n "$local_hash" && "$template_hash" == "$local_hash" ]]; then
+    reason="内容与当前母模板 CHANGELOG-PLAIN.md 相同"
+  elif [[ -n "$project_version" && -n "$plain_version" && "$plain_version" != "$project_version" ]]; then
+    reason="顶部版本 $plain_version 与本地 VERSION $project_version 不一致"
+  fi
+
+  if [[ -n "$reason" ]]; then
+    echo "⚠️  根 CHANGELOG-PLAIN.md 可能仍是母模板内容（$reason）。"
+    echo "   从本版起模板同步会保留该文件，不再覆盖；请把它改写为 $owner_label 自有大白话 changelog。"
+  fi
 }
 
 detect_lineage_role() {
@@ -491,9 +533,9 @@ fi
 
 echo "==> 模板版本: $VERSION"
 if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
-  echo "==> 普通派生项目版本治理: 保留本地 VERSION/CHANGELOG，更新 TEMPLATE-BASE.md 为继承版本记录"
+  echo "==> 普通派生项目版本治理: 保留本地 VERSION/CHANGELOG/CHANGELOG-PLAIN，更新 TEMPLATE-BASE.md 为继承版本记录"
 elif [[ "$DOMAIN_TEMPLATE_MODE" -eq 1 ]]; then
-  echo "==> 领域模板版本治理: 保留领域模板 VERSION/CHANGELOG，更新 TEMPLATE-BASE.md 为领域版继承版本记录"
+  echo "==> 领域模板版本治理: 保留领域模板 VERSION/CHANGELOG/CHANGELOG-PLAIN，更新 TEMPLATE-BASE.md 为领域版继承版本记录"
 fi
 warn_derived_workflow_migration
 echo "==> 同步文件:"
@@ -636,6 +678,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
       echo "    Δ TEMPLATE-BASE.md（新增继承版本记录，$LINEAGE_MODE_LABEL）"
       record_summary "TEMPLATE-BASE.md" "added"
     fi
+    warn_if_changelog_plain_needs_project_rewrite
   fi
   if [[ "$SKIP_STAT" -eq 1 ]]; then
     print_summary
@@ -709,6 +752,8 @@ else
     fi
   done
 
+  warn_if_changelog_plain_needs_project_rewrite
+
   echo
   if git diff --quiet HEAD -- "${UPDATED_FILES[@]}"; then
     echo "ℹ️  无需提交：同步文件与模板一致。"
@@ -727,8 +772,8 @@ else
   echo "  5. 生成或更新同步运行记录: sync-records/template-sync/YYYY-MM-DD-sync-template-$VERSION.md"
   echo "     可参考: template-docs/derived-sync-report-template.md"
   if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
-    echo "  6. 核对项目自身版本仍记录在 VERSION；继承模板版本见 TEMPLATE-BASE.md"
+    echo "  6. 核对项目自身版本仍记录在 VERSION，项目演进记录在 CHANGELOG.md / CHANGELOG-PLAIN.md；继承模板版本见 TEMPLATE-BASE.md"
   elif [[ "$DOMAIN_TEMPLATE_MODE" -eq 1 ]]; then
-    echo "  6. 核对领域模板版本仍记录在 VERSION、领域演进在 CHANGELOG；继承母模板版本见 TEMPLATE-BASE.md（领域版）"
+    echo "  6. 核对领域模板版本仍记录在 VERSION、领域演进在 CHANGELOG.md / CHANGELOG-PLAIN.md；继承母模板版本见 TEMPLATE-BASE.md（领域版）"
   fi
 fi
