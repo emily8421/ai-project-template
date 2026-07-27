@@ -215,7 +215,7 @@ function Get-SyncFilesFromRef {
 function Remove-ProjectVersionFiles {
   param([string[]]$SyncFiles)
 
-  return @($SyncFiles | Where-Object { $_ -ne "VERSION" -and $_ -ne "CHANGELOG.md" })
+  return @($SyncFiles | Where-Object { $_ -ne "VERSION" -and $_ -ne "CHANGELOG.md" -and $_ -ne "CHANGELOG-PLAIN.md" })
 }
 
 function Get-TemplateVersion {
@@ -308,6 +308,7 @@ function Write-TemplateBase {
 ## Version Semantics
 
 - ``VERSION`` is owned by this derived project and records the project version.
+- ``CHANGELOG.md`` and ``CHANGELOG-PLAIN.md`` are owned by this derived project and record project evolution; template sync does not overwrite them.
 - ``TEMPLATE-BASE.md`` records the inherited ai-project-template version used for methodology sync audit.
 - Template sync commits keep the message format ``sync template $TemplateVersion from ai-project-template``.
 "@
@@ -357,12 +358,66 @@ function Write-DomainTemplateBase {
 ## Version Semantics
 
 - ``VERSION`` is owned by this domain template and records the domain template version.
-- ``CHANGELOG.md`` is owned by this domain template and records domain template evolution; template sync does not overwrite it.
+- ``CHANGELOG.md`` and ``CHANGELOG-PLAIN.md`` are owned by this domain template and record domain template evolution; template sync does not overwrite them.
 - ``TEMPLATE-BASE.md`` records the inherited ai-project-template version used for methodology sync audit.
 - Template sync commits keep the message format ``sync template $TemplateVersion from ai-project-template``.
 "@
   $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
   [System.IO.File]::WriteAllText((Join-Path (Get-Location) "TEMPLATE-BASE.md"), $content, $utf8NoBom)
+}
+
+function Get-FirstChangelogPlainVersion {
+  if (-not (Test-Path -LiteralPath "CHANGELOG-PLAIN.md" -PathType Leaf)) {
+    return ""
+  }
+
+  $match = Select-String -Path "CHANGELOG-PLAIN.md" -Pattern '^## (v\d+\.\d+\.\d+)（' | Select-Object -First 1
+  if ($match -and $match.Matches.Count -gt 0) {
+    return $match.Matches[0].Groups[1].Value
+  }
+  return ""
+}
+
+function Show-ChangelogPlainMigrationNotice {
+  param(
+    [string]$Ref,
+    [bool]$PreserveProjectVersion,
+    [bool]$DomainTemplateMode
+  )
+
+  if (-not ($PreserveProjectVersion -or $DomainTemplateMode)) {
+    return
+  }
+
+  $ownerLabel = "derived project"
+  if ($DomainTemplateMode) { $ownerLabel = "domain template" }
+
+  if (-not (Test-Path -LiteralPath "CHANGELOG-PLAIN.md" -PathType Leaf)) {
+    Write-Warning "Root CHANGELOG-PLAIN.md is missing. Template sync now preserves this file; add a project-owned plain-language changelog for this $ownerLabel."
+    return
+  }
+
+  $projectVersion = ""
+  if (Test-Path -LiteralPath "VERSION" -PathType Leaf) {
+    $projectVersion = (Get-Content -Raw -Encoding UTF8 VERSION).Trim()
+  }
+  $plainVersion = Get-FirstChangelogPlainVersion
+  $templateHash = ""
+  if (Test-GitObject -Ref $Ref -Path "CHANGELOG-PLAIN.md") {
+    $templateHash = Get-RemoteHash -Ref $Ref -Path "CHANGELOG-PLAIN.md"
+  }
+  $localHash = Get-LocalHash -Path "CHANGELOG-PLAIN.md"
+
+  $reason = ""
+  if ($templateHash -and $localHash -and $templateHash -eq $localHash) {
+    $reason = "content matches the current template CHANGELOG-PLAIN.md"
+  } elseif ($projectVersion -and $plainVersion -and $plainVersion -ne $projectVersion) {
+    $reason = "top version $plainVersion differs from local VERSION $projectVersion"
+  }
+
+  if ($reason) {
+    Write-Warning "Root CHANGELOG-PLAIN.md may still be template-owned ($reason). Template sync now preserves it; rewrite it as this $ownerLabel's own plain-language changelog."
+  }
 }
 
 function Get-LineageRole {
@@ -664,9 +719,9 @@ function Invoke-NativeTemplateSync {
   $version = Get-TemplateVersion -Ref $ref
   Write-Host "==> Template version: $version"
   if ($preserveProjectVersion) {
-    Write-Host "==> Ordinary derived project version mode: preserve local VERSION/CHANGELOG and update TEMPLATE-BASE.md"
+    Write-Host "==> Ordinary derived project version mode: preserve local VERSION/CHANGELOG/CHANGELOG-PLAIN and update TEMPLATE-BASE.md"
   } elseif ($domainTemplateMode) {
-    Write-Host "==> Domain template version mode: preserve domain VERSION/CHANGELOG and update TEMPLATE-BASE.md (domain lineage)"
+    Write-Host "==> Domain template version mode: preserve domain VERSION/CHANGELOG/CHANGELOG-PLAIN and update TEMPLATE-BASE.md (domain lineage)"
   }
   if (Test-Path -LiteralPath ".github/workflows/template-check.yml" -PathType Leaf) {
     Write-Warning "Detected .github/workflows/template-check.yml. This workflow is for template repository self-checks; derived project PRs should not run scripts/check-template.sh. Migrate to .github/workflows/project-check.yml with git diff --check for normal PRs and scripts/check-derived-sync.sh HEAD only for template sync commits."
@@ -712,6 +767,7 @@ function Invoke-NativeTemplateSync {
         Write-Host "    delta TEMPLATE-BASE.md (new template lineage, $lineageModeLabel)"
         Add-SummaryEntry -Summary $summary -RiskHits $riskHits -Path "TEMPLATE-BASE.md" -Status "added"
       }
+      Show-ChangelogPlainMigrationNotice -Ref $ref -PreserveProjectVersion $preserveProjectVersion -DomainTemplateMode $domainTemplateMode
     }
     if ($skipStat) {
       Write-Summary -Summary $summary -RiskHits $riskHits
@@ -787,6 +843,8 @@ function Invoke-NativeTemplateSync {
     }
   }
 
+  Show-ChangelogPlainMigrationNotice -Ref $ref -PreserveProjectVersion $preserveProjectVersion -DomainTemplateMode $domainTemplateMode
+
   Write-Host ""
   & git diff --cached --quiet
   if ($LASTEXITCODE -eq 0) {
@@ -814,9 +872,9 @@ function Invoke-NativeTemplateSync {
   Write-Host "  5. Create or update: sync-records/template-sync/YYYY-MM-DD-sync-template-$version.md"
   Write-Host "     Use: template-docs/derived-sync-report-template.md"
   if ($preserveProjectVersion) {
-    Write-Host "  6. Confirm project VERSION is still project-owned; inherited template version is in TEMPLATE-BASE.md"
+    Write-Host "  6. Confirm project VERSION is still project-owned, project evolution is in CHANGELOG.md / CHANGELOG-PLAIN.md, and inherited template version is in TEMPLATE-BASE.md"
   } elseif ($domainTemplateMode) {
-    Write-Host "  6. Confirm domain template VERSION and CHANGELOG are still domain-owned; inherited base template version is in TEMPLATE-BASE.md (domain lineage)"
+    Write-Host "  6. Confirm domain template VERSION, CHANGELOG.md, and CHANGELOG-PLAIN.md are still domain-owned; inherited base template version is in TEMPLATE-BASE.md (domain lineage)"
   }
   return 0
 }

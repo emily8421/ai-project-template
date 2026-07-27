@@ -3,7 +3,16 @@
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
 
-本文是 `CHANGELOG.md` 的大白话同步版，按同一版本顺序解释“这版到底改善了什么”。权威版本事实仍以 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂发布影响。
+本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本以 `TEMPLATE-BASE.md` 为准。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
+
+## v1.57.4（2026-07-27）
+
+修正派生项目大白话 changelog 的归属。以前普通派生项目和领域模板会保留自己的 `VERSION` / `CHANGELOG.md`，但根目录 `CHANGELOG-PLAIN.md` 仍会被母模板同步覆盖，结果派生项目没法维护自己的大白话版本记录。
+
+- 同步脚本现在在 `--preserve-project-version` / `--domain-template` 模式下同时保留 `CHANGELOG-PLAIN.md`，让派生项目根目录 changelog 对（正式 + 大白话）都归项目自有。
+- `new-project.sh` 新建派生项目时会初始化自己的 `CHANGELOG-PLAIN.md`，与 `CHANGELOG.md` 一起从 `v0.1.0` 起步。
+- 存量派生项目如果根 `CHANGELOG-PLAIN.md` 看起来还是母模板内容，同步脚本只给非阻断提示，不自动改写。
+- 母模板这份 `CHANGELOG-PLAIN.md` 的开头说明已改清楚：它记录母模板自身演进，不等于派生项目自己的大白话 changelog。
 
 ## v1.57.3（2026-07-27）
 

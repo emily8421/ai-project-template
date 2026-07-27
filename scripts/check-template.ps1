@@ -8,10 +8,10 @@ Notes:
   This script prefers Git Bash so Windows does not accidentally invoke WSL
   bash. If Git Bash cannot be started from PowerShell on this machine, it
   falls back to a MINIMAL native PowerShell structural check (file/dir
-  existence, VERSION format, template-sync.json parse). All detailed content
-  assertions live only in check-template.sh and run when Bash is available;
-  the fallback intentionally does NOT mirror them, so adding a new assertion
-  no longer requires editing this file (avoids the double-mirror coupling).
+  existence, VERSION format, template-sync.json parse). Detailed content
+  assertions mostly live in check-template.sh and run when Bash is available;
+  the fallback mirrors only Windows-critical ownership guards that affect
+  PowerShell sync behavior.
   For release, always rely on CI or the Bash self-check.
 #>
 $ErrorActionPreference = "Stop"
@@ -169,9 +169,8 @@ function Invoke-NativeTemplateCheck {
   Write-Host "Running a MINIMAL native structural check instead."
   Write-Host ""
   Write-Host "Note: This fallback only checks structural integrity (key files/dirs exist,"
-  Write-Host "      VERSION format, template-sync.json parses). All detailed content"
-  Write-Host "      assertions run only via check-template.sh (Bash). For release, always"
-  Write-Host "      rely on CI or the Bash self-check."
+  Write-Host "      VERSION format, template-sync.json parses) plus Windows-critical"
+  Write-Host "      ownership guards. For release, always rely on CI or the Bash self-check."
 
   # --- Structural existence: key files ---
   foreach ($path in @(
@@ -236,10 +235,9 @@ function Invoke-NativeTemplateCheck {
     Fail "VERSION does not use vMAJOR.MINOR.PATCH"
   }
 
-  # Detailed content assertions (file-contains-keyword) are intentionally NOT
-  # mirrored here. They live only in check-template.sh and run when Bash is
-  # available. This keeps the fallback minimal and breaks the double-mirror
-  # coupling (adding an assertion no longer requires editing this file).
+  # Detailed content assertions mostly live in check-template.sh and run when
+  # Bash is available. Keep this fallback minimal; only mirror Windows-critical
+  # ownership guards that affect PowerShell sync behavior.
 
   # --- Structural: template-sync.json parses and lists existing files ---
   $syncFiles = Get-SyncFiles
@@ -259,6 +257,9 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "AGENTS.md" "Sync notice" "AGENTS.md contains sync notice"
   Require-Contains "CLAUDE.md" "Sync notice" "CLAUDE.md contains sync notice"
   Require-Contains ".cursor/rules/project-rules.mdc" "Sync notice" "Cursor rules contain sync notice"
+  Require-Contains "scripts/sync-template.sh" 'VERSION\|CHANGELOG\.md\|CHANGELOG-PLAIN\.md' "sync-template Bash preserves project-owned CHANGELOG-PLAIN.md"
+  Require-Contains "scripts/sync-template.ps1" '\$_ -ne "CHANGELOG-PLAIN\.md"' "sync-template PowerShell fallback preserves project-owned CHANGELOG-PLAIN.md"
+  Require-Contains "scripts/new-project.sh" 'CHANGELOG-PLAIN\.md' "new-project initializes project-owned CHANGELOG-PLAIN.md"
 
   Write-Host ""
   if ($script:NativeFailures -eq 0) {
