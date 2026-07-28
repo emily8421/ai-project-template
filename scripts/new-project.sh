@@ -18,6 +18,22 @@
 # 说明: 默认从 GitHub main 派生（事实来源）；--local 走本地。两种产物等价，派生时任选。
 set -euo pipefail
 
+# MSYS PATH 自举守卫（MSYS_PATH_GUARD）：非登录 bash 或 PATH 被沙箱刮掉时，
+# /usr/bin（dirname/grep/sed）与 /mingw64/bin（git）可能不在 PATH 上，导致
+# 早期 dirname/sed/git 调用塌掉、后续雪崩。只用 bash 内建判定
+# （command -v / [[ -d ]]），不依赖 uname 等外部工具——触发场景本身就是 /usr/bin 缺失。
+# 三种 canonical 调用方式见 template-docs/env-setup.md §8.1。
+if [[ -z "${MSYS_PATH_GUARD:-}" ]] && ! command -v dirname >/dev/null 2>&1; then
+  for _guard_dir in /usr/bin /mingw64/bin /mingw32/bin; do
+    [[ -d "$_guard_dir" ]] || continue
+    case ":${PATH:-}:" in
+      *":$_guard_dir:"*) ;;
+      *) PATH="$_guard_dir:$PATH" ;;
+    esac
+  done
+  export PATH MSYS_PATH_GUARD=1
+fi
+
 ACCOUNT="${ACCOUNT:-}"
 VISIBILITY="${VISIBILITY:-private}"
 NO_EXAMPLES=0

@@ -5,6 +5,16 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.58.1（2026-07-28）
+
+修了维护者在 Windows 上跑模板脚本的两个老坑（codex 和 claude 切着用最容易踩）。
+
+- 第一个坑是 PowerShell 5.1 把 `bash -lc '...$var...'` 里的引号弄丢，带空格的项目路径被拆成两半。现在 `template-docs/env-setup.md` §8.1 写清了三种正确调用方式：直接跑 `.sh` 最稳；要传变量就改用环境变量或 wrapper 文件，别用 `bash -lc`。
+- 第二个坑是非登录 bash 找不到 `/usr/bin` 工具箱（`dirname`/`grep`/`git` 全报 command not found）。现在三个 `.sh` 脚本顶部各加了一段「自举守卫」——发现 `dirname` 找不到就自动把 `/usr/bin`、`/mingw64/bin` 加到 PATH 前面，脚本自己救自己，不靠外部配 PATH。实测把 PATH 刮到只剩 Windows 系统目录，`check-template.sh` 照样跑完。
+- 配套加了 5 条自检断言锁住这些改动，防止以后改回去没人发现。
+
+不动 `.ps1`、不改同步行为、派生项目不用迁移；Linux / macOS 不受影响。
+
 ## v1.58.0（2026-07-27）
 
 补上“派生项目怎么看母模板改了什么”。上一版已经让派生项目根目录的 changelog 对归项目自己，但这样一来，母模板自己的发布说明就不能再占用派生根目录了。
