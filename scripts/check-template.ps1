@@ -259,6 +259,10 @@ function Invoke-NativeTemplateCheck {
   Require-Contains ".cursor/rules/project-rules.mdc" "Sync notice" "Cursor rules contain sync notice"
   Require-Contains "scripts/sync-template.sh" 'VERSION\|CHANGELOG\.md\|CHANGELOG-PLAIN\.md' "sync-template Bash preserves project-owned CHANGELOG-PLAIN.md"
   Require-Contains "scripts/sync-template.ps1" '\$_ -ne "CHANGELOG-PLAIN\.md"' "sync-template PowerShell fallback preserves project-owned CHANGELOG-PLAIN.md"
+  Require-Contains "scripts/sync-template.sh" 'sync_upstream_changelog_references' "sync-template Bash generates upstream changelog references"
+  Require-Contains "scripts/sync-template.ps1" 'Write-UpstreamChangelogReference' "sync-template PowerShell fallback generates upstream changelog references"
+  Require-Contains "scripts/check-derived-sync.sh" 'upstream/CHANGELOG\.md\|upstream/CHANGELOG-PLAIN\.md' "check-derived-sync Bash allows only upstream changelog references"
+  Require-Contains "scripts/check-derived-sync.ps1" 'upstream/CHANGELOG-PLAIN\.md' "check-derived-sync PowerShell fallback allows upstream changelog references"
   Require-Contains "scripts/new-project.sh" 'CHANGELOG-PLAIN\.md' "new-project initializes project-owned CHANGELOG-PLAIN.md"
 
   Write-Host ""
