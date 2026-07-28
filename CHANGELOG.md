@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.58.1（2026-07-28）
+
+Windows Git Bash 入口调用健壮性：维护者在 Windows 从 PowerShell 调 Git Bash 跑 `.sh` 脚本（codex / claude 频繁切换）反复踩的两个坑，本次从根因侧治理。
+
+- **坑 2 自救助（治本）**：`scripts/check-template.sh` / `sync-template.sh` / `new-project.sh` 各内联 MSYS PATH 自举守卫（`MSYS_PATH_GUARD`）——非登录 bash 或 PATH 被沙箱刮掉时，若 `dirname` 缺失则前置 `/usr/bin` + `/mingw64/bin`（+ `/mingw32/bin` 兜底），让脚本不靠外部 PATH 配置即可跑完。纯 bash 内建判定（无 `uname` 依赖），健康系统永不触发、零副作用。
+- **坑 1 文档化**：`template-docs/env-setup.md` 新增 §8.1「在 Windows 上调用 .sh 脚本的三种 canonical 方式」（直接执行 .sh / 绕开 `bash -lc '...$var...'` 改用继承 CWD·env 变量·wrapper 文件 / 登录 shell·`env.exe`·wrapper 追加 PATH）；`git-guide.md` §5、`MAINTAINERS.md` §5 加指针。
+- **防漂移断言**：`scripts/check-template.sh` 新增 5 断言锁住三脚本 `MSYS_PATH_GUARD` + env-setup §8.1 关键词。
+
+不改 `.ps1`、不改同步行为与 `template-sync.json` schema、不要求派生项目迁移；Linux / macOS 守卫门控跳过、零影响。实测：`env.exe` 把 PATH 刮成纯 Windows 目录后，`check-template.sh --summary` 仍跑完（守卫自救）。
+
 ## v1.58.0（2026-07-27）
 
 母模板 changelog 继承参考：普通派生项目和领域模板同步母模板时，母模板 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 会映射生成到派生侧 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`，与派生项目根目录自有 changelog 对物理分离。

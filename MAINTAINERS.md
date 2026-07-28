@@ -100,6 +100,8 @@ Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-t
 4. 成功路径只记命令、退出码 / check 结论和通过摘要，不回灌完整成功日志。
 5. 失败路径只保留失败断言块、文件、expected pattern、复现命令和必要的 Bash / fallback 错误。
 
+Windows 下从 PowerShell 调 Git Bash 跑 `.sh` 时若出现内嵌双引号丢变量（ARGCOUNT 错乱）或 `/usr/bin` 工具箱缺失（`dirname`/`git` 找不到），三种 canonical 调用方式见 `template-docs/env-setup.md §8.1`；三个 `.sh` 内置 `MSYS_PATH_GUARD` 自举守卫，正常路径无需手动配 PATH。
+
 ## 6. README 边界与派生 README 规范
 
 ### 模板仓库 README（根 `README.md`）

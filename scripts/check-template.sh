@@ -32,13 +32,30 @@ export GIT_CONFIG_VALUE_0=false
 export GIT_CONFIG_KEY_1=core.safecrlf
 export GIT_CONFIG_VALUE_1=false
 
+# MSYS PATH 自举守卫（MSYS_PATH_GUARD）：非登录 bash 或 PATH 被沙箱刮掉时，
+# /usr/bin（dirname/grep/sed）与 /mingw64/bin（git）可能不在 PATH 上，导致
+# 早期 dirname/sed/git 调用塌掉、后续雪崩。只用 bash 内建判定
+# （command -v / [[ -d ]]），不依赖 uname 等外部工具——触发场景本身就是 /usr/bin 缺失。
+# 三种 canonical 调用方式见 template-docs/env-setup.md §8.1。
+if [[ -z "${MSYS_PATH_GUARD:-}" ]] && ! command -v dirname >/dev/null 2>&1; then
+  for _guard_dir in /usr/bin /mingw64/bin /mingw32/bin; do
+    [[ -d "$_guard_dir" ]] || continue
+    case ":${PATH:-}:" in
+      *":$_guard_dir:"*) ;;
+      *) PATH="$_guard_dir:$PATH" ;;
+    esac
+  done
+  export PATH MSYS_PATH_GUARD=1
+fi
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 # early-exit 守卫：ROOT 不像模板根 或 核心前置文件缺失时早退，避免一次环境 / 入口故障引爆上千条假 ✗（token 炸弹）。
 if [[ ! -d "$ROOT/.git" || ! -f "$ROOT/VERSION" ]]; then
   echo "✗ 环境守卫: ROOT($ROOT) 不像模板仓库根目录（缺 .git 或 VERSION），多为 bash 入口 / PATH 环境问题，非模板内容失败。" >&2
-  echo "  复现诊断: bash --version; command -v dirname grep sed; echo ROOT=$ROOT" >&2
+  echo "  复现诊断: bash --version; command -v dirname grep sed git; echo ROOT=$ROOT; uname -s" >&2
+  echo "  若 dirname/git 缺失：非登录 bash 或沙箱刮了 PATH；三种 canonical 调用方式见 template-docs/env-setup.md §8.1。" >&2
   exit 2
 fi
 for _prereq in README.md VERSION template-sync.json ai/index.md; do
@@ -1094,6 +1111,13 @@ require_contains "scripts/sync-template.ps1" '--domain-template' "sync-template 
 require_contains "scripts/sync-template.ps1" 'Write-DomainTemplateBase' "sync-template PowerShell fallback 维护领域版 TEMPLATE-BASE.md"
 require_contains "scripts/sync-template.ps1" 'Get-LegacyDomainStandardsScope' "sync-template PowerShell fallback 迁移旧领域版 TEMPLATE-BASE.md 标准件范围"
 require_contains "scripts/sync-template.ps1" '叠加的标准件范围' "sync-template PowerShell fallback 兼容旧领域版 TEMPLATE-BASE.md 中文范围标题"
+# Windows Git Bash 入口健壮性：.sh 自举 MSYS PATH 守卫（坑 2：非登录 bash 缺 /usr/bin 工具箱）+
+# env-setup §8.1 防漂移（坑 1：PS5.1 内嵌双引号丢变量）。坑 1 由文档+断言约束，不靠脚本自救。
+require_contains "scripts/check-template.sh" 'MSYS_PATH_GUARD' "check-template.sh 含 MSYS PATH 自举守卫（dirname 缺失时前置 /usr/bin + mingw 目录）"
+require_contains "scripts/sync-template.sh" 'MSYS_PATH_GUARD' "sync-template.sh 含 MSYS PATH 自举守卫"
+require_contains "scripts/new-project.sh" 'MSYS_PATH_GUARD' "new-project.sh 含 MSYS PATH 自举守卫"
+require_contains "template-docs/env-setup.md" 'MSYS_PATH_GUARD' "env-setup §8.1 引用 MSYS PATH 自举守卫关键词"
+require_contains "template-docs/env-setup.md" '继承当前工作目录|env 变量|wrapper 文件' "env-setup §8.1 提供避开 PS5.1 内嵌双引号坑的三种 canonical 调用"
 require_absent_dir "upstream"
 require_contains "scripts/sync-template.sh" 'http\.proxy|HTTPS_PROXY' "sync-template fetch 失败提示受限网络代理配置（git http.proxy + gh HTTPS_PROXY）"
 require_contains "scripts/sync-template.ps1" 'http\.proxy|HTTPS_PROXY' "sync-template PowerShell fallback fetch 失败提示受限网络代理配置"

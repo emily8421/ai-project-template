@@ -198,6 +198,8 @@ git status --short --branch
 git show --name-only --stat HEAD
 ```
 
+> 在 PowerShell 调 Git Bash 跑 `.sh` 时若遇带空格路径被拆词或 `dirname`/`git` 找不到，三种 canonical 调用方式见 `template-docs/env-setup.md §8.1`（推荐：直接执行 .sh；带变量：改用 env 变量或 wrapper 文件，避开 `bash -lc '...$var...'`）。
+
 检查最新同步提交没有误覆盖 `README.md`、`ai/project-rules.md`、`docs/00-09` 或业务代码。旧派生项目首次同步到新版脚本后，不要停在同步提交；应继续读取新同步到的 `ai/prompts/maintainers/12-sync-template.md`，按标准闭环完成边界验证、同步后整理、文档体系审计、项目验证建议和同步运行记录。同步到包含 `scripts/check-derived-sync.ps1` 的版本后，也可以运行：
 
 ```powershell
