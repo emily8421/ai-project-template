@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.58.0（2026-07-27）
+
+母模板 changelog 继承参考：普通派生项目和领域模板同步母模板时，母模板 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 会映射生成到派生侧 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`，与派生项目根目录自有 changelog 对物理分离。
+
+- **upstream 映射生成**：`scripts/sync-template.sh` / `.ps1` 在 `--preserve-project-version` 与 `--domain-template` 模式下，从母模板根 changelog 对生成带定位说明的 `upstream/` 只读继承参考；`template-sync.json` schema 保持扁平同名清单，不扩 `{src,dest}`。
+- **派生边界校验**：`scripts/check-derived-sync.sh` / `.ps1` 仅放行 `upstream/CHANGELOG.md` 与 `upstream/CHANGELOG-PLAIN.md` 两个映射文件，并校验定位说明与正式 / 大白话标题，避免把整个 `upstream/` 变成宽泛白名单。
+- **说明与自检**：`TEMPLATE-BASE.md` 生成内容、同步完成提示、`template-docs/beginner-guide.md`、`template-docs/template-methodology.md`、`template-docs/domain-templates.md` 与 `check-template.*` 均补充 upstream 继承参考约定；模板仓自身仍不维护 `upstream/` 物理副本。
+
 ## v1.57.4（2026-07-27）
 
 派生项目 changelog 归属修复：普通派生项目和领域模板同步母模板时，根目录 `CHANGELOG-PLAIN.md` 与 `VERSION` / `CHANGELOG.md` 一样归项目自有，不再被母模板覆盖；新建派生项目也会初始化自己的大白话 changelog。存量派生项目若仍保留母模板版 `CHANGELOG-PLAIN.md`，同步脚本给出非阻断迁移提示。

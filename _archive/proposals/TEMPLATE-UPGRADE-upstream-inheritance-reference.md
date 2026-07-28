@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: 母模板 changelog 继承参考下发（upstream/ 映射）
 
 > 来源：agent-system-template（emily8421/agent-system-template）派生项目回流（GitHub issue #273，本地镜像 `_proposals/_remote-issues/issue-273.md`）；本提案是 #273 拆分落地的**第二批（Batch 2 / P1 upstream/ 继承参考）**
-> 状态：候选 · 待维护者确认；**映射机制方案待定（见 §5），确认前不进入实现**
+> 状态：已处理 · v1.58.0 吸收；映射机制采用方案 1：脚本硬编码特例（见 §5）
 > 目标版本：v1.58.0（minor）
-> Release impact：minor（AI 建议，待维护者确认；新增 `upstream/` 同步结构与路径映射，改变下行同步行为）
+> Release impact：minor（新增 `upstream/` 同步结构与路径映射，改变下行同步行为）
 > Release strategy：在 `TEMPLATE-UPGRADE-derived-changelog-ownership.md`（Batch 1，归属修复）之后发布；本批提供母模板 changelog 的继承参考可见性，**完整关闭 #273**
 
 ## 1. 背景
@@ -35,19 +35,19 @@ Batch 1（`TEMPLATE-UPGRADE-derived-changelog-ownership.md`）让派生项目完
 | 文件 | 改动 |
 |---|---|
 | `scripts/sync-template.sh` / `.ps1` | 派生保留路径下，把母模板根 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 映射下发到派生 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`（路径映射，非同名复制）。 |
-| `template-sync.json` | 视映射机制方案（§5）：若扩 schema 支持 `{src,dest}`，则登记映射；若脚本硬编码特例，则不改本文件结构（仅注释说明）。 |
-| `upstream/` 定位说明 | 同步时在 `upstream/` 顶部写入只读参考件定位说明（由脚本生成，不在模板仓维护物理副本）。 |
+| `template-sync.json` | 不扩 schema，继续保持扁平同名路径清单；本批只在脚本中对两份 changelog 做固定映射。 |
+| `upstream/` 定位说明 | 同步时在 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md` 顶部写入只读参考件定位说明（由脚本生成，不在模板仓维护物理副本）。 |
 | `scripts/check-derived-sync.sh` / `.ps1` | 新增断言：派生项目 `upstream/CHANGELOG.md` + `upstream/CHANGELOG-PLAIN.md` 存在、含定位说明、正式 + 大白话配对完整。**断言落派生边界检查器 `check-derived-sync.*`，不落模板自检 `check-template.*`**（`upstream/` 只存在于派生项目）。 |
 | `template-docs/domain-templates.md` / `template-methodology.md` / `beginner-guide.md` | 补 `upstream/` 继承参考约定与“只读、不编辑、同步时刷新”说明。 |
 
-## 5. 映射机制（待定，落地前必须确认）
+## 5. 映射机制（已定）
 
 当前 `template-sync.json` 是扁平同名路径清单（`files:[...]`，无 `src→dest`），脚本按同名路径下发，**无法直接表达“母模板根 `CHANGELOG.md` → 派生 `upstream/CHANGELOG.md`”**。两个候选方案：
 
-1. **脚本硬编码特例（低风险，推荐起点）**：在 `sync-template.*` 派生保留路径里，对 changelog 对做特殊映射，不扩 `template-sync.json` schema。优点：改动小、不影响现有同名复制语义；缺点：映射规则散在脚本里。
+1. **已采用：脚本硬编码特例（低风险起点）**：在 `sync-template.*` 派生保留路径里，对 changelog 对做特殊映射，不扩 `template-sync.json` schema。优点：改动小、不影响现有同名复制语义；缺点：映射规则散在脚本里。
 2. **扩展 `template-sync.json` schema 为 `{src,dest}` 映射对象**：更通用，可支撑未来其他重映射需求；缺点：schema 不兼容变化，需同步改两端脚本解析 + 兜底 + 自检，工作量与回归面更大。
 
-> 建议先以方案 1 落地（与 Batch 1 同属“保留 / 映射”补丁族，风险可控）；若后续出现更多重映射需求，再升级到方案 2。**本项确认前不进入实现。**
+本批按方案 1 落地；若后续出现更多重映射需求，再升级到方案 2。
 
 ## 6. 双写漂移防护（关键约束）
 
