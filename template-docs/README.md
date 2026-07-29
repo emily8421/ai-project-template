@@ -13,6 +13,8 @@
 | `smoke-test.md` | 新手烟测流程 |
 | `smoke-test-report-template.md` | 烟测结果记录模板 |
 | `template-methodology.md` | 模板为什么这么设计（设计原则与各子系统 why） |
+| `domain-templates.md` | 领域模板可选中间层方法论：什么时候引入 L2、边界和回流关系 |
+| `domain-derived-scenarios-template.md` | 领域模板复制后领域化的 L2-to-L3 playbook template |
 | `glossary.md` | 模板核心术语索引：文档链路、ID、阶段、状态、原型、handoff、同步治理 |
 | `docs-scaffold/` | 项目文档结构模板库：`docs/inputs/*`、`docs/vision/*`、`docs/00-09`、`docs/design/*`、`docs/decisions/*`、`docs/research/*` 的原始大纲、占位表格和撰写提要 |
 | `session-handoff.example.md` | 会话续接文件样例 |

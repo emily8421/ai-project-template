@@ -5,6 +5,17 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.59.0（2026-07-29）
+
+给领域模板补了一个可复制的“领域模板 → 领域派生项目”剧本模板。
+
+- 新增 `template-docs/domain-derived-scenarios-template.md`，领域模板可以复制成自己的 `template-docs/<domain>/domain-derived-scenarios.md`。
+- 模板里先把适用性判断、创建项目、同步领域模板更新、初始化后自检、日常开发、回流和发布后下游同步这些最小章节列齐。
+- `domain-templates`、`scenario-guides`、`domain-template-lab` 命令和 Prompt 都指向这个骨架，避免每个领域模板从零想一遍。
+- 同步清单和自检脚本也补上了，派生项目同步母模板时能拿到这个通用骨架。
+
+这次仍不做 `new-project --profile <domain>`，也不把 agent / OCR / IoT 这类领域内容塞进母模板。
+
 ## v1.58.3（2026-07-29）
 
 把“母模板、领域模板、领域派生项目”这三层该走哪条路讲清楚。

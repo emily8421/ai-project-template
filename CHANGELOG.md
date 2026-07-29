@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.59.0（2026-07-29）
+
+领域派生项目 L2→L3 剧本模板：承接 issue #285，新增可下行同步的 `template-docs/domain-derived-scenarios-template.md`，为领域模板提供通用剧本骨架。
+
+- **通用骨架**：覆盖适用性判断、创建领域派生项目、同步领域模板更新、初始化后整理与领域自检、日常开发、L3→L2 回流、领域模板发布后的下游同步。
+- **入口衔接**：`domain-templates`、`scenario-guides`、`domain-template-lab` 命令与 Prompt 指向该模板，作为 `template-docs/<domain>/domain-derived-scenarios.md` 的起点。
+- **同步与自检**：纳入 `template-sync.json` 与 Bash fallback 清单；`check-template.*` 增加稳定关键词断言。
+
+本版不实现 `new-project --profile <domain>`，不改母模板同步协议，不新增任何领域专属 scaffold；普通 L3 项目路径不变。
+
 ## v1.58.3（2026-07-29）
 
 领域模板三层路径路由澄清：承接 issue #276 的 Batch 1，先以 patch 级文档和命令路由方式落地 L1→普通 L3、L1→L2、L2→领域 L3 的路径矩阵；不新增 `domain-derived-scenarios-template.md`，不改同步脚本协议，不实现 `new-project --profile <domain>`。

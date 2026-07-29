@@ -116,6 +116,7 @@ DEFAULT_SYNC_FILES=(
   "template-docs/template-methodology.md"
   "template-docs/capability-packages.md"
   "template-docs/remote-ci-sop-profile.md"
+  "template-docs/domain-derived-scenarios-template.md"
   "template-docs/glossary.md"
   "template-docs/docs-scaffold/README.md"
   "template-docs/docs-scaffold/inputs/input-review-report.md"
