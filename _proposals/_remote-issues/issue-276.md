@@ -1,18 +1,19 @@
 # GitHub Issue #276: TEMPLATE-UPGRADE: scenario-guides 三层路径矩阵与领域派生项目场景
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/276
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:agent-system-template
 > Author: emily8421
 > Created: 2026-07-28T00:38:23Z
-> Updated: 2026-07-28T00:38:23Z
-> Mirrored at: 2026-07-28T17:14:50+08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Updated: 2026-07-29T07:51:33Z
+> Closed: 2026-07-29T07:51:33Z
+> Mirrored at: 2026-07-29T15:54:57+08:00
+> Mirror status: remote issue closed as implemented; GitHub issue remains source of comments and closure state.
 
 ## Local Triage / Implementation Notes
 
-> Local triage updated: 2026-07-29T15:23:21+08:00
-> Remote issue state at triage: OPEN
+> Local triage updated: 2026-07-29T15:54:57+08:00
+> Remote issue state at triage: CLOSED
 
 Batch 1 has landed in the mother template:
 
@@ -29,6 +30,12 @@ Remaining decision notes:
 - C2 (L2-to-L3 playbook required asset): resolved in Batch 1 by documenting the requirement in `template-docs/domain-templates.md`, `scenario-guides.md`, `domain-template-lab`, and maintainer prompt checks.
 - C3 (transitional L1 new-project plus L2 overlay): documented as tolerated transitional routing; no script change in this batch.
 - C4 (new A29): resolved as "do not split yet"; routing stays in the matrix and A2/A13/A15/C entries.
+
+Closure comment recorded on GitHub at 2026-07-29T07:51:32Z:
+
+- #276 scope is implemented by PR #283 and mirrored by PR #284.
+- Follow-up reusable L2-to-L3 playbook skeleton work is split to #285.
+- `new-project --profile <domain>`, sync protocol changes, and domain-specific scaffold content remain out of this closure.
 
 ## Raw Issue Body
 
