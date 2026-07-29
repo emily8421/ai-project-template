@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.58.2（2026-07-29）
+
+token hotspot 本地化边界澄清：承接 issue #275，但按 v1.57.2 后的现状裁剪落地——单条原始记录仍在 `.ai/token-hotspots/`（gitignored，本地不提交），入库路径只保留脱敏汇总 `ai-records/token-hotspots/`。
+
+- **路径口径防漂移**：`scripts/check-template.sh` / `.ps1` 增加断言，锁住 `.gitignore` 必须忽略 `.ai/token-hotspots/`，且 `session-rules` 必须同时声明单条本地路径与入库 summary 路径。
+- **维护者 checklist 澄清**：`MAINTAINERS.md` 将 `_proposals/` 与 `ai-records/` 的 markdown clean 口径收窄为“准备提交的正式记录”，明确 `.ai/token-hotspots/` 不作为提交内容。
+- **研发数据链澄清**：`template-docs/rd-data-chain.md` 明确单条 `.ai/token-hotspots/` 是 local-only meta，只有提炼后的 `ai-records/token-hotspots/` summary 可入库；自检门禁只守路径边界，不校验单条记录内容。
+- **CI 稳定性**：`check-template.sh` 取 changelog 顶部版本时不再使用 `grep | head` 管道，避免 Ubuntu CI 在 `pipefail` 下因 Broken pipe 误失败。
+
+不采纳 issue #275 原文中“忽略 `ai-records/token-hotspots/*.md`”的旧路径建议，避免误伤已入库的 summary 机制；不改同步协议、不要求派生项目迁移。
+
 ## v1.58.1（2026-07-28）
 
 Windows Git Bash 入口调用健壮性：维护者在 Windows 从 PowerShell 调 Git Bash 跑 `.sh` 脚本（codex / claude 频繁切换）反复踩的两个坑，本次从根因侧治理。
