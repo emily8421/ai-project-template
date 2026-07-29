@@ -49,7 +49,7 @@
 7. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 doc-standards 镜像自检（`require_doc_standards_mirror`）通过。
 8. 若改变用户入口，保持 `README.md` 的「快速开始」三入口可读，不塞入维护者细节。
 9. 运行：`git diff --check`。
-10. 若新增 / 修改 `_proposals/`、`ai-records/` 等 Markdown 记录，运行：`powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。
+10. 若新增 / 修改准备提交的 `_proposals/`、`ai-records/` 等 Markdown 记录，运行：`powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。单条 token hotspot 记录位于 `.ai/token-hotspots/`，是 gitignored 本地过程观察，不作为提交内容；只有脱敏汇总 `ai-records/token-hotspots/` 才按正式记录检查。
 11. 运行：`bash scripts/check-template.sh`（或 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`）。
 12. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
 
@@ -144,4 +144,4 @@ Windows 下从 PowerShell 调 Git Bash 跑 `.sh` 时若出现内嵌双引号丢�
 - 历史归档放 `docs/archive/`。
 - `ai/doc-standards/`（v1.20.0+）是模板 `00-09` 撰写规范的只读镜像，随模板同步刷新，不作为项目事实、不直接驱动开发；旧项目可能残留 `docs/_scaffold/`。
 - AI 需要新增文档时，必须先判断文档类型；不确定则先提议路径并等待人工确认。
-- 研发过程各类数据（决策 / 调研 / 会议 / 验证 / 版本 / AI 成本 / 续接）如何沉淀、流转和回写，见 `template-docs/rd-data-chain.md`（索引 / 分类，不替代 00-09）。
+- 研发过程各类数据（决策 / 调研 / 会议 / 验证 / 版本 / AI 成本 / 续接）如何沉淀、流转和回写，见 `template-docs/rd-data-chain.md`（索引 / 分类，不替代 00-09）。其中单条 token hotspot 为 `.ai/token-hotspots/` 本地记录，入库只保留 `ai-records/token-hotspots/` 脱敏汇总。

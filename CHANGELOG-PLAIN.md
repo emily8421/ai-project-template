@@ -5,6 +5,17 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.58.2（2026-07-29）
+
+把 token hotspot 的“本地记录不提交”边界讲硬一点，并加自检防止路径口径漂移。
+
+- 单条 hotspot 继续放 `.ai/token-hotspots/`，这个目录已经被 `.gitignore` 忽略，只是本地过程观察。
+- 能长期复用的脱敏汇总才放 `ai-records/token-hotspots/` 入库；不是把所有原始记录都提交。
+- `MAINTAINERS.md` 和 `rd-data-chain` 现在把这两类路径拆清楚，避免看到 `ai-records` 就误以为 token hotspot 原始记录也该提交。
+- 自检脚本补了很窄的断言：只锁路径边界，不检查每条本地 hotspot 内容。
+
+这次没有采用 issue #275 里“忽略 `ai-records/token-hotspots/*.md`”的旧建议，因为当前机制已经改成 `.ai/token-hotspots/` 存单条、`ai-records/token-hotspots/` 存 summary。
+
 ## v1.58.1（2026-07-28）
 
 修了维护者在 Windows 上跑模板脚本的两个老坑（codex 和 claude 切着用最容易踩）。

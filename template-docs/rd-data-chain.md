@@ -28,13 +28,13 @@
 ## 3. 流转规则
 
 - **长期事实回写 00-09**：ADR 结论约束 04/05、调研结论回写 05、会议结论回写 00-03、验证证据入 09。辅助留痕是过程，不是事实权威。
-- **token-hotspots → proposals 回流**：`ai-records/token-hotspots/` 记录的模板优化建议，可去项目化转写为 `_proposals/TEMPLATE-UPGRADE-*.md` 回流模板（已有机制，本 Profile 显式说明这条路径）。
+- **token-hotspots → proposals 回流**：单条 `.ai/token-hotspots/` 记录只留本地；若其中出现可通用的模板优化建议，应先提炼为脱敏 summary（`ai-records/token-hotspots/`）或直接去项目化转写为 `_proposals/TEMPLATE-UPGRADE-*.md` 回流模板（已有机制，本 Profile 显式说明这条路径）。
 - **handoff 不替代正式记录**：`.ai/session-handoff.md` 是临时续接，须回写 08/09；Sprint 完成 / 验证通过 / Phase 验收必须落 08/09（`implementation-lifecycle-rules.md` §7.1）。
 
 ## 4. 自检门禁现状
 
 - **有门禁**：文档事实链（00-09 / doc-standards）、运行时机制、同步清单（`template-sync.json`）有 `scripts/check-template.sh` 守卫。
-- **无自检门禁（依赖自觉）**：ADR / research / meetings / handoff / token-hotspots 无 `check-template` 自检硬门禁。本 Profile 只做索引，**不为它们新增自检断言或 CI 门禁**（避免过度治理；强制化另案讨论）。其中 token-hotspot 记录的「汇总状态」等字段级必填属写入时自觉（见 `ai/session-rules.md` §4.2），不构成自检门禁。
+- **无内容门禁（依赖自觉）**：ADR / research / meetings / handoff / token-hotspots 无内容级 `check-template` 门禁。本 Profile 只做索引，**不为它们新增逐条内容断言或 CI 门禁**（避免过度治理；强制化另案讨论）。其中 token-hotspot 记录的「汇总状态」等字段级必填属写入时自觉（见 `ai/session-rules.md` §4.2），不构成自检门禁；模板自检只守 `.ai/token-hotspots/` 本地忽略与 `ai-records/token-hotspots/` summary 入库的路径边界，防止口径漂移。
 
 ## 5. 边界
 
