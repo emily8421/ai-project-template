@@ -269,6 +269,15 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "ai/session-rules.md" 'ai-records/token-hotspots/SUMMARY\.md' "session-rules defines token hotspot summary path"
   Require-Contains "MAINTAINERS.md" '\.ai/token-hotspots/' "MAINTAINERS distinguishes local token hotspot records"
   Require-Contains "template-docs/rd-data-chain.md" '\.ai/token-hotspots/' "rd-data-chain distinguishes local token hotspot records"
+  Require-Contains "template-docs/domain-templates.md" 'L2-to-L3 playbook' "domain-templates defines L2-to-L3 playbook"
+  Require-Contains "template-docs/scenario-guides.md" 'L2-to-L3 playbook' "scenario-guides contains L2-to-L3 playbook routing"
+  Require-Contains "template-docs/scenario-guides.md" 'domain-derived-scenarios\.md' "scenario-guides points to domain-derived scenarios"
+  Require-Contains "ai/commands/domain-template-lab.md" 'L2-to-L3 playbook' "domain-template-lab command requires L2-to-L3 playbook"
+  Require-Contains "ai/prompts/maintainers/23-domain-template-lab.md" 'L2-to-L3 playbook' "domain-template-lab prompt lists L2-to-L3 playbook asset"
+  Require-Contains "ai/commands/new-project.md" 'L2-to-L3 playbook' "new-project command routes domain-derived project creation"
+  Require-Contains "ai/commands/sync-methodology.md" 'L2-to-L3 playbook' "sync-methodology command routes domain overlay sync"
+  Require-Contains "ai/commands/submit-proposal.md" 'adjacent-layer upstream' "submit-proposal command defines adjacent-layer proposal flow"
+  Require-Contains "ai/commands/submit-feedback.md" 'adjacent-layer upstream' "submit-feedback command defines adjacent-layer feedback flow"
 
   Write-Host ""
   if ($script:NativeFailures -eq 0) {

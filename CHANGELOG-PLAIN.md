@@ -5,6 +5,18 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.58.3（2026-07-29）
+
+把“母模板、领域模板、领域派生项目”这三层该走哪条路讲清楚。
+
+- 普通项目还是直接走母模板，不需要理解领域模板。
+- 创建领域模板走 A20 / `domain-template-lab`，并且必须规划自己的“领域模板 → 领域派生项目”场景剧本。
+- 领域派生项目的同步、整理、自检、回流细节由对应领域模板维护；母模板只给边界，不直接写 agent / OCR / IoT 这类具体领域剧本。
+- `new-project`、`sync-methodology`、`submit-proposal`、`submit-feedback` 都补了相邻层路由口径，避免领域项目越级走母模板路径。
+- 自检脚本补了关键词断言，防止这些边界以后漂移。
+
+这次先不新增 `domain-derived-scenarios-template.md`，也不做 `new-project --profile <domain>`；这些留到后续 Batch 单独评估。
+
 ## v1.58.2（2026-07-29）
 
 把 token hotspot 的“本地记录不提交”边界讲硬一点，并加自检防止路径口径漂移。
