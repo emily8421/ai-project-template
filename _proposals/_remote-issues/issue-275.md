@@ -1,12 +1,12 @@
 # GitHub Issue #275: TEMPLATE-UPGRADE: token-hotspots 本地化与 Git 忽略约束
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/275
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:agent-system-template
 > Author: emily8421
 > Created: 2026-07-27T13:11:26Z
-> Updated: 2026-07-27T13:11:26Z
-> Mirrored at: 2026-07-28T17:14:50+08:00
+> Updated: 2026-07-29T03:41:16Z
+> Mirrored at: 2026-07-29T11:47:43+08:00
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
