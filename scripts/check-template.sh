@@ -10,6 +10,11 @@
 #   1. 基础 helper：文件 / 目录 / 内容断言。
 #   2. 专项检查函数：复杂或容易增长的检查主题。
 #   3. 主流程：按入口、文档、治理、脚本、同步清单、样例分组调度。
+#
+# 断言哲学（防膨胀）:
+#   断言只守「行为 / 结构 / 口径 / 同步范围」，不守「内部函数名、写死的版本号、
+#   可替换的文案措辞」。守实现细节会让重构 / 升级误触发自检失败，反而阻碍维护；
+#   守护目标优先用「用户可见的输出 / 诊断文本」表达，而非内部符号。
 set -euo pipefail
 
 # 参数（opt-in）：--summary / --quiet 只输出分区计数、总数与失败项，不逐条打印 ✓；默认仍全量，CI 不受影响。
@@ -634,11 +639,8 @@ check_project_bootstrap_scripts() {
   require_contains "scripts/collect-env.ps1" '服务器资源预案' "collect-env 保留服务器资源预案"
   require_contains "scripts/check-prereqs.ps1" 'Git Bash' "check-prereqs 检查 Git Bash"
   require_contains "scripts/check-prereqs.ps1" 'bootstrap-dev-env\.ps1' "check-prereqs 提示一键安装脚本"
-  require_contains "scripts/check-prereqs.ps1" 'Get-DeclaredNodeVersion' "check-prereqs 含运行时声明版本读取（阶段 1 声明 vs 实际对比）"
   require_contains "scripts/check-prereqs.ps1" 'major version drift' "check-prereqs 含 Node 主版本漂移告警"
-  require_contains "scripts/check-prereqs.ps1" 'Get-NodeResolutionHint' "check-prereqs 含阶段 2 node 解析路径健康提示"
   require_contains "scripts/check-prereqs.ps1" 'bypassing shim' "check-prereqs 阶段 2 告警提示 Volta image 绕过 shim"
-  require_contains "scripts/check-runtime.ps1" 'Resolve-NodeSource' "check-runtime 含 node 解析来源判定"
   require_contains "scripts/check-runtime.ps1" 'major drift' "check-runtime 含声明 vs 实际主版本漂移判定"
   require_contains "scripts/check-runtime.ps1" 'persistent' "check-runtime 区分会话注入 vs 持久 PATH 污染"
   require_contains "scripts/check-runtime.ps1" 'declaration consistency' "check-runtime 含混合 manager 双声明文件一致性诊断"
@@ -647,7 +649,7 @@ check_project_bootstrap_scripts() {
   require_contains "scripts/bootstrap-dev-env.ps1" 'Git\.Git' "bootstrap 脚本安装 Git for Windows"
   require_contains "scripts/bootstrap-dev-env.ps1" 'GitHub\.cli' "bootstrap 脚本安装 GitHub CLI"
   require_contains "scripts/bootstrap-dev-env.ps1" 'OpenJS\.NodeJS\.LTS' "bootstrap 脚本安装 Node.js LTS"
-  require_contains "scripts/bootstrap-dev-env.ps1" 'Python\.Python\.3\.11' "bootstrap 脚本安装 Python"
+  require_contains "scripts/bootstrap-dev-env.ps1" 'Python\.Python\.3' "bootstrap 脚本安装 Python 3.x"
   require_contains "scripts/bootstrap-dev-env.ps1" 'Microsoft\.VisualStudioCode' "bootstrap 脚本安装 VS Code"
 }
 
@@ -913,13 +915,11 @@ require_contains "README.md" 'SOP\.md' "README 包含 SOP 索引入口"
 require_contains "README.md" 'ai/commands/README\.md' "README 包含 AI 快捷命令入口"
 require_contains "README.md" 'ai/session-rules\.md' "README 包含会话续接规则入口"
 require_contains "README.md" 'scenario-guides' "README 快速开始指向 scenario-guides"
-require_contains "README.md" 'SOP\.md' "README 快速开始指向 SOP"
 require_contains "README.md" 'beginner-guide' "README 快速开始指向 beginner-guide"
 require_contains "README.md" 'git-guide\.md' "README 指向 git-guide"
 require_contains "README.md" 'scripts/check-prereqs\.ps1' "README 提示环境检查"
 require_contains "README.md" 'scripts/bootstrap-dev-env\.ps1' "README 提示基础安装脚本"
 require_contains "README.md" 'template-docs/ai-cli-setup\.md' "README 包含 AI CLI 安装入口"
-require_contains "README.md" 'ai/session-rules\.md' "README 包含会话续接规则入口"
 require_contains "README.md" 'MAINTAINERS\.md' "README 指向 MAINTAINERS"
 require_contains "README.md" 'CHANGELOG\.md' "README 指向 CHANGELOG"
 require_contains "README.md" 'docs/README\.md' "README 指向 docs 分区规则"
