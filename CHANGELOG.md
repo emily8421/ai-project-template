@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.58.3（2026-07-29）
+
+领域模板三层路径路由澄清：承接 issue #276 的 Batch 1，先以 patch 级文档和命令路由方式落地 L1→普通 L3、L1→L2、L2→领域 L3 的路径矩阵；不新增 `domain-derived-scenarios-template.md`，不改同步脚本协议，不实现 `new-project --profile <domain>`。
+
+- **场景矩阵**：`template-docs/scenario-guides.md` 新增三层路径矩阵，并对 A2 / A13 / A15 / A20 / C1-C8 补路径分叉提示。
+- **领域模板职责**：`template-docs/domain-templates.md` 明确每个领域模板必须维护自己的 L2→L3 场景剧本入口，母模板只提供边界和剧本要求。
+- **命令路由**：`domain-template-lab` 命令与 Prompt 将 L2→L3 场景剧本列为领域模板实验线必备规划项；`new-project`、`sync-methodology`、`submit-proposal`、`submit-feedback` 补相邻层边界。
+- **防漂移断言**：`check-template.*` 增加少量稳定关键词断言，锁住三层路径矩阵、L2→L3 剧本入口和命令路由口径。
+
+本版仅澄清路径和职责，不要求普通派生项目迁移；可选骨架文件留作后续 Batch 2 单独评估。
+
 ## v1.58.2（2026-07-29）
 
 token hotspot 本地化边界澄清：承接 issue #275，但按 v1.57.2 后的现状裁剪落地——单条原始记录仍在 `.ai/token-hotspots/`（gitignored，本地不提交），入库路径只保留脱敏汇总 `ai-records/token-hotspots/`。
