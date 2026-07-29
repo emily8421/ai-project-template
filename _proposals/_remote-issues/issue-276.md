@@ -9,6 +9,27 @@
 > Mirrored at: 2026-07-28T17:14:50+08:00
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
+## Local Triage / Implementation Notes
+
+> Local triage updated: 2026-07-29T15:23:21+08:00
+> Remote issue state at triage: OPEN
+
+Batch 1 has landed in the mother template:
+
+- PR: https://github.com/emily8421/ai-project-template/pull/283
+- Merge commit: `894cb2b3b0ae952136df545ff529985603d0de34`
+- Version: `v1.58.3`
+- Scope: three-layer L1/L2/L3 scenario routing, L2-to-L3 playbook requirement, adjacent-layer feedback/proposal routing, and `check-template` assertions.
+- Explicitly not included: `template-docs/domain-derived-scenarios-template.md`, `template-sync.json` changes, sync script protocol changes, or `new-project --profile <domain>`.
+- Validation before merge: `git diff --check`; Markdown clean check; `scripts/check-template.ps1`; `scripts/check-template.sh --summary` (`1908` checks / `0` failures). CI `template-check` passed on PR #283.
+
+Remaining decision notes:
+
+- C1 (`domain-derived-scenarios-template.md`): resolved for Batch 1 as "do not add yet"; keep as future optional candidate only if multiple L2 templates need a reusable skeleton.
+- C2 (L2-to-L3 playbook required asset): resolved in Batch 1 by documenting the requirement in `template-docs/domain-templates.md`, `scenario-guides.md`, `domain-template-lab`, and maintainer prompt checks.
+- C3 (transitional L1 new-project plus L2 overlay): documented as tolerated transitional routing; no script change in this batch.
+- C4 (new A29): resolved as "do not split yet"; routing stays in the matrix and A2/A13/A15/C entries.
+
 ## Raw Issue Body
 
 # TEMPLATE-UPGRADE: scenario-guides 三层路径矩阵与领域派生项目场景
