@@ -1,12 +1,12 @@
 # GitHub Issue #273: TEMPLATE-UPGRADE: 派生项目 changelog 归属与继承参考分离（upstream/ + 大白话版配对）
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/273
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:agent-system-template
 > Author: emily8421
 > Created: 2026-07-27T07:10:43Z
-> Updated: 2026-07-27T07:10:43Z
-> Mirrored at: 2026-07-27T15:42:36+08:00
+> Updated: 2026-07-28T01:11:53Z
+> Mirrored at: 2026-07-28T17:14:50+08:00
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
