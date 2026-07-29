@@ -1,13 +1,32 @@
 # GitHub Issue #285: TEMPLATE-UPGRADE: add domain-derived-scenarios-template for L2-to-L3 playbooks
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/285
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:agent-system-template
 > Author: emily8421
 > Created: 2026-07-29T07:49:37Z
-> Updated: 2026-07-29T07:49:37Z
-> Mirrored at: 2026-07-29T15:54:57+08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Updated: 2026-07-29T08:36:50Z
+> Closed: 2026-07-29T08:36:50Z
+> Mirrored at: 2026-07-29T16:36:50+08:00
+> Mirror status: remote issue closed as implemented; GitHub issue remains source of comments and closure state.
+
+## Local Triage / Implementation Notes
+
+> Local triage updated: 2026-07-29T16:36:50+08:00
+> Remote issue state at triage: CLOSED
+
+Implemented by PR #287:
+
+- PR: https://github.com/emily8421/ai-project-template/pull/287
+- Merge commit: `08f389ed11f0ea1cd7fe93a1f8383e26b5ea1358`
+- Version: `v1.59.0`
+- Scope: added syncable `template-docs/domain-derived-scenarios-template.md`, wired domain-template docs / scenario guides / `domain-template-lab` command and Prompt, updated `template-sync.json`, Bash fallback list, and `check-template.*` assertions.
+- Explicitly not included: `new-project --profile <domain>`, mother-template sync protocol changes, multi-level sync automation, or any domain-specific scaffold content.
+- Validation before merge: `git diff --check`; Markdown clean check; `scripts/check-template.ps1`; `scripts/check-template.sh --summary` (`1922` checks / `0` failures). CI `template-check` passed on PR #287.
+
+Closure source:
+
+- #285 was auto-closed by PR #287 at 2026-07-29T08:36:50Z.
 
 ## Raw Issue Body
 
