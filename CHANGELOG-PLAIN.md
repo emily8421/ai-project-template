@@ -13,6 +13,7 @@
 - 能长期复用的脱敏汇总才放 `ai-records/token-hotspots/` 入库；不是把所有原始记录都提交。
 - `MAINTAINERS.md` 和 `rd-data-chain` 现在把这两类路径拆清楚，避免看到 `ai-records` 就误以为 token hotspot 原始记录也该提交。
 - 自检脚本补了很窄的断言：只锁路径边界，不检查每条本地 hotspot 内容。
+- 顺手修了 CI 里 `check-template.sh` 读取 changelog 顶部版本时可能因为 `grep | head` Broken pipe 误失败的问题。
 
 这次没有采用 issue #275 里“忽略 `ai-records/token-hotspots/*.md`”的旧建议，因为当前机制已经改成 `.ai/token-hotspots/` 存单条、`ai-records/token-hotspots/` 存 summary。
 

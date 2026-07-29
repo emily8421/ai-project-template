@@ -13,6 +13,7 @@ token hotspot 本地化边界澄清：承接 issue #275，但按 v1.57.2 后的�
 - **路径口径防漂移**：`scripts/check-template.sh` / `.ps1` 增加断言，锁住 `.gitignore` 必须忽略 `.ai/token-hotspots/`，且 `session-rules` 必须同时声明单条本地路径与入库 summary 路径。
 - **维护者 checklist 澄清**：`MAINTAINERS.md` 将 `_proposals/` 与 `ai-records/` 的 markdown clean 口径收窄为“准备提交的正式记录”，明确 `.ai/token-hotspots/` 不作为提交内容。
 - **研发数据链澄清**：`template-docs/rd-data-chain.md` 明确单条 `.ai/token-hotspots/` 是 local-only meta，只有提炼后的 `ai-records/token-hotspots/` summary 可入库；自检门禁只守路径边界，不校验单条记录内容。
+- **CI 稳定性**：`check-template.sh` 取 changelog 顶部版本时不再使用 `grep | head` 管道，避免 Ubuntu CI 在 `pipefail` 下因 Broken pipe 误失败。
 
 不采纳 issue #275 原文中“忽略 `ai-records/token-hotspots/*.md`”的旧路径建议，避免误伤已入库的 summary 机制；不改同步协议、不要求派生项目迁移。
 

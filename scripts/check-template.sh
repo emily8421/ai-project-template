@@ -225,7 +225,14 @@ require_changelog_current_version() {
   require_contains "CHANGELOG.md" "^## ${version//./\\.}（" "CHANGELOG 包含当前 VERSION: $version"
 
   local first_version
-  first_version="$(grep -E '^## v[0-9]+\.[0-9]+\.[0-9]+（' CHANGELOG.md | head -n 1 | sed -E 's/^## (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')"
+  local changelog_line
+  first_version=""
+  while IFS= read -r changelog_line; do
+    if [[ "$changelog_line" =~ ^##[[:space:]]+(v[0-9]+\.[0-9]+\.[0-9]+) ]]; then
+      first_version="${BASH_REMATCH[1]}"
+      break
+    fi
+  done < CHANGELOG.md
   if [[ "$first_version" == "$version" ]]; then
     pass "CHANGELOG 最新三段式版本位于顶部: $version"
   else
