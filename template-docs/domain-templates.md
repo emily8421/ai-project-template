@@ -84,7 +84,7 @@ Web App scaffold 也不自动等于领域模板。复杂 Web / 全栈交互项�
 template-docs/<domain>/domain-derived-scenarios.md
 ```
 
-母模板只提供三层边界、初始化要求和检查口径；不承载 agent / OCR / IoT 等具体领域派生项目的创建、同步、整理、自检、回流和发布后下游同步细节。领域派生项目应从对应领域模板读取该剧本，而不是要求母模板脚本直接处理领域 overlay。
+母模板提供通用骨架 `template-docs/domain-derived-scenarios-template.md`，领域模板可复制为上面的入口后再填入领域事实、领域脚本和领域自检项。母模板仍只提供三层边界、初始化要求和检查口径；不承载 agent / OCR / IoT 等具体领域派生项目的创建、同步、整理、自检、回流和发布后下游同步细节。领域派生项目应从对应领域模板读取该剧本，而不是要求母模板脚本直接处理领域 overlay。
 
 该剧本最少覆盖：
 
