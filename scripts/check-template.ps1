@@ -16,6 +16,50 @@ Notes:
 #>
 $ErrorActionPreference = "Stop"
 
+function Repair-ProcessPathEnvironment {
+  $vars = [Environment]::GetEnvironmentVariables("Process")
+  $pathKeys = @()
+  foreach ($key in $vars.Keys) {
+    if ([string]::Equals([string]$key, "Path", [StringComparison]::OrdinalIgnoreCase)) {
+      $pathKeys += [string]$key
+    }
+  }
+  if ($pathKeys.Count -le 1) { return }
+
+  $orderedKeys = @()
+  foreach ($key in $pathKeys) {
+    if ($key -ceq "Path") { $orderedKeys += $key }
+  }
+  foreach ($key in $pathKeys) {
+    if ($key -cne "Path") { $orderedKeys += $key }
+  }
+
+  $separator = [string][System.IO.Path]::PathSeparator
+  $seen = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  $parts = New-Object 'System.Collections.Generic.List[string]'
+  foreach ($key in $orderedKeys) {
+    $value = [Environment]::GetEnvironmentVariable($key, "Process")
+    if ([string]::IsNullOrWhiteSpace($value)) { continue }
+    foreach ($part in ([string]$value -split [regex]::Escape($separator))) {
+      if ([string]::IsNullOrWhiteSpace($part)) { continue }
+      if ($seen.Add($part)) {
+        $parts.Add($part) | Out-Null
+      }
+    }
+  }
+
+  foreach ($key in $pathKeys) {
+    if ($key -cne "Path") {
+      [Environment]::SetEnvironmentVariable($key, $null, "Process")
+    }
+  }
+  if ($parts.Count -gt 0) {
+    [Environment]::SetEnvironmentVariable("Path", [string]::Join($separator, $parts), "Process")
+  }
+}
+
+Repair-ProcessPathEnvironment
+
 function Find-TemplateBash {
   $programFilesX86 = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
   $candidates = @($env:GIT_BASH)
@@ -263,6 +307,10 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "scripts/sync-template.ps1" 'Write-UpstreamChangelogReference' "sync-template PowerShell fallback generates upstream changelog references"
   Require-Contains "scripts/check-derived-sync.sh" 'upstream/CHANGELOG\.md\|upstream/CHANGELOG-PLAIN\.md' "check-derived-sync Bash allows only upstream changelog references"
   Require-Contains "scripts/check-derived-sync.ps1" 'upstream/CHANGELOG-PLAIN\.md' "check-derived-sync PowerShell fallback allows upstream changelog references"
+  Require-Contains "scripts/check-template.ps1" 'Repair-ProcessPathEnvironment' "check-template PowerShell repairs duplicate PATH keys"
+  Require-Contains "scripts/sync-template.ps1" 'Repair-ProcessPathEnvironment' "sync-template PowerShell repairs duplicate PATH keys"
+  Require-Contains "scripts/check-derived-sync.ps1" 'Repair-ProcessPathEnvironment' "check-derived-sync PowerShell repairs duplicate PATH keys"
+  Require-Contains "template-docs/remote-ci-sop-profile.md" 'Invoke-WebRequest' "Remote / CI profile recommends raw REST JSON on Windows"
   Require-Contains "scripts/new-project.sh" 'CHANGELOG-PLAIN\.md' "new-project initializes project-owned CHANGELOG-PLAIN.md"
   Require-Contains ".gitignore" '\.ai/token-hotspots/' ".gitignore excludes local token hotspot records"
   Require-Contains "ai/session-rules.md" '\.ai/token-hotspots/' "session-rules defines local token hotspot path"

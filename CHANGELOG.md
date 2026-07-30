@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.59.1（2026-07-30）
+
+Windows PowerShell wrapper 兼容性修复：承接 issue #293，三个会通过 `Start-Process` 拉起 Git Bash / Git 的 PowerShell 入口先归一化当前进程内重复的 `Path` / `PATH` 环境变量键，避免子进程环境构造在真正执行检查前失败。
+
+- **wrapper 修复**：`scripts/check-template.ps1`、`scripts/sync-template.ps1`、`scripts/check-derived-sync.ps1` 在启动前运行 `Repair-ProcessPathEnvironment`，只修 Process scope，不写 User / Machine 环境变量。
+- **行为边界**：保留 canonical `Path`，合并可用 PATH 片段后删除重复大小写变体；不改变 Bash 主路径、同步清单、保护文件策略或默认输出语义。
+- **远端查询 SOP**：`remote-ci-sop-profile` 记录 Windows PowerShell / AI CLI 包装层中复杂 `gh --jq` / `gh --template` 可能被拆词，稳定只读复核优先用 GitHub REST API + `Invoke-WebRequest` 原始 JSON。
+- **防漂移断言**：`check-template.*` 增加稳定关键词断言，锁住三个 PowerShell wrapper 的 PATH 修复 helper 与 Remote / CI Profile 的 REST JSON 建议。
+
+本版是 patch 级兼容性修复，不要求派生项目迁移；重复 PATH 环境下的失败从 PowerShell 子进程启动阶段回到原脚本逻辑。
+
 ## v1.59.0（2026-07-29）
 
 领域派生项目 L2→L3 剧本模板：承接 issue #285，新增可下行同步的 `template-docs/domain-derived-scenarios-template.md`，为领域模板提供通用剧本骨架。
