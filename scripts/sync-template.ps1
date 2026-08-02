@@ -23,6 +23,50 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Repair-ProcessPathEnvironment {
+  $vars = [Environment]::GetEnvironmentVariables("Process")
+  $pathKeys = @()
+  foreach ($key in $vars.Keys) {
+    if ([string]::Equals([string]$key, "Path", [StringComparison]::OrdinalIgnoreCase)) {
+      $pathKeys += [string]$key
+    }
+  }
+  if ($pathKeys.Count -le 1) { return }
+
+  $orderedKeys = @()
+  foreach ($key in $pathKeys) {
+    if ($key -ceq "Path") { $orderedKeys += $key }
+  }
+  foreach ($key in $pathKeys) {
+    if ($key -cne "Path") { $orderedKeys += $key }
+  }
+
+  $separator = [string][System.IO.Path]::PathSeparator
+  $seen = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  $parts = New-Object 'System.Collections.Generic.List[string]'
+  foreach ($key in $orderedKeys) {
+    $value = [Environment]::GetEnvironmentVariable($key, "Process")
+    if ([string]::IsNullOrWhiteSpace($value)) { continue }
+    foreach ($part in ([string]$value -split [regex]::Escape($separator))) {
+      if ([string]::IsNullOrWhiteSpace($part)) { continue }
+      if ($seen.Add($part)) {
+        $parts.Add($part) | Out-Null
+      }
+    }
+  }
+
+  foreach ($key in $pathKeys) {
+    if ($key -cne "Path") {
+      [Environment]::SetEnvironmentVariable($key, $null, "Process")
+    }
+  }
+  if ($parts.Count -gt 0) {
+    [Environment]::SetEnvironmentVariable("Path", [string]::Join($separator, $parts), "Process")
+  }
+}
+
+Repair-ProcessPathEnvironment
+
 function Find-TemplateBash {
   $programFilesX86 = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
   $candidates = @($env:GIT_BASH)
