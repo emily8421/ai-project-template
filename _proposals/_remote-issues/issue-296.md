@@ -1,24 +1,25 @@
 # GitHub Issue #296: TEMPLATE-UPGRADE: PowerShell Start-Process Path Normalization
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/296
-> State: OPEN
+> State: CLOSED
 > Labels: proposal, from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-08-01T08:35:17Z
-> Updated: 2026-08-01T08:35:17Z
+> Updated: 2026-08-02T08:01:17Z
 > Mirrored at: 2026-08-01T23:02:20+08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: remote issue closed as implemented; GitHub issue remains source of comments and closure state.
 
 ## Local Triage / Implementation Notes
 
 > Local triage updated: 2026-08-02
-> Remote issue state at triage: OPEN
+> Remote issue state at triage: CLOSED
 
 C1 dedup decision (2026-08-02):
 
 - Core ask (normalize duplicate `Path` / `PATH` before `Start-Process`) is a **duplicate of #293**, already absorbed by PR #295 (squash merge `360ba54a`, v1.59.1) via `Repair-ProcessPathEnvironment`. The `Normalize-ProcessPathEnvironment` name suggested here is the same logic; the shipped helper is `Repair-ProcessPathEnvironment`.
-- **Residual scope not covered by #295**, tracked as v1.59.2 patch (A2 batch): (a) default `-WindowStyle Hidden` for background `Start-Process` launches in the wrapper scripts; (b) Windows notes in `template-docs/demo-runbook-template.md` or `ai/commands/show-demo.md` (Path/PATH duplication + AI-executor child-process reclamation).
-- Issue remains OPEN until A2 lands and closes it.
+- **Residual scope not covered by #295**, landed via PR #298 (squash merge `752c7e5`, v1.59.2): documentation note in `template-docs/demo-runbook-template.md` §4 + `ai/commands/show-demo.md` pointer, covering Path/PATH normalization (reuse `Repair-ProcessPathEnvironment`), `-WindowStyle Hidden` for background launches, and AI-executor child-process reclamation.
+- **Scope finding**: `-WindowStyle Hidden` does NOT apply to the mother-template wrappers (they use `-NoNewWindow -Wait`, mutually exclusive with `-WindowStyle`); the guidance targets derived project demo scripts instead.
+- Issue CLOSED 2026-08-02T08:01:17Z (auto-closed by PR #298 "Closes #296"; closing comment posted on GitHub).
 
 ## Raw Issue Body
 
