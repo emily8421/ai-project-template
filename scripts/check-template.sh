@@ -1656,6 +1656,8 @@ require_contains "template-docs/demo-runbook-template.md" '不替代' "demo-runb
 require_contains "template-docs/demo-runbook-template.md" 'identity marker' "demo-runbook 模板包含页面身份标记"
 require_contains "template-docs/demo-runbook-template.md" 'local-demo-runtime\.json' "demo-runbook 模板包含运行状态文件忽略口径"
 require_contains "template-docs/demo-runbook-template.md" '默认端口只是示例' "demo-runbook 模板区分默认端口和实际入口"
+require_contains "template-docs/demo-runbook-template.md" 'Repair-ProcessPathEnvironment' "demo-runbook 模板含 Windows Path/PATH 归一化复用指引（#296）"
+require_contains "template-docs/demo-runbook-template.md" 'WindowStyle Hidden' "demo-runbook 模板含 Windows 后台启动 -WindowStyle Hidden 指引（#296）"
 require_contains "ai/commands/README.md" 'show-demo' "命令索引收录 show-demo"
 require_contains "docs/README.md" 'local-demo-runbook' "docs README 记录 demo runbook 默认路径"
 require_contains "template-sync.json" 'ai/commands/show-demo\.md' "同步清单包含 show-demo 命令"
