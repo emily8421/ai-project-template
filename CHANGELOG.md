@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.59.2（2026-08-02）
+
+Demo 启动脚本 Windows 注意事项：承接 issue #296，在 `template-docs/demo-runbook-template.md` 补一段 Windows 启动脚本指导，覆盖 PowerShell `Start-Process` 的三类常见坑。
+
+- **Path / PATH 归一化**：项目 demo 脚本用 `Start-Process` 前应归一化进程内重复的 `Path` / `PATH` 键，复用母模板 wrapper 的 `Repair-ProcessPathEnvironment` 套路。
+- **后台启动窗口**：后台拉服务用 `-WindowStyle Hidden` 避免弹控制台窗口；明确 `-WindowStyle Hidden` 与 `-NoNewWindow` 互斥，后者适用于同步等待、无窗口的子进程（母模板 wrapper 用 `-NoNewWindow -Wait`，无需 `-WindowStyle`）。
+- **进程生命周期**：AI 执行器可能在命令结束时回收子进程，后台服务应写运行状态文件（`.ai/local-demo-runtime.json`）并提供显式 stop 命令；`show-demo` 命令补交叉指针。
+- **防漂移断言**：`check-template.sh` 增加稳定关键词断言，锁住 `Repair-ProcessPathEnvironment` 与 `-WindowStyle Hidden` 指引。
+
+本版是 patch 级文档澄清，不改脚本逻辑、不改同步清单范围，不要求派生项目迁移；#296 核心由 v1.59.1（#295）吸收，本版落地残余的 demo 脚本指导并关闭 #296。
+
 ## v1.59.1（2026-07-30）
 
 Windows PowerShell wrapper 兼容性修复：承接 issue #293，三个会通过 `Start-Process` 拉起 Git Bash / Git 的 PowerShell 入口先归一化当前进程内重复的 `Path` / `PATH` 环境变量键，避免子进程环境构造在真正执行检查前失败。

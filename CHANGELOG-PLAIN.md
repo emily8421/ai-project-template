@@ -5,6 +5,17 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.59.2（2026-08-02）
+
+给“项目自己写的 demo 启动脚本”补了一段 Windows 注意事项（承接 issue #296）。
+
+- 用 PowerShell 的 `Start-Process` 启动本地服务前，先清理进程里重复的 `Path` / `PATH` 键，复用模板脚本里 `Repair-ProcessPathEnvironment` 的做法。
+- 后台拉服务时用 `-WindowStyle Hidden` 别弹控制台窗口；说清楚它和 `-NoNewWindow` 不能一起用（模板自己的脚本是 `-NoNewWindow -Wait` 同步跑，不需要这个）。
+- 注意 AI 执行器可能在命令结束时把子进程收掉，所以后台服务要写运行状态文件、给一个显式 stop 命令。
+- 自检加了关键词断言，防止这段指导以后被同步悄悄删掉。
+
+这是 patch 级文档说明，不改脚本逻辑；#296 的核心修复在 v1.59.1 已经做了，这版把剩下给 demo 脚本的指导补齐并关闭 #296。
+
 ## v1.59.1（2026-07-30）
 
 修了 Windows PowerShell wrapper 在重复 `Path` / `PATH` 环境下还没开始跑脚本就失败的问题。
