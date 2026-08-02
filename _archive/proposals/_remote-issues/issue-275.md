@@ -7,7 +7,19 @@
 > Created: 2026-07-27T13:11:26Z
 > Updated: 2026-07-29T03:41:16Z
 > Mirrored at: 2026-07-29T11:47:43+08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: remote issue closed as implemented; GitHub issue remains source of comments and closure state.
+
+## Local Triage / Implementation Notes
+
+> Local triage updated: 2026-08-02
+> Remote issue state at triage: CLOSED
+
+经设计演进取代（意图由另一种机制满足）：
+
+- 原诉求：`.gitignore` 应忽略 `ai-records/token-hotspots/*.md`。
+- 实际落地：`ai/session-rules.md` §4.1 路径分层（v1.57.2 起）把 token-hotspot 记录拆成两条路径 —— 本地原始记录移到 `.ai/token-hotspots/`（由 `.gitignore:30` 忽略），而 `ai-records/token-hotspots/` 故意保留为可入库的 `SUMMARY.md` rollup 目录。
+- 净效果：原意图（本地 hotspot 记录不进 Git 历史）已满足；若按原诉求忽略 `ai-records/token-hotspots/*.md`，现在反而是错的（会挡住可入库的 SUMMARY）。
+- 2026-08-02（C 批）从 `_proposals/_remote-issues/` 归档。
 
 ## Raw Issue Body
 

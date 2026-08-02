@@ -7,7 +7,19 @@
 > Created: 2026-07-27T07:10:43Z
 > Updated: 2026-07-28T01:11:53Z
 > Mirrored at: 2026-07-28T17:14:50+08:00
-> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+> Mirror status: remote issue closed as implemented; GitHub issue remains source of comments and closure state.
+
+## Local Triage / Implementation Notes
+
+> Local triage updated: 2026-08-02
+> Remote issue state at triage: CLOSED
+
+Implemented across two mother-template releases:
+
+- **v1.57.4（2026-07-27）— 归属修复**：`sync-template.*` 的 `--preserve-project-version` / `--domain-template` 保留清单扩展为过滤 `CHANGELOG-PLAIN.md`；`new-project.sh` 初始化项目自有 `CHANGELOG-PLAIN.md`（v0.1.0）；存量派生项目非阻断迁移提示。（承接 `TEMPLATE-UPGRADE-derived-changelog-ownership.md` Batch 1 / #273 归属修复部分。）
+- **v1.58.0（2026-07-27）— upstream/ 继承参考**：母模板 changelog 对映射到派生 `upstream/CHANGELOG.md` + `upstream/CHANGELOG-PLAIN.md`；`check-derived-sync.*` 仅放行这两个映射文件并校验定位说明；模板说明文档与 `check-template.*` 断言同步更新。
+- 当前代码已核实活跃：`sync-template.sh:109/284`（CHANGELOG-PLAIN 保留）、`:370/422`（upstream 映射）、`check-derived-sync.sh:199-203`（upstream 断言）、`template-sync.json:7`。
+- 2026-08-02（C 批）从 `_proposals/_remote-issues/` 归档。
 
 ## Raw Issue Body
 
