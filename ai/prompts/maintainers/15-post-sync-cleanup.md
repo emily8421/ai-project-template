@@ -86,7 +86,7 @@
    - 检查初始化必填检查是否包含：`docs/README.md` 分区规则、不得把新增项目文档直接放到 `docs/` 根目录。
    - 检查 §2.5 是否引用 `docs/env/local-env.md`，并保留待人工确认项。
    - 检查 §3 是否明确 `docs/06`、`docs/07`、`frontend/`、`backend/`、`tests/`、`scripts/`、`docker/` 的保留 / 省略 / 删除决策。
-   - 不要把模板方法论长文复制进 project-rules；只补项目专属约束和裁剪决策。
+   - `ai/project-rules.md` 字段规范基线在 `ai/doc-standards/project-rules.md`（随模板同步刷新）；审计实例时对照规范基线，只补项目专属约束和裁剪决策，不把模板方法论长文复制进实例。
    - 审计版本机制启用状态：检查 `ai/project-rules.md` 是否含「项目版本管理」规则（辅信号，对应 §2.8 的 PATCH/MINOR/MAJOR 语义），以及 `.github/workflows/project-check.yml` 是否含「Check project version consistency」校验（主信号，防 VERSION↔CHANGELOG 漂移）。
      - 双信号都在：版本机制已启用，无需迁移。
      - 仅辅信号在（project-rules 有规则但 project-check.yml 缺校验）：建议补 CI 版本校验。

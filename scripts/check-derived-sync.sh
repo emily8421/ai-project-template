@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
 # check-derived-sync.sh — 检查派生项目最近一次模板同步提交是否越过同步边界
 #
 # 用法（在派生项目根目录执行）:

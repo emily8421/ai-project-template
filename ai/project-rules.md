@@ -1,8 +1,10 @@
 # 项目专属规则
 
-> 本文件每个新项目都需要重新填写，不参与跨项目同步。
+> 本文件是项目专属规则的**种子实例**（不参与跨项目同步）。字段规范、填写要求、审计项与禁止项的
+> 单一事实源在 `ai/doc-standards/project-rules.md`（规范基线，随模板同步）；生成 / 审计 / 精修本文件时对照规范基线。规则分层原则见 `ai/global-rules.md` §5。
+>
 > 判断标准：一条规则换到另一个完全不同的项目上是否还成立——
-> 不成立（涉及具体技术栈/具体功能/具体Phase定义）就属于本文件。
+> 不成立（涉及具体技术栈/具体功能/具体Phase定义）就属于本文件（实例）；成立属规范基线或通用层。
 >
 > 填写时机：§1 Phase边界、§2 技术栈、§3 项目形态与文档裁剪在生成 docs/03-09 **之前**填
 > （作为约束）；§4 目录特例、§5 编码约定与禁区在审核 03-09 **之后**补。
@@ -46,7 +48,7 @@
 
 ## 2.5 运行环境与资源约束
 
-> 本节用于约束架构与技术方案选择。Demo / MVP 阶段优先保证本机可运行；若本机资源不足，必须在 `docs/05-tech-spec.md` 中明确降级策略或服务器资源预案。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.5（约束架构与技术方案选择；Demo / MVP 优先本机可运行，资源不足须在 `docs/05-tech-spec.md` 写降级策略或服务器预案；`docs/env/local-env.md` 只记录本机事实，不等于技术路线已被环境支撑）。
 
 - 本机环境文档：`docs/env/local-env.md`（由 `scripts/collect-env.ps1` 生成，人工补充确认项）
 - 技术环境评估报告：需要 / 不需要 / 豁免（若需要，推荐 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`；若豁免，说明原因、风险和补做时点）
@@ -56,18 +58,16 @@
 - 是否允许使用公司服务器：待确认
 - 若需服务器，资源申请口径：待确认
 
-说明：`docs/env/local-env.md` 只记录本机事实，不等于技术路线已被环境支撑。若项目保留 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API 或其他真实运行依赖，生成 / 修订 `docs/05-tech-spec.md` 或进入首个相关编码 Sprint 前，应完成技术路线与环境支撑评估，或在本节记录跳过理由、风险、影响范围和补做时点。
-
 ## 2.6 图表格式偏好
 
-> 本项目设计文档（04/05/06/07/`docs/design`）的图表格式偏好。规范见 `ai/document-lifecycle-rules.md §13`，场景引导见 `template-docs/scenario-guides.md §7`。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.6；图表格式规范见 `ai/document-lifecycle-rules.md` §13，场景引导见 `template-docs/scenario-guides.md` §7。
 
 - 图表格式：`mermaid`（默认）/ `plantuml`
 - 若选 mermaid 以外格式，说明原因（如团队工具链、渲染环境）
 
 ## 2.7 UI 原型策略（如适用）
 
-> 本节用于 UI 型项目在前端实现前选择可视化原型策略。触发与边界见 `ai/document-lifecycle-rules.md §5.3`。原型只作为已授权需求的可视化证据，不是需求权威源，不得新增未授权需求、接口、权限行为或验收目标。
+> 字段规范与触发边界见 `ai/doc-standards/project-rules.md` §4 §2.7（触发与边界见 `ai/document-lifecycle-rules.md` §5.3；原型只作为已授权需求的可视化证据，不是需求权威源）。
 
 - 是否涉及可点击 UI：是 / 否
 - 是否需要开发前可视化原型：需要 / 不需要 / 豁免
@@ -79,19 +79,11 @@
 
 ## 2.8 项目版本管理
 
-默认规则（可按项目交付节奏覆盖，但必须在本节写明）：
-
-- 初始项目版本：`v0.1.0`。
-- `VERSION` 记录项目自有版本；继承 / 当前同步到的模板版本记录在 `TEMPLATE-BASE.md`。
-- `CHANGELOG.md` 顶部第一个 `## vX.Y.Z（...）` 项目版本必须等于 `VERSION`。
-- `PATCH`：bug 修复、文档 / 配置 / 重构，不新增可演示能力、不破坏对外契约。
-- `MINOR`：可感知的能力增强或里程碑交付，向后兼容。
-- `MAJOR`：不兼容变更、对外契约破坏、首上线。
-- 是否使用 git tag / GitHub Release：（待确认；默认不强制）
+默认从 `v0.1.0` 起步，并保持 `VERSION` 与 `CHANGELOG.md` 顶部项目版本一致；`VERSION` / `CHANGELOG.md` / `TEMPLATE-BASE.md` 关系与 `PATCH` / `MINOR` / `MAJOR` 规则见 `ai/doc-standards/project-rules.md` §4 §2.8。可按项目交付节奏覆盖默认规则，但必须在本节写明；是否使用 git tag / GitHub Release：（待确认；默认不强制）。
 
 ## 2.9 运行时版本锁定
 
-> 本节约束语言 / 运行时版本与切换工具，与 §2.5「运行环境与资源约束」（硬件资源：CPU / 内存 / GPU / 磁盘）正交：§2.5 管“机器跑得动吗”，§2.9 管“用哪个 Node / Python 版本、怎么切换、CI 怎么校验”。工具推荐与声明文件标准见 `template-docs/env-setup.md`「运行时版本管理」；声明落点在 `docs/05-tech-spec.md` §1 / §1.1。运行时健康深度诊断（解析路径 / manager / 声明 vs 实际漂移）见 `scripts/check-runtime.ps1`，输出语义见 `template-docs/env-setup.md` §6「运行时健康检测」。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.9（与 §2.5 运行环境与资源约束正交：§2.5 管硬件资源，§2.9 管运行时版本与切换工具；工具推荐见 `template-docs/env-setup.md`「运行时版本管理」；声明落点 `docs/05-tech-spec.md` §1）。
 
 - 是否启用运行时版本锁定：是 / 否 / 豁免
 - 锁定的运行时与版本：（如 Node 16.13.0 / Python 3.11 / 多运行时）
@@ -117,19 +109,7 @@
 - docs/07-api-spec.md：保留 / 省略
 - 需要保留的代码目录：（如 frontend/ backend/ tests/ scripts/ docker/；不用的目录可删除）
 
-按项目形态裁剪说明（不适用的行可删除）：
-- 无持久化存储 → `docs/06-db-design.md` 省略
-- 浏览器端 localStorage / IndexedDB / sessionStorage 等非数据库存储 → 不触发 `docs/06-db-design.md`，其数据结构写在 `docs/05-tech-spec.md`
-- 无对外接口（纯内部库、纯计算模块） → `docs/07-api-spec.md` 省略
-- CLI / 本地脚本 → `docs/07-api-spec.md` 保留，但用于描述命令/参数/输出契约，不强求 RESTful
-- 演示形态为消息通道内交互 / CLI / 不需演示 → 通常不启用 `frontend/`；独立 Web 页面 / 移动端 / 小程序 / 桌面端 → 通常启用对应前端目录，并在 `docs/04-05` 体现前端设计
-- 非平凡子系统、复杂权限 / 安全边界、AI / RAG / 外部模型、第三方服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异、候选 / 默认关闭 / 高风险愿景能力 → 开发前应补充 `docs/design/<subsystem>.md`，并按 `ai/doc-standards/design-doc.md` 保留元信息、追溯、readiness gate、验收追溯、实现偏差 / 设计回写和待确认项；简单项目可豁免，但必须写明理由
-- 若存在多页面、多角色、复杂表单、状态流、管理页、搜索 / 问答 UI、验收依赖点击路径，或愿景 / PRD 出现“页面 / 界面 / 点击 / 手机 / Web / App / 小程序”等交互信号 → 开发前应补充 `docs/design/frontend-interaction.md` 或按入口拆分的 `docs/design/*interaction*.md`；不补时必须在本节或 `docs/05-tech-spec.md` 写明豁免理由
-- 前端交互设计是 `docs/design/*` 的页面 / 交互型子类型，只细化既有需求的界面呈现、状态、文案、接口依赖和验收路径；不得新增需求、接口或验收目标；前端隐藏 / 禁用 / 路由守卫不是权限边界，权限必须由后端接口和服务层执行
-- 满足前端交互设计触发条件，且用户需实现前预览界面、页面信息密度高、主流程依赖点击验收、存在加载 / 空态 / 错误 / 禁用 / 成功 / 无权限 / 降级 / 风险提示等多状态、多角色 / 多租户 / 权限可见性，或 Demo / Mock / 降级能力需要界面可见口径 → 开发前应在 §2.7、`docs/05-tech-spec.md` 或 `docs/design/frontend-interaction.md` 选择 UI 原型策略；不需要时必须写明豁免理由
-- UI 原型策略可选择 Figma / Penpot / Balsamiq / Axure / Storybook / 代码原型 / 截图标注 / 其他；工程驱动项目可优先代码原型 + Mock 数据 + 截图 / smoke 证据；不强制所有项目使用 Figma 或高保真设计
-- 原型不得替代 `00-09`、不得替代前端交互设计或 `09` 验收；原型发现的新需求、接口、权限规则或验收目标必须回到正式文档链路修订
-- frontend/ backend/ tests/ scripts/ docker/ 只保留本项目用得到的目录
+按项目形态裁剪规则（docs/06 / 07 何时省略、`frontend/` 启用条件、详细设计 / 前端交互 / UI 原型触发条件、目录裁剪等）见 `ai/doc-standards/project-rules.md` §4 §3；本节裁剪决策须与 `docs/00-09` 实际结构一致，省略项留下说明，不适用的裁剪行可删除。
 
 ## 4. 目录规范的项目特例
 
@@ -138,7 +118,7 @@
 
 ## 5. 编码约定与禁区
 
-> Phase 级功能禁止见 §1，技术栈替代品禁止见 §2，本节只管代码层。
+> Phase 级功能禁止见 §1，技术栈替代品禁止见 §2，本节只管代码层。字段规范见 `ai/doc-standards/project-rules.md` §4 §5。
 > 每条尽量具体可执行；没有则写“无”，不要留空占位。
 
 ### 5.1 既有约定（新代码必须向其看齐）
@@ -155,9 +135,4 @@
 
 ## 6. AI修改确认规则
 
-- AI在进行任何文件新增、修改、删除、重命名、格式化、批量替换前，必须先说明目的、影响范围、预计文件、预计变更摘要、风险与验证方式，并等待用户明确确认后再执行。
-- AI在运行任何可能写入文件、安装依赖、生成构建产物、修改配置、提交代码或改变项目状态的命令前，必须先询问用户确认。
-- 若一次 patch / 批量操作涉及多个文件，必须先列出全部文件和每个文件的变更摘要；不得用“批量优化”等模糊表述替代。
-- 只读分析操作（如读取文件、搜索代码、查看 Git 状态）无需逐次确认，但不得借只读分析之名修改项目内容。
-- 用户在单次消息中明确要求“直接修改”“执行修复”“不必确认”等同类授权时，仅对该次明确任务和已说明范围生效；后续新任务仍默认先确认再修改。
-- 模板只能约束 AI 行为和项目期望，不能替代 Claude / Codex / Cursor 等工具自身的权限模型；建议在 AI CLI / IDE 中启用写入前确认、patch 预览或审批模式，并用 `git status` / `git diff` 做兜底审计。
+AI 修改确认规则（写入前说明目的 / 影响范围 / **预计文件** / 预计变更摘要 / 风险与验证方式；批量操作先列全部文件与每文件变更摘要；只读分析无需逐次确认但不借只读之名修改；单次授权仅限该次任务；**模板只能约束 AI 行为和项目期望**，不能替代工具权限模型，建议启用写入前确认 / patch 预览并用 `git status` / `git diff` 兜底）见 `ai/doc-standards/project-rules.md` §5。

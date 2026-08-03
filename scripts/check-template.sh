@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
 # check-template.sh — 检查 ai-project-template 的关键入口、文档骨架与同步清单是否自洽
 #
 # 用法:
@@ -211,8 +212,10 @@ require_sync_notice() {
   local sync_file
   while IFS= read -r sync_file; do
     [[ -n "$sync_file" ]] || continue
+    # VERSION 是纯版本号（程序读取），无法内嵌 notice；其“会被覆盖”语义由 template-sync.json description 承载。
+    [[ "$sync_file" == "VERSION" ]] && continue
     case "$sync_file" in
-      *.md)
+      *.md|*.mdc|*.sh|*.ps1)
         require_contains "$sync_file" 'Sync notice' "$sync_file 包含同步覆盖说明"
         ;;
     esac
@@ -1181,6 +1184,17 @@ require_contains "ai/project-rules.md" '切换工具' "project-rules §2.9 标�
 require_contains "ai/project-rules.md" '豁免理由' "project-rules §2.9 含豁免理由字段"
 require_contains "ai/project-rules.md" 'docs/05-tech-spec\.md' "project-rules §2.9 指向 05-tech-spec 声明落点"
 require_contains "ai/doc-standards/05-tech-spec.md" '运行时版本锁定' "05 技术方案标准纳入运行时版本锁定维度"
+# project-rules 字段规范分层（v1.59.3）：规范长文上移到 doc-standards/project-rules.md（规范基线，同步），
+# 种子 ai/project-rules.md 瘦身为填写骨架 + 指向行（实例，不同步）。规范源断言锁定 standards 为字段规范单一事实源。
+require_contains "ai/doc-standards/project-rules.md" '规范基线' "project-rules standards 声明规范基线定位"
+require_contains "ai/doc-standards/project-rules.md" '§2\.8 项目版本管理' "project-rules standards 含 §2.8 版本管理规范"
+require_contains "ai/doc-standards/project-rules.md" '§2\.9 运行时版本锁定' "project-rules standards 含 §2.9 运行时版本锁定规范"
+require_contains "ai/doc-standards/project-rules.md" '版本声明文件' "project-rules standards §2.9 标明版本声明文件字段"
+require_contains "ai/doc-standards/project-rules.md" '切换工具' "project-rules standards §2.9 标明切换工具字段"
+require_contains "ai/doc-standards/project-rules.md" 'AI 修改确认规则' "project-rules standards 含 AI 修改确认规则规范"
+require_contains "ai/project-rules.md" 'ai/doc-standards/project-rules\.md' "project-rules 实例指向规范基线"
+require_contains "ai/global-rules.md" '规则分层原则' "global-rules 含规则分层原则小节"
+require_contains "ai/global-rules.md" 'ai/doc-standards/project-rules\.md' "global-rules 规则分层原则指向 project-rules 规范基线"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '运行时版本锁定' "05 scaffold 提示运行时版本锁定"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '版本声明文件' "05 scaffold 含版本声明文件字段"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '切换工具' "05 scaffold 含切换工具字段"
@@ -1719,12 +1733,14 @@ require_contains "template-sync.json" 'ai/doc-standards/08-dev-plan\.md' "同步
 require_contains "template-sync.json" 'ai/doc-standards/09-verification\.md' "同步清单包含 09 验证独立标准"
 require_contains "template-sync.json" 'ai/doc-standards/frontend-interaction\.md' "同步清单包含前端交互独立标准"
 require_contains "template-sync.json" 'ai/doc-standards/ui-prototype-strategy\.md' "同步清单包含 UI 原型策略独立标准"
+require_contains "template-sync.json" 'ai/doc-standards/project-rules\.md' "同步清单包含 project-rules 字段规范标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/06-db-design\.md' "sync-template fallback 包含 06 DB 独立标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/07-api-spec\.md' "sync-template fallback 包含 07 API 独立标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/08-dev-plan\.md' "sync-template fallback 包含 08 开发计划独立标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/09-verification\.md' "sync-template fallback 包含 09 验证独立标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/frontend-interaction\.md' "sync-template fallback 包含前端交互独立标准"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards/ui-prototype-strategy\.md' "sync-template fallback 包含 UI 原型策略独立标准"
+require_contains "scripts/sync-template.sh" 'ai/doc-standards/project-rules\.md' "sync-template fallback 包含 project-rules 字段规范标准"
 require_contains "scripts/sync-template.sh" '00-09 已升级为独立标准文件' "sync-template 说明 00-09 独立标准"
 require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/06-db-design\.md' "sync-template 不再用 docs/06 覆盖 06 标准"
 require_absent_contains "scripts/sync-template.sh" 'DOC_STANDARD_DOCS=\([^)]*docs/07-api-spec\.md' "sync-template 不再用 docs/07 覆盖 07 标准"

@@ -1,4 +1,5 @@
 <#
+Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
 check-template.ps1 - Windows PowerShell entrypoint for template self-check.
 
 Usage:
@@ -293,7 +294,9 @@ function Invoke-NativeTemplateCheck {
 
   foreach ($syncFile in $syncFiles) {
     Require-File $syncFile
-    if ($syncFile -like "*.md") {
+    # VERSION 是纯版本号，豁免（其“会被覆盖”语义由 template-sync.json description 承载）
+    if ($syncFile -eq "VERSION") { continue }
+    if ($syncFile -like "*.md" -or $syncFile -like "*.mdc" -or $syncFile -like "*.sh" -or $syncFile -like "*.ps1") {
       Require-Contains $syncFile "Sync notice" ($syncFile + " contains sync notice")
     }
   }
