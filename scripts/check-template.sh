@@ -204,8 +204,26 @@ extract_index_rules() {
   grep -Eo '`ai/[^`]+\.md`|^- ai/.+\.md$' ai/index.md | sed -E 's/^`//; s/`$//; s/^- //'
 }
 
+# 从 template-sync.json 指定数组键（files_all / files_ordinary / files_domain / legacy files）提取文件清单。
+# 下划线在正则中是字面量：传 "files" 不误匹配 "files_all"，传 "files_all" 不误匹配 "files_ordinary"。
+# 依赖每个数组的 ] 独占一行（sed 范围闭合到第一个 ]）；空数组（如 "files_ordinary": []）不产出条目。
+extract_sync_array() {
+  local key="$1"
+  sed -n "/\"${key}\"[[:space:]]*:[[:space:]]*\[/,/\]/ s/^[[:space:]]*\"\([^\"]\+\)\"[[:space:]]*,\{0,1\}[[:space:]]*$/\1/p" template-sync.json
+}
+
+# 自检需校验全部同步文件存在：取三组并集（files_all 为主；files_ordinary / files_domain 补充），
+# 向后兼容仅有旧 "files" 键的 json（视为 files_all）。awk 去重后输出。
 extract_sync_files() {
-  sed -n '/"files"[[:space:]]*:[[:space:]]*\[/,/\]/ s/^[[:space:]]*"\([^"]\+\)"[[:space:]]*,\{0,1\}[[:space:]]*$/\1/p' template-sync.json
+  {
+    if grep -q '"files_all"' template-sync.json; then
+      extract_sync_array "files_all"
+    else
+      extract_sync_array "files"   # legacy fallback：旧 json 无 files_all 时读 files
+    fi
+    extract_sync_array "files_ordinary"
+    extract_sync_array "files_domain"
+  } | awk '!seen[$0]++'
 }
 
 require_sync_notice() {
@@ -224,6 +242,23 @@ require_sync_notice() {
   require_contains "AGENTS.md" 'Sync notice' "AGENTS.md 包含入口同步说明"
   require_contains "CLAUDE.md" 'Sync notice' "CLAUDE.md 包含入口同步说明"
   require_contains ".cursor/rules/project-rules.mdc" 'Sync notice' "Cursor 规则包含入口同步说明"
+}
+
+# files_domain 非重叠断言（v1.60.0）：领域专属文件不得同时出现在 files_all 或 files_ordinary，
+# 防误配导致普通派生项目误收领域文件（普通路线 = files_all ∪ files_ordinary，不含 files_domain）。
+check_files_domain_no_overlap() {
+  begin_section "检查 files_domain 非重叠"
+  local domain_file count
+  while IFS= read -r domain_file; do
+    [[ -n "$domain_file" ]] || continue
+    # 每个数组条目独占一行：grep -cF 统计该路径在 json 中出现的行数；>1 即跨组重复。
+    count="$(grep -cF "\"$domain_file\"" template-sync.json || true)"
+    if [[ "$count" -gt 1 ]]; then
+      fail "$domain_file 同时出现在多个同步组（files_domain 应与 files_all / files_ordinary 互斥）"
+    else
+      pass "$domain_file 仅在 files_domain（无跨组重叠）"
+    fi
+  done < <(extract_sync_array "files_domain")
 }
 
 require_changelog_current_version() {
@@ -791,7 +826,16 @@ require_contains "MAINTAINERS.md" 'template-sync\.json' "MAINTAINERS 说明同�
 require_contains "MAINTAINERS.md" 'README\.md.*轻量' "MAINTAINERS 约束 README 保持轻量"
 require_contains "MAINTAINERS.md" 'Sync notice' "MAINTAINERS 说明同步文档提示块"
 require_contains "MAINTAINERS.md" '根 `README\.md` 是项目专属文档' "MAINTAINERS 说明派生 README 不同步"
-require_contains "template-sync.json" '"files"' "template-sync.json 包含同步文件清单"
+require_contains "template-sync.json" '"files_all"' "template-sync.json 主同步清单键为 files_all"
+require_contains "template-sync.json" '"files_ordinary"' "template-sync.json 含普通派生补充组 files_ordinary"
+require_contains "template-sync.json" '"files_domain"' "template-sync.json 含领域模板专属组 files_domain"
+# json 格式约定（extract_sync_array sed 解析依赖）：同步数组的 [ 必须在行尾（] 独占行），
+# 禁止任何内联数组内容（含内联空数组 [] 与内联非空数组 ["x"]），否则 sed 范围会跨数组串读。
+if grep -qE '"[^"]*"[[:space:]]*:[[:space:]]*\[[[:space:]]*[^[:space:]]' template-sync.json; then
+  fail "template-sync.json 含内联数组内容（数组 [ 须在行尾、] 独占行，sed 解析依赖）"
+else
+  pass "template-sync.json 数组均多行（[ 在行尾、] 独占行）"
+fi
 require_contains "template-sync.json" '"CHANGELOG\.md"' "template-sync 同步 CHANGELOG"
 require_contains "template-sync.json" '"CHANGELOG-PLAIN\.md"' "template-sync 同步大白话 CHANGELOG"
 require_contains "template-sync.json" '"MAINTAINERS\.md"' "template-sync 同步 MAINTAINERS"
@@ -1096,14 +1140,24 @@ require_contains "scripts/check-derived-sync.sh" 'Upstream template changelog re
 require_contains "scripts/check-derived-sync.ps1" 'Upstream template changelog reference' "check-derived-sync PowerShell fallback 校验 upstream changelog 定位说明"
 require_contains "scripts/check-derived-sync.sh" 'Domain standards scope' "check-derived-sync 校验领域版 TEMPLATE-BASE.md 领域标准件字段"
 require_contains "scripts/check-derived-sync.ps1" 'Domain standards scope' "check-derived-sync PowerShell fallback 校验领域版 TEMPLATE-BASE.md"
-require_contains "scripts/check-derived-sync.sh" 'README\.md\|ai/project-rules\.md\|docs/0\[0-9\]-\*' "check-derived-sync 保护项目专属文件"
+require_contains "scripts/check-derived-sync.sh" 'README\.md\|ai/project-rules\.md\|ai/domain-rules\.md\|docs/0\[0-9\]-\*' "check-derived-sync 保护项目专属文件（含 domain-rules）"
 require_contains "scripts/check-derived-sync.sh" 'git show --name-only' "check-derived-sync 输出最近同步提交文件名（--name-only；v1.56.11 去 --stat 减噪）"
 require_contains "scripts/check-derived-sync.sh" 'git rev-list --parents -n 1' "check-derived-sync 识别 HEAD merge commit 并提示传入实际同步提交"
 require_contains "scripts/check-derived-sync.sh" 'ai/prompts/maintainers/15-post-sync-cleanup\.md' "check-derived-sync 指向同步后整理 Prompt"
+# v1.60.0：check-derived-sync 按路线路由同步清单，防止普通派生项目误收 files_domain 领域专属文件。
+require_contains "scripts/check-derived-sync.sh" 'files_domain' "check-derived-sync 按领域路线读 files_domain"
+require_contains "scripts/check-derived-sync.ps1" 'files_domain' "check-derived-sync PowerShell fallback 按领域路线读 files_domain"
 require_contains "scripts/sync-template.sh" 'ai/doc-standards' "sync-template 含 doc-standards 规范镜像步骤"
 require_contains "scripts/sync-template.sh" '--preserve-project-version' "sync-template 支持普通派生项目保留自身 VERSION"
 require_contains "scripts/sync-template.sh" 'core.autocrlf=false' "sync-template dry-run diff 局部关 autocrlf 消 Windows CRLF 噪音（不影响 commit）"
 require_contains "scripts/sync-template.ps1" 'core.autocrlf=false' "sync-template PowerShell fallback dry-run diff 局部关 autocrlf"
+# v1.60.0：sync-template 三组路由 + TEMPLATE-BASE 受管文件指针（防漂移断言，守用户可见输出与结构）。
+require_contains "scripts/sync-template.sh" 'files_domain' "sync-template 领域路线读 files_domain 组"
+require_contains "scripts/sync-template.ps1" 'files_domain' "sync-template.ps1 领域路线读 files_domain 组"
+require_contains "scripts/sync-template.sh" '同步路线' "sync-template 输出同步路线摘要"
+require_contains "scripts/sync-template.ps1" 'Sync route' "sync-template.ps1 输出同步路线摘要"
+require_contains "scripts/sync-template.sh" 'overwritten on the next template sync' "sync-template TEMPLATE-BASE writer 声明受管文件会被覆盖"
+require_contains "scripts/sync-template.ps1" 'overwritten on the next template sync' "sync-template.ps1 TEMPLATE-BASE writer 声明受管文件会被覆盖"
 require_contains "scripts/sync-template.sh" 'detect_lineage_role' "sync-template 自动判定 TEMPLATE-BASE 普通版/领域版角色"
 require_contains "scripts/sync-template.sh" 'TEMPLATE-BASE\.md' "sync-template 维护普通派生项目继承版本记录"
 require_contains "scripts/sync-template.sh" 'VERSION\|CHANGELOG\.md\|CHANGELOG-PLAIN\.md' "sync-template Bash 保留过滤含 CHANGELOG-PLAIN"
@@ -1195,6 +1249,13 @@ require_contains "ai/doc-standards/project-rules.md" 'AI 修改确认规则' "pr
 require_contains "ai/project-rules.md" 'ai/doc-standards/project-rules\.md' "project-rules 实例指向规范基线"
 require_contains "ai/global-rules.md" '规则分层原则' "global-rules 含规则分层原则小节"
 require_contains "ai/global-rules.md" 'ai/doc-standards/project-rules\.md' "global-rules 规则分层原则指向 project-rules 规范基线"
+# domain-rules 字段规范分层（v1.60.0）：领域层 rules 规范基线（doc-standards/domain-rules.md）只走领域模板路线（files_domain），
+# 领域仓 ai/domain-rules.md 种子不同步、自生成、受 check-derived-sync 保护。
+require_contains "ai/doc-standards/domain-rules.md" '规范基线' "domain-rules standards 声明规范基线定位"
+require_contains "ai/doc-standards/domain-rules.md" 'Sync notice' "domain-rules standards 含同步覆盖说明"
+require_contains "ai/doc-standards/domain-rules.md" '§1 领域标准件清单' "domain-rules standards 含领域标准件清单规范"
+require_contains "ai/global-rules.md" 'ai/doc-standards/domain-rules\.md' "global-rules 规则分层原则指向 domain-rules 规范基线"
+require_contains "template-sync.json" 'ai/doc-standards/domain-rules\.md' "template-sync files_domain 含 domain-rules 规范基线"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '运行时版本锁定' "05 scaffold 提示运行时版本锁定"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '版本声明文件' "05 scaffold 含版本声明文件字段"
 require_contains "template-docs/docs-scaffold/05-tech-spec.md" '切换工具' "05 scaffold 含切换工具字段"
@@ -1834,6 +1895,8 @@ require_sync_notice
 require_sync_dry_run_direction
 require_new_project_local_smoke
 require_doc_standards_mirror
+
+check_files_domain_no_overlap
 
 begin_section "检查同步清单一致性"
 while IFS= read -r sync_file; do

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "ai-project-template 下行同步的模板方法论文件清单；派生项目同步时这些文件会被覆盖，不应直接修改（通用改进请经 _proposals/ 回流模板仓库）；项目专属内容（ai/project-rules.md / ai/domain-rules.md / docs/ / 业务代码）不在此列。",
-  "files": [
+  "files_all": [
     "VERSION",
     "CHANGELOG.md",
     "CHANGELOG-PLAIN.md",
@@ -153,5 +153,10 @@
     "scripts/check-prereqs.ps1",
     "scripts/check-runtime.ps1",
     "scripts/bootstrap-dev-env.ps1"
+  ],
+  "files_ordinary": [
+  ],
+  "files_domain": [
+    "ai/doc-standards/domain-rules.md"
   ]
 }

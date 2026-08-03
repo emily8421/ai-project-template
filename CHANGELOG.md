@@ -6,6 +6,19 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.0（2026-08-04）
+
+模板治理分层第三阶段（领域层 + 同步路线三组化）：补齐领域模板（domain template）的「领域通用但跨项目」rules 中间层，并把下行同步清单从扁平 `files` 拆为按派生路线选组的 `files_all` / `files_ordinary` / `files_domain`，使普通派生项目不再误收领域专属文件。承接 v1.59.3 的规则文档分层，提案见 `_proposals/TEMPLATE-UPGRADE-project-rules-layering.md` §10。
+
+- **领域 rules 规范基线**：新建 `ai/doc-standards/domain-rules.md`（领域层 rules 字段规范 / 审计基线，进 `template-sync.json` 的 `files_domain` 组，仅领域路线接收）；领域模板仓的 `ai/domain-rules.md` 种子由 `domain-template-lab` 按 standards 自生成（§0-§4：领域定位 / 标准件清单 / 裁剪禁止 / 验收口径 / 与 project-rules 关系），不入同步清单、不同步、受 `check-derived-sync` 保护。
+- **同步清单三组化**：`template-sync.json` 由扁平 `files` 拆为 `files_all`（全部路线）/ `files_ordinary`（普通派生补充，当前空）/ `files_domain`（领域专属），向后兼容（仅有 `files` 视为 `files_all`）。路线 = 领域 `files_all ∪ files_domain`，普通 `files_all ∪ files_ordinary`。
+- **同步脚本按路线路由**：`sync-template.sh` / `.ps1` 的文件加载改为按路线选组（复用 `detect_lineage_role` / `Get-LineageRole`，关联数组 / HashSet 去重保序）；`check-derived-sync.sh` / `.ps1` 新增独立 lineage 判定 + 按路线读清单，防止普通派生项目误收 `files_domain` 文件。dry-run / sync 输出新增「同步路线」摘要行。
+- **受保护路径 + 受管文件指针**：`check-derived-sync.*` 受保护清单加 `ai/domain-rules.md`（方案①全不同步）；两个 `TEMPLATE-BASE.md` writer（普通 / 领域）各加 `## Managed Files` 段，指向 `template-sync.json` 并声明直接修改会被覆盖。
+- **边界文档**：`domain-templates.md`、`domain-template-lab` 命令 + Prompt、`12-sync-template`、`15-post-sync-cleanup`、`MAINTAINERS`、`git-guide`、`CONTRIBUTING` 补领域 rules 层与三组路线说明。
+- **防漂移断言**：`check-template.sh` / `.ps1` 增加 `files_all` / `files_ordinary` / `files_domain` 键断言、`files_domain` 非重叠断言、同步数组多行格式断言（`[` 须在行尾，防 sed 跨数组串读）、domain-rules standards 断言、sync-template 路由摘要与 Managed Files 覆盖声明断言、check-derived-sync 领域路线断言。
+
+本版是 minor 级能力增强：新增领域 rules 层 + 按路线差异化同步的同步行为变化。向后兼容（旧 `files` json + 新脚本仍可解析；普通派生路线行为不变，仍同步原 151 个 `files_all` 文件）。已知限制：领域→领域派生段（`check-domain-derived-sync.*` 等 Batch 3 资产）不在本仓，本次只打通「母模板→领域模板」段。L3 端到端回归（`e2e-sync-check.sh` + 双路线 dry-run + `ai/domain-rules.md` 受保护 + 向后兼容）通过。
+
 ## v1.59.3（2026-08-03）
 
 模板治理分层（规则文档分层第一、二阶段 + sync-notice patch）：为 `ai/project-rules.md` 建立「规范基线 / 种子实例」两层分工，规范长文上移到随模板同步的 `ai/doc-standards/project-rules.md`，种子实例瘦身为填写骨架；并把 Sync notice 强制覆盖范围从 Markdown 扩展到脚本与 json 自声明。提案见 `_proposals/TEMPLATE-UPGRADE-project-rules-layering.md`、`_proposals/TEMPLATE-UPGRADE-sync-notice-coverage.md`。
