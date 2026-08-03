@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
 # sync-template.sh — 在派生项目里下行同步 ai-project-template 的方法论文件
 #
 # 用法（在派生项目根目录执行）:
@@ -167,6 +168,7 @@ DEFAULT_SYNC_FILES=(
   "ai/doc-standards/design-doc.md"
   "ai/doc-standards/frontend-interaction.md"
   "ai/doc-standards/ui-prototype-strategy.md"
+  "ai/doc-standards/project-rules.md"
   "ai/commands/README.md"
   "ai/commands/sync-methodology.md"
   "ai/commands/post-sync-cleanup.md"

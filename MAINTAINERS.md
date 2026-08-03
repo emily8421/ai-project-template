@@ -57,9 +57,9 @@
 
 `template-sync.json` 是下行同步清单的**事实来源**，`scripts/sync-template.sh` 优先读取它。维护规则：
 
-- **只放跨项目复用的方法论文件**；不放项目专属内容（`ai/project-rules.md`、根 `README.md`、`docs/` 业务文档、业务代码）。
+- **只放跨项目复用的方法论文件**；不放项目专属内容（`ai/project-rules.md` 种子实例、根 `README.md`、`docs/` 业务文档、业务代码）。注：`ai/project-rules.md` 的规范基线 `ai/doc-standards/project-rules.md`（字段规范 / 审计基线）属跨项目方法论，进同步清单；种子实例不进。
 - **不放具体维护者账号**、个人邮箱、个人 Token 类型或本机私有备忘；这类内容只能留在本地忽略文件中。
-- 同步 Markdown 文件必须在顶部包含 `Sync notice`，说明派生项目同步时可能被覆盖、不建议直接修改。
+- 同步的可注释方法论文件（`.md` / `.mdc` / `.sh` / `.ps1`）必须在顶部包含 `Sync notice`，说明派生项目同步时会被覆盖、不应直接修改；不可内嵌注释的 `template-sync.json` 用 `description` 字段承载同等声明；`VERSION`（纯版本号）豁免，其“会被覆盖”语义由 `template-sync.json` 的 description 间接覆盖。`check-template.sh` / `.ps1` 的 `require_sync_notice` 强制覆盖上述后缀范围（防清单演进遗漏）。
 - 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；由 `scripts/new-project.sh` 初始化生成，项目自行维护。
 - 新增方法论入口、脚本、规则文件时，必须同时更新 `template-sync.json` 和自检断言。
 - `template-sync.json` 是完整清单权威；人读文档只维护分组摘要和维护规则，避免复制一份容易漂移的完整文件列表。

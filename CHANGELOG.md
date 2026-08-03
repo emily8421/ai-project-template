@@ -6,6 +6,18 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.59.3（2026-08-03）
+
+模板治理分层（规则文档分层第一、二阶段 + sync-notice patch）：为 `ai/project-rules.md` 建立「规范基线 / 种子实例」两层分工，规范长文上移到随模板同步的 `ai/doc-standards/project-rules.md`，种子实例瘦身为填写骨架；并把 Sync notice 强制覆盖范围从 Markdown 扩展到脚本与 json 自声明。提案见 `_proposals/TEMPLATE-UPGRADE-project-rules-layering.md`、`_proposals/TEMPLATE-UPGRADE-sync-notice-coverage.md`。
+
+- **project-rules 规范分层**：新建 `ai/doc-standards/project-rules.md`（字段规范 / 审计基线，进 `template-sync.json` 与 `sync-template.sh` 兜底清单）；`ai/project-rules.md` 剥离 §2.8 项目版本管理、§6 AI 修改确认规则、§3 按形态裁剪说明等规范长文，保留章节标题、字段占位与初始化必填检查（填写骨架），改以指向行引用规范基线。
+- **引用迁移（仅 A 类）**：`ai/doc-standards/05-tech-spec.md` §2.9、`ai/doc-standards/04-architecture.md` §2.6 的「字段规范」引用改指向 `ai/doc-standards/project-rules.md`；B 类「项目实例权威位置」引用（03/06/07/08/09、frontend-interaction、design-doc、ui-prototype-strategy）保持指向实例 `ai/project-rules.md` 不动。
+- **规则分层原则**：`ai/global-rules.md` §5 新增「规则分层原则」小节（通用层 / 项目专属层 standards+seed / 领域专属层），指向 project-rules 规范基线；`CONTRIBUTING.md`、`MAINTAINERS.md`、`ai/prompts/maintainers/15-post-sync-cleanup.md` 补两层分工说明。
+- **sync-notice 覆盖扩展**：`check-template.sh` / `.ps1` 的 `require_sync_notice` 从仅 `*.md` 扩展到 `*.md` / `*.mdc` / `*.sh` / `*.ps1`（`VERSION` 豁免）；15 个清单内脚本补头部 Sync notice；`template-sync.json` 的 `description` 补「会被覆盖 / 勿改」自声明（json 无法内嵌注释）；`MAINTAINERS.md`、`git-guide.md` 边界说明同步。
+- **防漂移断言**：`check-template.sh` 增加 project-rules 规范基线字段源断言、global-rules 规则分层原则断言、实例指向规范基线断言；sync-notice 扩展后强制覆盖脚本后缀，防清单演进遗漏。
+
+本版是 patch 级治理增强：不改同步脚本逻辑、不改默认行为、不要求派生项目迁移（领域层 + 同步路线三组化归后续 minor v1.60.0）。下游同步后派生项目会收到新的 `ai/doc-standards/project-rules.md` 与脚本头部 notice；既有 `ai/project-rules.md` 实例不被覆盖（种子不同步）。
+
 ## v1.59.2（2026-08-02）
 
 Demo 启动脚本 Windows 注意事项：承接 issue #296，在 `template-docs/demo-runbook-template.md` 补一段 Windows 启动脚本指导，覆盖 PowerShell `Start-Process` 的三类常见坑。
