@@ -46,8 +46,42 @@ require_contains() {
   fi
 }
 
+# 从 TEMPLATE-BASE.md 嗅探派生角色：ordinary / domain / 空（无 TEMPLATE-BASE.md）。
+detect_lineage_role() {
+  [[ -f TEMPLATE-BASE.md ]] || return 0
+  local lineage
+  lineage="$(grep -E '^\- Lineage type:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Lineage type:[[:space:]]*//' | sed -E 's/[[:space:]]*$//' || true)"
+  case "$lineage" in
+    "ordinary derived project") echo "ordinary" ;;
+    "domain template") echo "domain" ;;
+    "")
+      if grep -qi 'ordinary derived project' TEMPLATE-BASE.md; then echo "ordinary"
+      elif grep -qi 'domain template' TEMPLATE-BASE.md; then echo "domain"; fi
+      ;;
+  esac
+}
+
+# 从 template-sync.json 指定数组键提取文件清单（下划线字面量，不互误匹配）。
+extract_sync_array() {
+  local key="$1"
+  sed -n "/\"${key}\"[[:space:]]*:[[:space:]]*\[/,/\]/ s/^[[:space:]]*\"\([^\"]\+\)\"[[:space:]]*,\{0,1\}[[:space:]]*$/\1/p" template-sync.json
+}
+
+# 按路线读取同步清单：领域 → files_all ∪ files_domain；普通（含 legacy 无标志）→ files_all ∪ files_ordinary。
+# 向后兼容仅有旧 "files" 键的 json（视为 files_all）。关联数组去重保序。
 extract_sync_files() {
-  sed -n '/"files"[[:space:]]*:[[:space:]]*\[/,/\]/ s/^[[:space:]]*"\([^"]\+\)"[[:space:]]*,\{0,1\}[[:space:]]*$/\1/p' template-sync.json
+  local lineage="${1:-}"
+  local main_key route_key
+  if grep -q '"files_all"' template-sync.json; then main_key="files_all"; else main_key="files"; fi
+  if [[ "$lineage" == "domain" ]]; then route_key="files_domain"; else route_key="files_ordinary"; fi
+  local -A seen=()
+  local key file
+  for key in "$main_key" "$route_key"; do
+    while IFS= read -r file; do
+      [[ -z "$file" ]] && continue
+      if [[ -z "${seen[$file]:-}" ]]; then seen["$file"]=1; printf '%s\n' "$file"; fi
+    done < <(extract_sync_array "$key")
+  done
 }
 
 is_sync_file() {
@@ -70,7 +104,7 @@ is_sync_file() {
 is_protected_project_file() {
   local changed_file="$1"
   case "$changed_file" in
-    README.md|ai/project-rules.md|docs/0[0-9]-*|frontend/*|backend/*|tests/*|docker/*)
+    README.md|ai/project-rules.md|ai/domain-rules.md|docs/0[0-9]-*|frontend/*|backend/*|tests/*|docker/*)
       return 0
       ;;
     *)
@@ -96,11 +130,17 @@ if ! git rev-parse --verify "$COMMIT^{commit}" >/dev/null 2>&1; then
   fail "无法解析提交: $COMMIT"
 fi
 
+LINEAGE_ROLE="$(detect_lineage_role)"
+if [[ "$LINEAGE_ROLE" == "domain" ]]; then
+  echo "ℹ️  检测到领域模板（domain lineage）：同步清单按 files_all ∪ files_domain 路线校验。"
+else
+  echo "ℹ️  按普通派生路线校验同步清单（files_all ∪ files_ordinary，不含领域专属文件）。"
+fi
 SYNC_FILES=()
 if [[ -f template-sync.json ]]; then
   while IFS= read -r sync_file; do
     [[ -n "$sync_file" ]] && SYNC_FILES+=("$sync_file")
-  done < <(extract_sync_files)
+  done < <(extract_sync_files "$LINEAGE_ROLE")
 fi
 
 if [[ "${#SYNC_FILES[@]}" -eq 0 ]]; then
@@ -152,16 +192,7 @@ fi
 echo
 echo "==> 根 README 模板版本号一致性（非阻断）"
 if [[ -f "TEMPLATE-BASE.md" ]]; then
-  LINEAGE_ROLE=""
-  lineage_val="$(grep -E '^\- Lineage type:' TEMPLATE-BASE.md | head -1 | sed -E 's/^\- Lineage type:[[:space:]]*//' | sed -E 's/[[:space:]]*$//' || true)"
-  case "$lineage_val" in
-    "ordinary derived project") LINEAGE_ROLE="ordinary" ;;
-    "domain template") LINEAGE_ROLE="domain" ;;
-    "")
-      if grep -qi 'ordinary derived project' TEMPLATE-BASE.md; then LINEAGE_ROLE="ordinary"
-      elif grep -qi 'domain template' TEMPLATE-BASE.md; then LINEAGE_ROLE="domain"; fi
-      ;;
-  esac
+  # LINEAGE_ROLE 已在前段同步清单路由前判定（detect_lineage_role），此处直接复用。
   if [[ "$LINEAGE_ROLE" == "domain" ]]; then
     echo "ℹ️  检测到领域版 TEMPLATE-BASE.md（Lineage type: domain template）：VERSION / CHANGELOG 属于领域模板自身；继承母模板版本以 TEMPLATE-BASE.md 为准，跳过 README ↔ VERSION 模板版本一致性检查。"
   else

@@ -30,7 +30,7 @@
 - 我已经完成模板方法论同步，当前项目中应已有最新版 `docs/README.md`、`ai/global-rules.md`、`INIT-PROMPT.md`、`SOP.md` 等方法论文件。
 - `sync-template` 只同步方法论文件，不会自动改项目事实文档。
 - 本次任务不是开发新功能，不允许扩展需求，不允许改业务代码。
-- 根 `README.md`、`ai/project-rules.md`、`docs/00-09`、业务代码都是项目专属内容，整理前必须先审计再给迁移计划。
+- 根 `README.md`、`ai/project-rules.md`、（领域模板仓的）`ai/domain-rules.md`、`docs/00-09`、业务代码都是项目专属内容，整理前必须先审计再给迁移计划。
 
 请按以下步骤执行：
 
@@ -103,7 +103,7 @@
        5. 新增 / 补齐 `.github/workflows/project-check.yml`，至少校验项目版本信号与模板同步边界。
        6. 运行 `check-derived-sync.*` 确认版本机制检测通过或明确非阻断提示。
        7. 在 `sync-records/template-sync/` 记录启用状态、验证结果与后续待办。
-     - 领域模板差异：使用 `--domain-template` 保留领域模板自己的 `VERSION` / `CHANGELOG.md`；`TEMPLATE-BASE.md` 记录母模板继承版本和领域标准件范围；不把普通派生 workflow 强行套到领域模板。
+     - 领域模板差异：使用 `--domain-template` 保留领域模板自己的 `VERSION` / `CHANGELOG.md`；`TEMPLATE-BASE.md` 记录母模板继承版本和领域标准件范围；不把普通派生 workflow 强行套到领域模板。领域模板仓还应按同步下来的 `ai/doc-standards/domain-rules.md` 规范基线维护 `ai/domain-rules.md` 种子（领域通用标准件骨架，不同步、受 `check-derived-sync` 保护）。
      - 验收（双信号）：项目侧 workflow（主信号）+ `ai/project-rules.md` 项目版本管理章节（辅信号）都在；`VERSION` / `CHANGELOG.md` 顶部项目版本 / `TEMPLATE-BASE.md` 的 Project version 三者一致。
 
 6. 输出迁移计划
