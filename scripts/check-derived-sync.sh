@@ -255,7 +255,7 @@ else
   if $main_signal_ok && $aux_signal_ok; then
     pass "派生项目版本机制已启用（project-check.yml 含版本一致性校验 + ai/project-rules.md 含「项目版本管理」规则）"
   elif $main_signal_ok; then
-    echo "⚠️  版本机制主信号在（project-check.yml 校验 VERSION↔CHANGELOG）但辅信号缺：ai/project-rules.md 未含「项目版本管理」规则。建议补 §2.8 明确 PATCH/MINOR/MAJOR 语义（非阻断，不计入失败）。"
+    echo "⚠️  版本机制主信号在（project-check.yml 校验 VERSION↔CHANGELOG）但辅信号缺：ai/project-rules.md 未含「项目版本管理」规则。建议补 §2.4 明确 PATCH/MINOR/MAJOR 语义（非阻断，不计入失败）。"
   elif $aux_signal_ok; then
     echo "⚠️  版本机制辅信号在（ai/project-rules.md 含「项目版本管理」）但主信号缺：.github/workflows/project-check.yml 未含「Check project version consistency」校验。建议补 CI 校验防 VERSION/CHANGELOG 漂移（非阻断，不计入失败）。"
   else

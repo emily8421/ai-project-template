@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.1（2026-08-04）
+
+project-rules 种子章节编号规范化：修复 `ai/project-rules.md` 自创建（v1.55.0 起）就存在的 §2→§2.5 编号跳号（§2.1-2.4 从未存在）+ §2.5-2.9 内容（运行环境/图表/UI 原型/版本/运行时）非"技术栈"子话题却挂 §2 下的概念错位；并把"文档编号规范"沉淀为 global-rules 通用原则 + advisory 自检，防复发。
+
+- **重编号（方案 D + 改 §2 标题）**：§2.5-2.9 → §2.1-2.5（运行环境/图表格式/UI 原型/项目版本/运行时版本），§2 标题"技术栈约束"→"技术栈与项目约束"兜住杂项；§0/§1/§3/§4/§5/§6 不动，避开动引用最密的 §3。
+- **全量引用迁移**：种子 + 3 个 `_examples` 副本 + `ai/doc-standards/project-rules.md` standards + ~20 跨文档引用（global-rules、document-lifecycle、doc-standards 04/05/06/07/ui-prototype/frontend/README、template-docs docs-scaffold/*、scenario-guides、env-setup、prompts 15/12/10/16/20/00/22、docs/04/06/07、docker/README、check-derived-sync 消息）按映射迁移；显式不动 CHANGELOG（历史）与 `_archive/**`。04-architecture 自身 §2.6、05-tech-spec 自身 §2.9 保持不动（仅它们对 project-rules 的引用迁移）。
+- **编号规范沉淀**：`ai/global-rules.md` §5 新增「文档编号规范」小节（连续 / 归属一致 / 稳定锚点须全量迁移 / advisory 自检）；`check-template.sh` 新增 `check_project_rules_section_continuity` advisory（非阻断，检测 §2.x 跳号告警）。
+- **防漂移断言**：`check-template.sh` 的 §2.5/§2.8/§2.9 内容断言 + `## 2.X` 标题断言（种子/烟测）+ standards §2.X 断言 + global-rules 路由断言 + 15-post-sync-cleanup 断言全部迁移到新编号；新增 global-rules 文档编号规范断言。
+
+本版是 patch 级编号规范化：不改同步脚本逻辑、不改默认行为、不要求派生项目迁移（派生同步后收到新编号的种子 + standards；既有派生实例的 `ai/project-rules.md` 不被覆盖）。L3 端到端回归（`e2e-sync-check.sh` + 残留旧编号 grep）通过。
+
 ## v1.60.0（2026-08-04）
 
 模板治理分层第三阶段（领域层 + 同步路线三组化）：补齐领域模板（domain template）的「领域通用但跨项目」rules 中间层，并把下行同步清单从扁平 `files` 拆为按派生路线选组的 `files_all` / `files_ordinary` / `files_domain`，使普通派生项目不再误收领域专属文件。承接 v1.59.3 的规则文档分层，提案见 `_proposals/TEMPLATE-UPGRADE-project-rules-layering.md` §10。

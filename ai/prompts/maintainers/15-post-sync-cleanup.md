@@ -67,7 +67,7 @@
      - 是否允许安装依赖
      - 是否允许使用公司服务器
      - 若需服务器，资源申请口径
-   - 检查 `ai/project-rules.md` 是否存在并补齐 §2.5「运行环境与资源约束」。若没有 §2.5，请建议新增；未知项保持“待确认”，不得虚构。
+   - 检查 `ai/project-rules.md` 是否存在并补齐 §2.1「运行环境与资源约束」。若没有 §2.1，请建议新增；未知项保持“待确认”，不得虚构。
    - 检查 `docs/04-architecture.md` 是否包含“部署 / 运行拓扑约束”，并明确本机单机 / 公司服务器 / 远程服务边界。
     - 检查 `docs/05-tech-spec.md` 是否包含“运行环境与资源评估”，并说明本机 Demo 可行性、资源瓶颈、降级 / Mock 策略、服务器资源预案。
     - 检查 `docs/09-verification.md` 是否包含“本机资源验证”，并说明如何验证 Demo 在本机资源范围内可运行。
@@ -84,14 +84,14 @@
 
 5. 审计 `ai/project-rules.md`
    - 检查初始化必填检查是否包含：`docs/README.md` 分区规则、不得把新增项目文档直接放到 `docs/` 根目录。
-   - 检查 §2.5 是否引用 `docs/env/local-env.md`，并保留待人工确认项。
+   - 检查 §2.1 是否引用 `docs/env/local-env.md`，并保留待人工确认项。
    - 检查 §3 是否明确 `docs/06`、`docs/07`、`frontend/`、`backend/`、`tests/`、`scripts/`、`docker/` 的保留 / 省略 / 删除决策。
    - `ai/project-rules.md` 字段规范基线在 `ai/doc-standards/project-rules.md`（随模板同步刷新）；审计实例时对照规范基线，只补项目专属约束和裁剪决策，不把模板方法论长文复制进实例。
-   - 审计版本机制启用状态：检查 `ai/project-rules.md` 是否含「项目版本管理」规则（辅信号，对应 §2.8 的 PATCH/MINOR/MAJOR 语义），以及 `.github/workflows/project-check.yml` 是否含「Check project version consistency」校验（主信号，防 VERSION↔CHANGELOG 漂移）。
+   - 审计版本机制启用状态：检查 `ai/project-rules.md` 是否含「项目版本管理」规则（辅信号，对应 §2.4 的 PATCH/MINOR/MAJOR 语义），以及 `.github/workflows/project-check.yml` 是否含「Check project version consistency」校验（主信号，防 VERSION↔CHANGELOG 漂移）。
      - 双信号都在：版本机制已启用，无需迁移。
      - 仅辅信号在（project-rules 有规则但 project-check.yml 缺校验）：建议补 CI 版本校验。
-     - 仅主信号在（project-check.yml 有校验但 project-rules 缺规则）：建议补 §2.8。
-     - 双信号都缺（存量项目未启用版本机制）：建议补 §2.8 + project-check.yml 版本校验，并从 `VERSION` 当前值起按项目自有版本递增；`VERSION` / `CHANGELOG` 顶部项目版本 / `TEMPLATE-BASE.md` 的 `Project version at sync time` 三者保持一致。
+     - 仅主信号在（project-check.yml 有校验但 project-rules 缺规则）：建议补 §2.4。
+     - 双信号都缺（存量项目未启用版本机制）：建议补 §2.4 + project-check.yml 版本校验，并从 `VERSION` 当前值起按项目自有版本递增；`VERSION` / `CHANGELOG` 顶部项目版本 / `TEMPLATE-BASE.md` 的 `Project version at sync time` 三者保持一致。
    - `scripts/check-derived-sync.*` 在版本一致性段后会非阻断检测版本机制启用状态，可作为本步审计的自动化参考。
    - 启用项目自有版本机制 checklist（当上述审计判定需要启用时，按以下步骤；版本号必须人工确认）：
      - 前置判断：确认项目类型（普通派生 / 领域模板 / 领域派生）；读取 `VERSION`、`CHANGELOG.md` 顶部、`TEMPLATE-BASE.md`、`ai/project-rules.md`、`.github/workflows/`。
@@ -99,7 +99,7 @@
        1. 根 `VERSION` 调整为项目自有版本（初始如 `v0.1.0`，具体值需人工确认）。
        2. 重构 `CHANGELOG.md` 顶部：项目版本记录在上，模板继承历史保留在分隔区 / 历史区。
        3. 更新 `TEMPLATE-BASE.md`：记录当前继承模板版本、同步时间、Project version。
-       4. `ai/project-rules.md` 增加「项目版本管理」章节（§2.8），说明项目版本与模板版本分层。
+       4. `ai/project-rules.md` 增加「项目版本管理」章节（§2.4），说明项目版本与模板版本分层。
        5. 新增 / 补齐 `.github/workflows/project-check.yml`，至少校验项目版本信号与模板同步边界。
        6. 运行 `check-derived-sync.*` 确认版本机制检测通过或明确非阻断提示。
        7. 在 `sync-records/template-sync/` 记录启用状态、验证结果与后续待办。
