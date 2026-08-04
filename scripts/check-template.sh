@@ -261,6 +261,26 @@ check_files_domain_no_overlap() {
   done < <(extract_sync_array "files_domain")
 }
 
+# advisory（非阻断，v1.60.1）：project-rules 种子 §2.x 子节编号连续性。
+# 发现未说明的跳号仅告警（不计入失败），与 global-rules「文档编号规范」一致：有意保留号须当节注明。
+check_project_rules_section_continuity() {
+  begin_section "检查 project-rules §2.x 编号连续性（advisory）"
+  local nums expected n prev gap
+  nums="$(grep -oE '^## 2\.[0-9]+' ai/project-rules.md | sed 's/^## 2\.//' | sort -n | uniq)"
+  [[ -z "$nums" ]] && { echo "ℹ️  无 §2.x 子节，跳过连续性检查"; return 0; }
+  prev=0
+  gap=0
+  while IFS= read -r n; do
+    expected=$((prev + 1))
+    if [[ "$n" -ne "$expected" ]]; then
+      echo "⚠️  project-rules §2.x 跳号：期望 §2.$expected，实际 §2.$n（若为有意保留号须当节注明；规范见 ai/global-rules.md 文档编号规范）" >&2
+      gap=1
+    fi
+    prev="$n"
+  done <<< "$nums"
+  [[ "$gap" -eq 0 ]] && pass "project-rules §2.x 子节编号连续（无未说明跳号）"
+}
+
 require_changelog_current_version() {
   local version
   version="$(tr -d '\r\n[:space:]' < VERSION)"
@@ -467,7 +487,7 @@ require_new_project_local_smoke() {
   require_contains "$project_dir/CHANGELOG-PLAIN.md" '^## v0\.1\.0（' "new-project 烟测 CHANGELOG-PLAIN 顶部项目版本匹配 v0.1.0"
   require_contains "$project_dir/TEMPLATE-BASE.md" 'Project version at sync time: v0\.1\.0' "new-project 烟测 TEMPLATE-BASE 记录项目版本起点"
   require_contains "$project_dir/.github/workflows/project-check.yml" 'Check project version consistency' "new-project 烟测 workflow 校验项目版本一致性"
-  require_contains "$project_dir/ai/project-rules.md" '## 2\.8 项目版本管理' "new-project 烟测 project-rules 含项目版本管理"
+  require_contains "$project_dir/ai/project-rules.md" '## 2\.4 项目版本管理' "new-project 烟测 project-rules 含项目版本管理"
   require_contains "$project_dir/README.md" 'docs/inputs/' "new-project 烟测 README 从 inputs 起步"
   require_contains "$project_dir/README.md" 'docs/env/local-env\.md' "new-project 烟测 README 提醒环境采集"
   require_contains "$project_dir/README.md" 'input-review-report\.md' "new-project 烟测 README 说明输入评审报告"
@@ -1228,27 +1248,28 @@ require_contains "docs/05-tech-spec.md" '技术环境评估结论' "05 技术方
 require_contains "docs/09-verification.md" '技术环境评估验证' "09 验证计划包含技术环境评估验证"
 require_contains "template-docs/scenario-guides.md" 'A24 技术路线与环境支撑评估' "scenario-guides 路由技术环境评估"
 
-# 运行时版本锁定机制（v1.55.0）：规则层 project-rules §2.9、声明层 05-tech-spec 标准 + scaffold §1.1、
+# 运行时版本锁定机制（v1.55.0）：规则层 project-rules §2.5、声明层 05-tech-spec 标准 + scaffold §1.1、
 # 文档层 env-setup「运行时版本管理」、评估层 20-tech-env-evaluation、路由层 global-rules §5。
 # PS1 fallback 显式收窄、不镜像内容断言（见 check-template.ps1 顶部注释），故断言只在此维护。
-require_contains "ai/project-rules.md" '^## 2\.9 运行时版本锁定' "project-rules 含运行时版本锁定小节"
-require_contains "ai/project-rules.md" '§2\.5.*运行环境与资源约束' "project-rules §2.9 与 §2.5 运行环境与资源约束区分"
-require_contains "ai/project-rules.md" '版本声明文件' "project-rules §2.9 标明版本声明文件字段"
-require_contains "ai/project-rules.md" '切换工具' "project-rules §2.9 标明切换工具字段"
-require_contains "ai/project-rules.md" '豁免理由' "project-rules §2.9 含豁免理由字段"
-require_contains "ai/project-rules.md" 'docs/05-tech-spec\.md' "project-rules §2.9 指向 05-tech-spec 声明落点"
+require_contains "ai/project-rules.md" '^## 2\.5 运行时版本锁定' "project-rules 含运行时版本锁定小节"
+require_contains "ai/project-rules.md" '运行环境与资源约束.*正交' "project-rules §2.5 运行时版本与 §2.1 运行环境与资源约束正交区分"
+require_contains "ai/project-rules.md" '版本声明文件' "project-rules §2.5 标明版本声明文件字段"
+require_contains "ai/project-rules.md" '切换工具' "project-rules §2.5 标明切换工具字段"
+require_contains "ai/project-rules.md" '豁免理由' "project-rules §2.5 含豁免理由字段"
+require_contains "ai/project-rules.md" 'docs/05-tech-spec\.md' "project-rules §2.5 指向 05-tech-spec 声明落点"
 require_contains "ai/doc-standards/05-tech-spec.md" '运行时版本锁定' "05 技术方案标准纳入运行时版本锁定维度"
 # project-rules 字段规范分层（v1.59.3）：规范长文上移到 doc-standards/project-rules.md（规范基线，同步），
 # 种子 ai/project-rules.md 瘦身为填写骨架 + 指向行（实例，不同步）。规范源断言锁定 standards 为字段规范单一事实源。
 require_contains "ai/doc-standards/project-rules.md" '规范基线' "project-rules standards 声明规范基线定位"
-require_contains "ai/doc-standards/project-rules.md" '§2\.8 项目版本管理' "project-rules standards 含 §2.8 版本管理规范"
-require_contains "ai/doc-standards/project-rules.md" '§2\.9 运行时版本锁定' "project-rules standards 含 §2.9 运行时版本锁定规范"
-require_contains "ai/doc-standards/project-rules.md" '版本声明文件' "project-rules standards §2.9 标明版本声明文件字段"
-require_contains "ai/doc-standards/project-rules.md" '切换工具' "project-rules standards §2.9 标明切换工具字段"
+require_contains "ai/doc-standards/project-rules.md" '§2\.4 项目版本管理' "project-rules standards 含 §2.4 版本管理规范"
+require_contains "ai/doc-standards/project-rules.md" '§2\.5 运行时版本锁定' "project-rules standards 含 §2.5 运行时版本锁定规范"
+require_contains "ai/doc-standards/project-rules.md" '版本声明文件' "project-rules standards §2.5 标明版本声明文件字段"
+require_contains "ai/doc-standards/project-rules.md" '切换工具' "project-rules standards §2.5 标明切换工具字段"
 require_contains "ai/doc-standards/project-rules.md" 'AI 修改确认规则' "project-rules standards 含 AI 修改确认规则规范"
 require_contains "ai/project-rules.md" 'ai/doc-standards/project-rules\.md' "project-rules 实例指向规范基线"
 require_contains "ai/global-rules.md" '规则分层原则' "global-rules 含规则分层原则小节"
 require_contains "ai/global-rules.md" 'ai/doc-standards/project-rules\.md' "global-rules 规则分层原则指向 project-rules 规范基线"
+require_contains "ai/global-rules.md" '文档编号规范' "global-rules 含文档编号规范小节"
 # domain-rules 字段规范分层（v1.60.0）：领域层 rules 规范基线（doc-standards/domain-rules.md）只走领域模板路线（files_domain），
 # 领域仓 ai/domain-rules.md 种子不同步、自生成、受 check-derived-sync 保护。
 require_contains "ai/doc-standards/domain-rules.md" '规范基线' "domain-rules standards 声明规范基线定位"
@@ -1266,7 +1287,7 @@ require_contains "template-docs/env-setup.md" 'pyenv-win' "env-setup 推荐 Wind
 require_contains "template-docs/env-setup.md" '\.node-version|\.python-version|\.tool-versions' "env-setup 列举标准声明文件"
 require_contains "template-docs/env-setup.md" 'asdf.*WSL|WSL.*asdf' "env-setup 注明 asdf Windows 需 WSL"
 require_contains "ai/prompts/review/20-tech-env-evaluation.md" '声明锁定版本|声明运行时版本锁定' "tech-env-evaluation 比对项目声明锁定版本"
-require_contains "ai/global-rules.md" '§2\.9' "global-rules 路由到 project-rules §2.9"
+require_contains "ai/global-rules.md" '§2\.5 写明' "global-rules 路由到 project-rules §2.5"
 require_contains "ai/global-rules.md" 'ai/commands/README\.md' "global-rules 指向快捷命令路由"
 require_contains "ai/global-rules.md" 'ai/session-rules\.md' "global-rules 指向会话续接规则"
 require_contains "ai/global-rules.md" 'ai/implementation-lifecycle-rules\.md' "global-rules 指向实现生命周期规则"
@@ -1442,7 +1463,7 @@ require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '同步后项�
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '同步报告回写建议' "同步后整理 Prompt 输出同步报告回写建议"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" 'project-check\.yml' "同步后整理 Prompt 提醒迁移派生 workflow"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" 'docs/env/local-env\.md' "同步后整理 Prompt 检查 local-env"
-require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '§2\.5「运行环境与资源约束」' "同步后整理 Prompt 检查 project-rules §2.5"
+require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '§2\.1「运行环境与资源约束」' "同步后整理 Prompt 检查 project-rules §2.1"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '部署 / 运行拓扑约束' "同步后整理 Prompt 检查 04 运行拓扑"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '运行环境与资源评估' "同步后整理 Prompt 检查 05 资源评估"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '本机资源验证' "同步后整理 Prompt 检查 09 本机资源验证"
@@ -1464,7 +1485,7 @@ require_contains "template-docs/derived-sync-report-template.md" '项目验证�
 require_contains "scripts/new-project.sh" 'project-check\.yml' "new-project 生成派生项目 workflow"
 require_contains "scripts/new-project.sh" 'Check project version consistency' "new-project 生成派生项目版本一致性检查"
 require_contains "scripts/new-project.sh" 'DERIVED_PROJECT_VERSION="v0\.1\.0"' "new-project 默认项目自有版本从 v0.1.0 起步"
-require_contains "ai/project-rules.md" '## 2\.8 项目版本管理' "project-rules 种子包含项目版本管理"
+require_contains "ai/project-rules.md" '## 2\.4 项目版本管理' "project-rules 种子包含项目版本管理"
 require_contains "scripts/new-project.sh" 'Not a template sync commit; skip derived sync boundary check' "派生 workflow 普通 PR 跳过同步边界检查"
 require_contains "scripts/new-project.sh" 'bash scripts/check-derived-sync\.sh HEAD' "派生 workflow 同步提交运行边界检查"
 require_contains "scripts/new-project.sh" 'rm -f "\$TARGET/\.github/workflows/template-check\.yml"' "new-project 移除模板仓 workflow"
@@ -1839,7 +1860,7 @@ require_contains "ai/doc-standards/ui-prototype-strategy.md" '原型形式' "UI 
 require_contains "ai/doc-standards/README.md" 'docs/design/\* 通用详细设计基线' "doc-standards README 定义 design 基线"
 require_contains "ai/document-lifecycle-rules.md" 'docs/design/\* 通用详细设计触发与回写规则' "文档生命周期定义 design 触发与回写"
 require_contains "ai/document-lifecycle-rules.md" 'UI 原型策略触发与边界规则' "文档生命周期定义 UI 原型策略门禁"
-require_contains "ai/project-rules.md" '## 2\.7 UI 原型策略' "project-rules 包含 UI 原型策略章节"
+require_contains "ai/project-rules.md" '## 2\.3 UI 原型策略' "project-rules 包含 UI 原型策略章节"
 require_contains "ai/doc-standards/05-tech-spec.md" 'UI 原型策略记录位' "05 技术方案标准包含 UI 原型策略记录位"
 require_contains "ai/doc-standards/README.md" 'UI 原型策略是前端交互设计' "doc-standards README 说明 UI 原型证据关系"
 require_contains "docs/05-tech-spec.md" 'UI 原型策略' "05 技术方案模板包含 UI 原型策略字段"
@@ -1897,6 +1918,7 @@ require_new_project_local_smoke
 require_doc_standards_mirror
 
 check_files_domain_no_overlap
+check_project_rules_section_continuity
 
 begin_section "检查同步清单一致性"
 while IFS= read -r sync_file; do

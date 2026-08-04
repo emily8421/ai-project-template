@@ -6,7 +6,7 @@
 > 判断标准：一条规则换到另一个完全不同的项目上是否还成立——
 > 不成立（涉及具体技术栈/具体功能/具体Phase定义）就属于本文件（实例）；成立属规范基线或通用层。
 >
-> 填写时机：§1 Phase边界、§2 技术栈、§3 项目形态与文档裁剪在生成 docs/03-09 **之前**填
+> 填写时机：§1 Phase边界、§2 技术栈与项目约束、§3 项目形态与文档裁剪在生成 docs/03-09 **之前**填
 > （作为约束）；§4 目录特例、§5 编码约定与禁区在审核 03-09 **之后**补。
 
 ## 初始化必填检查（生成 docs/03-09 前）
@@ -15,11 +15,11 @@
 
 - `项目名称` 与 `代号/缩写` 已明确；若暂不需要缩写，写“无”。
 - `§1 Phase边界` 已明确当前阶段允许、禁止与下一阶段预告；禁止项不得留空。
-- `§2 技术栈约束` 已列出本项目确定使用的主要技术；不确定版本写“待确认”，不得虚构。
-- `§2.5 运行环境与资源约束` 已通过 `scripts/collect-env.ps1` 生成 `docs/env/local-env.md`，并完成人工确认项；若暂不能采集，必须说明原因。
-- `§2.6 图表格式偏好` 已确认（默认 mermaid，可改 plantuml）；未确认则按默认 mermaid，不阻断。
+- `§2 技术栈与项目约束` 已列出本项目确定使用的主要技术；不确定版本写“待确认”，不得虚构。
+- `§2.1 运行环境与资源约束` 已通过 `scripts/collect-env.ps1` 生成 `docs/env/local-env.md`，并完成人工确认项；若暂不能采集，必须说明原因。
+- `§2.2 图表格式偏好` 已确认（默认 mermaid，可改 plantuml）；未确认则按默认 mermaid，不阻断。
 - `§3 项目形态与文档裁剪` 已明确持久化、对外接口、演示形态、`docs/06`、`docs/07` 与需要保留的代码目录。
-- `§2.8 项目版本管理` 已确认：默认从 `v0.1.0` 起步，并保持 `VERSION` 与 `CHANGELOG.md` 顶部项目版本一致；如需改规则，先在本节写明。
+- `§2.4 项目版本管理` 已确认：默认从 `v0.1.0` 起步，并保持 `VERSION` 与 `CHANGELOG.md` 顶部项目版本一致；如需改规则，先在本节写明。
 - 不适用的模板目录或文档已有“保留 / 省略 / 删除”决策；省略 `docs/06` 或 `docs/07` 时必须在 §3 留下说明。
 - 新增项目文档的类型与路径已按 `docs/README.md` 分区规则判断；不得把新增文档直接放到 `docs/` 根目录。
 - 若以上任一项无法判断，AI 必须先向用户提问或提出待确认项，不得继续生成后续设计文档。
@@ -42,13 +42,13 @@
 下一阶段预告：
 - （Phase2大致会开放什么）
 
-## 2. 技术栈约束
+## 2. 技术栈与项目约束
 
 （本项目确定使用的前端/后端/数据库/AI模型等，及禁止引入的替代品）
 
-## 2.5 运行环境与资源约束
+## 2.1 运行环境与资源约束
 
-> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.5（约束架构与技术方案选择；Demo / MVP 优先本机可运行，资源不足须在 `docs/05-tech-spec.md` 写降级策略或服务器预案；`docs/env/local-env.md` 只记录本机事实，不等于技术路线已被环境支撑）。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.1（约束架构与技术方案选择；Demo / MVP 优先本机可运行，资源不足须在 `docs/05-tech-spec.md` 写降级策略或服务器预案；`docs/env/local-env.md` 只记录本机事实，不等于技术路线已被环境支撑）。
 
 - 本机环境文档：`docs/env/local-env.md`（由 `scripts/collect-env.ps1` 生成，人工补充确认项）
 - 技术环境评估报告：需要 / 不需要 / 豁免（若需要，推荐 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`；若豁免，说明原因、风险和补做时点）
@@ -58,16 +58,16 @@
 - 是否允许使用公司服务器：待确认
 - 若需服务器，资源申请口径：待确认
 
-## 2.6 图表格式偏好
+## 2.2 图表格式偏好
 
-> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.6；图表格式规范见 `ai/document-lifecycle-rules.md` §13，场景引导见 `template-docs/scenario-guides.md` §7。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.2；图表格式规范见 `ai/document-lifecycle-rules.md` §13，场景引导见 `template-docs/scenario-guides.md` §7。
 
 - 图表格式：`mermaid`（默认）/ `plantuml`
 - 若选 mermaid 以外格式，说明原因（如团队工具链、渲染环境）
 
-## 2.7 UI 原型策略（如适用）
+## 2.3 UI 原型策略（如适用）
 
-> 字段规范与触发边界见 `ai/doc-standards/project-rules.md` §4 §2.7（触发与边界见 `ai/document-lifecycle-rules.md` §5.3；原型只作为已授权需求的可视化证据，不是需求权威源）。
+> 字段规范与触发边界见 `ai/doc-standards/project-rules.md` §4 §2.3（触发与边界见 `ai/document-lifecycle-rules.md` §5.3；原型只作为已授权需求的可视化证据，不是需求权威源）。
 
 - 是否涉及可点击 UI：是 / 否
 - 是否需要开发前可视化原型：需要 / 不需要 / 豁免
@@ -77,13 +77,13 @@
 - 原型与文档关系：承接 `docs/design/frontend-interaction.md`，并映射到 `docs/08-dev-plan.md` Sprint 与 `docs/09-verification.md` 验收用例；不得新增未授权需求、接口或验收目标
 - 豁免理由：仅当不需要原型或暂不补原型时填写，并说明风险、影响范围和补做时点
 
-## 2.8 项目版本管理
+## 2.4 项目版本管理
 
-默认从 `v0.1.0` 起步，并保持 `VERSION` 与 `CHANGELOG.md` 顶部项目版本一致；`VERSION` / `CHANGELOG.md` / `TEMPLATE-BASE.md` 关系与 `PATCH` / `MINOR` / `MAJOR` 规则见 `ai/doc-standards/project-rules.md` §4 §2.8。可按项目交付节奏覆盖默认规则，但必须在本节写明；是否使用 git tag / GitHub Release：（待确认；默认不强制）。
+默认从 `v0.1.0` 起步，并保持 `VERSION` 与 `CHANGELOG.md` 顶部项目版本一致；`VERSION` / `CHANGELOG.md` / `TEMPLATE-BASE.md` 关系与 `PATCH` / `MINOR` / `MAJOR` 规则见 `ai/doc-standards/project-rules.md` §4 §2.4。可按项目交付节奏覆盖默认规则，但必须在本节写明；是否使用 git tag / GitHub Release：（待确认；默认不强制）。
 
-## 2.9 运行时版本锁定
+## 2.5 运行时版本锁定
 
-> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.9（与 §2.5 运行环境与资源约束正交：§2.5 管硬件资源，§2.9 管运行时版本与切换工具；工具推荐见 `template-docs/env-setup.md`「运行时版本管理」；声明落点 `docs/05-tech-spec.md` §1）。
+> 字段规范见 `ai/doc-standards/project-rules.md` §4 §2.5（与 §2.1 运行环境与资源约束正交：§2.1 管硬件资源，§2.5 管运行时版本与切换工具；工具推荐见 `template-docs/env-setup.md`「运行时版本管理」；声明落点 `docs/05-tech-spec.md` §1）。
 
 - 是否启用运行时版本锁定：是 / 否 / 豁免
 - 锁定的运行时与版本：（如 Node 16.13.0 / Python 3.11 / 多运行时）
@@ -102,7 +102,7 @@
 - 是否有对外接口：（如 REST API / SDK / CLI / 无）
 - 演示形态：[消息通道内交互 / 独立 Web 页面 / 移动端 / CLI / 不需演示]（决定 `frontend/` 是否启用、`docs/04-05` 是否体现前端架构）
 - 前端交互设计：需要 / 不需要 / 豁免（若需要，推荐 `docs/design/frontend-interaction.md`；若豁免，说明原因）
-- UI 原型策略：需要 / 不需要 / 豁免（若需要，在 §2.7 记录原型形式、位置、覆盖范围和追溯；若豁免，说明原因）
+- UI 原型策略：需要 / 不需要 / 豁免（若需要，在 §2.3 记录原型形式、位置、覆盖范围和追溯；若豁免，说明原因）
 - 通用详细设计：需要 / 不需要 / 豁免（若存在非平凡子系统、复杂权限 / 安全、AI / 外部服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异或高风险愿景能力，推荐 `docs/design/<subsystem>.md`；若豁免，说明原因、风险和补做时点）
 - System Skeleton Gate：需要 / 不需要 / 豁免（non-trivial 项目——多模块 / 有对外接口 / 有运行依赖——默认需要，首个业务 Sprint 前在 `docs/08-dev-plan.md` Sprint 0 + `docs/09-verification.md` 系统框架测试大纲落地框架验收；quick-script / 纯计算库 / 单文件工具可豁免，须说明原因、风险和补做时点；规则见 `ai/implementation-lifecycle-rules.md` §3）
 - docs/06-db-design.md：保留 / 省略
