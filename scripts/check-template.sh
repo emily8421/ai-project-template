@@ -875,6 +875,8 @@ require_contains "template-sync.json" '"ai/doc-standards/05-tech-spec\.md"' "tem
 require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
 require_contains "template-sync.json" '"ai/commands/docs-evaluation\.md"' "template-sync 同步 docs-evaluation 命令"
 require_contains "template-sync.json" '"ai/prompts/review/19-docs-evaluation\.md"' "template-sync 同步 docs-evaluation Prompt"
+require_contains "template-sync.json" '"ai/commands/docs-health-review\.md"' "template-sync 同步 docs-health-review 命令"
+require_contains "template-sync.json" '"ai/prompts/review/24-docs-health-review\.md"' "template-sync 同步 docs-health-review Prompt"
 require_contains "template-sync.json" '"ai/prompts/README\.md"' "template-sync 同步 Prompt Library README"
 require_contains "template-sync.json" '"ai/prompts/planning/19-plan-phases-and-sprints\.md"' "template-sync 同步 A9 阶段 Sprint 规划 Prompt"
 require_contains "template-sync.json" '"template-docs/session-handoff\.example\.md"' "template-sync 同步会话续接样例"
@@ -905,6 +907,7 @@ for command_file in \
   ai/commands/sync-methodology.md \
   ai/commands/post-sync-cleanup.md \
   ai/commands/docs-system-audit.md \
+  ai/commands/docs-health-review.md \
   ai/commands/docs-evaluation.md \
   ai/commands/template-proposal-summary.md \
   ai/commands/domain-template-lab.md \
@@ -1103,6 +1106,15 @@ require_contains "ai/prompts/review/19-docs-evaluation.md" 'docs/research/YYYY-M
 require_contains "ai/commands/docs-evaluation.md" 'Go / Conditional Go / No Go' "docs-evaluation 命令说明 Go 结论"
 require_contains "ai/commands/README.md" 'docs-evaluation' "commands README 注册 docs-evaluation"
 require_contains "template-docs/scenario-guides.md" 'docs-evaluation' "scenario guides 注册 docs-evaluation"
+require_contains "ai/global-rules.md" '### 8\.4 整理（tidy）例外' "global-rules §8.4 定义整理例外通道"
+require_contains "ai/session-rules.md" 'docs-health-review' "session-rules §4 接入 docs-health-review 触发点"
+require_file "ai/prompts/review/24-docs-health-review.md"
+require_contains "ai/prompts/review/24-docs-health-review.md" '可安全整理' "docs-health-review Prompt 区分可安全整理"
+require_contains "ai/prompts/review/24-docs-health-review.md" '状态滞后' "docs-health-review Prompt 覆盖状态滞后信号"
+require_contains "ai/prompts/review/24-docs-health-review.md" '整理例外' "docs-health-review Prompt 引用 §8.4 整理例外"
+require_contains "ai/commands/docs-health-review.md" 'ai/prompts/review/24-docs-health-review\.md' "docs-health-review 路由到 24 健康 Prompt"
+require_contains "ai/commands/README.md" 'docs-health-review' "commands README 注册 docs-health-review"
+require_contains "template-docs/scenario-guides.md" 'docs-health-review' "scenario guides 注册 docs-health-review"
 require_contains "ai/document-lifecycle-rules.md" 'E1' "document-lifecycle 定义 E1-E6 评估码"
 require_contains "ai/implementation-lifecycle-rules.md" 'Conditional Go' "implementation-lifecycle 承接 docs-evaluation"
 require_contains "ai/prompts/docs/00-generate-or-complete-docs.md" '功能范围 \+ 交付物形态' "生成 Prompt 要求阶段双维度"

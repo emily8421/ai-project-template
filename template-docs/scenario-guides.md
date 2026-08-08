@@ -147,7 +147,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | A5 评审输入材料 | 「评审输入」「材料够吗」「判断入口模式」 | Product Vision 就绪评估 + 缺口补齐 |
 | A6 生成文档骨架 | 「生成文档」「铺 00-09」「生成整个文档体系」 | 先说明阶段路线和模式，再生成 product-vision 与 docs 骨架 |
 | A7 PLM 文档精修 | 「打磨文档」「精修 02-srs」「补 ER 图」 | 按 PLM 阶段精修（见 §6） |
-| A8 文档评估 / 审计 / 检查 | 「评估文档」「审计文档」「PLM 链路检查」「开发前检查」 | docs-evaluation 判阶段，docs-system-audit 找问题，docs-checklist 拦编码 |
+| A8 文档评估 / 审计 / 检查 | 「评估文档」「审计文档」「PLM 链路检查」「开发前检查」「收尾梳理文档」「检查文档可读性」 | docs-evaluation 判阶段，docs-system-audit 找问题，docs-checklist 拦编码；收尾用 docs-health-review 查臃肿 / 可读性 |
 | A9 阶段规划与路线图 | 「规划阶段」「Demo 做什么」「排路线图」 | 分阶段 + 路线图 |
 | A10 执行 Sprint / 任务 | 「执行 Sprint」「做这个任务」「开始编码」 | 编码 + 合规审查 + 提交 |
 | A11 修 Bug | 「修 Bug」「修复缺陷」「这个报错」 | 定位根因 + 小范围修复 |
@@ -416,8 +416,8 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 - **cmd 指针**：`ai/implementation-lifecycle-rules.md` §3 + `ai/prompts/dev/02-run-task.md`
 
 #### A8 文档评估 / 审计 / 检查
-- **说明**：编码前或阶段转换前判断文档是否能继续往下走；评估给 Go / Conditional Go / No Go，审计找断点，checklist 做最后拦截。
-- **触发**：「评估文档」「评估能不能进入下一阶段」「审计文档」「PLM 链路检查」「开发前检查」
+- **说明**：编码前或阶段转换前判断文档是否能继续往下走；评估给 Go / Conditional Go / No Go，审计找断点，checklist 做最后拦截。一轮工作收尾时还可用 `docs-health-review` 做轻量健康度复核（臃肿 / 重复 / 结构退化 / 状态滞后），与审计互补，不重走追溯链。
+- **触发**：「评估文档」「评估能不能进入下一阶段」「审计文档」「PLM 链路检查」「开发前检查」「收尾梳理文档」「检查文档可读性」「文档瘦身」
 - **cwd·前置**：在派生项目 · 文档基本成型
 
 | # | 做什么 | 为什么 | 机器执行 |
@@ -426,10 +426,11 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 2 | 回溯审计整条文档链 | 检查有没有断点/越界，对照规范基线 | `docs-system-audit`(16)（对照 `ai/doc-standards`，先出报告不改文件） |
 | 3 | 开发前过一遍 checklist | 编码前最后一道边界复查 | `docs-checklist`(10) |
 | 4 | 把结论和问题清单给你 | 先看清问题再决定改，避免边审边改乱套 | 输出评估 / 审计报告（Go 结论、悬空 ID / 越界 / 漂移） |
+| 5 | 收尾做轻量健康度复核（可选） | 一轮工作收尾时顺手查臃肿 / 重复 / 状态滞后，保持文档可读 | `docs-health-review`(24)（默认只读，整理另确认，遵守 `global-rules §8.4`） |
 
 - **完成判据**：评估结论为 Go 或 Conditional Go 且条件已处理 / 接受 · 审计报告无阻断项 · 人工确认 03 §3 路线图 + 05 本机可行性
 - **下一步**：A9
-- **cmd 指针**：`ai/prompts/review/19-docs-evaluation.md` + `ai/prompts/review/16-docs-system-audit.md` + `ai/prompts/review/10-docs-checklist.md`
+- **cmd 指针**：`ai/prompts/review/19-docs-evaluation.md` + `ai/prompts/review/16-docs-system-audit.md` + `ai/prompts/review/10-docs-checklist.md` + `ai/prompts/review/24-docs-health-review.md`
 
 #### A24 技术路线与环境支撑评估
 - **说明**：真实运行依赖项目在生成 / 修订 05 或进入首个相关 Sprint 前，评估本机 / 团队环境是否支撑技术路线。
