@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: 领域模板继承机制与 Agent 系统 Profile
 
 > 来源：2026-07-09 维护会话中关于“母模板 → agent 专用模板”继承关系的设计讨论
-> 状态：部分落地（Batch 1 方法论文档化已完成；Batch 3 母模板侧 AI 实验入口 + C-004 版本保留机制已落地；多级同步自动化与领域 scaffold 资产仍待独立仓库试验）
-> 目标版本：v1.45.6（domain-template-lab AI 实验入口）、v1.47.0（C-004 领域模板版本保留 `--domain-template`）；后续领域模板仓库资产待确认
+> 状态：部分落地（Batch 1 方法论文档化 ✅；Batch 2 独立 `agent-system-template` 仓库 ✅ 已建立并同步至 v1.60.1 / domain v0.4.2，母模板 registry PR#306 已记录；Batch 3 母模板侧 AI 实验入口 v1.45.6 + C-004 版本保留机制 v1.47.0 ✅；剩余：多级同步自动化与 Batch 4 profile 仍待评估）
+> 目标版本：v1.45.6（domain-template-lab AI 实验入口）、v1.47.0（C-004 领域模板版本保留 `--domain-template`）；Batch 2 已落地（`agent-system-template` v0.4.2，同步母模板 v1.60.1）；多级同步自动化 / Batch 4 profile 待评估
 > Release impact：patch（AI 建议，待维护者确认；新增独立实验入口，不改变主同步路径）
 > Release strategy：分批落地；母模板只提供 `domain-template-lab` 启动器和边界，不把领域模板机制并入普通派生项目同步 SOP；领域 scaffold / 同步清单 / 自检先在独立领域模板仓库试验
 
@@ -216,7 +216,7 @@ MVP 只提供结构模板和检查表，不绑定具体 agent runtime。母模�
 
 | ID | 待确认项 | AI 建议 | 建议依据 | 备选方案 | 取舍影响 / 阻塞关系 |
 |---|---|---|---|---|---|
-| C-001 | agent 领域模板首版采用哪种形态 | 采用方案 B：独立 `agent-system-template` 仓库 | 正式 scaffold 需要独立版本、自检、同步清单和后续 eval / trace / tool policy 扩展，不应让母模板承担领域生命周期 | 母模板内置可选 scaffold | 初期成本低但会污染母模板治理边界 |
+| C-001 ✅ | agent 领域模板首版采用哪种形态 | **已解决**：采纳方案 B，独立 `agent-system-template` 仓库已建立（v0.4.2，同步母模板 v1.60.1，registry PR#306） | 正式 scaffold 需要独立版本、自检、同步清单和后续 eval / trace / tool policy 扩展，不应让母模板承担领域生命周期 | 母模板内置可选 scaffold | 初期成本低但会污染母模板治理边界 |
 | C-002 | 是否立刻支持 `new-project --profile agent-system` | 暂不支持，等 scaffold 稳定后再做 | 脚本语义和测试矩阵会扩大 | 直接做 profile 参数 | 使用体验更好但容易过早固化不成熟结构 |
 | C-003 | Batch 2 版本影响 | 母模板保持 none；`agent-system-template` 仓库按自身版本治理判断 | 母模板不新增 scaffold、不改同步清单；领域模板能力在独立仓库发布 | 若母模板内置 scaffold，则按母模板版本治理判断 | 独立仓库避免母模板因领域能力膨胀而频繁发版 |
 | C-004 ✅ | Batch 3 版本保留机制：sync 是否跳过 / 保留领域模板 `VERSION`/`CHANGELOG` | **已落地 v1.47.0**：采用"领域模板角色"分支 `--domain-template`（与 `--preserve-project-version` 互斥），跳过领域模板 `VERSION`/`CHANGELOG` 并维护领域版 `TEMPLATE-BASE.md` | 2026-07-11 试跑实证：每次 sync 覆盖 `VERSION`/`CHANGELOG` 需手动恢复，不可持续 | ~~领域专属 sync 清单 `domain-template-sync.json`~~（因 `template-sync.json` 自我覆盖缺陷未采用） | 显式角色分支比专属清单稳健；领域版本仍可经 `TEMPLATE-BASE.md` 追溯 | 已解除每次手动恢复的开销；多级同步自动化仍待后续 |
