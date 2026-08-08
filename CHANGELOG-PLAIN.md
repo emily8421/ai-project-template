@@ -16,6 +16,27 @@
 
 这是 patch 级的可选能力增强：全是新增的可选命令，默认只读，不强制用，现有命令和行为都不变，派生项目不用迁移。
 
+## v1.60.1（2026-08-04）
+
+把 `ai/project-rules.md`（项目专属规则种子）从模板创建起就存在的章节编号问题修掉了：§2 下面直接跳到 §2.5（§2.1-2.4 从没存在过），而且 §2.5-2.9 讲的运行环境、图表、UI 原型、版本、运行时这些其实不算“技术栈”子话题却挂在 §2 下。顺手把“文档编号要连续”沉淀成通用规则，防止以后再出现怪编号。
+
+- **重编号**：§2.5-2.9 → §2.1-2.5（运行环境 / 图表格式 / UI 原型 / 项目版本 / 运行时版本），§2 标题改成“技术栈与项目约束”兜住杂项；§0/§1/§3-§6 不动（避开引用最密的 §3）。
+- **全量引用迁移**：种子本身 + 3 个 `_examples` 副本 + 规范基线 `ai/doc-standards/project-rules.md` + 约 20 处跨文档引用（global-rules、document-lifecycle、各 doc-standards、scenario-guides、env-setup、多个 prompts、docs/04/06/07 等）全部按新编号迁移；CHANGELOG（历史）和 `_archive/**` 显式不动。
+- **编号规范沉淀**：`global-rules §5` 新增「文档编号规范」小节（连续 / 归属一致 / 改编号要全量迁移 / advisory 自检）；`check-template` 加了个非阻断的 advisory 检测 §2.x 跳号。
+
+这是 patch 级编号规范化：不改同步脚本逻辑、不改默认行为、不要求派生项目迁移（派生同步后收到新编号的种子 + 规范基线；既有派生实例的 `ai/project-rules.md` 不被覆盖）。
+
+## v1.60.0（2026-08-04）
+
+模板治理分层的第三阶段：给领域模板（比如 `agent-system-template` 这类面向某类系统的专用模板）补了一层「领域通用但跨项目」的规则中间层；同时把下行同步清单从“一锅端的扁平列表”拆成按派生路线选组的三组，让普通派生项目不再误收领域专属文件。
+
+- **领域 rules 规范基线**：新建 `ai/doc-standards/domain-rules.md`（领域层 rules 的字段规范 / 审计基线，进同步清单的 `files_domain` 组，只有领域路线接收）；领域模板仓自己的 `ai/domain-rules.md` 种子由 `domain-template-lab` 按 standards 自动生成，不入同步清单、不同步、受边界检查保护。
+- **同步清单三组化**：`template-sync.json` 从扁平 `files` 拆成 `files_all`（全部路线）/ `files_ordinary`（普通派生补充，当前空）/ `files_domain`（领域专属），向后兼容（旧 json 只有 `files` 视为 `files_all`）。路线 = 领域 `files_all ∪ files_domain`，普通 `files_all ∪ files_ordinary`。
+- **同步脚本按路线路由**：`sync-template` 和 `check-derived-sync` 改成按路线选组，防止普通派生项目误收 `files_domain` 文件。
+- **受保护路径**：`check-derived-sync` 受保护清单加 `ai/domain-rules.md`；两个 `TEMPLATE-BASE.md` writer 各加 `## Managed Files` 段，指向 `template-sync.json` 并声明直接改会被覆盖。
+
+这是 minor 级能力增强（新增领域 rules 层 + 按路线差异化同步），向后兼容（旧 json + 新脚本仍可解析；普通派生路线行为不变）。已知限制：领域→领域派生那段（`check-domain-derived-sync.*` 等）不在本仓，这版只打通「母模板→领域模板」。
+
 ## v1.59.2（2026-08-02）
 
 给“项目自己写的 demo 启动脚本”补了一段 Windows 注意事项（承接 issue #296）。
