@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.2（2026-08-09）
+
+新增「文档体系周期性健康度复核」机制（`docs-health-review` 命令 + 24 号 Prompt + `global-rules §8.4` 整理例外 + `session-rules §4` 触发点 + A8 场景接入），补位现有「阶段触发型」审计命令缺少的「周期性 / 收尾触发的可读性与信息密度检查」。来源 issue #307（LUMEN 派生项目回流），提案镜像 `_proposals/_remote-issues/issue-307.md`。
+
+- **新增命令 + Prompt**：`ai/commands/docs-health-review.md` + `ai/prompts/review/24-docs-health-review.md`，检查四类信号（内容重复 / 章节臃肿 / 结构退化 / 状态滞后），输出区分「可安全整理」与「需人工确认」两类清单，默认只读、定位 `文件:行`；区别于 `docs-system-audit`(16) 的全链路追溯，聚焦可读性与信息密度，互补不替换。
+- **整理例外通道**：`ai/global-rules.md` §8 新增 §8.4 整理（tidy）例外——允许在保留可追溯前提下清理过时过程性记录 / 重构超长头部 / 过时段落进 `docs/archive/`；禁止删除历史事实与追溯锚点（REQ / 设计结论 / 验收记录 / 决策记录），历史事实进 archive 或留指针；全局规则版本 v1.12→v1.13。
+- **触发点 + 场景接入**：`ai/session-rules.md` §4 加 Sprint / Phase 收口触发点；`template-docs/scenario-guides.md` A8「文档评估 / 审计 / 检查」并入健康度复核（步骤 5 + 速查索引 + cmd 指针），不新增顶层场景。
+- **同步 + 自检**：`template-sync.json` `files_all` 加新命令 + Prompt；`scripts/check-template.sh` 加 command_file 循环注册 + sync json 断言 + 新命令区块断言（对称 19-docs-evaluation，含 §8.4 / 四类信号 / 命令路由 / 两处注册）；`check-template.ps1` 的 sync 动态检查（`Get-SyncFiles`）自动覆盖新增文件，无需改 fallback。
+
+本版是 patch 级可选能力增强：新增命令 / Prompt / 场景 / §8.4 全部为可选、默认只读、不强制采用，现有命令与默认行为不变，不要求派生项目迁移。按 CONTRIBUTING 兼容性默认规则判定 patch（issue 原建议 minor，但无强制迁移 / 默认行为变化 / 同步结构扩展，故降为 patch）；patch 可豁免 L3 端到端回归。
+
 ## v1.60.1（2026-08-04）
 
 project-rules 种子章节编号规范化：修复 `ai/project-rules.md` 自创建（v1.55.0 起）就存在的 §2→§2.5 编号跳号（§2.1-2.4 从未存在）+ §2.5-2.9 内容（运行环境/图表/UI 原型/版本/运行时）非"技术栈"子话题却挂 §2 下的概念错位；并把"文档编号规范"沉淀为 global-rules 通用原则 + advisory 自检，防复发。
