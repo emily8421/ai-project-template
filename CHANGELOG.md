@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.4（2026-08-11）
+
+同步预检失败隔离（P0）：把「同步前辅助检查失败吞掉已取得的关键事实」的风险收敛为核心规则通用约束 + 同步两阶段预检契约。来源：模板维护者提案 `_proposals/TEMPLATE-UPGRADE-agent-command-preflight.md`（2026-08-10 Codex CLI 同步预检因 PowerShell `Get-ChildItem -Name` 参数构造错误中止；事故无越界，但暴露预检未按失败域隔离、辅助失败掩盖 Git / 版本 / lineage 事实的缺口）。
+
+- **核心规则通用约束**：`ai/rules-core.md` §4 新增「预检精确查询与失败域隔离」——对有限已知目标用与数量 / 类型匹配的精确查询，不得把目录枚举或输出格式开关当筛选；关键事实（Git / 版本 / lineage）与辅助能力检查按失败域隔离、逐项输出 `pass / fail / not-checked`、不共用 all-or-nothing 聚合，辅助失败不掩盖已取得关键事实；同一失败点不自动连续重试。不绑 shell / API，适用所有 Agent / CLI。
+- **同步两阶段预检契约**：`ai/commands/sync-methodology.md` + `ai/prompts/maintainers/12-sync-template.md` 把预检细化为 A 阶段（身份与安全事实：路径 / Git 仓 / 分支与工作区 / stash / `VERSION` / `TEMPLATE-BASE.md` lineage / registry `Sync mode`，任一关键项失败即停仅报告）+ B 阶段（同步能力：`sync-template.*` / `check-derived-sync.*` / `template-sync.json` / 运行入口，记缺项不抹 A 结果）；逐项输出状态、按失败域隔离；给 PowerShell `Test-Path -LiteralPath` / Bash `test -f` 精确查询示例，明确禁用 `Get-ChildItem -Name` 当筛选。
+- **未实施（P1 留候选池）**：对称只读预检脚本 `scripts/preflight-derived-sync.sh/.ps1` 作为同主题后续 Batch 留在提案候选池，本次不新增脚本、不改 `template-sync.json`、不改 `check-template` 断言。
+
+本版是 patch 级治理增强：仅强化现有同步命令 / Prompt 的预检组织方式 + 核心规则补一条通用约束，无新文件 / 脚本 / CI / 同步清单变更，不新增能力层级或下游采用面，默认同步语义与下游必做流程不变。按 CONTRIBUTING 兼容性默认规则判定 patch；patch 可豁免 L3 端到端回归。
+
 ## v1.60.3（2026-08-10）
 
 token-hotspot 触发强化为收尾自检项（`session-rules §4` 收尾触发点 +hotspot 自检项 / `§4.1` 措辞「主动提示」→「必须自检 + 默认写入不询问」/ `§4.2` 收尾即查未汇总计数），把 advisory 软行为锚定到 §4 收尾必经清单，降低长会话 / 上下文压缩 / 跨 CLI 接手后的执行漂移（issue #312，来自 LUMEN_demo_T2.1 回流）。不引入 CI 门禁，hotspot 路径分层与 §4.2「无门禁」底线不变。
