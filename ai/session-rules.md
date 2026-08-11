@@ -24,7 +24,7 @@ NEXT-STEPS.md
 
 **裁决优先级**（恢复上下文时按此链判定，高优先级覆盖低优先级）：
 
-1. **Git 客观事实**（`git status --short --branch` / `git log` / `git stash list` / 当前分支 / 未提交 diff）——永远最新、永远可信。
+1. **Git 客观事实**（`git status --short --branch` / `git log` / `git stash list` / `git worktree list` / 当前分支 / 未提交 diff）——永远最新、永远可信。
 2. **`.ai/session-handoff.md`**——主观记录，提供任务意图 / 计划 / 待确认项，但可能过时。
 3. **`NEXT-STEPS.md`**——仅当 handoff 不存在时的兼容兜底。
 4. **冲突仲裁**：任何续接文件与 Git 事实冲突时，**以 Git 为准 + 停下问用户**，不得直接覆盖项目文件。
@@ -37,6 +37,8 @@ NEXT-STEPS.md
 | 被动中断 | AI CLI 撞 token / 时间上限被强制断、来不及写 handoff；或切换到另一个 AI CLI 接手 | 缺失或停留在上一个任务 | **Git 为唯一可信锚点**，handoff 仅作参考，重建后向用户确认 |
 
 > 关键：被动中断（含跨 CLI 接手）是高频场景，此时不能信任 handoff 的新鲜度，必须以 Git 客观事实重建上下文。跨 Claude / Codex / Cursor 等 CLI 时，续接文件 + Git 是公共状态，换 CLI 不丢上下文。
+
+> worktree 内被动中断（会话在独立 worktree 里工作到一半被断，改动未提交）适用同一裁决：以该 worktree 的 Git 事实（分支 / HEAD / 未提交 diff）为锚点重建上下文；handoff「活跃 worktree」段的登记仅作意图参考（见 §3 / §6 / §8），不替代 Git 事实。
 
 ## 2. 工具运行时元数据边界
 
@@ -61,7 +63,7 @@ AI 每次在项目中开始分析、设计或编码前，应按以下顺序恢�
 
 1. 读取 `ai/index.md` 与 `ai/rules-core.md`，并按任务类型读取对应规则包；无法判断时读取 `ai/index.md` 的完整规则回退包。
 2. 不得先扫描 CLI 私有会话、Memory、SubAgent 或 Cache 目录来推断项目续接点；如用户明确要求检查此类目录，只能按 §2 作为调试信息处理。
-3. 运行只读状态检查：`git status --short --branch`、`git log --oneline -8`、`git stash list`，确认当前分支、工作区是否干净、最近提交。
+3. 运行只读状态检查：`git status --short --branch`、`git log --oneline -8`、`git stash list`、`git worktree list`，确认当前分支、工作区是否干净、最近提交；若除主工作区外存在活跃 worktree，报告其路径 / 分支 / HEAD 是否落后主仓 / 是否含未提交改动，作为恢复上下文的一部分。
 4. 读取 `.ai/session-handoff.md`；若不存在，再读 `NEXT-STEPS.md`。
 5. **交叉核对，判主动 / 被动中断**：
    - handoff 记录的任务 / 分支 / 进度与 Git 一致 → 主动中断，handoff 可信，进入第 6 步。
@@ -89,8 +91,9 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 1. `git status --short --branch`
 2. `git log --oneline -3`
 3. `git stash list`
-4. 读取 `VERSION`（若存在）
-5. 读取 `.ai/session-handoff.md` 的元数据、当前状态、下次优先做和阻塞 / 待确认；若不存在，再读 `NEXT-STEPS.md`
+4. `git worktree list`（除主工作区外存在活跃 worktree 时，作为恢复摘要的上下文一并报告）
+5. 读取 `VERSION`（若存在）
+6. 读取 `.ai/session-handoff.md` 的元数据、当前状态、下次优先做和阻塞 / 待确认；若不存在，再读 `NEXT-STEPS.md`
 
 快速续接模式默认**不做**：
 
@@ -244,6 +247,14 @@ summary 最小结构（写入 `SUMMARY.md` 时参考）：
 - VERSION:
 - Remote snapshot:
 
+## 活跃 worktree
+
+> 记录除主工作区外的活跃 worktree。创建 worktree 后立即登记；合并进 main 或明确废弃后移除 worktree 并从本段清除登记。无则写「无」。
+
+- 路径 / 分支 / 主题：
+- 未提交改动摘要：
+- 处置：待救回 / 待丢弃 / 已合并待清理
+
 ## 当前任务
 
 ## 当前进度
@@ -277,3 +288,9 @@ summary 最小结构（写入 `SUMMARY.md` 时参考）：
 多个 AI 会话（或终端）同时操作同一仓库时，共用一个工作目录 = 共用一个 HEAD，`先确认分支再 commit` 是非原子操作，**必然偶发 commit 落错分支**。
 
 **并发前先确认是否需要开独立 worktree**：`git worktree add <目录> <分支>` 让每会话有独立工作区 + HEAD（共享同一 `.git`），互不踩踏。这是 git 没有自动机制、必须靠约定的并发解法。完整操作步骤见 `git-guide.md` §4「多会话并发操作」。
+
+**worktree 建 / 删登记责任**：
+
+- 创建 worktree 的会话，应立即在续接文件「活跃 worktree」段登记（路径 / 分支 / 主题 / 未提交改动摘要 / 处置状态）。不登记等同不可见——其他会话 / CLI 无法知道该 worktree 存在及其改动。
+- worktree 工作完成（合并进 main / 明确废弃）后，移除 worktree（`git worktree remove`）并从续接文件清除登记。
+- worktree 内被动中断（改动未提交）时，续接文件的登记让接手会话能按 §1 裁决以该 worktree 的 Git 事实重建上下文；不要假设「创建者会记得提交」，模板应假设 worktree 可能被任意会话创建并中途搁置。

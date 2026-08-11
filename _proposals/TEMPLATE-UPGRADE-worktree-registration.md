@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: 会话 worktree 登记与恢复可见性
 
 > 来源：模板维护者（2026-08-11，agent-command-preflight P0 实施期间发现 D:\tmp 漂移 worktree）
-> 状态：待评审
-> 目标版本：待评审后确定（实施时按 patch 评估，见 §10）
-> Release impact：none（本提案仅记录分析；若实施，建议按 patch 评估）
+> 状态：实施中（2026-08-11 triage 通过，实施 P0，目标 v1.60.6）
+> 目标版本：v1.60.6（patch，见 §10）
+> Release impact：patch
 > Release strategy：单独发布；不与命令预检或其他模板提案合并
 
 ## 1. 摘要
@@ -124,9 +124,10 @@
 | 文件 | 拟改内容 |
 |---|---|
 | `ai/session-rules.md` | §3 / §3.1 加 `git worktree list` 只读检查；§6 handoff 结构加「活跃 worktree」段；§1 补 worktree 被动中断裁决；§8 加建 / 删登记责任 |
+| `ai/commands/resume.md` | 执行节点（§3.1 快速续接实际运行文件）只读检查清单加 `git worktree list`（triage 评审补充，避免只改规则散文不落执行节点） |
 | `git-guide.md` | §4 多会话并发补 worktree 建 / 删登记责任 |
 | `template-docs/session-handoff.example.md` | 加「活跃 worktree」段示例 |
-| `scripts/check-template.sh` / `.ps1`（P1 可选） | advisory 断言 session-rules 含 worktree 登记机制说明 |
+| `scripts/check-template.sh` / `.ps1`（P1 可选，本次不实施） | advisory 断言 session-rules 含 worktree 登记机制说明 |
 
 `AGENTS.md` / `CLAUDE.md` 保持入口职责，不复制 worktree 细节；`ai/global-rules.md` 不承载会话级 worktree 规则（属 session-rules）。
 
@@ -167,4 +168,4 @@
 - 续接文件有「活跃 worktree」段，跨会话 / 跨 CLI 可见。
 - 建 / 删 worktree 有登记责任，中断后接手会话能以 Git 事实重建。
 - 不引入 CI 门禁、不改 worktree git 语义、不把本地 worktree 写进同步清单。
-- 模板规则、git-guide、handoff example 三处 worktree 机制一致，无漂移。
+- session-rules、git-guide、handoff example、resume.md 四处 worktree 机制一致，无漂移。
