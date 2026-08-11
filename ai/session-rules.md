@@ -19,7 +19,7 @@
 NEXT-STEPS.md
 ```
 
-- `.ai/session-handoff.md` / `NEXT-STEPS.md` 只用于本地会话断点恢复，不是项目事实文档，不进入正式提交（均已 gitignore），不得替代 `docs/08-dev-plan.md` 的进度摘要或 `docs/09-verification.md` 的验证证据 / 验收记录。
+- `.ai/session-handoff.md` / `NEXT-STEPS.md` 只用于本地会话断点恢复，不是项目事实文档，不进入正式提交（均已 gitignore），不得替代 `docs/08-dev-plan.md` 的进度摘要或 `docs/09-verification.md` 的验证证据 / 验收记录。handoff 虽为本地 gitignored 文件，但体积仍受 §6.1 rollup 约束，不得无限膨胀。
 - 续接文件不得记录 token、密钥、账号密码、客户敏感数据或无法提交到仓库的隐私事实；只记录任务状态、文件路径、命令和待确认项。待确认项应尽量包含 AI 建议、建议依据、备选方案、取舍影响和阻塞关系，避免只留下无法续接的问题清单。
 
 **裁决优先级**（恢复上下文时按此链判定，高优先级覆盖低优先级）：
@@ -150,6 +150,7 @@ Checkpoint Mode 是非快速续接任务的执行中防跑飞协议；触发条�
 - 完成 Sprint / Phase 收口、或连续多轮文档修改后：可运行 `docs-health-review` 对文档体系做一次收尾梳理（识别臃肿 / 重复 / 结构退化 / 状态滞后），整理须遵守 `ai/global-rules.md` §8.4 整理例外。
 - 结束回复前：若仍有未完成任务，刷新“下次优先做”。
 - 结束回复前（hotspot 收尾自检）：若本轮命中 §4.1 任一触发条件，**默认写入本地 `.ai/token-hotspots/` 单条记录（不询问、不上传）**；若本地未汇总记录累计 ≥3 份，按 §4.2 提示 rollup。
+- 结束回复前（handoff rollup 自检）：若续接文件 Latest checkpoint 达 §6.1 触发阈值（累计 ≥N 个或 ≥M 行），提示按 rollup 流程压缩旧 checkpoint + 归档原文到 `.ai/session-handoff-archive/`，避免续接文件无限膨胀。
 
 纯只读问答、一次性解释或没有形成后续任务的对话，可以不更新续接文件。
 
@@ -278,6 +279,16 @@ summary 最小结构（写入 `SUMMARY.md` 时参考）：
 ```
 
 样例见 `template-docs/session-handoff.example.md`。
+
+### 6.1 Latest checkpoint rollup
+
+handoff 的「Latest checkpoint」累加结构（配合 `global-rules §8` 只增不删、原位追加）保证续接记录可追溯，但**只规定了「如何追加」，未规定「何时压缩 / 归档旧 checkpoint」**——只增不减会让续接文件随历史累积线性膨胀，挤占快速续接（§3.1）的上下文读取上限。本小节补 rollup 机制（类比 §4.2 token-hotspot rollup），**用归档而非删除**，不违背「只增不删」，也不引入 CI 门禁（handoff 是 gitignored 本地文件，CI 无法检查）。
+
+- **触发**：当续接文件 Latest checkpoint 累计 **≥ N 个**（建议 8-10）或文件 **≥ M 行**（建议 800-1000；具体阈值由维护者按项目定）时，AI 在任务收尾（§4 触发点）提示 rollup。
+- **压缩**：保留**近 3-5 个** Latest checkpoint 原文；更早的 checkpoint 压缩为一段「**历史阶段摘要**」（每个 Phase / Sprint 收口或固定时间窗口一段，提炼：任务结论 / 已完成关键项 / 未完成与待确认 / Git 锚点 commit）。
+- **归档**：被压缩的原文 checkpoint 移入 `.ai/session-handoff-archive/YYYY-MM-DD-<range>.md`（**本地 gitignored，保留可追溯，不删除**；该目录由派生项目按需创建并自行 `.gitignore`，类比 `.ai/token-hotspots/`）。
+- **原位指针**：续接文件顶部「历史阶段摘要」段附归档文件路径指针，确保被动中断重建（§1）仍可回溯。
+- **不替代 docs/ 回写**：有长期价值的结论（Phase 收口、验收通过、缺陷回归）仍必须回写 `docs/08` / `docs/09`（§5 既有规则）；handoff 摘要只保留「续接线索」，不是项目事实。
 
 ## 7. 与快捷命令联动
 

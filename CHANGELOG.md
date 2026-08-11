@@ -10,11 +10,14 @@
 
 代码治理分层（MINOR）：把派生项目回流的三份代码治理提案聚合为一次 MINOR 发布，填补 Core 层「写代码基本功」与实现层「破坏性测试 DB 安全」两处空白，并补会话续接文件 rollup 机制。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流，issue #322 / #320 / #314 镜像见 `_proposals/_remote-issues/`。
 
-**Batch A（PR 进行中）**：
+**Batch A（PR #326，已合入）**：
 - **`ai/global-rules.md` §2.1 L0 通用代码原则基线**（#322）：新增 12 条跨语言 / 跨技术栈 / 跨项目形态通用代码原则（命名传达意图、单一职责、一致性优先、失败必须可见、DRY、显式优于隐式、对外信息最小化、可测试性、变更最小与可追溯、import / 依赖卫生、体量克制、先契约后实现），每条附可执行口径；与形态特化 L1/L2（各 profile §9）、项目专属 L3（`project-rules §5`）正交分层。全局规则版本 `v1.14` → `v1.15`。不引入硬 CI 门禁。
 - **`ai/implementation-lifecycle-rules.md` §6.1 破坏性测试数据库安全 guard**（#320）：新增独立测试库 + 三重 fail-closed guard（环境标记 / `DATABASE_URL` 指向测试库 / 显式破坏性开关，全部满足才放行）、guard 为测试侧纯函数且不降级 skip、错误信息不含连接串 / 凭证；无持久化项目豁免。
 
-本版为 MINOR 能力补强：新增代码治理与测试安全规范条目，不改变默认行为、不新增同步结构文件或强制迁移；派生项目同步后按需在代码 review / DB 集成测试中应用。合并后下行同步各派生项目。
+**Batch B（PR #327，进行中）**：
+- **`ai/session-rules.md` handoff Latest checkpoint rollup**（#314）：§6 新增 §6.1 rollup 机制（触发阈值 ≥N 个 checkpoint 或 ≥M 行 → 保留近 3-5 个原文 + 更早压缩为历史阶段摘要 + 原文归档 `.ai/session-handoff-archive/` + 原位指针），用归档不删除、不违背「只增不删」、不引入 CI；§4 新增 handoff rollup 收尾自检触发点；§1 措辞补「handoff 体积受 rollup 约束」。类比 §4.2 token-hotspot rollup。
+
+本版为 MINOR 能力补强：新增代码治理、测试安全与续接文件压缩规范条目，不改变默认行为、不新增同步结构文件或强制迁移；派生项目同步后按需在代码 review / DB 集成测试 / 续接文件维护中应用。合并后下行同步各派生项目。
 
 ## v1.60.6（2026-08-11）
 
