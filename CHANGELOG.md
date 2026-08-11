@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.1（2026-08-11）
+
+新增坑 / 问题观察日志（pitfall observation log）机制（PATCH）：与 `ai/session-rules.md` §4.1 token-hotspot 平行，提供 AI 引入或踩到的坑 / 问题 / 教训（bug、流程坑、低效行为导致返工或缺陷）的轻量记录载体，作为定期审视、归纳、转提案的原始材料。提案见 `_proposals/TEMPLATE-UPGRADE-pitfall-observation-log.md`。
+
+- **`ai/session-rules.md` 新增 §4.3**：与 §4.1 / §4.2 同构——载体分层（本地单条 `.ai/pitfalls/` gitignored + 可选入库 `ai-records/pitfalls/SUMMARY.md` 默认不建）、单条最小字段（建议非必填）、收尾自检触发与写入、rollup ≥3 提示、归档（`.ai/pitfalls-archive/`，归档不删除）、汇总状态字段、派生项目自行 `.gitignore` 提示；与 token-hotspot 边界划清（成本 / 上下文热点 → §4.1，问题 / 教训 → §4.3）；C1 只负责提案 triage，不承担坑日志计数。§4 触发点新增 pitfall 收尾自检条。
+- **`template-docs/rd-data-chain.md` 索引同步**：§2 辅助留痕表新增「AI 引入的问题 / 教训」类别行；§4「无门禁」枚举补 pitfalls，保持索引自洽。
+- **`.gitignore` 新增 `.ai/pitfalls/`**：本地单条记录纯本地、不询问、不上传。
+
+本版是 patch 级可选能力补强：新增一个与 token-hotspot 同构的本地观察载体 + 索引行 + 一条触发句，不改变同步结构、不加下游采用面、不新增 CI 门禁或 `check-template` 断言；派生项目按需采用。patch 豁免 L3 端到端回归。
+
 ## v1.61.0（2026-08-11）
 
 代码治理分层（MINOR）：把派生项目回流的三份代码治理提案聚合为一次 MINOR 发布，填补 Core 层「写代码基本功」与实现层「破坏性测试 DB 安全」两处空白，并补会话续接文件 rollup 机制。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流，issue #322 / #320 / #314 镜像见 `_proposals/_remote-issues/`。
