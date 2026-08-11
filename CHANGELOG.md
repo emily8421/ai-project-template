@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.0（2026-08-11）
+
+代码治理分层（MINOR）：把派生项目回流的三份代码治理提案聚合为一次 MINOR 发布，填补 Core 层「写代码基本功」与实现层「破坏性测试 DB 安全」两处空白，并补会话续接文件 rollup 机制。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流，issue #322 / #320 / #314 镜像见 `_proposals/_remote-issues/`。
+
+**Batch A（PR 进行中）**：
+- **`ai/global-rules.md` §2.1 L0 通用代码原则基线**（#322）：新增 12 条跨语言 / 跨技术栈 / 跨项目形态通用代码原则（命名传达意图、单一职责、一致性优先、失败必须可见、DRY、显式优于隐式、对外信息最小化、可测试性、变更最小与可追溯、import / 依赖卫生、体量克制、先契约后实现），每条附可执行口径；与形态特化 L1/L2（各 profile §9）、项目专属 L3（`project-rules §5`）正交分层。全局规则版本 `v1.14` → `v1.15`。不引入硬 CI 门禁。
+- **`ai/implementation-lifecycle-rules.md` §6.1 破坏性测试数据库安全 guard**（#320）：新增独立测试库 + 三重 fail-closed guard（环境标记 / `DATABASE_URL` 指向测试库 / 显式破坏性开关，全部满足才放行）、guard 为测试侧纯函数且不降级 skip、错误信息不含连接串 / 凭证；无持久化项目豁免。
+
+本版为 MINOR 能力补强：新增代码治理与测试安全规范条目，不改变默认行为、不新增同步结构文件或强制迁移；派生项目同步后按需在代码 review / DB 集成测试中应用。合并后下行同步各派生项目。
+
 ## v1.60.6（2026-08-11）
 
 会话 worktree 登记与恢复可见性（P0）：把活跃 worktree 纳入会话恢复的只读检查 + 续接文件登记 + 建 / 删登记责任，解决跨会话 / 跨 CLI 接手时 worktree 及其未提交工作不可见的问题。提案见 `_proposals/TEMPLATE-UPGRADE-worktree-registration.md`。
