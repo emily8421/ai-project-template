@@ -28,6 +28,7 @@ Thumbs.db
 NEXT-STEPS.md
 .ai/session-handoff.md
 .ai/token-hotspots/
+.ai/pitfalls/
 
 # 构建产物
 dist/
