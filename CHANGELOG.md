@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.6（2026-08-11）
+
+会话 worktree 登记与恢复可见性（P0）：把活跃 worktree 纳入会话恢复的只读检查 + 续接文件登记 + 建 / 删登记责任，解决跨会话 / 跨 CLI 接手时 worktree 及其未提交工作不可见的问题。提案见 `_proposals/TEMPLATE-UPGRADE-worktree-registration.md`。
+
+- **恢复流程加 `git worktree list`**：`ai/session-rules.md` §3 恢复流程第 3 步与 §3.1 快速续接只读检查清单、`ai/commands/resume.md` 执行节点均加 `git worktree list`；除主工作区外存在活跃 worktree 时，报告其路径 / 分支 / HEAD 是否落后主仓 / 是否含未提交改动。
+- **续接文件登记「活跃 worktree」段**：`ai/session-rules.md` §6 推荐结构与 `template-docs/session-handoff.example.md` 增加「活跃 worktree」段（路径 / 分支 / 主题 / 未提交改动摘要 / 处置状态）。
+- **建 / 删登记责任**：`ai/session-rules.md` §8 与 `git-guide.md` §4 补充——创建 worktree 后立即登记，合并进 main 或明确废弃后移除 worktree 并清除登记；`ai/session-rules.md` §1 裁决优先级补充 worktree 内被动中断以该 worktree 的 Git 事实为锚点。
+- **P1 advisory 未实施**：`check-template` advisory 自检（只查规则文件含机制说明）留候选池，本次不新增断言 / 脚本 / CI 门禁。
+
+本版是 patch 级治理补强：只强化会话恢复检查与续接文件登记，不改变 worktree 的 git 语义、不要求派生项目迁移、不新增同步结构或采用面；patch 可豁免 L3 端到端回归。
+
 ## v1.60.5（2026-08-11）
 
 新增正式工程文档语言与表述规范（`ai/global-rules.md` §10），并把它接入文档生成与修改的执行节点，使 AI 在生成前、生成后、修改前、修改后都受约束。提案见 `_proposals/TEMPLATE-UPGRADE-document-language-style.md`。
