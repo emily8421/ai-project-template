@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.60.5（2026-08-11）
+
+新增正式工程文档语言与表述规范（`ai/global-rules.md` §10），并把它接入文档生成与修改的执行节点，使 AI 在生成前、生成后、修改前、修改后都受约束。提案见 `_proposals/TEMPLATE-UPGRADE-document-language-style.md`。
+
+- **全局规则 §10 七条**：准确专业、平实简洁、具体可核对、逻辑与状态明确、规范性用词、避免不当表达、例外与渐进适用；不拆多级子节，不新增关键词 CI。全局规则版本 `v1.13` → `v1.14`。
+- **抗误伤边界**：已成行业通用术语的比喻（心跳 / 沙箱 / 灰度 / 容器等）视为专业术语；愿景 / 路线图可方向性表述但须在需求或验收层落到可核对项；“尽量 / 原则上”上下文明确时可用；面向人的说明性文档（README / 教程 / `CHANGELOG-PLAIN.md`）保留通俗例外——避免机械拦截误伤合法技术表达。
+- **执行接入点（生成 / 修改前后自检）**：`document-lifecycle-rules.md` §10 生成前声明 + §11 生成后自检、`prompts/docs/00-generate-or-complete-docs.md` 硬约束、`prompts/docs/04-edit-single-doc.md` 修订要求、`prompts/review/10-docs-checklist.md` 验收、`prompts/review/24-docs-health-review.md` 语气检查各加一条问句式语言自检；`document-lifecycle-rules.md` §1 加引用。自检用问句式（“是否…若有，是否说明…”），不做关键词硬拦。
+- **不改动 `rules-core`**：面向用户的决策说明保持原样；正式工程文档规范与对话式说明分离，互不波及。
+
+本版是 patch 级规则补强：不新增同步文件、文档字段、命令、脚本或 CI 门禁，不改变同步清单结构。派生项目同步后在后续新增或修改文档时应用该规范；patch 可豁免 L3 端到端回归。
+
 ## v1.60.4（2026-08-11）
 
 同步预检失败隔离（P0）：把「同步前辅助检查失败吞掉已取得的关键事实」的风险收敛为核心规则通用约束 + 同步两阶段预检契约。来源：模板维护者提案 `_proposals/TEMPLATE-UPGRADE-agent-command-preflight.md`（2026-08-10 Codex CLI 同步预检因 PowerShell `Get-ChildItem -Name` 参数构造错误中止；事故无越界，但暴露预检未按失败域隔离、辅助失败掩盖 Git / 版本 / lineage 事实的缺口）。
