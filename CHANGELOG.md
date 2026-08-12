@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.2（2026-08-12）
+
+Web Profile 代码层一致性基线（PATCH）：给 `template-docs/web-fullstack-profile.md` 新增 §9 Web 代码契约精简版，兑现 `ai/global-rules.md §2.1` L0 引言与 L0-8 口径对 `web-fullstack-profile §9/§9.4` 的前向引用（原为悬空引用）。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流 issue #333；评估与裁剪见 `docs/research/2026-08-12-c1-proposal-triage-reassessment.md` §15。
+
+- **`template-docs/web-fullstack-profile.md` 新增 §9 代码层一致性基线（Web 形态）**：§9.1 错误与响应契约（机器可读错误标识、兜底异常 envelope 复用 L0-7、结构化客户端错误）；§9.2 传输边界（统一 API client / transport，禁裸 `fetch`）；§9.3 类型与契约同步（机器可校验契约源，禁手工双写漂移）；§9.4 工程化护栏（真实 HTTP 路径回归 + CI 必须跑测试复用 L0-8 + 质量门按形态裁剪指向 `implementation-lifecycle-rules §6`）。跨形态通用基本功指向 L0，具体栈写法留项目 `05-tech-spec` / `project-rules §5`；不引 R1-R7、不强制固定工具组合、不新增硬 Gate。部分采纳 #333——裁掉固定 envelope 结构 / 读写分层二选一 / barrel re-export / 端点后缀等项目特定或栈特定条目。
+
+本版是 patch 级治理说明补强：在已有同步清单文件内新增一节可选代码契约，兑现已有规则的前向引用，不新增同步结构文件 / 目录、不新增必填入口、不新增强制 Gate 或 `check-template` 断言；默认行为与下游必做流程不变。派生项目同步后按需在 `project-rules §5` / `05-tech-spec` 落地具体口径。patch 豁免 L3 端到端回归。
+
 ## v1.61.1（2026-08-11）
 
 新增坑 / 问题观察日志（pitfall observation log）机制（PATCH）：与 `ai/session-rules.md` §4.1 token-hotspot 平行，提供 AI 引入或踩到的坑 / 问题 / 教训（bug、流程坑、低效行为导致返工或缺陷）的轻量记录载体，作为定期审视、归纳、转提案的原始材料。提案见 `_proposals/TEMPLATE-UPGRADE-pitfall-observation-log.md`。
