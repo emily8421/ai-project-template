@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.3（2026-08-12）
+
+去重声明必填 + 自动检查归位准则（PATCH）：把 #335 选 A 关闭时认可的两个真实 gap 落地——提案流程补"与既有规则关系（去重）"必填章节（gap A），实现层补"自动检查归位"统一准则（gap B）。来源：模板维护者基于 #335 评估（`docs/research/2026-08-12-c1-proposal-triage-reassessment.md` §6）+ handoff C-007；提案见 `_proposals/TEMPLATE-UPGRADE-rule-dedup-and-check-gate.md`。
+
+- **gap A 去重声明必填（5 文件）**：`_proposals/README.md` 新增「提案正文章节」小节，把 `## 1.1 与既有规则的关系（去重）` 列为必填并给范式（关系标签：对象不同 / 层级不同 / 机制不同 / 互补不重复 / 合并入 / 指向）；`CONTRIBUTING §3.1` 追加必填要求；`ai/commands/submit-proposal.md §2` + `ai/prompts/maintainers/17-submit-proposal.md` 校验清单追加"去重声明"项（command / Prompt 配对不漂移）；`ai/global-rules.md §9` 在提案去项目化字段后追加"/ 与既有规则关系（去重）"，下沉到通用层让派生项目 AI 也读到。把 LUMEN 回流批次的自觉范式（#312 / #314 / #320 / #322 / #332 / #333 / #334 §1.1）提升为流程必填。
+- **gap B 自动检查归位准则（1 文件）**：`ai/implementation-lifecycle-rules.md` 新增 §6.2「自动检查归位与质量门口径」，照 §6.1 结构——重申 §6 主节"按形态裁剪"口径；3 条归位准则（不与 L0 §2.1 重复定义 / 适用性裁剪显式说明不适用项 / 声明位置 `project-rules §5` 或 `05-tech-spec`）；blockquote「口径」列触发 / 豁免 / 验证。采 #335 立场（按适用性裁剪，不强制固定工具组合），定 #332 / #335 冲突口径；兑现 `web-fullstack-profile §9.4 → §6` 外部引用。
+
+本版是 patch 级治理说明补强：提案流程字段追加（现有五字段本就必填，追加一个并给范式）+ 规则文件内新增小节，不新增同步结构文件 / 目录、不新增必填入口、不新增强制 Gate 或 `check-template` 断言；默认行为与下游必做流程不变。派生项目同步后，新提案按 §1.1 写去重声明、自动检查按 §6.2 声明适用质量门。patch 豁免 L3 端到端回归。
+
 ## v1.61.2（2026-08-12）
 
 Web Profile 代码层一致性基线（PATCH）：给 `template-docs/web-fullstack-profile.md` 新增 §9 Web 代码契约精简版，兑现 `ai/global-rules.md §2.1` L0 引言与 L0-8 口径对 `web-fullstack-profile §9/§9.4` 的前向引用（原为悬空引用）。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流 issue #333；评估与裁剪见 `docs/research/2026-08-12-c1-proposal-triage-reassessment.md` §15。
