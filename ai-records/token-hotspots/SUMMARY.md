@@ -1,14 +1,14 @@
-# Token Hotspot 汇总：2026-07-10 ~ 2026-08-11
+# Token Hotspot 汇总：2026-07-10 ~ 2026-08-13
 
-> 生成日期：2026-08-11（首版 2026-07-22，07-25 第二次扩展，08-09 第三次扩展纳入 07-26 ~ 08-09 共 10 份；本次第四次扩展纳入 08-10 ~ 08-11 共 7 份）。
+> 生成日期：2026-08-13（首版 2026-07-22，07-25 第二次扩展，08-09 第三次扩展纳入 07-26 ~ 08-09 共 10 份，08-11 第四次扩展纳入 08-10 ~ 08-11 共 7 份；本次第五次扩展纳入 08-12 ~ 08-13 共 8 份）。
 > 归纳方法：07-22 前基于文件名 / 任务类型分布 + 4 份通读归纳；07-23 / 07-24 / 07-25 三份逐份通读；08-09 次 07-26 ~ 08-09 共 10 份逐份通读；本次 08-10 ~ 08-11 共 7 份逐份通读后纳入。截至本次覆盖 37 份（07-10 ~ 08-11），其中 07-10 ~ 07-22 早期 16 份非全部逐份审计。
 > 单条记录去向（v1.57.2 起）：单条 hotspot 记录已移至本地 `.ai/token-hotspots/`（gitignore，不上传）；本目录仅保留汇总（`SUMMARY.md` + `summaries/`）作为入库观察材料。下方“份数 / 日期”对应本地 `.ai/token-hotspots/` 中的单条文件。
 
 ## 0. 覆盖边界
 
-- 已覆盖记录（本地 `.ai/token-hotspots/`）：07-10 ~ 07-25 共 20 份 + 07-26 ~ 08-09 共 10 份 + 08-10 ~ 08-11 共 7 份 = **37 份**。
-- 未覆盖记录：无（截至 2026-08-11，本地全部单条已纳入本汇总）。
-- 下一次 rollup 起点：从 **2026-08-12** 起，只统计 `汇总状态：未汇总` 的本地新记录。
+- 已覆盖记录（本地 `.ai/token-hotspots/`）：07-10 ~ 07-25 共 20 份 + 07-26 ~ 08-09 共 10 份 + 08-10 ~ 08-11 共 7 份 + 08-12 ~ 08-13 共 8 份 = **45 份**。
+- 未覆盖记录：无（截至 2026-08-13，本地全部单条已纳入本汇总）。
+- 下一次 rollup 起点：从 **2026-08-14** 起，只统计 `汇总状态：未汇总` 的本地新记录。
 
 > 本次为常规增量 rollup：08-09 次汇总后，08-10 ~ 08-11 两日连续 7 份未汇总（超 §4.2 的 3 份阈值），于 08-11 会话收尾自检触发 rollup 提示后补齐。较上次“补欠账”（10 份断档）间隔明显缩短，§6 改进（收尾前显式查未汇总份数）生效。
 
@@ -34,6 +34,16 @@
   - 08-11 worktree-registration triage + P0 实施 + 双 PR 闭环（→ 已落地 v1.60.6，PR #324 / #325）
 - **主要热点（08-10 ~ 08-11 新增观察）**：模板维护规则读取链固化（多次重复 index + rules-core + CONTRIBUTING + MAINTAINERS + global-rules + 相邻规则）、check-markdown-clean 误扫 `_archive`（超 MAINTAINERS §3 固定参数）、chore 归档 PR 单独建造成 CI 往返翻倍、`gh pr checks --json bucket` 字段本机为空导致轮询空转、SUMMARY 份数连续性盲区再现（订正 29→30 靠人工核实）、worktree 漂移调查（一次性）。
 - **前序主要热点（07-10 ~ 08-09）**：规则门禁读取（反复全文读 CONTRIBUTING / git-guide / rules 包）、PR/CI 闭环远端 gh 查询、归档 / 同步目录 Glob 大列表、跨仓同步多仓库上下文、验证失败环境诊断往返、triage 对照（提案描述 vs 实际现状）、横切评估取证、多批次 Edit 精确重读、check-template --summary 重复长输出、跨仓核实、Windows Git Bash 环境诊断、Explore agent 批量分担、handoff 更新前 Read 全文。
+- **08-12 ~ 08-13 新增 8 份任务类型**：
+  - 08-12 远端 issue 只读快照（治理上下文加载 > 查询本身）
+  - 08-12 C1 提案 triage 首轮评估（完整回退包 + 2 提案全文 + grep 核对）
+  - 08-12 提案重新评估报告落盘（5 issue 镜像 + 首轮报告交叉对照）
+  - 08-12 C1 复评 triage（2 份 AI 报告 + 4 issue 原文核实）
+  - 08-12 #335 gap 评估 + 远端关闭（capability-packages / rules-core / remote-ci-sop 全文）
+  - 08-12 #335 gap 补强 PATCH（plan + 2 PR + 归档；check-template 1800+ 行 Read 2 次）
+  - 08-12 #332 退回重写草稿（完整规则 + issue 镜像 + 复评章节 + 范本）
+  - 08-13 #332 评审 → v1.61.4 落地长任务（Grep 稀疏核实失误 + CI 失败排查 + 多轮 git/gh）
+- **主要热点（08-12 ~ 08-13 新增观察）**：**Grep 稀疏匹配（-C 1）导致评审核实失误**（漏看 §6.2 中间 3 条编号列表、误判结构，Read 全段纠正）；check-template 默认输出 1800+ 行应优先 `--summary`；双报告核对应先 grep 事实锚点再精读；plan mode Explore agent 落点结论可直接当 Plan（跳过 Plan agent）；远端 gh / CI 多轮交互 + Monitor 轮询。
 
 ## 2. 为什么触发 / 为什么此前未触发
 
@@ -55,6 +65,9 @@
 - **check-markdown-clean 参数漂移（08-11 新增）**：MAINTAINERS §3 步骤 10 固定参数是 `_proposals ai-records`；误扩 `_archive` 会扫出 29 个历史 BOM/EOF 问题、失败日志截断 4547 字符污染上下文。应严格限定参数范围，历史归档不在提交前清洁检查范围。
 - **chore 归档 PR 单独建 → CI 往返翻倍（08-11 新增）**：实施 PR 与归档 PR（单文件 rename）分开各跑一轮 CI；低价值重复往返。可考虑实施 + 归档同 PR，或归档类 CI 轮询降频。
 - **目录 Glob 大列表**：`_archive/proposals/`（90+ 文件）、`ai/prompts/`、`_proposals/`。
+- **Grep 稀疏匹配核实失误（08-13 新增，重要）**：用 Grep `-C 1` 看 `implementation-lifecycle §6.2` 漏掉中间 3 条编号列表，误判「§6.2 无 3 条」，差点把提案对的描述当错改；Read 全段后纠正。教训：Grep 定位 + Read 全段应配对，稀疏上下文不能单独作结构判断（与 [[self-check-continuity-blindspot]] 同类的「检查存在不查连续性」盲区）。
+- **check-template 长输出（08-12 新增）**：默认 1800+ 行，应优先 `--summary`（v1.61.1 落地），避免多次 Read 大输出费 token。
+- **双报告核对（08-12 新增）**：两份长评估报告（首轮 122 行 + 复评 348 行）+ 4 issue 全文是评估对象本身、不可摘要替代；未来先 grep 事实锚点（章节号 / 引用 / 版本规则行）再精读可减少全文读取。
 
 ## 4. 已形成的改进建议（必须保留 / 应压缩 / 应沉淀 / 应拆会话）
 
@@ -75,6 +88,8 @@
   - CHANGELOG-PLAIN 漂移检测断言（顶部版本 == CHANGELOG.md 顶部，07-26 候选）。
   - **模板维护「最小必读清单」**（08-10 / 08-11 连续命中）：给模板维护类任务前置固化必读文件（index + rules-core + CONTRIBUTING + MAINTAINERS + global-rules + 目标文件相邻规则），避免临场决定读哪些——**新提案候选**。
 - **应拆会话**：跨仓批量同步（sync-all-derived）、9 提案收口 + 归档 + A13 叠加（08-05）、多 issue triage（C1）应独立会话。
+- **08-12 ~ 08-13 新增应压缩**：评审核实用 Read 全段而非 Grep 稀疏匹配；check-template 优先 `--summary`；双报告先 grep 锚点再精读。
+- **08-12 ~ 08-13 新增应沉淀**：plan mode Explore agent 落点结论完整可直接当 Plan（复杂规则改造复用「Explore 即 Plan」）；check-markdown-clean 本地预检缺口（→ `ai-records/pitfalls/SUMMARY.md` + `_proposals/TEMPLATE-UPGRADE-local-preflight-coverage.md`）。
 
 ## 5. 模板回流判断（是否需要形成 _proposals/ 提案，去项目化边界）
 
@@ -85,6 +100,7 @@
 - **C1 硬门禁显式化**（命令文件步骤补“先列镜像路径 + Updated/Mirrored at 再出计划”）：08-02，先观察是否反复触发。
 - **已落地（无需新提案）**：Windows Git Bash（v1.58.1 PR #278 / #279）、ai-record-lifecycle（v1.57.2，本汇总机制自身）、模板能力现状索引（rd-data-chain 延伸，观察中）、**document-language-style 语言规范（v1.60.5 #321）**、**agent-command-preflight 失败域隔离（v1.60.4 #317）**、**worktree-registration 会话恢复可见性（v1.60.6 #324 / #325，本次 rollup 期间闭环）**。
 - **领域仓自有流程（不回流母模板）**：agent-system-template 提案归档批注 + followups 转出（08-05，已落领域仓 `_archive/proposals/README.md` + `_proposals/_archive-followups.md`，母模板 `_proposals/` 已有完整收件箱 + `_archive/` 机制，无可复用改进）。
+- **`TEMPLATE-UPGRADE-local-preflight-coverage`**（check-markdown-clean 本地预检缺口，08-11 + 08-13 双实证）：本次已起提案，见 `_proposals/`；跨派生通用（`check-markdown-clean.ps1` 在 files_all 下行同步）。详细坑见 `ai-records/pitfalls/SUMMARY.md`。
 
 ## 6. 记录节奏教训（累积）
 
@@ -94,3 +110,4 @@
 - **08-09 教训（rollup 断裂）**：SUMMARY 停在 07-26，之后 10 份未汇总（§4.2 阈值 3 份的 3 倍多），连续多个会话收尾时未触发 rollup 提示。根因：rollup 靠“AI 收尾自觉”，无累计计数器强制触发，属与 [[self-check-continuity-blindspot]] 同类的连续性盲区（检查项存在，但无计数器，全靠每次自觉）。用户视角后果：单条是 gitignored 本地不可见，SUMMARY 是唯一跨会话可见层，断了 → 用户误判“机制停转”。改进：每次会话收尾前显式检查“上次 SUMMARY 后本地新增未汇总份数 ≥3 即提示 rollup”；08-09 已补齐 10 份欠账。
 - **08-10 教训（份数连续性盲区再现）**：归档 issue-312 时订正 SUMMARY 份数（29→30），发现 handoff「下次优先做」推测的份数不可当锚点——本地 `.ai/token-hotspots/` 文件枚举一度误判为 31（把 rollup 元记录 `08-09-rollup-catchup` 算入被汇总单条），需对照 §1 清单修正。印证 [[self-check-continuity-blindspot]]：**rollup 份数必须用本地文件枚举交叉验证，handoff 推测不能当稳定锚点**；check-template 不查 hotspot 份数（与 §4.2「无自检门禁」一致，仅观察）。
 - **08-11 教训（改进验证）**：上次 §6 改进（收尾前显式查未汇总份数）生效——本次 08-11 收尾自检即触发 rollup 提示，未再出现断档欠账；间隔收敛到 2 日 7 份。
+- **08-13 教训（Grep 核实盲区）**：评审核实 §6.2 时 Grep `-C 1` 稀疏匹配漏看中间 3 条编号列表，误判结构，差点错改提案；Read 全段纠正。与 [[self-check-continuity-blindspot]]（check-template 只查存在不查连续性）同类——**核实用 Read 全段，Grep 只作定位**。
