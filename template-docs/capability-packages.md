@@ -201,7 +201,7 @@
 
 ### 7.3 UI 原型
 
-相关说明：UI brief、UI 原型探索、前端交互设计和 UI 原型策略等模板及 Prompt。
+相关说明：UI brief、UI 原型探索、前端交互设计、UI 原型策略等模板及 Prompt；参考分析落盘模板 `template-docs/frontend-ui-reference-analysis-template.md` 与设计知识核心层 `template-docs/ui-knowledge/`（视觉 / 交互模式 + 来源索引，按 scope 读取）。
 
 这些内容用于区分需求探索原型、视觉效果探索和实现前原型，并说明原型结果如何回填 `docs/08-dev-plan.md` 和 `docs/09-verification.md`。
 
