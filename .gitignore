@@ -30,6 +30,7 @@ NEXT-STEPS.md
 .ai/token-hotspots/
 .ai/pitfalls/
 .ai/session-handoff-archive/
+.ai/e2e-reports/
 
 # 构建产物
 dist/
