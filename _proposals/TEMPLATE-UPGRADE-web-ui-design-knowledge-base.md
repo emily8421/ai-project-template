@@ -416,7 +416,9 @@ docs/research/YYYY-MM-DD-frontend-ui-reference-analysis.md
 
 - **主方向**：接受提案；Batch 0 双项目试点先行（Release impact `none`，不改同步范围）；Batch 1 `minor` 实施范围等试点结论后单独确认；Batch 3 维持待 §7 门槛 + 独立提案。
 - **C-001 ~ C-006**：全部采纳为 Batch 0 试点基线。
-- **Batch 0 试点项目**：`zhiyan`（派生项目 zhiyan-digital-cs-platform）+ 新建实验仓 `flowkit`；两者须形成差异化 Web 场景对照（各自定位待确认后回填本节）。
+- **Batch 0 试点项目**：`zhiyan`（事务型 / 客服流程，已生成回溯性 RA，验证 schema 能给已实现决策补证据链 + 浮现场景盲点）+ `flowkit`（开发者工具 / 工作流）。差异化场景对照成立。
+- **flowkit 试点产物（2026-08-13 订正）**：flowkit 项目内已独立产出一份「UI 设计知识库与交互数据源评估」（2026-08-13），其知识模型（Source / Pattern / Case / Validation）、证据等级 A-D、十个知识维度、来源策略（W3C APG / GOV.UK / USWDS / Microsoft HAX）与本提案高度收敛且更细（含原型输入包契约、独立仓候选结构、Phase 分期）。该评估**直接作为 flowkit 试点产物**，flowkit 不需新生成 RA（曾基于过时历史归档材料误生成的 RA 已删除）。
+- **项目实例与来源对齐**：本提案与 flowkit 评估的关系为 **flowkit 项目实践 → 本提案（去项目化提炼）**；flowkit 评估是本提案 schema 的**首个项目级实例与来源**，两者独立收敛反证 schema 抓住真实需求。Batch 1 `template-docs/ui-knowledge/` 核心层与 RA 落盘模板应吸收 flowkit 评估的更细结构（原型输入包 11 字段、独立知识库仓目录、Phase 0-3 分期、许可状态机）。
 - **awesome-design-md**：作为视觉种子来源（GitHub `VoltAgent/awesome-design-md`），维护者本地检出路径记于 `.ai/session-handoff.md`（本地绝对路径不进入模板同步文件）；Batch 0 只抽取少量视觉 Case 与可复用视觉 Pattern，默认 D 级证据。
 - **§1.1 措辞**：已按核实结论精化（区分“阶段 / Gate 已定义”与“缺落盘模板 + 知识来源层”）。
 
