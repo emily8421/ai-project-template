@@ -1161,6 +1161,7 @@ require_contains "scripts/sync-template.sh" 'scripts/check-markdown-clean\.ps1' 
 require_contains ".github/workflows/template-check.yml" 'check-markdown-clean\.ps1' "template-check CI 运行 Markdown 清洁预检"
 require_contains "MAINTAINERS.md" 'check-markdown-clean\.ps1' "MAINTAINERS 提醒 PR 前运行 Markdown 清洁预检"
 require_contains "git-guide.md" 'check-markdown-clean\.ps1' "git-guide 模板维护流程包含 Markdown 清洁预检"
+require_contains "scripts/check-template.ps1" 'check-markdown-clean\.ps1"\s+_proposals ai-records' "check-template 本地预检调用 Markdown 清洁检查对齐 CI"
 check_script_entrypoints
 require_contains "scripts/check-derived-sync.sh" '同步清单外变更' "check-derived-sync 检查同步清单外变更"
 require_contains "scripts/check-derived-sync.sh" 'README 模板版本' "check-derived-sync 含 README 模板版本一致性告警（非阻断）"

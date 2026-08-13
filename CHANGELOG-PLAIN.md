@@ -5,6 +5,14 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.61.5（2026-08-13）
+
+模板仓库本地「一键自检」（`check-template.ps1`）以前只管文件在不在、结构对不对；CI 上另外还有一道「文档格式检查」（`check-markdown-clean`，查 `_proposals/` 和 `ai-records/` 里的 Markdown 结尾有没有换行、有没有多余空格、有没有 BOM）。本地不跑这道检查，出现过两次「本地全绿、CI 红」的返工（08-11、08-13）。
+
+- 本次把两道检查合并：本地跑 `check-template.ps1` 会自动把文档格式检查也跑一遍，和 CI 对齐。
+- 不改 CI、不改格式检查脚本本身、不新增强制规则；本地多跑一步，稍慢几秒。
+- 派生项目同步后同样受益。
+
 ## v1.60.5（2026-08-11）
 
 给 AI 生成的技术文档立了一套语言规范（`global-rules §10`），并接到“生成前、生成后、修改前、修改后”四个检查点上，让规范不只写在规则文件里没人执行，而是每次生成 / 改文档时都被对照检查。
