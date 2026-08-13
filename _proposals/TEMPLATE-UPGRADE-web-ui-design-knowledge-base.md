@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: Web UI/UX 设计知识能力与原型参考输入体系
 
 > 来源：模板维护者（2026-08-13 对公开 UI 设计资料与现有 UI Exploration 流程的评估）
-> 状态：候选 / 待评估
-> 目标版本：待确认；建议先做双项目试点，再按 Batch 发布
+> 状态：Batch 1 已实施（v1.62.0 MINOR，待 PR 合并归档）
+> 目标版本：v1.62.0（Batch 1，MINOR）
 > Release impact：none（本次只新增提案，不修改同步范围或模板行为）
 > Expected implementation impact：minor（AI 建议；若新增同步目录、参考分析模板并改变 UI 任务推荐流程）
 > Release strategy：试点验证后单独发布核心能力；内容扩充按同主题 patch 聚合；大规模语料库延后评估独立 Web 领域层
@@ -370,9 +370,11 @@ docs/research/YYYY-MM-DD-frontend-ui-reference-analysis.md
 
 ### 10.3 Batch 1 模板发布
 
+> 分阶说明（2026-08-13 Batch 1 实施订正）：下列「经人工评审」在 Batch 1 落地为「记录存在 + schema 完整 + 评审升级路径清晰」——首批 13 条记录标 candidate（AI 基于公开权威来源起草）；逐条人工评审升 reviewed / core 与评审节奏属 Batch 2（质量治理）。
+
 - 新增文件全部进入 `template-sync.json` 和同步脚本备用清单。
 - 派生项目可以通过现有 `ui-prototype-exploration` 入口发现并使用知识能力。
-- 核心目录至少有 12 至 20 条经人工评审的记录，不是空 schema。
+- 核心目录至少有 12 至 20 条记录（首批 13 条 candidate），不是空 schema。
 - 核心记录都有来源、证据等级、适用边界、许可策略和最后核验日期。
 - `frontend-ui-reference-analysis` 能输出采纳 / 调整 / 排除矩阵及 `UI-G-002` 结论。
 - `git diff --check`、Markdown 清洁检查、模板完整自检和 CI 通过。

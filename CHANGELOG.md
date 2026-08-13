@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.62.0（2026-08-13）
+
+Web UI 设计知识核心层（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-web-ui-design-knowledge-base.md` Batch 1——给「UI 探索 → 交付」流水线（`ai/document-lifecycle-rules.md` §5.2.1）已有的「前端参考分析」阶段补上**项目级落盘模板 + 可查询的设计知识来源层**，让 AI 做参考分析时有标好来源与证据等级的依据可查，而非每次靠临场记忆或临时搜截图。Batch 0 已用 zhiyan + flowkit 双项目验证 schema 跨场景可产出可追溯、防机械套用的参考分析。
+
+- **新增 `template-docs/ui-knowledge/` 核心层（4 文件）**：`README.md`（知识模型 Source/Principle/Pattern/Case + A-D 证据等级 + 十维度 + 按 scope 选择流程 + 版权与许可状态机 + 评审升级路径；吸收 flowkit 评估更细结构——原型输入包契约 / Phase 分期）、`source-registry.md`（6 类来源：W3C WAI-ARIA / WCAG / GOV.UK / USWDS / MS HAX / awesome-design-md）、`visual-patterns.md`（6 条视觉模式）、`interaction-patterns.md`（7 条交互模式）。首批 13 条 candidate 模式。
+- **新增 `template-docs/frontend-ui-reference-analysis-template.md`**：项目级参考分析落盘模板（八节结构，强制采纳 / 调整 / 排除矩阵 + UI-G-002 判断）。
+- **接入现有流程（5 文件）**：`ui-prototype-exploration` command / Prompt 补参考分析路由（按 scope 读 ui-knowledge，输出证据分级 + 采纳 / 排除矩阵，满足 UI-G-002）；`document-lifecycle-rules.md` §5.2.1 补知识来源指针；`ui-prototype-exploration-template.md` 加 `PAT-*` / `SRC-*` 引用位；`capability-packages.md` §7.3 登记 reference analysis 模板与 ui-knowledge 入口（不新增机制 ID）。
+- **同步与自检**：`template-sync.json` files_all + `sync-template.sh` fallback 各纳入 5 个新文件；`check-template.sh` 补断言（5 文件存在性 + 关键内容 + 同步清单 / fallback 一致性）。
+
+本版为 MINOR 能力补强：新增同步目录 `template-docs/ui-knowledge/` + 项目参考分析模板 + UI 任务推荐工作流采用面变化，派生项目可通过现有 `ui-prototype-exploration` 入口发现并使用。首批内容为 candidate 候选（AI 基于公开权威来源起草，待维护者逐条评审升 reviewed / core，评审节奏属 Batch 2），不写已验证结论；不新增 Gate、不改变默认行为。合并后下行同步各派生项目。
+
 ## v1.61.6（2026-08-13）
 
 治理机制与工具资产登记（PATCH）：落地 `_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` 的 Batch 1，在不改变规则路由、脚本行为、同步范围或自动化门禁的前提下，建立现有机制和脚本的统一人读总账。
