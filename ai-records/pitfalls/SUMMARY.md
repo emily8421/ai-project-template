@@ -32,7 +32,7 @@ v1.61.1 起启用 pitfall 观察日志（§4.3）；C1 提案批次 + v1.61.3 / 
 
 ## 4. 已形成的改进建议
 
-- **应沉淀（转提案）**：本地落地前补跑 `check-markdown-clean.ps1 _proposals ai-records`——纳入 `check-template.ps1` 预检或写进 implementation-lifecycle / remote-ci-sop-profile 本地验证清单（08-11 + 08-13 双实证）。
+- **应沉淀（转提案）**：本地落地前补跑 `check-markdown-clean.ps1 _proposals ai-records`——纳入 `check-template.ps1` 预检或写进 implementation-lifecycle / remote-ci-sop-profile 本地验证清单（08-11 + 08-13 双实证）。（✅ 已落地 v1.61.5：`check-template.ps1` 追加调用 + `remote-ci-sop-profile` §B 说明 + `check-template.sh` 断言。）
 - **应沉淀**：`.gitignore` 补 `.ai/tmp-*` 或 commit message 用 stdin heredoc（08-12 `.ai/tmp`）。
 - **应沉淀**：`remote-ci-sop-profile §E` 补「`--delete-branch` 已含本地 + 远端清理，勿重复手动删」（08-12 merge）。
 - **应沉淀**：Windows PowerShell 下 apply_patch 不可用 → 用 `[System.IO.File]::WriteAllText`（UTF-8 无 BOM）落盘（08-12 apply_patch）；可向上游反馈包装器问题。

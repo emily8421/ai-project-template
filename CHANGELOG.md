@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.5（2026-08-13）
+
+本地预检对齐 CI check-markdown-clean（PATCH）：落地 `_proposals/TEMPLATE-UPGRADE-local-preflight-coverage.md`——`scripts/check-template.ps1`（本地落地预检入口）在 Bash 主路径与 PowerShell fallback 两条路径末尾都追加调用 `check-markdown-clean.ps1 _proposals ai-records`，使本地一键预检覆盖 CI `template-check` 的两个独立 step（`check-template` + `check-markdown-clean`），消除「本地全绿、CI fail」返工；`scripts/check-template.sh` 补防回归断言；`template-docs/remote-ci-sop-profile.md` §B 补一句说明。来源：模板维护者（pitfall 2026-08-11 + 2026-08-13 双实证，见 `ai-records/pitfalls/SUMMARY.md` §1 / §4）。
+
+- **`scripts/check-template.ps1`**：新增 `Invoke-MarkdownCleanPreflight` helper（以子进程运行 `check-markdown-clean.ps1 _proposals ai-records`，返回其退出码）；主路径与 fallback 路径均与模板检查退出码合并（任一失败即非零退出）。不扩大 fallback 断言范围。
+- **`scripts/check-template.sh`**：新增 `require_contains` 断言，校验 `check-template.ps1` 内含 `check-markdown-clean.ps1` + `_proposals ai-records` 调用（防回归）。
+- **`template-docs/remote-ci-sop-profile.md`**：§B「提交与推送」第 2 条补说明（模板仓跑 `check-template.ps1` 即覆盖 markdown clean 预检）。
+- 归档 `local-preflight-coverage` 提案到 `_archive/proposals/`（本 PR 内）。
+
+本版是 patch 级自检脚本增强：不改 CI workflow、不改 `check-markdown-clean.ps1` 本身、不改 `template-sync.json` 结构、不新增必填入口；本地预检多跑一步（对齐 CI）。派生项目同步后，本地 `check-template.ps1` 同样覆盖 markdown clean 预检。patch 豁免 L3 端到端回归。
+
 ## v1.61.4（2026-08-13）
 
 通用层代码一致性补充（PATCH）：落地 #332 退回重写稿——把 LUMEN 回流的三条跨项目通用代码一致性原则（CI 质量门 / 关键 secret 启动校验 / 多实现显式契约）从原稿「固定实现」改写为「原则 + 适用条件 + 项目化落地」，作为 `implementation-lifecycle-rules §6.2` 的应用说明补齐。来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流 issue #332；重写依据 `docs/research/2026-08-12-c1-proposal-triage-reassessment.md` §3 / §15.7；提案见 `_proposals/TEMPLATE-UPGRADE-code-consistency-general-layer.md`。
