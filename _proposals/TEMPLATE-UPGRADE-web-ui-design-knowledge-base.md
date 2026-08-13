@@ -370,11 +370,11 @@ docs/research/YYYY-MM-DD-frontend-ui-reference-analysis.md
 
 ### 10.3 Batch 1 模板发布
 
-> 分阶说明（2026-08-13 Batch 1 实施订正）：下列「经人工评审」在 Batch 1 落地为「记录存在 + schema 完整 + 评审升级路径清晰」——首批 13 条记录标 candidate（AI 基于公开权威来源起草）；逐条人工评审升 reviewed / core 与评审节奏属 Batch 2（质量治理）。
+> 分阶说明（2026-08-13 Batch 1 实施订正，同日评审更新）：首批 13 条模式中 12 条已在 PR #348 评审中经维护者逐条确认升 reviewed；`PAT-VIS-004`（D 级视觉启发）与 6 条来源记录维持 candidate（分别待项目实证 / 链接联网复核）。core 晋升、证据升降级与评审节奏属 Batch 2（质量治理）。
 
 - 新增文件全部进入 `template-sync.json` 和同步脚本备用清单。
 - 派生项目可以通过现有 `ui-prototype-exploration` 入口发现并使用知识能力。
-- 核心目录至少有 12 至 20 条记录（首批 13 条 candidate），不是空 schema。
+- 核心目录至少有 12 至 20 条记录（首批 13 条：12 reviewed + 1 candidate），不是空 schema。
 - 核心记录都有来源、证据等级、适用边界、许可策略和最后核验日期。
 - `frontend-ui-reference-analysis` 能输出采纳 / 调整 / 排除矩阵及 `UI-G-002` 结论。
 - `git diff --check`、Markdown 清洁检查、模板完整自检和 CI 通过。
