@@ -114,7 +114,7 @@ AI 做参考分析时**不加载全部知识**，按 scope 选取：
 4. 输出证据分级 + 采纳 / 调整 / 排除矩阵（见 `template-docs/frontend-ui-reference-analysis-template.md`）。
 5. 视觉案例（D 级）只作发散，不得推导为成熟交互结论。
 
-简单页面或无参考输入时可写豁免，不做长分析。
+简单页面或无参考输入时，可在参考分析或上游文档中写明豁免理由，不做长分析。
 
 ## 6. 原型输入包契约
 
@@ -127,7 +127,7 @@ AI 做参考分析时**不加载全部知识**，按 scope 选取：
 | 每项来源与证据等级 | `SRC-*` + A / B / C / D |
 | 适用与不适用条件 | 引用模式字段或按项目改写 |
 | 采纳 / 调整 / 排除决定 | 项目级判断，附理由 |
-| 必须覆盖的状态 / 恢复 / a11y / 响应式 | 不能只覆盖颜色与布局 |
+| 必须覆盖的状态 / 恢复 / 可访问性 / 响应式 | 不能只覆盖颜色与布局 |
 | 回填位置 | UI brief / 原型 / experience brief / 正式设计 |
 
 落盘路径：`docs/research/YYYY-MM-DD-frontend-ui-reference-analysis.md`（与 `ai/document-lifecycle-rules.md` §5.2.1 一致）。
