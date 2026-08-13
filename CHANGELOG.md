@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.61.6（2026-08-13）
+
+治理机制与工具资产登记（PATCH）：落地 `_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` 的 Batch 1，在不改变规则路由、脚本行为、同步范围或自动化门禁的前提下，建立现有机制和脚本的统一人读总账。
+
+- **`template-docs/capability-packages.md`**：标题由抽象的“Capability Packages 与 Profile 契约索引”改为“模板机制与专项使用说明”，按“如何使用 → 新增专项说明要求 → 工作分区 → 现有机制 → 多机制协作 → 具体专项”的顺序重写。14 类机制统一说明负责人、使用时机、主要依据、产出边界和完成判断；保留现有机制 ID、文件路径和自检兼容关键词。纠正 5 类失效引用：文档审计命令、文档评估 Prompt、待确认事项 Prompt、开发计划和研发数据链 / CHANGELOG 路径。
+- **`scripts/README.md`**：把 15 个可执行脚本归并为 12 类工具能力，补齐运行位置、Owner、消费者、输入输出、副作用、风险、权威实现、失败语义和生命周期规则；补登记原说明遗漏的 `check-github-context.ps1` 与 `check-markdown-clean.ps1`。
+- **审计结论**：3 组 Bash / PowerShell 双入口属于主实现与 wrapper / fallback 配对；当前未发现完全无用途的脚本。`scripts/README.md` 尚未进入 `template-sync.json`，已登记为后续决策缺口，本版不扩大同步边界。
+
+本版只增强人读可见性：不创建可执行 Agent，不拆规则，不新增自检断言，不改变默认执行行为。`template-docs/capability-packages.md` 已在同步范围内，派生项目可获得机制总览；工具注册表是否下行留待后续单独评估。patch 豁免 L3 端到端回归。
+
 ## v1.61.5（2026-08-13）
 
 本地预检对齐 CI check-markdown-clean（PATCH）：落地 `_proposals/TEMPLATE-UPGRADE-local-preflight-coverage.md`——`scripts/check-template.ps1`（本地落地预检入口）在 Bash 主路径与 PowerShell fallback 两条路径末尾都追加调用 `check-markdown-clean.ps1 _proposals ai-records`，使本地一键预检覆盖 CI `template-check` 的两个独立 step（`check-template` + `check-markdown-clean`），消除「本地全绿、CI fail」返工；`scripts/check-template.sh` 补防回归断言；`template-docs/remote-ci-sop-profile.md` §B 补一句说明。来源：模板维护者（pitfall 2026-08-11 + 2026-08-13 双实证，见 `ai-records/pitfalls/SUMMARY.md` §1 / §4）。
