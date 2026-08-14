@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.62.1（2026-08-15）
+
+Web UI 知识质量基线（PATCH，Batch 2A）：落地 `_archive/proposals/TEMPLATE-UPGRADE-web-ui-knowledge-quality-governance.md`——给 v1.62.0 建立的 `template-docs/ui-knowledge/` 核心层补来源可核验性与结构自检：6 条 `SRC-*` 来源完成只读链接 / 发布方 / 可见许可口径复核并落盘；新增「链接核验状态」独立字段，把「内容评审（生命周期）」与「链接可用性」分开记录；唯一来源暂时不可用的 `PAT-INT-006` 降为 candidate。
+
+- **`template-docs/ui-knowledge/source-registry.md`**：6 条来源核验事实落盘（2026-08-14：W3C APG / WCAG 2.2 / GOV.UK / USWDS / awesome-design-md 可访问；Microsoft HAX Toolkit 请求失败，标「暂时不可用」，2026-08-15 复核仍超时）。每条来源新增「链接核验」字段；生命周期仍全部 candidate（可访问 ≠ 人工评审通过）。许可口径：USWDS 只保存摘要 + 链接（资产含多种许可）；awesome-design-md 不镜像第三方素材。
+- **`template-docs/ui-knowledge/README.md`**：§4.1 Source 字段新增「链接核验状态」；§7 补规则：仅依赖「暂时不可用」来源的 Pattern / Principle 不得保持 `reviewed` / `core`；§9 首批说明更新为 Batch 2A 复核口径。
+- **`template-docs/ui-knowledge/interaction-patterns.md`**：`PAT-INT-006`（唯一来源 `SRC-HAI-001` Microsoft HAX Toolkit）reviewed → candidate（注明降级原因与恢复条件）；其余 6 条交互模式维持 reviewed。
+- **`scripts/check-template.sh`**：新增 `check_ui_knowledge_structure`——`SRC-*` / `PAT-*` 编号唯一、`PAT-* -> SRC-*` 引用已登记、每条来源有链接核验状态、视觉 / 交互模式稳定字段（适用 / 不适用 / 来源 / 证据等级 / 状态）在场；不绑定长文案语义。
+
+本版是 patch 级质量补强：不新增同步结构文件 / 目录（4 个改动文件均在同步清单内）、不改 `template-sync.json`、不改变默认行为与推荐流程、不新增 Gate。Batch 2 其余（HAX 链接恢复后复核 `PAT-INT-006`、core 晋升、证据升降级、模式合并）待派生项目对 v1.62.0 的实际使用反馈。patch 豁免 L3 端到端回归。
+
 ## v1.62.0（2026-08-13）
 
 Web UI 设计知识核心层（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-web-ui-design-knowledge-base.md` Batch 1——给「UI 探索 → 交付」流水线（`ai/document-lifecycle-rules.md` §5.2.1）已有的「前端参考分析」阶段补上**项目级落盘模板 + 可查询的设计知识来源层**，让 AI 做参考分析时有标好来源与证据等级的依据可查，而非每次靠临场记忆或临时搜截图。Batch 0 已用 zhiyan + flowkit 双项目验证 schema 跨场景可产出可追溯、防机械套用的参考分析。

@@ -200,6 +200,59 @@ require_files() {
   done
 }
 
+check_ui_knowledge_structure() {
+  local registry="template-docs/ui-knowledge/source-registry.md"
+  local visual="template-docs/ui-knowledge/visual-patterns.md"
+  local interaction="template-docs/ui-knowledge/interaction-patterns.md"
+  local source_rows source_ids duplicate_source_ids link_status_rows
+  local pattern_ids duplicate_pattern_ids referenced_source_ids source_id
+
+  source_rows=$(grep -Ec '^\| `SRC-[A-Z0-9-]+` ' "$registry" || true)
+  source_ids=$(grep -E '^\| `SRC-[A-Z0-9-]+` ' "$registry" | sed -E 's/^\| `([^`]+)`.*/\1/' | sort)
+  duplicate_source_ids=$(printf '%s\n' "$source_ids" | uniq -d)
+  link_status_rows=$(grep -Ec '^\| `SRC-[A-Z0-9-]+` .*\| (已核验：可访问|暂时不可用) \|$' "$registry" || true)
+
+  if [[ "$source_rows" -gt 0 && -z "$duplicate_source_ids" ]]; then
+    pass "UI 知识来源编号唯一"
+  else
+    fail "UI 知识来源编号缺失或重复"
+  fi
+
+  if [[ "$link_status_rows" -eq "$source_rows" ]]; then
+    pass "UI 知识来源均有链接核验状态"
+  else
+    fail "UI 知识来源缺少链接核验状态"
+  fi
+
+  pattern_ids=$(grep -Eho '^### PAT-(VIS|INT)-[0-9]{3}' "$visual" "$interaction" | awk '{print $2}' | sort)
+  duplicate_pattern_ids=$(printf '%s\n' "$pattern_ids" | uniq -d)
+  if [[ -n "$pattern_ids" && -z "$duplicate_pattern_ids" ]]; then
+    pass "UI 知识模式编号唯一"
+  else
+    fail "UI 知识模式编号缺失或重复"
+  fi
+
+  referenced_source_ids=$(grep -Eho 'SRC-[A-Z0-9-]+' "$visual" "$interaction" | sort -u)
+  for source_id in $referenced_source_ids; do
+    if printf '%s\n' "$source_ids" | grep -Fxq "$source_id"; then
+      pass "UI 模式来源已登记: $source_id"
+    else
+      fail "UI 模式引用未登记来源: $source_id"
+    fi
+  done
+
+  require_contains "$visual" '适用条件' "视觉模式保留适用条件字段"
+  require_contains "$visual" '不适用条件' "视觉模式保留不适用条件字段"
+  require_contains "$visual" '来源' "视觉模式保留来源字段"
+  require_contains "$visual" '证据等级' "视觉模式保留证据等级字段"
+  require_contains "$visual" '状态' "视觉模式保留状态字段"
+  require_contains "$interaction" '适用条件' "交互模式保留适用条件字段"
+  require_contains "$interaction" '不适用条件' "交互模式保留不适用条件字段"
+  require_contains "$interaction" '来源' "交互模式保留来源字段"
+  require_contains "$interaction" '证据等级' "交互模式保留证据等级字段"
+  require_contains "$interaction" '状态' "交互模式保留状态字段"
+}
+
 extract_index_rules() {
   grep -Eo '`ai/[^`]+\.md`|^- ai/.+\.md$' ai/index.md | sed -E 's/^`//; s/`$//; s/^- //'
 }
@@ -1690,6 +1743,7 @@ require_contains "template-sync.json" 'template-docs/ui-knowledge/visual-pattern
 require_contains "template-sync.json" 'template-docs/ui-knowledge/interaction-patterns\.md' "同步清单包含交互模式"
 require_contains "scripts/sync-template.sh" 'template-docs/ui-knowledge/README\.md' "sync-template fallback 包含 UI 知识 README"
 require_contains "scripts/sync-template.sh" 'template-docs/frontend-ui-reference-analysis-template\.md' "sync-template fallback 包含前端参考分析模板"
+check_ui_knowledge_structure
 require_file "template-docs/frontend-experience-brief-template.md"
 require_contains "template-docs/frontend-experience-brief-template.md" '已确认体验原则' "前端体验 brief 模板包含已确认体验原则"
 require_file "template-docs/ui-brief-intake-template.md"
