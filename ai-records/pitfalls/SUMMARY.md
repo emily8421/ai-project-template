@@ -1,14 +1,15 @@
-# Pitfall 汇总：2026-08-11 ~ 2026-08-13
+# Pitfall 汇总：2026-08-11 ~ 2026-08-15
 
-> 生成于 2026-08-13（rollup，session-rules §4.3，首次创建）。本目录只保留 SUMMARY.md + summaries/；单条原始记录在本地 `.ai/pitfalls/`（gitignore，不询问不上传）。从 6 份单条脱敏提炼，剔除 token / 密钥 / 账号 / 对话正文 / 项目敏感细节。
+> 生成于 2026-08-13（rollup，session-rules §4.3，首次创建）；2026-08-15 第二次扩展纳入第二批 5 份。本目录只保留 SUMMARY.md + summaries/；单条原始记录在本地 `.ai/pitfalls/`（gitignore，不询问不上传）。从单条脱敏提炼，剔除 token / 密钥 / 账号 / 对话正文 / 项目敏感细节。
 
 ## 0. 覆盖边界
 
-- 已覆盖记录（本地 `.ai/pitfalls/`，6 份）：2026-08-11 ~ 08-13 全部单条。
-- 未覆盖记录：无（截至 2026-08-13 本地全部已纳入）。
-- 下一次 rollup 起点：从 **2026-08-14** 起，只统计 `汇总状态：未汇总` 的本地新记录。
+- 已覆盖记录（本地 `.ai/pitfalls/`）：第一批 6 份（2026-08-11 ~ 08-13）+ 第二批 5 份（2026-08-13 后半 ~ 08-15）= **11 份**。
+- 未覆盖记录：无（截至 2026-08-15 本地全部已纳入）。
+- 下一次 rollup 起点：从 **2026-08-16** 起，只统计 `汇总状态：未汇总` 的本地新记录。
+- 计数口径订正：首批 rollup 时漏计 `2026-08-13-serial-check-template-timeout.md`（旧记录无「汇总状态」字段，当时未被识别为未覆盖），本次一并收编。
 
-## 1. 汇总范围（6 份）
+## 1. 汇总范围（第一批 6 份，2026-08-11 ~ 08-13）
 
 | 日期 | 场景 | 根因分类 | 一句话现象 |
 |---|---|---|---|
@@ -44,3 +45,26 @@ v1.61.1 起启用 pitfall 观察日志（§4.3）；C1 提案批次 + v1.61.3 / 
 - **最值得转提案**：check-markdown-clean 覆盖缺口（08-11 + 08-13 同类，2 次实证 + 跨派生通用）→ `_proposals/TEMPLATE-UPGRADE-local-preflight-coverage.md`（本次已起）。
 - **次优先**：`.ai/tmp` gitignore + commit heredoc；`gh --delete-branch` 勿重复删。
 - **项目专属**（Windows apply_patch）：留 `git-guide.md` / SOP 提示，不必单立模板提案。
+
+## 6. 第二批（2026-08-13 后半 ~ 08-15，5 份）
+
+| 日期 | 场景 | 根因分类 | 一句话现象 |
+|---|---|---|---|
+| 08-13 | Batch 0 试点 flowkit RA 生成 | AI 引入 + 流程坑 | 误用 miiot `9-历史归档/` 过时材料 + 未核实现状重复造轮子（教训已入 memory `feedback-historical-archive-not-source`） |
+| 08-13 | Batch 1 PR #348 ui-knowledge 起草 | AI 引入 | §10 表述自检流于形式，7 处口语比喻 + a11y 缩写漏进 PR，用户要求后才补审 |
+| 08-13 | Batch 1 发布过程 | AI 引入（流程坑） | 新建 `.ai/e2e-reports/` 未先核对 `.gitignore`（逐项列出非整目录忽略），返工补一条 gitignore commit |
+| 08-13 | v1.61.5 验证 | 行为教训 | 全量自检串行 3 次被 harness 判超时中断（实际均跑完）；教训 = 只跑一次 + 日志落盘为证据 |
+| 08-15 | 派生同步 dry-run 预演 | 环境 / 工具链 | PowerShell `Out-File -Encoding utf8` 带 BOM，bash 脚本首行 shebang 失效；用 Bash 重定向或 WriteAllText（UTF-8 无 BOM） |
+
+### 第二批重复坑模式
+
+- **材料来源不核实现状**（08-13 wrong-archive，与第一批 08-12 Grep 稀疏核实同属「先做后核」）：调研前未区分当前正式 vs 历史归档、未查项目是否已有同类产出。
+- **生成后清单式自检被挤掉**（08-13 §10）：起草时注意力在内容完整性，表述自检作为末项清单流于形式。
+- **Windows 工具链编码坑持续**（08-15 BOM，与第一批 08-12 apply_patch 同主题）：PowerShell 5.1 的 utf8 写文件默认带 BOM，bash / 工具链不容忍。
+
+### 第二批改进建议与回流判断
+
+- **候选转提案（观察中）**：§10 表述自检条在 `00-generate-or-complete-docs.md` / `04-edit-single-doc.md` 中前移或加粗——按单条约定「下次生成复发即转窄提案」，暂不起（与 memory `rule-enforcement-via-execution-nodes` 的「接入执行节点」方向一致）。
+- **已沉淀非提案渠道**：wrong-archive 教训入 memory；serial-timeout 属行为纪律（Checkpoint Mode 长输出），不改模板。
+- **行为约束**：新建 `.ai/` 子目录前先 grep `.gitignore`；给 bash 的脚本文件不用 `Out-File -Encoding utf8` 落盘。
+- **Windows 编码主题**（apply_patch + BOM 两条）已有共性结论，复发第三次可合并转一条窄提案（`git-guide.md` / SOP 附注级）。
