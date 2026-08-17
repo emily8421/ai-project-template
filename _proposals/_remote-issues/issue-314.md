@@ -1,12 +1,12 @@
 # GitHub Issue #314: TEMPLATE-UPGRADE：handoff Latest checkpoint rollup 机制
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/314
-> State: OPEN
-> Labels: proposal, from:LUMEN_demo_T2.1
+> State: CLOSED
+> Labels: proposal from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-08-09T16:37:38Z
-> Updated: 2026-08-09T16:37:38Z
-> Mirrored at: 2026-08-11T16:17:43+0800
+> Updated: 2026-08-12T03:26:57Z
+> Mirrored at: 2026-08-17
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body

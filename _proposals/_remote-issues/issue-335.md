@@ -1,12 +1,12 @@
 # GitHub Issue #335: TEMPLATE-UPGRADE: 评估轻量代码治理路由与规则分层地图（非阻塞）
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/335
-> State: OPEN
-> Labels: proposal, from:LUMEN_demo_T2.1
+> State: CLOSED
+> Labels: proposal from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-08-12T09:00:39Z
-> Updated: 2026-08-12T09:00:39Z
-> Mirrored at: 2026-08-12
+> Updated: 2026-08-12T14:30:40Z
+> Mirrored at: 2026-08-17
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
@@ -24,7 +24,7 @@
 - 同一要求是否已在多个层级重复表达，导致未来同步或修改时漂移？
 - 可自动检查的 test / type / lint 要求，应作为执行 Gate 还是写进通用代码原则？
 
-本提案不主张建立一套替代现有目录的新治理框架，而是评估是否为现有载体补一份轻量的"归类地图"，帮助规则归位、去重和按任务组合加载。
+本提案不主张建立一套替代现有目录的新治理框架，而是评估是否为现有载体补一份轻量的“归类地图”，帮助规则归位、去重和按任务组合加载。
 
 ## 2. 拟评估的分类模型
 
@@ -84,7 +84,7 @@ L0-L3 用于判断规则的稳定性和落点；R1-R7 用于判断一次任务�
 ## 7. 验证方式
 
 - 人工核对映射表能将新增规则唯一归入现有承载位，且不与 `ai/index.md`、Capability Packages、Implementation lifecycle 或项目规则产生第二权威源。
-- 选取至少一个通用原则、一个 CI Gate、一个项目形态 Profile、一个技术栈约定和一个任务约束，确认其归位能解释"为何在此处、何时加载、由谁验证"。
+- 选取至少一个通用原则、一个 CI Gate、一个项目形态 Profile、一个技术栈约定和一个任务约束，确认其归位能解释“为何在此处、何时加载、由谁验证”。
 - 若模板实际采纳任何文本变更，运行模板既有自检，并检查同步清单、入口和引用是否需要随之更新。
 
 ## 8. 待维护者确认项
