@@ -548,8 +548,10 @@ AI 生成或修改后输出：
 | `docs/07-api-spec.md` | 接口交互 / 时序图 |
 | `docs/design/*` | 流程图、状态机、交互图 |
 
-**格式**：默认 `mermaid`（GitHub 原生渲染），可选 `plantuml`；项目可在 `ai/project-rules.md §2.2` 覆盖默认。
+**格式**：默认 `mermaid`（GitHub 原生渲染），可选 `plantuml`；项目可在 `ai/project-rules.md §2.2` 覆盖默认。**例外**：用例图使用 `plantuml`——mermaid 无原生用例图语法（无椭圆用例 / actor / `<<include>>` 语义），规范 UML 用例图只能用 plantuml `usecase` 表达；GitHub 不原生渲染 plantuml，需本机 / CI 预览，因此用例图仅作为 OO overlay 可选项而非默认要求。
 
 **性质**：「建议 + 默认」而非强制——图表服务于表达，不要求每类文档必须凑齐所有图；但涉及架构 / 数据 / 接口 / 关键流程的设计文档应有对应图表。生成或精修设计文档时（见 `template-docs/scenario-guides.md` A7），AI 应按本节出图，并提示用户确认格式偏好。
 
 图纸审核四维度（让图可审 / 可追溯 / 可验收，不改本节柔性）：① 可渲染（mermaid 默认或 `ai/project-rules.md` §2.2 指定格式）；② 有图 ID（`DIAG-<DOC>-<TYPE>-<NN>`，如 `DIAG-ARCH-01` / `DIAG-API-SEQ-01` / `DIAG-DB-ER-01`，可被评审 / 验收指名）；③ 可追溯（架构图→REQ / 模块，时序图→API-ID / 关键流程，ER 图→表 / REQ，状态图→子系统 / TC，挂 §6 追溯链）；④ 覆盖异常 / 降级 / 权限路径，非仅正常路径。各 doc-standards（04 / 06 / 07）按此落实关键图字段与检查项。
+
+**图表生成式镜像（可选机制）**：图表密集的 Full 剖面项目可在 `docs/diagrams/` + `docs/tables/` 建生成式镜像目录——脚本从文档正文（唯一权威源）抽取全部 fenced mermaid / plantuml 图块与核心矩阵表，每图 / 表一文件 + `INDEX.md`（按 §2 PLM 阶段分组 + 按文档反查），作为审核主入口。约束：镜像头部声明「生成式产物、不手改、以源文档为准」；启用前提是 CI 有 `--check` 同步校验（镜像与源不一致即红），未启用 CI 校验的项目不建议建镜像目录（过期镜像误导审核）；增量日志型表（Sprint 完成包 / 验收记录）只挂锚点链接不抽镜像。脚本样例见 `template-docs/examples/extract-diagrams.mjs`。

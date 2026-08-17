@@ -25,6 +25,7 @@
 | 场景边界与非目标 | 做什么、不做什么、适用阶段、原因 / 来源 |
 | 上游来源映射 | 场景 / 角色、来源文件或人工输入、来源锚点、可信度、备注 |
 | 下游影响 | 预计影响的 U-ID、REQ、设计、验证或任务入口 |
+| OO 建模 overlay（可选，Full / Standard 剖面建议） | 用例全景图 `DIAG-UC-NN`：参与者 + 用例域 + 挂需求追溯（SC-ID / U-ID）；格式见 `ai/document-lifecycle-rules.md` §13（用例图需 plantuml）。Lean 剖面可豁免并在 `ai/project-rules.md` §3 说明 |
 | 待人工确认项 | 结构化确认项表，不得只写问题列表 |
 
 ## 3. ID 与追溯规则
