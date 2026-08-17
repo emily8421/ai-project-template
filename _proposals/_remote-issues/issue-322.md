@@ -1,12 +1,12 @@
 # GitHub Issue #322: TEMPLATE-UPGRADE：global-rules §2 增补「L0 通用代码原则基线」
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/322
-> State: OPEN
-> Labels: proposal, from:LUMEN_demo_T2.1
+> State: CLOSED
+> Labels: proposal from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-08-11T03:19:40Z
-> Updated: 2026-08-11T03:19:40Z
-> Mirrored at: 2026-08-11T16:17:43+0800
+> Updated: 2026-08-11T08:40:58Z
+> Mirrored at: 2026-08-17
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body

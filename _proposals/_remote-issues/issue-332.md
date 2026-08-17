@@ -1,12 +1,12 @@
 # GitHub Issue #332: TEMPLATE-UPGRADE：通用层（R1/R2）代码一致性补充——补 L0 未覆盖项
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/332
-> State: OPEN
-> Labels: proposal, from:LUMEN_demo_T2.1
+> State: CLOSED
+> Labels: proposal from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-08-12T06:24:01Z
-> Updated: 2026-08-12T06:24:01Z
-> Mirrored at: 2026-08-12
+> Updated: 2026-08-12T17:36:28Z
+> Mirrored at: 2026-08-17
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
