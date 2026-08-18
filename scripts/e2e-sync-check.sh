@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
 # e2e-sync-check.sh — L3 端到端回归发布门（可自动化部分）
 #
 # 用法:
@@ -9,7 +9,7 @@
 # + sync-all-derived 批量烟测。不重复 check-template 内部测试，只做发布门聚合 + 批量烟测。
 # 不可自动化项（场景引导路由 / 文档生成 / PowerShell fallback）见
 # template-docs/e2e-regression-checklist.md，人工跑并记到 e2e-report-template.md。
-# 随模板下行同步（在 template-sync.json）；不改真实项目。
+# 模板仓专用脚本（v1.65.0 起不下行，不进 template-sync.json）；不改真实项目。
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
