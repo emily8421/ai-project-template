@@ -6,6 +6,21 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.65.0（2026-08-18）
+
+脚本同步边界分层（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`（吸收并关闭 C-016；C-017 / C-018 一并拍板——孤儿清理留下次同步窗口、LumiOne / gmbl 随下次同步一并到 v1.65.0）。主题：`scripts/` 按真实消费者分为「随模板下行 / 模板仓专用」两组，模板仓专用脚本不再无差别下发到派生项目；工具注册表 README 随下行组脚本一并下发，关掉「有工具没说明」缺口。
+
+- **同步清单调整（5 出 1 入）**：`template-sync.json` `files_all` 移出模板仓专用脚本 `check-template.sh` / `check-template.ps1` / `sync-all-derived.sh` / `e2e-sync-check.sh` / `new-project.sh`（仅模板维护者与模板仓 CI 使用；移出后停更不删除，派生项目残留随清理审计处置）；移入 `scripts/README.md`（工具注册表下行，C-016 关闭）。`description` 补边界声明。
+- **`scripts/README.md` 重写为下行视角**：§1 登记「下行 8 能力 / 10 文件」与「模板仓专用 4 能力 / 5 文件」两组；§2.1/2.2 分组表格；补 `Sync notice`；§5.2 落地记录 + 孤儿脚本清理指引（残留可安全删除、无需回填字段、恢复从模板仓复制）。
+- **`new-project.sh` 初始裁剪**：新增删除 5 个模板仓专用脚本步骤（含自删；`git archive` 全量复制后显式裁剪），新项目 `scripts/` 初始即只含下行集合 + README；收尾提示补「工具说明见 scripts/README.md」。
+- **头部标注**：5 个模板仓专用脚本 `Sync notice` 改为 `Template-only notice`（不再具备「同步时被覆盖」语义）；`sync-all-derived.sh` / `e2e-sync-check.sh` 头注释「在 template-sync.json」声明同步更正。
+- **自检防回流**：`check-template.sh` 新增「检查脚本同步边界」分区（16 项：5 脚本不在清单 + Template-only notice 头 + README 入清单）；烟测新增 6 项（产物含 README、不含 5 个专用脚本）；`check-template.ps1` 结构断言镜像（结构清单 + 边界断言）。
+- **兜底清单同步**：`sync-template.sh` `DEFAULT_SYNC_FILES` 与主清单同步调整（5 出 1 入），防 fallback 行为分叉。
+- **孤儿审计**：`ai/prompts/maintainers/15-post-sync-cleanup.md` 与 `ai/commands/post-sync-cleanup.md` 新增「模板仓专用脚本残留」审计项（与 v1.64.0 §3 裁剪审计同构；发现即列路径提示可安全删除）。
+- **措辞对齐**：`SOP.md`（C3/C8/烟测命令块）、`MAINTAINERS.md`（同步规则段 + 批量同步段）、`template-docs/env-setup.md`（new-project 运行位置声明）标注模板仓专用脚本「仅模板仓存在、不下行」。
+
+本版为 MINOR：同步范围成员变化（5 出 1 入）+ 新下行文件 = 下游采用面变化（`scripts/README.md` §4 治理规则要求）。非 MAJOR：同步机制与清单结构不变，派生侧无强制迁移（停更的孤儿脚本无害，不清理不破坏流程）。下次派生同步窗口：6 仓（含 LumiOne / gmbl，C-018）同步 v1.65.0 + post-sync-cleanup 顺带孤儿清理（C-017）+ registry 快照核对。
+
 ## v1.64.0（2026-08-18）
 
 形态裁剪执行落地 + 根目录地图 + pitfall 口径 + 场景手册指引（MINOR）：落地 `docs/research/2026-08-18-c1-proposal-triage-batch-plan.md` Batch B+C，吸收 #351 + #357 §2.2 + #350 与本地提案 `TEMPLATE-UPGRADE-project-scenario-handbook.md`（patch 聚合发布）。主题：让「按项目形态裁剪」从规则声明变成有执行点和审计项的动作，并给派生项目根目录一张「哪些能写、哪些会被覆盖」的三层地图。

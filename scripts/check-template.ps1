@@ -1,5 +1,5 @@
 <#
-Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
 check-template.ps1 - Windows PowerShell entrypoint for template self-check.
 
 Usage:
@@ -261,10 +261,13 @@ function Invoke-NativeTemplateCheck {
       "scripts/bootstrap-dev-env.ps1",
       "scripts/collect-env.ps1",
       "scripts/check-github-context.ps1",
-      "scripts/new-project.sh",
       "scripts/sync-template.sh",
       "scripts/check-template.sh",
-      "scripts/check-markdown-clean.ps1"
+      "scripts/check-markdown-clean.ps1",
+      "scripts/README.md",
+      "scripts/new-project.sh",
+      "scripts/sync-all-derived.sh",
+      "scripts/e2e-sync-check.sh"
     )) {
     Require-File $path
   }
@@ -310,6 +313,29 @@ function Invoke-NativeTemplateCheck {
     if ($syncFile -like "*.md" -or $syncFile -like "*.mdc" -or $syncFile -like "*.sh" -or $syncFile -like "*.ps1") {
       Require-Contains $syncFile "Sync notice" ($syncFile + " contains sync notice")
     }
+  }
+
+  # --- Structural: 脚本同步边界（模板仓专用脚本不下行，v1.65.0）---
+  $templateOnlyScripts = @(
+    "scripts/check-template.sh",
+    "scripts/check-template.ps1",
+    "scripts/sync-all-derived.sh",
+    "scripts/e2e-sync-check.sh",
+    "scripts/new-project.sh"
+  )
+  foreach ($tos in $templateOnlyScripts) {
+    Require-File $tos
+    if ($syncFiles -contains $tos) {
+      Fail ($tos + " is template-only and must NOT appear in template-sync.json")
+    } else {
+      Pass ($tos + " not in sync list (template-only)")
+    }
+    Require-Contains $tos "Template-only notice" ($tos + " header marks template-only")
+  }
+  if ($syncFiles -contains "scripts/README.md") {
+    Pass "scripts/README.md is in sync list (tool registry ships to derived)"
+  } else {
+    Fail "scripts/README.md missing from template-sync.json"
   }
 
   # --- Structural: files_domain 非重叠（领域文件不得跨组重复，v1.60.0）---

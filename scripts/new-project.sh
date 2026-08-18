@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
 # new-project.sh — 从 ai-project-template 派生新项目并初始化 git 远端
 #
 # 用法:
@@ -200,6 +200,14 @@ cat > "$TARGET/TEMPLATE-BASE.md" <<EOF
 - Template sync commits keep the message format \`sync template $TEMPLATE_VERSION from ai-project-template\`.
 EOF
 
+# 模板仓专用脚本裁剪（v1.65.0 起不进 template-sync.json，git archive 全量复制后须显式删除）：
+# new-project.sh 自删（派生项目不再派生）；其余 4 个为模板仓维护者 / CI 专用工具。
+rm -f "$TARGET/scripts/check-template.sh" \
+     "$TARGET/scripts/check-template.ps1" \
+     "$TARGET/scripts/sync-all-derived.sh" \
+     "$TARGET/scripts/e2e-sync-check.sh" \
+     "$TARGET/scripts/new-project.sh"
+
 rm -rf "$TARGET/_proposals"
 mkdir -p "$TARGET/_proposals"
 cat > "$TARGET/_proposals/README.md" <<EOF
@@ -397,3 +405,4 @@ echo "后续："
 echo "  cd \"$TARGET\""
 echo "  先运行 scripts/collect-env.ps1，再按 README 准备 docs/inputs/、初填 ai/project-rules.md，并通过 /run review-inputs -> /run generate-docs 进入文档链路"
 echo "  GitHub Actions 已使用派生项目版 .github/workflows/project-check.yml；普通 PR 不运行模板仓 check-template"
+echo "  scripts/ 已裁剪为派生项目所需（模板仓专用脚本未包含）；工具说明见 scripts/README.md"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
 # check-template.sh — 检查 ai-project-template 的关键入口、文档骨架与同步清单是否自洽
 #
 # 用法:
@@ -550,6 +550,12 @@ require_new_project_local_smoke() {
   require_contains "$project_dir/README.md" 'Phase1 不默认等于 MVP' "new-project 烟测 README 避免 Phase1 默认 MVP"
   require_file "$project_dir/_proposals/README.md"
   require_file "$project_dir/scripts/collect-env.ps1"
+  require_file "$project_dir/scripts/README.md"
+  require_absent_file "$project_dir/scripts/check-template.sh" "new-project 烟测 scripts/ 不含模板仓专用 check-template.sh"
+  require_absent_file "$project_dir/scripts/check-template.ps1" "new-project 烟测 scripts/ 不含模板仓专用 check-template.ps1"
+  require_absent_file "$project_dir/scripts/sync-all-derived.sh" "new-project 烟测 scripts/ 不含模板仓专用 sync-all-derived.sh"
+  require_absent_file "$project_dir/scripts/e2e-sync-check.sh" "new-project 烟测 scripts/ 不含模板仓专用 e2e-sync-check.sh"
+  require_absent_file "$project_dir/scripts/new-project.sh" "new-project 烟测 scripts/ 不含模板仓专用 new-project.sh（自删）"
   require_absent_dir "$project_dir/_examples"
   require_absent_dir "$project_dir/_archive"
 
@@ -2037,6 +2043,31 @@ while IFS= read -r sync_file; do
   require_file "$sync_file"
   require_contains "template-sync.json" "$(printf '%s' "$sync_file" | sed 's/[.[\*^$()+?{}|\\]/\\&/g')" "template-sync.json 包含 $sync_file"
 done < <(extract_sync_files)
+
+# 脚本同步边界断言（v1.65.0）：模板仓专用脚本不得回流下行清单；工具注册表 README 必须下行。
+# 提案：_proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md（落地后 _archive/proposals/）。
+check_scripts_sync_boundary() {
+  begin_section "检查脚本同步边界（模板专用不下行）"
+  local template_only
+  local template_only_scripts=(
+    "scripts/check-template.sh"
+    "scripts/check-template.ps1"
+    "scripts/sync-all-derived.sh"
+    "scripts/e2e-sync-check.sh"
+    "scripts/new-project.sh"
+  )
+  for template_only in "${template_only_scripts[@]}"; do
+    require_file "$template_only"
+    if grep -qF "\"$template_only\"" template-sync.json; then
+      fail "$template_only 是模板仓专用脚本，不得出现在 template-sync.json（防回流）"
+    else
+      pass "$template_only 不在同步清单（模板仓专用）"
+    fi
+    require_contains "$template_only" 'Template-only notice' "$template_only 头部标注模板仓专用"
+  done
+  require_contains "template-sync.json" '"scripts/README.md"' "工具注册表 scripts/README.md 已入同步清单"
+}
+check_scripts_sync_boundary
 
 begin_section "检查参考样例完整性"
 require_file "_examples/README.md"

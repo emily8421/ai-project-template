@@ -59,12 +59,12 @@
 | A21 | 查看演示效果 | `/run show-demo` | `ai/commands/show-demo.md`、`template-docs/demo-runbook-template.md` | 无 | 路由到项目演示 SOP；不替代 `09` 验收 |
 | C1 | 模板优化提案汇总 | `/run template-proposal-summary` | `CONTRIBUTING.md` §4、`_proposals/README.md` | `ai/prompts/maintainers/11-template-proposal-summary.md` | 先提案，后改模板；完成后归档到 `_archive/proposals/` |
 | C2 | 版本 bump 与发布 | 无 | `MAINTAINERS.md` §3、`CONTRIBUTING.md` §4 | 无 | VERSION / CHANGELOG + check + tag / Release |
-| C3 | 模板自检 | 无 | `scripts/check-template.sh` | 无 | `check-template` 全过 |
+| C3 | 模板自检 | 无 | `scripts/check-template.sh` | 无 | `check-template` 全过（仅模板仓存在，不下行到派生项目） |
 | C4 | 维护分支→PR→合并→归档 | 无 | `git-guide.md` §3-4、`CONTRIBUTING.md` | 无 | 模板改动走分支 PR；合并后归档提案 |
 | C4/C7 | 直接修改模板 | `/run template-proposal-summary` | `CONTRIBUTING.md` §3 / §7 | `ai/prompts/maintainers/11-template-proposal-summary.md` | 必须判断版本影响并更新 `VERSION` / CHANGELOG |
 | C5 | 维护下行同步机制 | 无 | `git-guide.md` §5、`template-sync.json` | 无 | 改同步清单 / 脚本 + 加自检断言 |
 | C6 | 派生同步验收（跨仓） | 无 | `scripts/check-derived-sync.sh`、`template-docs/derived-sync-report-template.md` | 无 | 跨仓验收派生同步；留运行记录 |
-| C8 | 批量同步所有派生项目 | `bash scripts/sync-all-derived.sh` | `template-docs/scenario-guides.md` C8 | 无 | 发版后一条指令更新父目录下所有派生（先 `--dry-run`） |
+| C8 | 批量同步所有派生项目 | `bash scripts/sync-all-derived.sh` | `template-docs/scenario-guides.md` C8 | 无 | 发版后一条指令更新父目录下所有派生（先 `--dry-run`）；模板仓专用脚本，仅在模板仓运行 |
 | M1 | 新窗口续接任务 | `/run resume` | `ai/session-rules.md` | 无 | 先读 `.ai/session-handoff.md`，兼容 `NEXT-STEPS.md`，再结合 Git 状态恢复 |
 
 ### 文档入口（要看什么 → 看哪；非操作场景）
@@ -117,9 +117,9 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ### 模板维护者
 
 ```bash
-# 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令）
+# 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令；new-project.sh 为模板仓专用脚本，在模板仓运行）
 bash scripts/new-project.sh smoke-demo --local --no-remote
-# 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行）
+# 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行；check-template.* 为模板仓专用脚本，不下行）
 powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records
 powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
 # Bash 完整自检入口（CI 使用同类路径）

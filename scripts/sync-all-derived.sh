@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
 # sync-all-derived.sh — 批量同步父目录下所有派生项目到最新模板方法论（维护者用）
 #
 # 用法:
@@ -11,7 +11,7 @@
 #
 # 每个派生项目是独立 git 仓；本脚本逐个进入、跑该项目的
 # scripts/sync-template.sh + scripts/check-derived-sync.sh，再汇总。
-# 随模板下行同步（在 template-sync.json）；维护者批量同步工具，类似 check-template。
+# 模板仓专用脚本（v1.65.0 起不下行，不进 template-sync.json）；维护者批量同步工具，类似 check-template。
 #
 # 派生项目判据: 子目录含 VERSION + scripts/sync-template.sh + docs/，
 #               且不含 _examples/（模板本体标识）。
