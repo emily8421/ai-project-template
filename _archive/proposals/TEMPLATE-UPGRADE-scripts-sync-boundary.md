@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 脚本同步边界分层——模板专用脚本移出下行清单 + 工具注册表 README 下行
 
 > 来源：模板维护者（2026-08-18 延后池 triage 会话；吸收并关闭 C-016）
-> 状态：**已拍板待实施**（2026-08-18 维护者确认：脚本分层 + README 下行一个 MINOR 落地；`new-project.sh` 一并移出；不等 governance Batch 2；§8 两项均按建议执行——孤儿清理留下次同步窗口、LumiOne / gmbl 一并同步到 v1.65.0）
+> 状态：**已落地**（2026-08-18 PR #371 squash merge `36a9ca7`，v1.65.0；CI template-check 通过 + 本地 L3 e2e 回归通过；归档时点随合并移入 `_archive/proposals/`）
 > 目标版本：v1.65.0（MINOR）
 > Release impact：minor（AI 建议，方向已获维护者确认；改变同步范围，按 `scripts/README.md` §4 治理规则必须提案、升版）
 > Release strategy：单独发布；落地后随下次派生同步窗口做 6 仓孤儿清理
