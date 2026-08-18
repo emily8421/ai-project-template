@@ -6,6 +6,18 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.64.0（2026-08-18）
+
+形态裁剪执行落地 + 根目录地图 + pitfall 口径 + 场景手册指引（MINOR）：落地 `docs/research/2026-08-18-c1-proposal-triage-batch-plan.md` Batch B+C，吸收 #351 + #357 §2.2 + #350 与本地提案 `TEMPLATE-UPGRADE-project-scenario-handbook.md`（patch 聚合发布）。主题：让「按项目形态裁剪」从规则声明变成有执行点和审计项的动作，并给派生项目根目录一张「哪些能写、哪些会被覆盖」的三层地图。
+
+- **#351 形态裁剪执行落地**：`scripts/new-project.sh` 新增 `--shape <docs|cli|web>` 可选参数（docs = 纯文档仓删 `frontend/backend/tests/docker` + `06/07` 骨架；cli = 删 `frontend/docker` 保 `07` 命令契约；web = 缺省不裁剪 ≡ 现状；裁剪口径对齐 `ai/doc-standards/project-rules.md` §3，输出明示删了什么并在生成 README 注明裁剪依据）；`ai/doc-standards/project-rules.md` §3 补「裁剪执行步骤」（决策确认后、生成 docs/03-09 前的显式删除动作 + 执行事实回填）；`ai/commands/post-sync-cleanup.md` 与 `ai/prompts/maintainers/15-post-sync-cleanup.md` 新增「§3 声明不启用 / 省略，但目录或骨架文档仍存在」审计项（防回潮，普通项目自查同样适用）；`template-docs/beginner-guide.md` §5 增根目录三层地图表。
+- **#357 §2.2 根目录分类框架（与 #351 §2.4 地图合并落）**：`ai/global-rules.md` §5 增「根目录分类框架（三层区）」规则口径（模板方法论覆盖区 / 模板治理本地记录区 / 项目产出区；机器事实源仍为 `template-sync.json`，本表是人读导航）；`scripts/new-project.sh` 生成 README 增「项目结构三层区」表。#357 §2.1 物理归拢（MAJOR）另立评估，不在本版。
+- **#350 pitfall 触发口径扩展**：`ai/session-rules.md` §4.3 机制定位句补「既覆盖当场踩的坑，也覆盖维护中发现的存量 AI 代码问题」；触发清单补「存量代码维护触发」（维护 / 治理 / 重构 / 引入新检查器时发现的 AI 代码缺陷、障眼法实现、契约失配——非本次会话产生也记录，根因标「AI 引入」）。
+- **本地提案 project-scenario-handbook**：`template-docs/scenario-guides.md` §8 第三条从「只说禁止」补成「给出去处」（同步清单外项目自有目录 + `ai/project-rules.md` §4 登记 + 编号与 A/C/M 隔离 + 沿用三层步骤表结构）；`ai/prompts/setup/14-new-project.md` 步骤 9 追加场景手册待办。
+- **自检**：`check-template.sh` 补 13 项断言（--shape 三形态与缺省、裁剪执行步骤、三层地图、pitfall 存量触发、审计项、场景手册指引）。
+
+本版为 MINOR：`--shape` 是新的初始化推荐路径采用面 + post-sync-cleanup 新增审计维度 + 根目录三层地图改变新手导航。全部改动缺省兼容——`--shape` 缺省 web 不裁剪、既有项目无强制迁移；`--shape` 删目录属破坏性动作但首提交含全量，误删可从 git 历史恢复。合并后下行同步各派生项目。MINOR 发布前需跑 L3 端到端回归。
+
 ## v1.63.0（2026-08-18）
 
 文档体系治理 Batch A（MINOR，两 PR）：落地 `docs/research/2026-08-18-c1-proposal-triage-batch-plan.md`（C-011 已拍板方案 1），吸收 LUMEN 回流提案 #356 / #355（PR A1，#362）与 #354 / #358（PR A2）——补 doc-standards 章节骨架要求、反向同步落点约束、可选 OO 建模 overlay 与图表生成式镜像机制。维护者同日补充拍板：LUMEN 提案锚定的行业模板与 OO 方法论在派生项目 `docs/references/` 内、模板仓不存在，落地一律通用化措辞（不点名外部规范、不引外部转换编号），并顺带给外部参考资料登记通用承载位。
