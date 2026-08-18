@@ -6,6 +6,20 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.63.0（2026-08-18）
+
+文档体系治理 Batch A（MINOR，两 PR）：落地 `docs/research/2026-08-18-c1-proposal-triage-batch-plan.md`（C-011 已拍板方案 1），吸收 LUMEN 回流提案 #356 / #355（PR A1，#362）与 #354 / #358（PR A2）——补 doc-standards 章节骨架要求、反向同步落点约束、可选 OO 建模 overlay 与图表生成式镜像机制。维护者同日补充拍板：LUMEN 提案锚定的行业模板与 OO 方法论在派生项目 `docs/references/` 内、模板仓不存在，落地一律通用化措辞（不点名外部规范、不引外部转换编号），并顺带给外部参考资料登记通用承载位。
+
+- **PR A1（#362）#356 引用式概述骨架 + 元信息精简**：`ai/doc-standards/02-srs.md` §2 与 `04-architecture.md` §2 补「引用式概述章」能力行（02：引言 / 任务概述 / 数据描述 / 性能 / 运行 / 其它需求；04：需求 / 接口 / 数据结构 / 安全保密 / 维护五域；每节 2-5 行 + 指针、不重复内容）；00-05 元信息口径「当前状态」一句话即可，实现历史归 `09` / CHANGELOG（05 原缺元信息行一并补齐）；`template-docs/docs-scaffold/02/04` 增 §0.1 概述骨架、00-05 撰写提要同步、README 增「三核心节点定位」表（通用措辞）。
+- **PR A1（#362）#355 反向同步落点 + 审计维度**：`ai/document-lifecycle-rules.md` §2 E6 补落点约束（实现证据归 `09` / `docs/design/*` / CHANGELOG，00-05 只留状态 + 指针，REQ→实现证据索引另立独立文档）；§9 code/tests 行挂指针；`ai/prompts/review/19-docs-evaluation.md` 评估维度表新增「阶段归属审计」（典型信号 + 通过 / 需收敛判定 + 收敛动作）；`03/04` doc-standards 禁条可审计化（「无实现细节倒灌」检查项）。
+- **PR A2 #354 OO 建模 overlay（全部「建议 + 可选」）**：`ai/doc-standards/00-scenario.md` 补用例全景图 `DIAG-UC-NN`；`02-srs.md` 补领域模型 / 分析级类图 `DIAG-DOM-NN`（概念层、06 物理表的概念上游）；`04-architecture.md` 补概要级交互图 + 可选概设类图 `DIAG-CLS-PRELIM-NN`；`design-doc.md` 补状态图族 `DIAG-STATE-NN`（带 `status` / 生命周期语义的实体）与详细类图 `DIAG-CLS-NN`（含豁免登记口径）；`06-db-design.md` 区分概念 ERD（`DIAG-DOM-*`）与物理 ERD（`DIAG-DB-ER-*`）两层、物理表间关系图必须挂图 ID；`document-lifecycle-rules.md` §13 补用例图 plantuml 指引（mermaid 无原生用例图语法）。**五阶段产物映射表按通用化示例表口径落地**：`docs/README.md` §2 附「方法论产物映射（可选）」示例表，不引外部方法论文档名与转换编号。
+- **PR A2 #358 图表生成式镜像机制（可选）**：`document-lifecycle-rules.md` §13 补「图表生成式镜像」机制说明（镜像头部声明 / 启用前提 = CI `--check` 校验 / 日志型表只挂锚点）；`docs/README.md` §5 登记 `docs/diagrams/` + `docs/tables/` 两个生成式子目录；新增样例脚本 `template-docs/examples/extract-diagrams.mjs`（manifest 驱动 + `--check` 校验 + 孤儿检测，manifest 留空由派生项目按实际文档登记），登记 `template-sync.json` files_all 与 `sync-template.sh` fallback。
+- **`docs/references/` 外部参考资料区（维护者拍板新增）**：`docs/README.md` §5 登记可选子目录——外部调研 / 方法论参考 / 行业模板的归置位，非权威规格区（采纳须先经 research 评审 / decisions 裁决），敏感原件可 gitignore 只留脱敏件与索引。
+- **同步与自检**：`check-template.sh` 补断言（样例脚本存在性 + 唯一权威源 / 孤儿检测关键词 + 同步清单 / fallback 一致性；§13 plantuml 指引与镜像机制；doc-standards OO overlay 图 ID；docs README references 登记）。
+- **勘误**：`docs/research/2026-08-18-c1-proposal-triage-batch-plan.md` §4 补 references 锚定层遗漏与三条拍板口径。
+
+本版为 MINOR：doc-standards 新增概述章骨架要求与 OO overlay 可选能力层、新增样例脚本入同步清单、docs/README 新增三个可选子目录约定——构成新的下游采用面。全部 OO 图纸与镜像机制均为「建议 + 可选」，Lean 剖面可豁免并在 `ai/project-rules.md` §3 说明；不强制既有项目回补。合并后下行同步各派生项目（建议随 Batch B / v1.64.0 一并排期）。MINOR 发布前需跑 L3 端到端回归（`scripts/e2e-sync-check.sh` + `template-docs/e2e-regression-checklist.md`）。
+
 ## v1.62.1（2026-08-15）
 
 Web UI 知识质量基线（PATCH，Batch 2A）：落地 `_archive/proposals/TEMPLATE-UPGRADE-web-ui-knowledge-quality-governance.md`——给 v1.62.0 建立的 `template-docs/ui-knowledge/` 核心层补来源可核验性与结构自检：6 条 `SRC-*` 来源完成只读链接 / 发布方 / 可见许可口径复核并落盘；新增「链接核验状态」独立字段，把「内容评审（生命周期）」与「链接可用性」分开记录；唯一来源暂时不可用的 `PAT-INT-006` 降为 candidate。
