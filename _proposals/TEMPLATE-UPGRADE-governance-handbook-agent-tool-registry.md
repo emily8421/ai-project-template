@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: 模板开发手册、分层管家、治理机制与工具注册体系评估
 
 > 来源：模板维护者（2026-08-13 关于模板开发手册、四路径管家、治理机制登记与工具管理的讨论）
-> 状态：Batch 1 已获授权、完成本地实施、通过验证和人工评审；Batch 2-5 未授权
-> 目标版本：v1.61.6（仅 Batch 1）
+> 状态：Batch 1 已落地（v1.61.6）；Batch 2 已授权并实施（v1.65.1，见 §17）；Batch 3-5 未授权
+> 目标版本：v1.61.6（Batch 1）；v1.65.1（Batch 2）
 > Release impact：patch（Batch 1 新增人读机制与工具登记，不改变默认行为、同步范围或门禁）；后续 Batch 分别判断 patch / minor
 > Release strategy：先登记与手册整理，再做角色化试点；不在首批默认启用真正并发多 Agent
 
@@ -817,3 +817,39 @@ AI 建议维护者确认以下总体方向：
 - `scripts/check-template.ps1`：机制文档初稿完成后通过，`1996` 项 / `0` 失败，耗时约 234 秒。
 - 按文档语言规范重写 `template-docs/capability-packages.md` 后重新运行 `scripts/check-template.ps1`：通过，`1996` 项 / `0` 失败，耗时约 247 秒。
 - 首次完整自检曾因外层 120 秒预算不足被截断；后续两次均使用 300 秒上限完整通过，未修改脚本或降低检查范围。
+
+## 17. Batch 2 实施记录（开发手册主干重构）
+
+> 授权：2026-08-19 维护者拍板「干，顺手删。按建议执行」——按 §9 Batch 2 原范围 + 评估会话提出的 4 文件草案实施。
+
+### 17.1 已实施范围（v1.65.1，PATCH）
+
+- `template-docs/template-methodology.md`（主改，保持原路径与量级）：
+  - §2 当前权威源表补 3 行：`template-docs/capability-packages.md`（机制注册表）、`scripts/README.md`（工具注册表，v1.65.0 起下行）、`template-docs/rd-data-chain.md`（研发数据链）。
+  - 新增「读者与阅读路径」小节（使用者 / 维护者 / 想看机制全貌三类入口）。
+  - 新增「四条价值流与工作分区」节：文档 → 实现 → 验收 → 知识各 2-3 行（输入 / 输出 / 权威源），指针指向 `capability-packages.md` §3 工作分区表，不复制正文。
+  - 新增「机制与工具注册表」小节：指向两个注册表 + MECH-* / TOOL-* ID 体系一句话说明。
+  - 既有 §3-§6（设计目标 / 设计原则 / 各子系统 why / 演进策略）原样保留。
+- `template-docs/README.md`：手册导航表补登 `capability-packages.md`、`rd-data-chain.md`、`ui-knowledge/`。
+- 根 `README.md`：快速开始「想理解模板为什么这么设计」入口补一句机制 / 工具注册表去向。
+- `template-docs/beginner-guide.md`：§7 导航表补一行「查治理机制 / 工具看哪」。
+- `template-docs/capability-packages.md` §5 尾部「已知缺口：scripts/README.md 不在 template-sync.json」过时表述（v1.65.0 已下行）修正为已落地记录。
+
+### 17.2 与验收标准（§13.3）对照
+
+- 使用者能从一个主干页面理解模板层次、价值流和入口：methodology §2 权威源表 + 新增价值流节 + 读者路径承担。
+- 维护者能从手册进入机制和工具注册表：§2 表新增两行 + 新增注册表小节承担。
+- 手册没有复制规则正文形成第二权威源：所有机制 / 工具字段只留指针，正文在注册表。
+- 现有关键路径和链接保持兼容：4 文件路径不变；`check-template.sh` 相关断言均为关键词断言，保留关键词。
+
+### 17.3 明确未实施
+
+- 未启动 Batch 3-5（五角色契约、双用例试点、物理演进决策）。
+- 未修改 `ai/index.md` 路由、任何规则文件、脚本行为或 `template-sync.json`（4 文件均已在 `files_all`）。
+- 未新建任何文件。
+
+### 17.4 版本与验证
+
+- `Release impact: patch`（只重组说明和导航，不改变默认行为、同步范围或推荐流程；符合 §9 Batch 2「若只重组说明和导航，patch」与 CONTRIBUTING §4 兼容增强默认 patch）。
+- 验证：`scripts/check-markdown-clean.ps1`（改动文件）+ `bash scripts/check-template.sh --summary` + `git diff --check`；PATCH 豁免 L3 e2e 回归。
+- 验证结果（2026-08-19）：markdown clean 8 文件通过；`git diff --check` 通过（仅 VERSION 行尾 LF→CRLF 提示，Windows 工作区常态）；`check-template.sh --summary` 通过（2086 项 / 0 失败）。

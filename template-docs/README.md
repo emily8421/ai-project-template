@@ -12,7 +12,10 @@
 | `ai-cli-setup.md` | 装 AI CLI（Claude / Codex）+ 公司中转站衔接 |
 | `smoke-test.md` | 新手烟测流程 |
 | `smoke-test-report-template.md` | 烟测结果记录模板 |
-| `template-methodology.md` | 模板为什么这么设计（设计原则与各子系统 why） |
+| `template-methodology.md` | 模板为什么这么设计（设计原则、四条价值流、各子系统 why、注册表总览） |
+| `capability-packages.md` | 模板机制与专项使用说明：14 类治理机制注册表（负责人 / 触发时机 / 完成判断）+ 工作分区 |
+| `rd-data-chain.md` | 研发数据沉淀路径：数据类别 → 载体 → 主链关系（ADR / research / handoff / hotspot 等） |
+| `ui-knowledge/` | UI 设计知识核心层：视觉 / 交互模式 + 来源索引（按 scope 读取） |
 | `domain-templates.md` | 领域模板可选中间层方法论：什么时候引入 L2、边界和回流关系 |
 | `domain-derived-scenarios-template.md` | 领域模板复制后领域化的 L2-to-L3 playbook template |
 | `glossary.md` | 模板核心术语索引：文档链路、ID、阶段、状态、原型、handoff、同步治理 |
