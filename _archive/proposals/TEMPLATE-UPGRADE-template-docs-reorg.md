@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: template-docs 目录分组重组 + 手册文档同步边界
 
 > 来源：模板维护者（2026-08-19「template-docs 平铺太多、不知怎么看；是否不必全部下行」评估会话）
-> 状态：已授权两步走（Step 1 导航 + 4 件停止下行；Step 2 目录重组本轮排期）；含 1 项已向维护者报告的修正（domain-derived-scenarios-template 改走 files_domain）
+> 状态：**已落地**（2026-08-19 PR #375 squash merge `1de22dd`，v1.66.0；CI template-check 通过 + L3 e2e 回归通过；归档时点随合并移入 `_archive/proposals/`；含 1 项维护者报告后修正：domain-derived-scenarios-template 改走 files_domain）
 > 目标版本：v1.66.0（MINOR，两步聚合一个版本、两个 PR，沿 v1.64.0 两 PR 一版本先例）
 > Release impact：minor（同步范围成员变化 + 同步文件路径迁移，派生项目需感知）
 > Release strategy：Step 1 PR 先行（bump v1.66.0），Step 2 PR 并入同一版本条目；均赶在下次 6 仓同步窗口之前合并，派生项目一次同步携带全部变更
