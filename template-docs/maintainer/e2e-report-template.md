@@ -18,7 +18,7 @@
 - sync-all-derived 批量烟测：✅ / ❌
 - 输出摘要：
 
-## 人工项（按 `template-docs/e2e-regression-checklist.md`）
+## 人工项（按 `template-docs/maintainer/e2e-regression-checklist.md`）
 
 - R4 场景引导路由（A0 / A2 / C / A3–A16）：✅ / ❌ / 备注
 - R5 文档生成（review-inputs + generate-docs → 00-09）：✅ / ❌ / 备注

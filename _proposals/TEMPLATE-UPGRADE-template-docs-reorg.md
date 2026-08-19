@@ -62,8 +62,8 @@
 
 #### 2.1 `template-sync.json`
 
-- `files_all` 移出 4 项：`template-docs/e2e-regression-checklist.md`、`template-docs/e2e-report-template.md`、`template-docs/rd-data-chain.md`、`template-docs/domain-derived-scenarios-template.md`。
-- `files_domain` 移入 1 项：`template-docs/domain-derived-scenarios-template.md`。
+- `files_all` 移出 4 项：`template-docs/maintainer/e2e-regression-checklist.md`、`template-docs/maintainer/e2e-report-template.md`、`template-docs/maintainer/rd-data-chain.md`、`template-docs/maintainer/domain-derived-scenarios-template.md`。
+- `files_domain` 移入 1 项：`template-docs/maintainer/domain-derived-scenarios-template.md`。
 - `description` 补充：template-docs 中模板仓专用文档（L3 回归、研发数据链地图）与领域专用模板不在 files_all。
 
 #### 2.2 头部标注
@@ -79,7 +79,7 @@
 
 同步范围内引用这 4 件的文件，标注「模板仓文档 / 仅领域路线」：
 
-- `ai/session-rules.md` 两处 rd-data-chain 脚注：改为「与模板仓 `template-docs/rd-data-chain.md` §4（模板仓文档，不下行）一致」。
+- `ai/session-rules.md` 两处 rd-data-chain 脚注：改为「与模板仓 `template-docs/maintainer/rd-data-chain.md` §4（模板仓文档，不下行）一致」。
 - `template-docs/beginner-guide.md` §7「查研发数据沉淀路径」行、`template-docs/template-methodology.md` §2 rd-data-chain 行：标注（模板仓文档）。
 - `template-docs/capability-packages.md`：rd-data-chain 引用处标注；§5 补记本批边界变化。
 - `template-docs/README.md`：重写为六类分组导航（Step 1 核心）——手册（根）/ profiles / templates / maintainer（模板仓专用）/ docs-scaffold / ui-knowledge；Step 2 落地前分组导航先按目标结构标注「（即将移入 X/）」或直接按现状分组、Step 2 再更新路径。**采用后者**：现状分组 + 一句话预告目录重组。
@@ -88,7 +88,7 @@
 
 #### 2.5 `scripts/new-project.sh` 初始裁剪
 
-- 既有裁剪段（删 5 脚本处）追加：删除 `template-docs/e2e-regression-checklist.md`、`template-docs/e2e-report-template.md`、`template-docs/rd-data-chain.md`、`template-docs/domain-derived-scenarios-template.md`（新项目 = 普通路线，4 件都不该有）。
+- 既有裁剪段（删 5 脚本处）追加：删除 `template-docs/maintainer/e2e-regression-checklist.md`、`template-docs/maintainer/e2e-report-template.md`、`template-docs/maintainer/rd-data-chain.md`、`template-docs/maintainer/domain-derived-scenarios-template.md`（新项目 = 普通路线，4 件都不该有）。
 
 #### 2.6 post-sync-cleanup 孤儿审计
 
@@ -148,5 +148,28 @@ template-docs/
 2. `check-markdown-clean.ps1` 改动 Markdown。
 3. `bash scripts/new-project.sh <名> --local --no-remote --no-examples` 烟测：产物无 4 件文档（Step 2 后：新路径结构 + 无孤儿）。
 4. `bash scripts/sync-template.sh <派生仓> --dry-run`：报告正确显示 4 件停更 / 1 件转 domain（Step 2 后新路径）。
-5. **L3 e2e 回归**（MINOR 必跑）：`bash scripts/e2e-sync-check.sh` + `template-docs/e2e-regression-checklist.md` R4-R6 人工项 + 报告。
+5. **L3 e2e 回归**（MINOR 必跑）：`bash scripts/e2e-sync-check.sh` + `template-docs/maintainer/e2e-regression-checklist.md` R4-R6 人工项 + 报告。
 6. 人工评审：README 分组导航可读性；引用迁移抽查。
+
+## 6. 实施记录（2026-08-19，v1.66.0）
+
+### 6.1 Step 1（commit `68ddf8e`）
+
+- 18 文件 +267/-39：template-sync.json（4 出 1 转 + description）、3 件 Template-only notice 头 + domain-derived 头部领域路线标注、sync-template.sh 兜底清单（4 出 + 兜底范围注释）、session-rules 两处脚注标注、beginner-guide / template-methodology / capability-packages 导航与 §5 补记、MAINTAINERS §3/§4、new-project.sh 裁剪 4 件、post-sync-cleanup 孤儿审计（prompt + command）、template-docs/README.md 五组导航重写、check-template.sh 边界断言（28 项分区）+ 烟测 4 项、check-template.ps1 镜像。
+- 验证：check-template.sh 2093 项 / 0 失败（Step 1 时点）。
+
+### 6.2 Step 2（同分支后续 commit）
+
+- git mv 19 文件归三子目录（profiles 4 / templates 11 / maintainer 4）；根目录收敛至 9 件手册。
+- 引用迁移：sed 批量 + 分组验证——profiles 组 36 文件、templates 组 33 文件、maintainer 组 24 文件；grep 复查零旧路径残留（排除 _archive / .ai）。
+- check-template.sh 断言 pattern 批量更新（约 105 处新路径）；发现并修复「sed 只改被检文件内容、漏改断言 pattern」的 27 项失败后全过。
+- template-sync.json 指向文件存在性校验（files_all 151 + files_domain 2 全部存在）；两脚本 bash -n 语法通过。
+- post-sync-cleanup 追加「旧路径残留」审计项（prompt §98 后新增 + command 4c）。
+- 验证：check-template.sh 2093 项 / 0 失败。
+
+### 6.3 验证结果汇总（PR 前回填）
+
+- check-markdown-clean.ps1（改动 Markdown）：待 PR 前。
+- new-project 烟测（新路径结构 + 无 4 件文档）：待 PR 前。
+- sync-template dry-run（选 1 派生仓）：待 PR 前。
+- L3 e2e 回归（MINOR 必跑）：待合并前。

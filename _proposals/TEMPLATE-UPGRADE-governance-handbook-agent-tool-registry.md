@@ -56,7 +56,7 @@
 - **Capability Packages 历史提案**（`_archive/proposals/TEMPLATE-UPGRADE-capability-packages-and-profile-contracts.md`，已归档）：明确目录重组与真正多 Agent 暂缓，先用角色化流程。**互补不重复**——本提案延续其风险判断，但基于当前新增需求重新评估“按四条价值流划分角色”的可行性，并提出试点门槛。
 - **Document Lifecycle Rules**（`ai/document-lifecycle-rules.md`，已启用）：定义输入到文档、计划、验证和代码的主链、按 scope 读取及变更传播。**层级不同**——它是 AI 执行规则，本提案是人读治理总览和所有权模型，不复制具体规则正文。
 - **Implementation Lifecycle Rules**（`ai/implementation-lifecycle-rules.md`，已启用）：定义 Phase、Sprint、Task、编码、验证与验收留痕。**层级不同**——本提案评估实现管家与验收管家的职责边界，不立即拆分规则文件。
-- **研发数据链 Profile**（`template-docs/rd-data-chain.md`，已启用）：登记 ADR、research、meetings、handoff、hotspot、pitfall 等数据载体及主链关系。**对象不同**——它登记研发数据，本提案补治理机制和工具资产登记，并把知识管家的职责建立在该 Profile 上。
+- **研发数据链 Profile**（`template-docs/maintainer/rd-data-chain.md`，已启用）：登记 ADR、research、meetings、handoff、hotspot、pitfall 等数据载体及主链关系。**对象不同**——它登记研发数据，本提案补治理机制和工具资产登记，并把知识管家的职责建立在该 Profile 上。
 - **脚本说明**（`scripts/README.md`，已启用）：已有脚本用途、运行位置、读写属性和使用者表。**合并入**——本提案不另造工具目录，而是把现有说明升级为工具注册表和生命周期入口。
 - **模板方法论说明**（`template-docs/template-methodology.md`，已启用）：解释模板为什么这样设计，并明确演进原则不是推翻重来。**合并入**——建议将其逐步升级为开发手册主干，而不是新建内容重复的整套手册。
 - **领域模板继承与 Agent 系统 Profile**（`_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md`，部分落地）：讨论作为软件产品的 Agent 系统所需 planner、executor、tool permission、memory、eval 等领域能力。**对象不同**——本提案中的“管家 Agent”是模板研发流程角色，不是 Agent 系统产品领域模板，不引入 agent runtime、memory、trace 或领域 scaffold。
@@ -75,7 +75,7 @@
 - 项目与命令约束：`ai/project-rules.md`、`ai/commands/README.md`、`ai/prompts/README.md`。
 - 人读入口：`README.md`、`template-docs/README.md`、`template-docs/beginner-guide.md`、`template-docs/template-methodology.md`、`SOP.md`。
 - 治理与同步：`CONTRIBUTING.md`、`MAINTAINERS.md`、`template-sync.json`、`template-docs/capability-packages.md`。
-- 数据与工具索引：`template-docs/rd-data-chain.md`、`scripts/README.md`。
+- 数据与工具索引：`template-docs/maintainer/rd-data-chain.md`、`scripts/README.md`。
 - 相关提案：Capability Packages 历史提案、领域模板继承提案。
 
 ### 2.2 资产规模快照
@@ -825,7 +825,7 @@ AI 建议维护者确认以下总体方向：
 ### 17.1 已实施范围（v1.65.1，PATCH）
 
 - `template-docs/template-methodology.md`（主改，保持原路径与量级）：
-  - §2 当前权威源表补 3 行：`template-docs/capability-packages.md`（机制注册表）、`scripts/README.md`（工具注册表，v1.65.0 起下行）、`template-docs/rd-data-chain.md`（研发数据链）。
+  - §2 当前权威源表补 3 行：`template-docs/capability-packages.md`（机制注册表）、`scripts/README.md`（工具注册表，v1.65.0 起下行）、`template-docs/maintainer/rd-data-chain.md`（研发数据链）。
   - 新增「读者与阅读路径」小节（使用者 / 维护者 / 想看机制全貌三类入口）。
   - 新增「四条价值流与工作分区」节：文档 → 实现 → 验收 → 知识各 2-3 行（输入 / 输出 / 权威源），指针指向 `capability-packages.md` §3 工作分区表，不复制正文。
   - 新增「机制与工具注册表」小节：指向两个注册表 + MECH-* / TOOL-* ID 体系一句话说明。

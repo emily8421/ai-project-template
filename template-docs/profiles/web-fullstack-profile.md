@@ -104,7 +104,7 @@ UI Brief / UI Exploration / frontend experience brief / frontend-interaction / U
 
 ## 8. 与 scaffold 实验的关系
 
-本 Profile 只定义结构基线和 Gate，不在母模板内生成真实 Web App scaffold。若需要验证 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板是否值得推进，先按 `template-docs/web-app-scaffold-experiment.md` 在真实项目或独立实验仓记录候选结构、Walking Skeleton 验证、文件膨胀观察和推广结论。
+本 Profile 只定义结构基线和 Gate，不在母模板内生成真实 Web App scaffold。若需要验证 `template-docs/web-app/`、`new-project --profile web-app` 或领域模板是否值得推进，先按 `template-docs/profiles/web-app-scaffold-experiment.md` 在真实项目或独立实验仓记录候选结构、Walking Skeleton 验证、文件膨胀观察和推广结论。
 
 ## 9. 代码层一致性基线（Web 形态）
 

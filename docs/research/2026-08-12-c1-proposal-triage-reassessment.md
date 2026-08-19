@@ -54,7 +54,7 @@
 - `docs/research/2026-08-10-rule-consolidation-map.md` 不存在。
 - `template-docs/stack-adapters/` 不存在。
 - `template-docs/capability-packages.md` 已有 Core、Docs、Implementation、Verification、Profiles、Governance 影响域表。
-- `ai/global-rules.md §2.1` 已引用 `web-fullstack-profile.md §9` 和 `§9.4`，但当前 `template-docs/web-fullstack-profile.md` 只有 §1-§8，形成悬空引用。
+- `ai/global-rules.md §2.1` 已引用 `web-fullstack-profile.md §9` 和 `§9.4`，但当前 `template-docs/profiles/web-fullstack-profile.md` 只有 §1-§8，形成悬空引用。
 
 ## 2. 对首轮报告的复核
 
@@ -131,7 +131,7 @@
 
 ### 4.4 建议落点
 
-- 在 `template-docs/web-fullstack-profile.md` 增加精简的代码契约章节。
+- 在 `template-docs/profiles/web-fullstack-profile.md` 增加精简的代码契约章节。
 - 章节只规定 Web 形态层的目标与验证要求，不引用 R3/R5 编号，不依赖尚不存在的 Adapter。
 - 同步修正 `ai/global-rules.md` 中对 §9/§9.4 的引用，使章节号与实际文件一致。
 - 具体错误结构、工具和框架实现继续由 `docs/05-tech-spec.md` 与 `ai/project-rules.md §5` 决定。
@@ -265,7 +265,7 @@
 
 | 文件 | 拟改内容 |
 |---|---|
-| `template-docs/web-fullstack-profile.md` | 增加精简的错误契约、统一传输边界、契约漂移检测和真实协议边界测试说明 |
+| `template-docs/profiles/web-fullstack-profile.md` | 增加精简的错误契约、统一传输边界、契约漂移检测和真实协议边界测试说明 |
 | `ai/global-rules.md` | 修正或确认对 Web Profile 章节的引用，不重复规则正文 |
 | `scripts/check-template.sh` | 仅在确有必要时补一条稳定存在性断言，避免为每个条目增加脆弱断言 |
 | `VERSION` / `CHANGELOG.md` | 按最终是否新增强制采用面判断 PATCH 或 MINOR；当前建议 PATCH |
@@ -363,7 +363,7 @@
 
 | 文件 | 改动 | 说明 |
 |---|---|---|
-| `template-docs/web-fullstack-profile.md` | §8 之后新增 §9（精简版，结构见 §15.2） | 主体改动 |
+| `template-docs/profiles/web-fullstack-profile.md` | §8 之后新增 §9（精简版，结构见 §15.2） | 主体改动 |
 | `ai/global-rules.md` | L0 正文**不改**；§2.1 对 §9/§9.4 的引用落 §9 后即自然兑现 | 无需改文本，仅需验证章节号一致 |
 | `scripts/check-template.sh` / `.ps1` | **默认不新增断言**；§9 非硬 Gate，不为其每条加脆弱断言 | 若维护者希望锁定 §9 存在，最多补 1 条标题存在性断言 |
 | `VERSION` / `CHANGELOG.md` | PATCH 递增 + 登记 Batch A | — |

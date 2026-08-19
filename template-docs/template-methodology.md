@@ -28,9 +28,9 @@
 | `template-docs/glossary.md` | 人读术语索引，不替代规则权威源 |
 | `template-docs/capability-packages.md` | 治理机制注册表（14 类机制 MECH-* 登记：负责人 / 触发时机 / 权威依据 / 完成判断）+ 工作分区表 |
 | `scripts/README.md` | 工具注册表（12 类工具能力 TOOL-* 登记：运行契约 / 权威实现 / 生命周期；v1.65.0 起随模板下行） |
-| `template-docs/rd-data-chain.md` | 研发数据沉淀路径（数据类别 → 载体 → 主链关系；模板仓文档，不下行） |
+| `template-docs/maintainer/rd-data-chain.md` | 研发数据沉淀路径（数据类别 → 载体 → 主链关系；模板仓文档，不下行） |
 | `template-docs/docs-scaffold/` | `docs/inputs` / `docs/vision` / `docs/00-09` / `docs/design` / `docs/decisions` / `docs/research` 结构模板副本，不替代项目事实文档 |
-| `template-docs/domain-templates.md` | 领域模板可选中间层方法论（演进中） |
+| `template-docs/profiles/domain-templates.md` | 领域模板可选中间层方法论（演进中） |
 | `SOP.md` | 场景索引与流程入口 |
 | `ai/index.md` | AI 规则入口 |
 | `ai/global-rules.md` | 跨项目通用规则 |
@@ -94,7 +94,7 @@
 | 文档 | 输入材料 → `docs/00-09` + `docs/design/*` | `ai/document-lifecycle-rules.md`、`ai/doc-standards/*` |
 | 实现 | 已确认设计 → Sprint / Task / 代码 | `ai/implementation-lifecycle-rules.md`、`docs/08` |
 | 验收 | 实现完成包 → 测试证据与验收结论 | `docs/09`、`tests/*` |
-| 知识 | 决策 / 调研 / 经验 → 可追溯记录与长期回写 | `template-docs/rd-data-chain.md`、`docs/decisions/*`、`ai-records/*` |
+| 知识 | 决策 / 调研 / 经验 → 可追溯记录与长期回写 | `template-docs/maintainer/rd-data-chain.md`、`docs/decisions/*`、`ai-records/*` |
 
 四条流在单会话中由同一个 AI 按阶段串行承担（任务协调 / 路由见 `ai/index.md`），不是四个并发 Agent；角色化与并发试点的评估见 `_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` Batch 3-5（未授权）。
 
@@ -218,7 +218,7 @@ Prompt Library 设计：
 - 模板改动必须走提案、版本、PR、归档流程，避免派生项目各自演化成不同流派。
 - 版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。
 
-> 领域模板可选中间层：若需在母模板与具体项目之间插入面向某类系统的「领域模板」（如 agent 系统领域模板），见 `template-docs/domain-templates.md`。该层为可选增强、尚在演进中，主线治理仍为母模板 ↔ 派生项目两层，现有派生项目无需迁移。
+> 领域模板可选中间层：若需在母模板与具体项目之间插入面向某类系统的「领域模板」（如 agent 系统领域模板），见 `template-docs/profiles/domain-templates.md`。该层为可选增强、尚在演进中，主线治理仍为母模板 ↔ 派生项目两层，现有派生项目无需迁移。
 
 ## 7. 机制与工具注册表
 

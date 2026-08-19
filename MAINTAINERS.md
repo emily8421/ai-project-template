@@ -36,7 +36,7 @@
 
 ## 3. 发布 Checklist
 
-> **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/e2e-report-template.md` 出报告确认（两件均为模板仓专用文档，v1.66.0 起不下行）。PATCH（含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修）可豁免。
+> **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/maintainer/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/maintainer/e2e-report-template.md` 出报告确认（两件均为模板仓专用文档，v1.66.0 起不下行）。PATCH（含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修）可豁免。
 
 每次发版前逐条过：
 
@@ -69,8 +69,8 @@
 - 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`template-docs/` 下对应文档与 `SOP.md` 的入口是否一致。
 - 删除同步文件时，必须确认派生项目旧版本同步脚本不会因此失败。
 - `scripts/check-template.sh` / `.ps1` 只用于模板仓库完整性自检（模板仓专用，不下行）；派生项目同步验收用 `scripts/check-derived-sync.sh` / `.ps1`（随模板下行）。
-- `NEXT-STEPS.md` / `.ai/session-handoff.md` 是本地续接便签，不属于模板方法论文档；保持本地临时性，通过 `.gitignore` 排除，不进同步清单和正式提交。模板只同步 `ai/session-rules.md` 与 `template-docs/session-handoff.example.md`。
-- 真实派生项目同步后的问题优先沉淀到 `template-docs/derived-sync-report-template.md` 运行记录；只有可通用于多个项目的问题，才去项目化转写为 `_proposals/TEMPLATE-UPGRADE-*.md` 回流。
+- `NEXT-STEPS.md` / `.ai/session-handoff.md` 是本地续接便签，不属于模板方法论文档；保持本地临时性，通过 `.gitignore` 排除，不进同步清单和正式提交。模板只同步 `ai/session-rules.md` 与 `template-docs/templates/session-handoff.example.md`。
+- 真实派生项目同步后的问题优先沉淀到 `template-docs/templates/derived-sync-report-template.md` 运行记录；只有可通用于多个项目的问题，才去项目化转写为 `_proposals/TEMPLATE-UPGRADE-*.md` 回流。
 - **批量同步**：维护者发新版后，从模板仓目录发起“同步至派生项目 / 同步 N 个派生”时，优先读取维护者侧 `ai-records/project-registry/registry.md`，用 Project / Aliases / Local path / Path status / Sync mode 解析目标；路径缺失或 stale-risk 先停下确认。`scripts/sync-all-derived.sh <父目录> --dry-run|--commit`（模板仓专用脚本，从模板仓运行）仅作为同父目录项目的 fallback 扫描工具；默认 dry-run，工作区不干净 / 非派生 / 模板本体自动跳过。要 PR-per-project 可审计流程仍走 A13。
 
 ## 5. 自检与 CI
@@ -147,4 +147,4 @@ Windows 下从 PowerShell 调 Git Bash 跑 `.sh` 时若出现内嵌双引号丢�
 - 历史归档放 `docs/archive/`。
 - `ai/doc-standards/`（v1.20.0+）是模板 `00-09` 撰写规范的只读镜像，随模板同步刷新，不作为项目事实、不直接驱动开发；旧项目可能残留 `docs/_scaffold/`。
 - AI 需要新增文档时，必须先判断文档类型；不确定则先提议路径并等待人工确认。
-- 研发过程各类数据（决策 / 调研 / 会议 / 验证 / 版本 / AI 成本 / 续接）如何沉淀、流转和回写，见 `template-docs/rd-data-chain.md`（索引 / 分类，不替代 00-09）。其中单条 token hotspot 为 `.ai/token-hotspots/` 本地记录，入库只保留 `ai-records/token-hotspots/` 脱敏汇总。
+- 研发过程各类数据（决策 / 调研 / 会议 / 验证 / 版本 / AI 成本 / 续接）如何沉淀、流转和回写，见 `template-docs/maintainer/rd-data-chain.md`（索引 / 分类，不替代 00-09）。其中单条 token hotspot 为 `.ai/token-hotspots/` 本地记录，入库只保留 `ai-records/token-hotspots/` 脱敏汇总。

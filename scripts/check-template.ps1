@@ -236,9 +236,9 @@ function Invoke-NativeTemplateCheck {
       "template-docs/env-setup.md",
       "template-docs/ai-cli-setup.md",
       "template-docs/smoke-test.md",
-      "template-docs/smoke-test-report-template.md",
+      "template-docs/templates/smoke-test-report-template.md",
       "template-docs/template-methodology.md",
-      "template-docs/web-fullstack-profile.md",
+      "template-docs/profiles/web-fullstack-profile.md",
       "CHANGELOG.md",
       "CHANGELOG-PLAIN.md",
       "VERSION",
@@ -367,17 +367,17 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "scripts/check-template.ps1" 'Repair-ProcessPathEnvironment' "check-template PowerShell repairs duplicate PATH keys"
   Require-Contains "scripts/sync-template.ps1" 'Repair-ProcessPathEnvironment' "sync-template PowerShell repairs duplicate PATH keys"
   Require-Contains "scripts/check-derived-sync.ps1" 'Repair-ProcessPathEnvironment' "check-derived-sync PowerShell repairs duplicate PATH keys"
-  Require-Contains "template-docs/remote-ci-sop-profile.md" 'Invoke-WebRequest' "Remote / CI profile recommends raw REST JSON on Windows"
+  Require-Contains "template-docs/profiles/remote-ci-sop-profile.md" 'Invoke-WebRequest' "Remote / CI profile recommends raw REST JSON on Windows"
   Require-Contains "scripts/new-project.sh" 'CHANGELOG-PLAIN\.md' "new-project initializes project-owned CHANGELOG-PLAIN.md"
   Require-Contains ".gitignore" '\.ai/token-hotspots/' ".gitignore excludes local token hotspot records"
   Require-Contains "ai/session-rules.md" '\.ai/token-hotspots/' "session-rules defines local token hotspot path"
   Require-Contains "ai/session-rules.md" 'ai-records/token-hotspots/SUMMARY\.md' "session-rules defines token hotspot summary path"
   Require-Contains "MAINTAINERS.md" '\.ai/token-hotspots/' "MAINTAINERS distinguishes local token hotspot records"
-  Require-Contains "template-docs/rd-data-chain.md" '\.ai/token-hotspots/' "rd-data-chain distinguishes local token hotspot records"
-  Require-Contains "template-docs/domain-templates.md" 'L2-to-L3 playbook' "domain-templates defines L2-to-L3 playbook"
-  Require-Contains "template-docs/domain-templates.md" 'domain-derived-scenarios-template\.md' "domain-templates points to L2-to-L3 playbook template"
-  Require-Contains "template-docs/domain-derived-scenarios-template.md" 'L2-to-L3 playbook template' "domain-derived scenarios template defines stable role"
-  Require-Contains "template-docs/domain-derived-scenarios-template.md" 'domain-derived-scenarios\.md' "domain-derived scenarios template documents copy target"
+  Require-Contains "template-docs/maintainer/rd-data-chain.md" '\.ai/token-hotspots/' "rd-data-chain distinguishes local token hotspot records"
+  Require-Contains "template-docs/profiles/domain-templates.md" 'L2-to-L3 playbook' "domain-templates defines L2-to-L3 playbook"
+  Require-Contains "template-docs/profiles/domain-templates.md" 'domain-derived-scenarios-template\.md' "domain-templates points to L2-to-L3 playbook template"
+  Require-Contains "template-docs/maintainer/domain-derived-scenarios-template.md" 'L2-to-L3 playbook template' "domain-derived scenarios template defines stable role"
+  Require-Contains "template-docs/maintainer/domain-derived-scenarios-template.md" 'domain-derived-scenarios\.md' "domain-derived scenarios template documents copy target"
   Require-Contains "template-sync.json" 'domain-derived-scenarios-template\.md' "template-sync (files_domain) includes domain-derived scenarios template"
   Require-Contains "template-docs/scenario-guides.md" 'L2-to-L3 playbook' "scenario-guides contains L2-to-L3 playbook routing"
   Require-Contains "template-docs/scenario-guides.md" 'domain-derived-scenarios\.md' "scenario-guides points to domain-derived scenarios"

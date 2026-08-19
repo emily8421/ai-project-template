@@ -1,7 +1,7 @@
 # 模板下行同步运行记录：v1.57.1 → 4 派生项目
 
 > 本记录为**模板仓（ai-project-template / 母模板）视角**的下行同步汇总：记录 2026-07-25 将模板方法论 v1.57.1 下行同步到 4 个派生项目 + 模板仓 token-hotspot 落盘的完整闭环。
-> 格式参考 `template-docs/derived-sync-report-template.md`（该模板为**派生视角**，本记录适配为**母模板下行视角**）。派生项目各自的派生视角 sync-records 可另写。
+> 格式参考 `template-docs/templates/derived-sync-report-template.md`（该模板为**派生视角**，本记录适配为**母模板下行视角**）。派生项目各自的派生视角 sync-records 可另写。
 
 ## 基本信息
 
