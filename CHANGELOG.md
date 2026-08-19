@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.65.1（2026-08-19）
+
+governance Batch 2：开发手册主干重构（PATCH）：落地 `_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` §9 Batch 2（Batch 1 机制 / 工具登记已于 v1.61.6 落地）。主题：把 v1.61.6 建立的两份注册表（机制台账 + 工具台账）接入手册主干与各入口导航，让人能从一份主干理解模板层次、四条价值流和入口；不复制注册表字段，只加指针。
+
+- **`template-docs/template-methodology.md` 主干重构（主改）**：§2 当前权威源表补 3 行（`capability-packages.md` 机制注册表 / `scripts/README.md` 工具注册表 / `rd-data-chain.md` 研发数据链）；§1 补「读者路径」三类入口；新增 §5「四条价值流与工作分区」（文档 / 实现 / 验收 / 知识，各 2-3 行输入输出 + 权威源，指针指向 capability-packages §3）；新增 §7「机制与工具注册表」（MECH-* / TOOL-* ID 体系与字段级事实源声明）；原 §5-§6 顺延为 §6 / §8，内容不变。
+- **入口指针收敛**：`template-docs/README.md` 手册导航补登 `capability-packages.md` / `rd-data-chain.md` / `ui-knowledge/`；根 `README.md` 快速开始补一句注册表去向；`template-docs/beginner-guide.md` §7 导航表补「查治理机制 / 脚本工具台账」一行。
+- **过时缺口修正（顺手）**：`template-docs/capability-packages.md` §5「已知缺口：scripts/README.md 不在 template-sync.json」表述已过时（v1.65.0 已下行），修正为已落地记录。
+
+本版为 PATCH：只重组人读说明与导航，不改变默认行为、推荐流程、同步范围或自检断言（4+1 文件均在同步清单内，`template-sync.json` 不变）；无派生侧迁移动作。对照提案 §13.3 验收：主干可导航层次 / 价值流 / 入口，注册表可达，无第二权威源，路径与关键词断言兼容。PATCH 豁免 L3 e2e 回归。
+
 ## v1.65.0（2026-08-18）
 
 脚本同步边界分层（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`（吸收并关闭 C-016；C-017 / C-018 一并拍板——孤儿清理留下次同步窗口、LumiOne / gmbl 随下次同步一并到 v1.65.0）。主题：`scripts/` 按真实消费者分为「随模板下行 / 模板仓专用」两组，模板仓专用脚本不再无差别下发到派生项目；工具注册表 README 随下行组脚本一并下发，关掉「有工具没说明」缺口。
