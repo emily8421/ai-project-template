@@ -166,7 +166,7 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 | 具体场景怎么操作 | `template-docs/scenario-guides.md`（A0–A28 / C1–C8 / 元场景） |
 | 找命令速查 | `SOP.md`、`ai/commands/README.md` |
 | 查 how-to 任务操作入口 | `template-docs/user-guide-template.md`（任务→权威入口导航表） |
-| 查研发数据沉淀路径 | `template-docs/rd-data-chain.md`（数据类别→载体→主链关系） |
+| 查研发数据沉淀路径 | `template-docs/rd-data-chain.md`（数据类别→载体→主链关系；模板仓文档，v1.66.0 起不下行，模板仓 GitHub 查看） |
 | 理解模板为什么这么设计 | `template-docs/template-methodology.md` |
 | 查治理机制 / 脚本工具台账 | `template-docs/capability-packages.md`（机制注册表）、`scripts/README.md`（工具注册表） |
 | 查术语是什么意思 | `template-docs/glossary.md` |

@@ -28,7 +28,7 @@
 | `template-docs/glossary.md` | 人读术语索引，不替代规则权威源 |
 | `template-docs/capability-packages.md` | 治理机制注册表（14 类机制 MECH-* 登记：负责人 / 触发时机 / 权威依据 / 完成判断）+ 工作分区表 |
 | `scripts/README.md` | 工具注册表（12 类工具能力 TOOL-* 登记：运行契约 / 权威实现 / 生命周期；v1.65.0 起随模板下行） |
-| `template-docs/rd-data-chain.md` | 研发数据沉淀路径（数据类别 → 载体 → 主链关系） |
+| `template-docs/rd-data-chain.md` | 研发数据沉淀路径（数据类别 → 载体 → 主链关系；模板仓文档，不下行） |
 | `template-docs/docs-scaffold/` | `docs/inputs` / `docs/vision` / `docs/00-09` / `docs/design` / `docs/decisions` / `docs/research` 结构模板副本，不替代项目事实文档 |
 | `template-docs/domain-templates.md` | 领域模板可选中间层方法论（演进中） |
 | `SOP.md` | 场景索引与流程入口 |

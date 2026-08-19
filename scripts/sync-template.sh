@@ -104,6 +104,10 @@ fi
 TEMPLATE_REMOTE="${TEMPLATE_REMOTE:-https://github.com/emily8421/ai-project-template.git}"
 
 # 兜底同步清单；优先读取模板远端 template-sync.json。
+# 注意：本兜底数组只覆盖 files_all（普通与领域路线的主集）；files_domain 专属文件
+#（ai/doc-standards/domain-rules.md、template-docs/domain-derived-scenarios-template.md）
+# 与模板仓专用文档（e2e-regression-checklist.md、e2e-report-template.md、rd-data-chain.md）
+# 不在兜底范围——template-sync.json 可读时由主清单正确分发；兜底场景下缺失属已知局限。
 DEFAULT_SYNC_FILES=(
   "VERSION"
   "CHANGELOG.md"
@@ -117,7 +121,6 @@ DEFAULT_SYNC_FILES=(
   "template-docs/template-methodology.md"
   "template-docs/capability-packages.md"
   "template-docs/remote-ci-sop-profile.md"
-  "template-docs/domain-derived-scenarios-template.md"
   "template-docs/glossary.md"
   "template-docs/docs-scaffold/README.md"
   "template-docs/docs-scaffold/inputs/input-review-report.md"
@@ -232,8 +235,6 @@ DEFAULT_SYNC_FILES=(
   "scripts/collect-env.ps1"
   "scripts/check-prereqs.ps1"
   "scripts/bootstrap-dev-env.ps1"
-  "template-docs/e2e-regression-checklist.md"
-  "template-docs/e2e-report-template.md"
   "ai/commands/submit-proposal.md"
   "ai/commands/submit-feedback.md"
   "ai/prompts/maintainers/17-submit-proposal.md"

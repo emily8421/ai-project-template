@@ -208,6 +208,14 @@ rm -f "$TARGET/scripts/check-template.sh" \
      "$TARGET/scripts/e2e-sync-check.sh" \
      "$TARGET/scripts/new-project.sh"
 
+# 模板仓 / 领域专用文档裁剪（v1.66.0 起不进 files_all，git archive 全量复制后须显式删除）：
+# e2e 两件与 rd-data-chain 为模板仓专用；domain-derived-scenarios-template 走 files_domain，
+# 新项目 = 普通路线，不接收。
+rm -f "$TARGET/template-docs/e2e-regression-checklist.md" \
+     "$TARGET/template-docs/e2e-report-template.md" \
+     "$TARGET/template-docs/rd-data-chain.md" \
+     "$TARGET/template-docs/domain-derived-scenarios-template.md"
+
 rm -rf "$TARGET/_proposals"
 mkdir -p "$TARGET/_proposals"
 cat > "$TARGET/_proposals/README.md" <<EOF

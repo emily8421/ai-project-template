@@ -1,7 +1,6 @@
 # 研发数据链 Profile（rd-data-chain）
 
-> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Template-only notice: 本文件由 ai-project-template 模板维护者维护，仅存在于模板仓（v1.66.0 起不进入下行同步清单）；历史版本曾下行，派生项目中的残留可安全删除。派生项目知识沉淀的可执行规则已随 `ai/session-rules.md` §4 下行。
 
 > 定位：本文件是研发过程各类数据如何沉淀的**索引 / 分类**，把留痕载体与文档事实主链的关系、流转规则、生命周期统一说明，**不替代 `docs/00-09` 事实文档**。长期事实必须回写 00-09（`ai/implementation-lifecycle-rules.md` §7.1）。Lean 项目可不用；复杂项目按需引用。
 

@@ -36,7 +36,7 @@
 
 ## 3. 发布 Checklist
 
-> **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/e2e-report-template.md` 出报告确认。PATCH（含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修）可豁免。
+> **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/e2e-report-template.md` 出报告确认（两件均为模板仓专用文档，v1.66.0 起不下行）。PATCH（含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修）可豁免。
 
 每次发版前逐条过：
 
@@ -62,6 +62,7 @@
 - **不放具体维护者账号**、个人邮箱、个人 Token 类型或本机私有备忘；这类内容只能留在本地忽略文件中。
 - 同步的可注释方法论文件（`.md` / `.mdc` / `.sh` / `.ps1`）必须在顶部包含 `Sync notice`，说明派生项目同步时会被覆盖、不应直接修改；不可内嵌注释的 `template-sync.json` 用 `description` 字段承载同等声明；`VERSION`（纯版本号）豁免，其“会被覆盖”语义由 `template-sync.json` 的 description 间接覆盖。`check-template.sh` / `.ps1` 的 `require_sync_notice` 强制覆盖上述后缀范围（防清单演进遗漏）。
 - **脚本同步边界（v1.65.0 起）**：`scripts/` 按「随模板下行 / 模板仓专用」两组管理（划分见 `scripts/README.md` §1）。模板仓专用脚本（`check-template.sh/.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`）不进 `template-sync.json`，头部用 `Template-only notice` 标注；`check-template.*` 的 `check_scripts_sync_boundary` 断言防回流。派生项目中的这批脚本属历史下行残留，随 post-sync-cleanup 审计清理。
+- **template-docs 文档同步边界（v1.66.0 起）**：`template-docs/` 文档同样按消费者划分（提案 `_proposals/TEMPLATE-UPGRADE-template-docs-reorg.md`）。模板仓专用文档（`e2e-regression-checklist.md`、`e2e-report-template.md`、`rd-data-chain.md`）不进 `template-sync.json`，头部 `Template-only notice`；`domain-derived-scenarios-template.md` 走 `files_domain` 仅领域路线下行。派生项目中的旧版残留同随 post-sync-cleanup 孤儿审计清理。
 - 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；由 `scripts/new-project.sh`（模板仓专用）初始化生成，项目自行维护。
 - 新增方法论入口、脚本、规则文件时，先判断下行 / 模板仓专用归属，再同步更新 `template-sync.json`、`scripts/sync-template.sh` 兜底清单和自检断言。
 - `template-sync.json` 是完整清单权威；人读文档只维护分组摘要和维护规则，避免复制一份容易漂移的完整文件列表。

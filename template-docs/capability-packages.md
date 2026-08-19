@@ -90,7 +90,7 @@
 | 文档 | 从输入材料生成或修改需求、设计和计划，并维护追溯关系 | `ai/document-lifecycle-rules.md`、`ai/doc-standards/*` | `docs/00-09`、`docs/design/*` | 实现、测试验收、README |
 | 实现 | 按阶段、Sprint 和任务完成代码及实现记录 | `ai/implementation-lifecycle-rules.md`、`ai/commands/run-dev-task.md` | 代码、任务状态、自测和完成记录 | 测试验收、Git / PR |
 | 测试验收 | 编写和执行测试，记录回归与验收结论 | `docs/09-verification.md`、`tests/*`、实现生命周期规则 | 测试证据、缺陷记录、验收结论 | 阶段升级、PR、维护者 |
-| 知识记录 | 保存决策、调研、会议结论和可复用经验，并回写长期事实 | `template-docs/rd-data-chain.md`、`docs/decisions/*`、`docs/research/*`、`docs/meetings/*` | 有来源的结论、影响说明和记录索引 | 文档、实现、测试验收、维护者 |
+| 知识记录 | 保存决策、调研、会议结论和可复用经验，并回写长期事实 | `template-docs/rd-data-chain.md`（模板仓文档）、`docs/decisions/*`、`docs/research/*`、`docs/meetings/*` | 有来源的结论、影响说明和记录索引 | 文档、实现、测试验收、维护者 |
 | 专项说明 | 为特定任务补充适用条件、必读文件和最低检查项 | 各 `template-docs/*profile*`、`SOP.md`、`git-guide.md` | 针对特定场景的使用说明 | 任务协调、文档、实现、测试验收 |
 | 模板维护 | 管理提案、版本、同步、发布和模板自检 | `MAINTAINERS.md`、`CONTRIBUTING.md`、`template-sync.json`、`scripts/check-template.*` | `VERSION`、两份 CHANGELOG、同步清单、归档记录 | 模板维护者、派生项目 |
 
@@ -107,7 +107,7 @@
 | `MECH-DOC-002` | 文档评估和待确认事项处理 | 文档负责人 | 输入评审、文档审计、完成度评估或待确认事项处理时；未获写入确认时只分析 | `ai/commands/docs-system-audit.md`、`ai/prompts/review/19-docs-evaluation.md`、`ai/prompts/docs/21-docs-open-items.md` | 先列缺口、证据和待确认项；用户确认后再修改正式文档 | Markdown 检查通过，待确认项有明确状态和回填位置 |
 | `MECH-IMPL-001` | 阶段、Sprint、任务和系统骨架执行 | 实现负责人 | 环境准备、系统骨架、编码、修复或任务收口时；仅做文档评估时不使用 | `ai/implementation-lifecycle-rules.md`、`ai/commands/run-dev-task.md`、`docs/08-dev-plan.md`、`tasks/*` | 修改已授权代码和任务记录；不得绕过进入条件或扩大任务范围 | 项目要求的测试、lint、build 和任务验收通过 |
 | `MECH-VER-001` | 测试、验收和回归 | 测试验收负责人 | 实现完成、发布前、回归或用户要求验收时；没有可验证对象时只记录缺口 | `ai/implementation-lifecycle-rules.md`、`docs/09-verification.md`、`tests/*` | 记录实际执行的测试和结果；不得把未运行或仍在等待的检查写成通过 | 测试证据可复核，失败和未验证项已明确列出 |
-| `MECH-KNOW-001` | 整理决策、调研和会议结论 | 知识记录负责人 | 出现新决策、研究证据、会议结论或需求依据时；临时推测不能直接写入权威文档 | `template-docs/rd-data-chain.md`、`docs/research/*`、`docs/decisions/*`、`docs/meetings/*` | 记录来源、结论、影响和引用关系；不得把摘要冒充原始材料 | 来源和链接可核对，长期事实已回写正确位置 |
+| `MECH-KNOW-001` | 整理决策、调研和会议结论 | 知识记录负责人 | 出现新决策、研究证据、会议结论或需求依据时；临时推测不能直接写入权威文档 | `template-docs/rd-data-chain.md`（模板仓文档）、`docs/research/*`、`docs/decisions/*`、`docs/meetings/*` | 记录来源、结论、影响和引用关系；不得把摘要冒充原始材料 | 来源和链接可核对，长期事实已回写正确位置 |
 | `MECH-KNOW-002` | 记录 AI 使用中的问题和可复用经验 | 知识记录负责人 | 出现重复错误、明显低效或高 token 消耗时；一次性且不可复用的问题可不沉淀 | `ai/session-rules.md`、`ai-records/*`、`.ai/token-hotspots/*`、`.ai/pitfalls/*` | 写入本地观察或受控汇总；观察记录不能自动升级为强制规则 | 记录已去重、有证据，并按规定检查是否需要汇总 |
 | `MECH-GOV-001` | 模板提案、评审、PR 和归档 | 模板维护者 | 修改模板机制、规则入口、同步范围或广泛行为时；派生项目的局部实现按项目规则处理 | `CONTRIBUTING.md`、`MAINTAINERS.md`、`_proposals/*` | 记录提案和评审；合并后归档；远端状态变更必须单步确认 | diff、评审和 PR / CI 结果符合发布要求 |
 | `MECH-GOV-002` | 版本和发布记录 | 模板维护者 | 下游可见的模板变更准备发布时；只新增提案或本地观察时不单独升版 | `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md`、`MAINTAINERS.md` | 同一批更新版本号、详细变更记录和大白话变更记录；发布前不得写成已经发布 | 版本号一致，模板自检通过 |
@@ -124,6 +124,7 @@
 - **本文不是最终裁决来源**：若本表与规则正文、Git 记录、GitHub 事实或用户最新授权冲突，以后者为准，并修正本表。
 - **当前没有五个独立 Agent**：这些负责人目前由执行任务的 Agent 按阶段承担。是否创建独立 Agent 属于后续决策，本文件不提前设定。
 - **工具说明下行**：工具登记位于 `scripts/README.md`，自 v1.65.0 起该文件已进入 `template-sync.json` 随模板下行（原「不在同步清单」缺口已关闭，见 `scripts/README.md` §5.2）。
+- **文档同步边界（v1.66.0 起）**：`template-docs/` 文档按消费者划分——模板仓专用文档（`e2e-regression-checklist.md`、`e2e-report-template.md`、`rd-data-chain.md`）不下行；`domain-derived-scenarios-template.md` 仅领域路线下行（files_domain）。派生项目侧这些文件的旧版本残留随 post-sync-cleanup 孤儿审计清理（提案 `_proposals/TEMPLATE-UPGRADE-template-docs-reorg.md`）。
 
 ## 6. 远端操作与 CI 专项说明
 

@@ -1,7 +1,6 @@
 # L3 端到端回归清单（模板发布前）
 
-> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Template-only notice: 本文件由 ai-project-template 模板维护者维护，仅存在于模板仓（v1.66.0 起不进入下行同步清单）；历史版本曾下行，派生项目中的残留可安全删除。
 
 本清单是 `ai-project-template` **MINOR / MAJOR 发布前**的 L3 端到端回归项，在专用测试派生项目（或临时派生项目）上跑，确认模板改动没有破坏同步链路、批量同步、场景引导、文档生成等端到端能力。
 

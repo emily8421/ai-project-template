@@ -556,6 +556,10 @@ require_new_project_local_smoke() {
   require_absent_file "$project_dir/scripts/sync-all-derived.sh" "new-project 烟测 scripts/ 不含模板仓专用 sync-all-derived.sh"
   require_absent_file "$project_dir/scripts/e2e-sync-check.sh" "new-project 烟测 scripts/ 不含模板仓专用 e2e-sync-check.sh"
   require_absent_file "$project_dir/scripts/new-project.sh" "new-project 烟测 scripts/ 不含模板仓专用 new-project.sh（自删）"
+  require_absent_file "$project_dir/template-docs/e2e-regression-checklist.md" "new-project 烟测 template-docs/ 不含模板仓专用 e2e-regression-checklist.md"
+  require_absent_file "$project_dir/template-docs/e2e-report-template.md" "new-project 烟测 template-docs/ 不含模板仓专用 e2e-report-template.md"
+  require_absent_file "$project_dir/template-docs/rd-data-chain.md" "new-project 烟测 template-docs/ 不含模板仓专用 rd-data-chain.md"
+  require_absent_file "$project_dir/template-docs/domain-derived-scenarios-template.md" "new-project 烟测 template-docs/ 不含领域专属 domain-derived-scenarios-template.md（普通路线）"
   require_absent_dir "$project_dir/_examples"
   require_absent_dir "$project_dir/_archive"
 
@@ -1825,8 +1829,7 @@ require_contains "template-docs/scenario-guides.md" '母模板 → 领域模板 
 require_contains "template-docs/scenario-guides.md" 'Phase 0 预检' "A20 要求领域模板创建前预检"
 require_contains "template-docs/scenario-guides.md" '未向母模板新增领域 scaffold|不把领域 scaffold 直接塞进母模板' "A20 禁止领域 scaffold 污染母模板"
 require_contains "template-sync.json" 'template-docs/domain-templates\.md' "同步清单包含领域模板方法论文档"
-require_contains "template-sync.json" 'template-docs/domain-derived-scenarios-template\.md' "同步清单包含领域派生项目场景剧本模板"
-require_contains "scripts/sync-template.sh" 'template-docs/domain-derived-scenarios-template\.md' "sync-template Bash fallback 包含领域派生项目场景剧本模板"
+require_contains "template-sync.json" 'template-docs/domain-derived-scenarios-template\.md' "同步清单（files_domain）包含领域派生项目场景剧本模板"
 require_file "template-docs/domain-templates.md"
 require_file "template-docs/domain-derived-scenarios-template.md"
 require_contains "template-docs/domain-templates.md" '可选中间层' "领域模板文档定位为可选中间层"
@@ -1881,7 +1884,11 @@ require_contains "template-sync.json" 'template-docs/user-guide-template\.md' "�
 require_contains "template-docs/beginner-guide.md" 'user-guide-template' "新手指南导航含 user-guide（防漂移）"
 require_file "template-docs/rd-data-chain.md"
 require_contains "template-docs/rd-data-chain.md" '数据类别' "rd-data-chain 含数据类别索引（RC-1）"
-require_contains "template-sync.json" 'template-docs/rd-data-chain\.md' "同步清单含 rd-data-chain"
+if grep -qF '"template-docs/rd-data-chain.md"' template-sync.json; then
+  fail "rd-data-chain 是模板仓专用文档，不得出现在 template-sync.json（防回流）"
+else
+  pass "rd-data-chain 不在同步清单（模板仓专用文档）"
+fi
 require_contains "template-docs/beginner-guide.md" 'rd-data-chain' "新手指南导航含 rd-data-chain（防漂移）"
 require_contains "ai/doc-standards/07-api-spec.md" '时序图' "07 审计基线含关键接口时序图字段（DR-3）"
 require_contains "ai/doc-standards/06-db-design.md" 'ER 图' "06 审计基线要求核心实体 ER 图（DR-1）"
@@ -2066,6 +2073,34 @@ check_scripts_sync_boundary() {
     require_contains "$template_only" 'Template-only notice' "$template_only 头部标注模板仓专用"
   done
   require_contains "template-sync.json" '"scripts/README.md"' "工具注册表 scripts/README.md 已入同步清单"
+
+  local template_only_docs=(
+    "template-docs/e2e-regression-checklist.md"
+    "template-docs/e2e-report-template.md"
+    "template-docs/rd-data-chain.md"
+  )
+  for template_only in "${template_only_docs[@]}"; do
+    require_file "$template_only"
+    if grep -qF "\"$template_only\"" template-sync.json; then
+      fail "$template_only 是模板仓专用文档，不得出现在 template-sync.json（防回流）"
+    else
+      pass "$template_only 不在同步清单（模板仓专用文档）"
+    fi
+    require_contains "$template_only" 'Template-only notice' "$template_only 头部标注模板仓专用"
+  done
+  # 领域专属：domain-derived-scenarios-template 只允许出现在 files_domain，不允许 files_all
+  require_file "template-docs/domain-derived-scenarios-template.md"
+  if python -c "
+import json, sys
+d = json.load(open('template-sync.json', encoding='utf-8'))
+sys.exit(0 if ('template-docs/domain-derived-scenarios-template.md' in d.get('files_domain', [])
+               and 'template-docs/domain-derived-scenarios-template.md' not in d['files_all']) else 1)
+" 2>/dev/null; then
+    pass "domain-derived-scenarios-template.md 在 files_domain（仅领域路线）且不在 files_all"
+  else
+    fail "domain-derived-scenarios-template.md 应在 files_domain 且不在 files_all"
+  fi
+  require_contains "template-docs/domain-derived-scenarios-template.md" '仅领域路线下行' "domain-derived-scenarios-template 头部标注仅领域路线下行"
 }
 check_scripts_sync_boundary
 
