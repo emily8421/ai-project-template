@@ -1,7 +1,6 @@
 # Domain-Derived Scenarios Template（领域派生项目场景剧本模板）
 
-> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Sync notice: 本文件由 ai-project-template 模板同步维护，**仅领域路线下行**（v1.66.0 起 files_domain，随 `--domain-template` 同步）；普通派生项目不接收本文件；领域模板同步时会被覆盖，不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
 
 定位：本文件是 **L2-to-L3 playbook template**，给领域模板复制后领域化。领域模板可将本文件复制为 `template-docs/<domain>/domain-derived-scenarios.md`，再替换 `<domain>`、领域事实、脚本名、清单名和验证项。
 

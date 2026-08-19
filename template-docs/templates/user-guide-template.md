@@ -21,7 +21,7 @@
 | 文档评估 | `ai/commands/docs-evaluation.md` | Go / Conditional Go / No Go |
 | 同步模板方法论 | `scripts/sync-template.sh` + `ai/commands/sync-methodology.md` | 派生项目侧 |
 | 同步后整理 | `ai/commands/post-sync-cleanup.md` | |
-| 提 PR / 合并 / 看 CI | `ai/commands/README.md` + `template-docs/remote-ci-sop-profile.md` | |
+| 提 PR / 合并 / 看 CI | `ai/commands/README.md` + `template-docs/profiles/remote-ci-sop-profile.md` | |
 | 提交模板优化提案 | `ai/commands/submit-proposal.md` | 回流模板 |
 
 ## 2. 卡住时去哪看

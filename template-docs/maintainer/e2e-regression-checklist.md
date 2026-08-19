@@ -1,11 +1,10 @@
 # L3 端到端回归清单（模板发布前）
 
-> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Template-only notice: 本文件由 ai-project-template 模板维护者维护，仅存在于模板仓（v1.66.0 起不进入下行同步清单）；历史版本曾下行，派生项目中的残留可安全删除。
 
 本清单是 `ai-project-template` **MINOR / MAJOR 发布前**的 L3 端到端回归项，在专用测试派生项目（或临时派生项目）上跑，确认模板改动没有破坏同步链路、批量同步、场景引导、文档生成等端到端能力。
 
-> 这是**模板维护者**发布门；派生项目不跑。可自动化部分用 `scripts/e2e-sync-check.sh`，不可自动化部分人工跑，结果记到 `template-docs/e2e-report-template.md`。
+> 这是**模板维护者**发布门；派生项目不跑。可自动化部分用 `scripts/e2e-sync-check.sh`，不可自动化部分人工跑，结果记到 `template-docs/maintainer/e2e-report-template.md`。
 
 ## 如何建 / 用专用测试派生项目 `ai-project-template-e2e`
 
@@ -43,6 +42,6 @@ bash scripts/e2e-sync-check.sh
 
 - R1–R3（自动化）全过。
 - R4–R6（人工）无阻断问题；发现问题记报告 + 判断是否阻塞发布。
-- 出 `template-docs/e2e-report-template.md` 报告，确认后再发版。
+- 出 `template-docs/maintainer/e2e-report-template.md` 报告，确认后再发版。
 
 > MAINTAINERS 发布 Checklist 已纳入 L3 步：MINOR / MAJOR 发布前必须跑本清单 + 报告确认。

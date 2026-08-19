@@ -9,7 +9,7 @@
 
 满足以下条件时，可以启动一次 Web App scaffold 实验：
 
-- 已触发 `template-docs/web-fullstack-profile.md`，并完成或计划完成 Sprint 0 / Walking Skeleton。
+- 已触发 `template-docs/profiles/web-fullstack-profile.md`，并完成或计划完成 Sprint 0 / Walking Skeleton。
 - 项目需要验证 App Shell、前后端目录边界、API client、state / hooks、样式 token、API / service / tests 的可复用结构。
 - 实验发生在真实派生项目或独立实验仓，不污染母模板主同步路径。
 
@@ -18,7 +18,7 @@
 - 不在母模板内直接生成 React / Vue / Next.js / FastAPI / Spring 等技术栈代码。
 - 不把单个项目的业务目录、组件库、权限模型或数据模型写成通用 scaffold。
 - 不在未验证前新增 `new-project --profile web-app`。
-- 不把 Web App Profile 直接升级为领域模板；领域模板判断见 `template-docs/domain-templates.md`。
+- 不把 Web App Profile 直接升级为领域模板；领域模板判断见 `template-docs/profiles/domain-templates.md`。
 
 ## 3. 实验输入
 
@@ -31,7 +31,7 @@
 
 ## 4. 实验步骤
 
-1. **选候选结构**：从 `template-docs/web-fullstack-profile.md` 的推荐目录边界裁剪出最小结构。
+1. **选候选结构**：从 `template-docs/profiles/web-fullstack-profile.md` 的推荐目录边界裁剪出最小结构。
 2. **只生成最小 slice**：只跑通 App Shell、一个页面 / 视图、一个 API client、一个后端 endpoint / mock、一个 API / browser smoke。
 3. **记录偏差**：记录哪些目录保留、哪些被裁剪、哪些技术栈命名不同但职责等价。
 4. **验证阈值**：观察主应用文件、全局样式、页面、service / controller 是否触发文件膨胀阈值。

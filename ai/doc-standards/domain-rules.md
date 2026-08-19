@@ -19,7 +19,7 @@
 
 判断标准：一条规则换到**同一领域的不同项目**是否还成立——成立（该领域所有项目共有的标准件，如 agent 系统的工具权限矩阵、memory / state 模型、trace / replay、agent eval、human-in-the-loop）属领域层（本文件规范 + `ai/domain-rules.md` 实例）；换到**不同领域或非领域项目**不成立。换到任何项目都成立的属通用层；只对单个项目成立的属项目层（`ai/project-rules.md`）。
 
-> 领域层是**可选中间层**：只有领域模板仓（如 `agent-system-template`）才有 `ai/domain-rules.md`；普通派生项目不经过领域层，不接收本文件，也不生成 `ai/domain-rules.md`。领域模板机制与适用判定见 `template-docs/domain-templates.md`。
+> 领域层是**可选中间层**：只有领域模板仓（如 `agent-system-template`）才有 `ai/domain-rules.md`；普通派生项目不经过领域层，不接收本文件，也不生成 `ai/domain-rules.md`。领域模板机制与适用判定见 `template-docs/profiles/domain-templates.md`。
 
 ## 2. 章节契约（种子实例必须保留的骨架）
 
@@ -49,7 +49,7 @@
 ### §0 领域定位
 
 - `领域`：该领域模板面向的系统类别（如 agent 系统）。
-- `适用判定`：什么样的项目应走本领域模板、什么项目直连母模板、什么项目不适用（指向 `template-docs/<domain>/domain-derived-scenarios.md` 或 `template-docs/domain-derived-scenarios-template.md`）。
+- `适用判定`：什么样的项目应走本领域模板、什么项目直连母模板、什么项目不适用（指向 `template-docs/<domain>/domain-derived-scenarios.md` 或 `template-docs/maintainer/domain-derived-scenarios-template.md`）。
 
 ### §1 领域标准件清单
 
@@ -90,6 +90,6 @@
 
 - 规则分层原则（通用 / 项目专属 / 领域专属）的权威表述见 `ai/global-rules.md` §5。
 - 项目层 rules 规范见 `ai/doc-standards/project-rules.md`（与本文件正交：项目层管项目专属，领域层管领域通用）。
-- 领域模板机制（三层模型、适用判定、`TEMPLATE-BASE.md`、同步双重身份）见 `template-docs/domain-templates.md`。
+- 领域模板机制（三层模型、适用判定、`TEMPLATE-BASE.md`、同步双重身份）见 `template-docs/profiles/domain-templates.md`。
 - 领域模板创建 / 生成 `ai/domain-rules.md` 种子的操作入口见 `ai/commands/domain-template-lab.md` + `ai/prompts/maintainers/23-domain-template-lab.md`。
 - 本文件只走领域模板路线（`files_domain`）；普通派生项目不接收，`scripts/check-derived-sync.sh` + `.ps1` 按路线区分，防止普通派生误收领域文件。

@@ -8,7 +8,7 @@
 # 聚合 L3 可自动化回归：check-template（含同步链路 doc-standards 镜像自检 + 新项目烟测）
 # + sync-all-derived 批量烟测。不重复 check-template 内部测试，只做发布门聚合 + 批量烟测。
 # 不可自动化项（场景引导路由 / 文档生成 / PowerShell fallback）见
-# template-docs/e2e-regression-checklist.md，人工跑并记到 e2e-report-template.md。
+# template-docs/maintainer/e2e-regression-checklist.md，人工跑并记到 e2e-report-template.md。
 # 模板仓专用脚本（v1.65.0 起不下行，不进 template-sync.json）；不改真实项目。
 set -uo pipefail
 
@@ -48,7 +48,7 @@ rm -rf "$TMP"
 echo
 
 echo "⚠ 人工项（R4 场景引导路由 / R5 文档生成 / R6 PowerShell fallback）见"
-echo "   template-docs/e2e-regression-checklist.md，按表跑并记到 e2e-report-template.md"
+echo "   template-docs/maintainer/e2e-regression-checklist.md，按表跑并记到 e2e-report-template.md"
 echo
 
 if [[ $FAILURES -eq 0 ]]; then

@@ -1,7 +1,6 @@
 # L3 端到端回归报告
 
-> Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Template-only notice: 本文件由 ai-project-template 模板维护者维护，仅存在于模板仓（v1.66.0 起不进入下行同步清单）；历史版本曾下行，派生项目中的残留可安全删除。
 
 > 模板发布前 L3 回归记录。复制本模板填写，保存到 `docs/archive/e2e/<YYYY-MM-DD>-v<X.Y.Z>.md` 或本地。
 
@@ -19,7 +18,7 @@
 - sync-all-derived 批量烟测：✅ / ❌
 - 输出摘要：
 
-## 人工项（按 `template-docs/e2e-regression-checklist.md`）
+## 人工项（按 `template-docs/maintainer/e2e-regression-checklist.md`）
 
 - R4 场景引导路由（A0 / A2 / C / A3–A16）：✅ / ❌ / 备注
 - R5 文档生成（review-inputs + generate-docs → 00-09）：✅ / ❌ / 备注

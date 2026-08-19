@@ -79,7 +79,7 @@
 | 提案 | 拟改文件 | 改动 |
 |---|---|---|
 | #332 | `ai/implementation-lifecycle-rules.md` | 增补 R1/R2 条目 3 条（CI test+type+lint / secret 启动校验 / 多实现显式契约） |
-| #333 | `template-docs/web-fullstack-profile.md` | §8 后新增 §9 及 §9.1~§9.4（Web 代码层一致性基线） |
+| #333 | `template-docs/profiles/web-fullstack-profile.md` | §8 后新增 §9 及 §9.1~§9.4（Web 代码层一致性基线） |
 | #334 | 新建 `template-docs/stack-adapters/` | README（选择矩阵）+ `fastapi-python.md` + `react-typescript.md`；登记同步清单 |
 | #335 | 方法论文档（如 `template-docs/capability-packages.md`） | 补轻量 L0-L3 / R1-R7 映射表（选项 B） |
 
