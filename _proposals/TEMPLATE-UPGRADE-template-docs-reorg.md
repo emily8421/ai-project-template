@@ -167,9 +167,11 @@ template-docs/
 - post-sync-cleanup 追加「旧路径残留」审计项（prompt §98 后新增 + command 4c）。
 - 验证：check-template.sh 2093 项 / 0 失败。
 
-### 6.3 验证结果汇总（PR 前回填）
+### 6.3 验证结果汇总（PR 前，2026-08-19）
 
-- check-markdown-clean.ps1（改动 Markdown）：待 PR 前。
-- new-project 烟测（新路径结构 + 无 4 件文档）：待 PR 前。
-- sync-template dry-run（选 1 派生仓）：待 PR 前。
-- L3 e2e 回归（MINOR 必跑）：待合并前。
+- `check-markdown-clean.ps1 _proposals template-docs`：61 文件通过；`git diff --check` 通过（仅 LF→CRLF Windows 常态提示）。
+- `check-template.sh --summary`：Step 1 后 2093 项 / 0 失败；Step 2 断言修正后复跑 2093 项 / 0 失败。
+- new-project 烟测（`--local --no-remote --no-examples`，HEAD 含 Step 2 后）：产物 `template-docs/` = 9 件手册 + profiles/（4 件）+ templates/（11 件）+ 既有子目录；maintainer/ 4 件文档已删、空目录已清（首测发现空目录残留，补 `rmdir` 后复测通过）。首测曾因「git archive HEAD 早于 Step 2 提交」产出旧结构——已确认是验证时序问题，非脚本缺陷。
+- 分发逻辑直测（模拟普通 / 领域两条路线，8 项断言）：全 PASS——普通路线收 profiles + templates、不收 4 件模板仓/领域专用；领域路线额外收 domain-derived-scenarios-template、同样不收 e2e 两件与 rd-data-chain。
+- 真实派生仓 dry-run：被同步脚本自身更新保护拦截（本地脚本旧版 + 远端 main 未含本分支，SOP 已知情形），改用上述清单分发直测等价覆盖；全链 dry-run 待 PR 合并后随同步窗口自然验证。
+- L3 e2e 回归（MINOR 必跑）：`bash scripts/e2e-sync-check.sh` + checklist R4-R6 人工项——合并前执行，报告落 `ai-records/e2e-reports/`。

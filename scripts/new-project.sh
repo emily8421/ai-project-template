@@ -215,6 +215,7 @@ rm -f "$TARGET/template-docs/maintainer/e2e-regression-checklist.md" \
      "$TARGET/template-docs/maintainer/e2e-report-template.md" \
      "$TARGET/template-docs/maintainer/rd-data-chain.md" \
      "$TARGET/template-docs/maintainer/domain-derived-scenarios-template.md"
+rmdir "$TARGET/template-docs/maintainer" 2>/dev/null || true
 
 rm -rf "$TARGET/_proposals"
 mkdir -p "$TARGET/_proposals"
