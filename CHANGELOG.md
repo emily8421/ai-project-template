@@ -1,10 +1,27 @@
 # CHANGELOG
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
+
+## v1.67.0（2026-08-21）
+
+workspace project-container 引入（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-workspace-project-container.md`（嵌套 B，docs 缓移）。主题：根目录引入 `project/`（项目代码骨架单一入口）与 `_governance/`（治理记录容器）两个容器，根目录可见项从 38 → 约 15。
+
+**目录迁移（git mv 保留历史）**：
+- 4 代码目录（`frontend/ backend/ tests/ docker/`）→ `project/`；5 治理目录（`ai-records/ sync-records/ _proposals/ _archive/ _examples/`）→ `_governance/`。`docs/`、`tasks/` 本次不动（下阶段单独梳理）。
+
+**路径引用迁移（全量）**：
+- `ai/` 规则 / 命令 / Prompt / doc-standards、`template-docs/`、`scripts/`、根入口手册（README / SOP / git-guide / CONTRIBUTING / INIT-PROMPT）等约 158 文件的根级治理目录与代码目录引用迁至 `project/` / `_governance/` 子层（同步 notice R13 + 正文 R14/R15 + 代码目录前缀）。CHANGELOG（历史）与 `docs/archive/**` 显式不动。
+
+**生成器与自检**：
+- `new-project.sh` 治理清理/种子（ROOT-C-006）：派生仓清理根级遗留 5 治理目录 + `_governance` 容器、重建 5 分区 README 种子（不携带模板治理内容）。
+- `sync-template.*` / `check-derived-sync.*` 禁止路径模式更新（`project/frontend/*` 等）；`check-template.*` 断言迁至新结构并新增治理 README 种子断言；`sync-all-derived.sh` 模板本体标记 `_examples/` → `scripts/check-template.sh`；`check-markdown-clean.ps1` 默认路径更新。
+- `template-sync.json` 仅 description 措辞更新（`_proposals/` → `_governance/_proposals/`），清单成员不变（代码骨架与治理容器不在 `files_all`）。
+
+本版为 MINOR：新增同步范围外的结构容器（`project/` / `_governance/`）+ 生成器/同步/自检路径迁移 = 下游需感知的采用面变化（派生项目下次同步收到更新后的方法论路径引用；新派生项目获得容器结构）。非 MAJOR：`files_all` 成员、覆盖式同步机制、文档编号体系均不变；`docs/` 缓移。验证：check-template 双 2093/0、受限路径审计 505→10（全假阳性）、三形态 new-project smoke、派生同步边界、e2e-sync-check（R1-R3）。
 
 ## v1.66.0（2026-08-19）
 

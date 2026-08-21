@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _governance/_proposals/ 回流。
 # new-project.sh — 从 ai-project-template 派生新项目并初始化 git 远端
 #
 # 用法:
@@ -7,13 +7,13 @@
 #     <项目名>           新项目目录名（相对当前目录，或绝对路径），默认也是 GitHub 仓库名
 #     --account <login>  建仓库的 GitHub 账号（优先级高于 ACCOUNT 和当前 gh 登录账号）
 #     --visibility <v>   GitHub 仓库可见性：private 或 public（默认取 VISIBILITY，未设置则为 private）
-#     --no-examples      不复制 _archive/ 与 _examples/ 参考材料
+#     --no-examples      不复制 _governance/_archive/ 与 _governance/_examples/ 参考材料
 #     --local            走本地模板派生（默认 = 脚本所在仓库根，需自行确保 git pull 到最新）；
 #                        不加此参数则从 GitHub main 派生（推荐，事实来源）
 #     --no-remote        只创建本地项目与首提交，不创建 GitHub 仓库、不推送（用于烟测或离线起步）
 #     --shape <形态>     按项目形态裁剪代码目录与骨架文档（形态已知时的一步到位路径；缺省不裁剪）：
-#                        docs = 纯文档/知识库仓（删 frontend/ backend/ tests/ docker/ + docs/06 + docs/07）
-#                        cli  = CLI/本地脚本（删 frontend/ docker/，保留 docs/07 用于命令契约）
+#                        docs = 纯文档/知识库仓（删 project/frontend/ backend/ tests/ docker/ + docs/06 + docs/07）
+#                        cli  = CLI/本地脚本（删 project/frontend/ docker/，保留 docs/07 用于命令契约）
 #                        web  = 缺省，等价不裁剪（Web/全栈项目后续按 ai/project-rules.md §3 自行裁剪）
 #                        裁剪口径与 ai/doc-standards/project-rules.md §3 对齐；--shape docs ≡ 事后执行 §3 裁剪步骤
 #   环境变量:
@@ -217,9 +217,16 @@ rm -f "$TARGET/template-docs/maintainer/e2e-regression-checklist.md" \
      "$TARGET/template-docs/maintainer/domain-derived-scenarios-template.md"
 rmdir "$TARGET/template-docs/maintainer" 2>/dev/null || true
 
-rm -rf "$TARGET/_proposals"
-mkdir -p "$TARGET/_proposals"
-cat > "$TARGET/_proposals/README.md" <<EOF
+# The archive may be produced from a pre-migration HEAD, so remove both the
+# current container and the legacy root-level governance directories.
+rm -rf "$TARGET/_governance" \
+       "$TARGET/ai-records" \
+       "$TARGET/sync-records" \
+       "$TARGET/_proposals" \
+       "$TARGET/_archive" \
+       "$TARGET/_examples"
+mkdir -p "$TARGET/_governance/_proposals" "$TARGET/_governance/ai-records" "$TARGET/_governance/sync-records" "$TARGET/_governance/_archive" "$TARGET/_governance/_examples"
+cat > "$TARGET/_governance/_proposals/README.md" <<EOF
 # 模板优化提案起草区
 
 本目录用于在本项目内临时起草可回流到 \`ai-project-template\` 的模板优化提案。
@@ -231,10 +238,14 @@ TEMPLATE-UPGRADE-vX.Y.Z.md        # 提案主体：动机、拟改、版本影�
 TEMPLATE-UPGRADE-vX.Y.Z-patch.md  # 可选：具体 old→new 修改建议
 \`\`\`
 
-提案应保持去项目化，不写入本项目的具体业务需求、技术栈细节或私有信息。提案成熟后，回到模板仓库开 PR，把提案提交到模板仓库的 \`_proposals/\` 收件箱，由模板维护者汇总分析并落地。
+提案应保持去项目化，不写入本项目的具体业务需求、技术栈细节或私有信息。提案成熟后，回到模板仓库开 PR，把提案提交到模板仓库的 \`_governance/_proposals/\` 收件箱，由模板维护者汇总分析并落地。
 
-模板改动合并并下行同步后，应将本项目内已处理的提案移动到项目历史记录 / \`_archive/proposals/\` 或删除，避免继续作为待办重复执行。
+模板改动合并并下行同步后，应将本项目内已处理的提案移动到项目历史记录 / \`_governance/_archive/proposals/\` 或删除，避免继续作为待办重复执行。
 EOF
+
+for governance_section in ai-records sync-records _archive _examples; do
+  printf '# %s\n\n本目录保留为项目治理记录的本地起点；不携带模板仓历史内容。\n' "$governance_section" > "$TARGET/_governance/$governance_section/README.md"
+done
 
 write_derived_project_workflow
 
@@ -332,9 +343,9 @@ cat >> "$TARGET/README.md" <<EOF
 
 | 层 | 典型目录 | 同步时 | 怎么用 |
 |---|---|---|---|
-| 模板方法论（继承） | \`ai/\`（除 project-rules）、\`template-docs/\`、\`scripts/\` | 覆盖 | 不直接改；通用改进走 \`_proposals/\` 回流 |
-| 模板治理（本地记录） | \`sync-records/\`、\`ai-records/\`、\`_proposals/\`、\`.ai/\` | 不覆盖 | 按各自 README 记录 |
-| 项目产出（自有） | \`docs/\`、代码目录、\`ai/project-rules.md\`、本 README、\`VERSION\` | 不覆盖 | 项目自有，直接写 |
+| 模板方法论（继承） | \`ai/\`（除 project-rules）、\`template-docs/\`、\`scripts/\` | 覆盖 | 不直接改；通用改进走 \`_governance/_proposals/\` 回流 |
+| 模板治理（本地记录） | \`_governance/\`、\`.ai/\` | 不覆盖 | 按各自 README 记录 |
+| 项目产出（自有） | \`docs/\`、\`project/\` 代码目录、\`ai/project-rules.md\`、本 README、\`VERSION\` | 不覆盖 | 项目自有，直接写 |
 
 - 通用方法论来自 \`ai-project-template\`。
 - 项目自身版本记录在 \`VERSION\`；继承 / 当前同步到的模板版本记录在 \`TEMPLATE-BASE.md\`。
@@ -344,22 +355,22 @@ cat >> "$TARGET/README.md" <<EOF
 - 模板方法论文件由 \`template-sync.json\` 定义，执行 \`scripts/sync-template.*\` 时可能被覆盖。
 - 项目专属规则写在 \`ai/project-rules.md\`。
 - 项目事实文档写在 \`docs/\`，但新增文档必须遵守 \`docs/README.md\` 的分区规则，不要直接堆到 \`docs/\` 根目录。
-- 如发现可通用的模板优化，先在 \`_proposals/\` 起草提案，再回流到模板仓库。
+- 如发现可通用的模板优化，先在 \`_governance/_proposals/\` 起草提案，再回流到模板仓库。
 EOF
 
 if [[ "$NO_EXAMPLES" -eq 1 ]]; then
-  rm -rf "$TARGET/_archive" "$TARGET/_examples"
+  rm -rf "$TARGET/_governance/_archive" "$TARGET/_governance/_examples"
 fi
 
 # --shape 按项目形态裁剪（破坏性动作：明示删了什么；首提交含全量，误删可从 git 历史恢复）
 SHAPE_REMOVED=""
 if [[ "$SHAPE" == "docs" ]]; then
-  rm -rf "$TARGET/frontend" "$TARGET/backend" "$TARGET/tests" "$TARGET/docker"
+  rm -rf "$TARGET/project/frontend" "$TARGET/project/backend" "$TARGET/project/tests" "$TARGET/project/docker"
   rm -f "$TARGET/docs/06-db-design.md" "$TARGET/docs/07-api-spec.md"
-  SHAPE_REMOVED="frontend/ backend/ tests/ docker/ + docs/06-db-design.md + docs/07-api-spec.md"
+  SHAPE_REMOVED="project/frontend/ backend/ tests/ docker/ + docs/06-db-design.md + docs/07-api-spec.md"
 elif [[ "$SHAPE" == "cli" ]]; then
-  rm -rf "$TARGET/frontend" "$TARGET/docker"
-  SHAPE_REMOVED="frontend/ docker/（docs/07-api-spec.md 保留，用于命令 / 参数 / 输出契约）"
+  rm -rf "$TARGET/project/frontend" "$TARGET/project/docker"
+  SHAPE_REMOVED="project/frontend/ docker/（docs/07-api-spec.md 保留，用于命令 / 参数 / 输出契约）"
 fi
 if [[ -n "$SHAPE_REMOVED" ]]; then
   echo "==> --shape $SHAPE 裁剪（口径对齐 ai/doc-standards/project-rules.md §3）：已删除 $SHAPE_REMOVED"

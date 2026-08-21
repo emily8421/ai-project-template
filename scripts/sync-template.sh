@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+# Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _governance/_proposals/ 回流模板仓库。
 # sync-template.sh — 在派生项目里下行同步 ai-project-template 的方法论文件
 #
 # 用法（在派生项目根目录执行）:
@@ -393,7 +393,7 @@ write_template_base() {
 ## Managed Files
 
 - Files managed by template sync are listed in \`template-sync.json\` (synced from ai-project-template).
-- Direct edits to those files are overwritten on the next template sync; propose reusable changes via \`_proposals/\`.
+- Direct edits to those files are overwritten on the next template sync; propose reusable changes via \`_governance/_proposals/\`.
 - Project-owned files (\`ai/project-rules.md\`, \`docs/\`, business code) are not in the sync list and are preserved.
 EOF
 }
@@ -451,7 +451,7 @@ write_domain_template_base() {
 ## Managed Files
 
 - Files managed by template sync are listed in \`template-sync.json\` (synced from ai-project-template).
-- Direct edits to those files are overwritten on the next template sync; propose reusable changes via \`_proposals/\`.
+- Direct edits to those files are overwritten on the next template sync; propose reusable changes via \`_governance/_proposals/\`.
 - Domain-template-owned files (\`ai/project-rules.md\`, \`ai/domain-rules.md\`, \`docs/\`, business code) are not in the sync list and are preserved.
 EOF
 }
@@ -724,7 +724,7 @@ summary_bucket_for() {
 matches_risk_path() {
   local file="$1"
   case "$file" in
-    README.md|ai/project-rules.md|docs/0[0-9]-*.md|frontend/*|backend/*|tests/*|docker/*)
+    README.md|ai/project-rules.md|docs/0[0-9]-*.md|project/frontend/*|project/backend/*|project/tests/*|project/docker/*)
       return 0
       ;;
     *)
@@ -938,7 +938,7 @@ else
   echo "  2. 在 AI 中执行: /run post-sync-cleanup"
   echo "  3. 在 AI 中执行: /run docs-system-audit（同步后审计模式）"
   echo "  4. 按项目技术栈运行测试 / lint / build；无法运行的记录为未验证项"
-  echo "  5. 生成或更新同步运行记录: sync-records/template-sync/YYYY-MM-DD-sync-template-$VERSION.md"
+  echo "  5. 生成或更新同步运行记录: _governance/sync-records/template-sync/YYYY-MM-DD-sync-template-$VERSION.md"
   echo "     可参考: template-docs/templates/derived-sync-report-template.md"
   if [[ "$PRESERVE_PROJECT_VERSION" -eq 1 ]]; then
     echo "  6. 核对项目自身版本仍记录在 VERSION，项目演进记录在 CHANGELOG.md / CHANGELOG-PLAIN.md；继承模板版本见 TEMPLATE-BASE.md，母模板发布参考见 upstream/CHANGELOG.md / upstream/CHANGELOG-PLAIN.md"

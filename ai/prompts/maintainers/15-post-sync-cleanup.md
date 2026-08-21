@@ -1,7 +1,7 @@
 # 15 同步后项目整理（派生项目）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 **用途**：派生项目完成模板方法论同步后，审计并整理项目专属内容，使其符合最新模板建议。
 
@@ -13,13 +13,13 @@
 
 **不适用场景**：还未完成模板方法论同步；或用户要求直接开发新功能。
 
-**使用前准备**：确认当前在派生项目根目录，工作区状态已知；已完成 `scripts/sync-template.*` 同步并提交或准备单独提交同步后整理改动；如存在推荐路径 `sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 同步运行记录，优先读取推荐路径最近一份，旧路径仅作兼容读取。
+**使用前准备**：确认当前在派生项目根目录，工作区状态已知；已完成 `scripts/sync-template.*` 同步并提交或准备单独提交同步后整理改动；如存在推荐路径 `_governance/sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 同步运行记录，优先读取推荐路径最近一份，旧路径仅作兼容读取。
 
 **续接要求**：第一段输出迁移计划后，必须把迁移范围、待确认项、禁止事项和下一步写入 / 更新续接文件。
 
 **预期产出**：先输出审计结果与迁移计划，并从同步运行记录中提炼可回流模板优化点；同时给出同步报告回写建议。人工确认后，执行 docs 分区整理、README 补齐、`ai/project-rules.md` 补齐和运行环境约束补齐。
 
-**使用后下一步**：人工确认迁移计划后，用本节第二段 Prompt 执行迁移；完成后运行项目自检 / 文档检查并单独提交，并把整理摘要回写 `sync-records/template-sync/` 同步报告或 `.ai/session-handoff.md`。若想用最新规范回溯审视文档体系（sync 后 `ai/doc-standards/00-09` 已刷新；旧项目可 fallback 到 `docs/_scaffold/00-09`），运行 `ai/prompts/review/16-docs-system-audit.md` 的同步后审计模式——它会对照规范镜像核查项目 `docs/00-09` 的章节完整性与撰写规范偏离。
+**使用后下一步**：人工确认迁移计划后，用本节第二段 Prompt 执行迁移；完成后运行项目自检 / 文档检查并单独提交，并把整理摘要回写 `_governance/sync-records/template-sync/` 同步报告或 `.ai/session-handoff.md`。若想用最新规范回溯审视文档体系（sync 后 `ai/doc-standards/00-09` 已刷新；旧项目可 fallback 到 `docs/_scaffold/00-09`），运行 `ai/prompts/review/16-docs-system-audit.md` 的同步后审计模式——它会对照规范镜像核查项目 `docs/00-09` 的章节完整性与撰写规范偏离。
 
 ### 第一段：同步后整理审计与迁移计划
 
@@ -38,7 +38,7 @@
    - 先读取 `ai/index.md` 列出的全部规则文件。
    - 再读取 `docs/README.md`，理解最新 docs 分区规则。
    - 再读取 `ai/project-rules.md`、根 `README.md`、`docs/00-09`、`docs/inputs/`、`docs/vision/product-vision.md`（如存在）。
-   - 如存在 `sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 下的同步运行记录，优先读取推荐路径 `sync-records/template-sync/` 最近一份，旧路径仅作兼容读取，提取同步问题、待确认项和可回流模板优化点。
+   - 如存在 `_governance/sync-records/template-sync/` 或旧路径 `docs/archive/template-sync/` 下的同步运行记录，优先读取推荐路径 `_governance/sync-records/template-sync/` 最近一份，旧路径仅作兼容读取，提取同步问题、待确认项和可回流模板优化点。
 
 2. 审计当前 docs 结构
    - 列出 `docs/` 根目录下所有文件和子目录。
@@ -85,8 +85,8 @@
 5. 审计 `ai/project-rules.md`
    - 检查初始化必填检查是否包含：`docs/README.md` 分区规则、不得把新增项目文档直接放到 `docs/` 根目录。
    - 检查 §2.1 是否引用 `docs/env/local-env.md`，并保留待人工确认项。
-   - 检查 §3 是否明确 `docs/06`、`docs/07`、`frontend/`、`backend/`、`tests/`、`scripts/`、`docker/` 的保留 / 省略 / 删除决策。
-   - 检查 §3 裁剪决策与目录结构是否一致：**「§3 声明不启用 / 省略，但目录或骨架文档仍存在」**（如声明无持久化但 `docs/06-db-design.md` 骨架仍在、声明纯文档仓但 `frontend/`/`backend/`/`tests/`/`docker/` 仍以 `.gitkeep` + README 占位）——逐项列出具体路径；发现即提示按 `ai/doc-standards/project-rules.md` §3 裁剪执行步骤补执行（删除占位并把执行事实回填 §3 / §4）。该审计同样适用于普通项目自查，不限于同步后。
+   - 检查 §3 是否明确 `docs/06`、`docs/07`、`project/frontend/`、`project/backend/`、`project/tests/`、`scripts/`、`project/docker/` 的保留 / 省略 / 删除决策。
+   - 检查 §3 裁剪决策与目录结构是否一致：**「§3 声明不启用 / 省略，但目录或骨架文档仍存在」**（如声明无持久化但 `docs/06-db-design.md` 骨架仍在、声明纯文档仓但 `project/frontend/`/`project/backend/`/`project/tests/`/`project/docker/` 仍以 `.gitkeep` + README 占位）——逐项列出具体路径；发现即提示按 `ai/doc-standards/project-rules.md` §3 裁剪执行步骤补执行（删除占位并把执行事实回填 §3 / §4）。该审计同样适用于普通项目自查，不限于同步后。
    - `ai/project-rules.md` 字段规范基线在 `ai/doc-standards/project-rules.md`（随模板同步刷新）；审计实例时对照规范基线，只补项目专属约束和裁剪决策，不把模板方法论长文复制进实例。
    - 审计版本机制启用状态：检查 `ai/project-rules.md` 是否含「项目版本管理」规则（辅信号，对应 §2.4 的 PATCH/MINOR/MAJOR 语义），以及 `.github/workflows/project-check.yml` 是否含「Check project version consistency」校验（主信号，防 VERSION↔CHANGELOG 漂移）。
      - 双信号都在：版本机制已启用，无需迁移。
@@ -106,7 +106,7 @@
        4. `ai/project-rules.md` 增加「项目版本管理」章节（§2.4），说明项目版本与模板版本分层。
        5. 新增 / 补齐 `.github/workflows/project-check.yml`，至少校验项目版本信号与模板同步边界。
        6. 运行 `check-derived-sync.*` 确认版本机制检测通过或明确非阻断提示。
-       7. 在 `sync-records/template-sync/` 记录启用状态、验证结果与后续待办。
+       7. 在 `_governance/sync-records/template-sync/` 记录启用状态、验证结果与后续待办。
      - 领域模板差异：使用 `--domain-template` 保留领域模板自己的 `VERSION` / `CHANGELOG.md`；`TEMPLATE-BASE.md` 记录母模板继承版本和领域标准件范围；不把普通派生 workflow 强行套到领域模板。领域模板仓还应按同步下来的 `ai/doc-standards/domain-rules.md` 规范基线维护 `ai/domain-rules.md` 种子（领域通用标准件骨架，不同步、受 `check-derived-sync` 保护）。
      - 验收（双信号）：项目侧 workflow（主信号）+ `ai/project-rules.md` 项目版本管理章节（辅信号）都在；`VERSION` / `CHANGELOG.md` 顶部项目版本 / `TEMPLATE-BASE.md` 的 Project version 三者一致。
 
@@ -148,10 +148,10 @@
    H. 模板优化回流建议
    - 从同步运行记录和本次整理中归纳可通用于多个项目的问题
    - 区分项目专属问题 / 环境问题 / 模板方法论问题
-   - 对建议回流模板的问题，给出 `_proposals/TEMPLATE-UPGRADE-*.md` 草案标题和去项目化摘要
+   - 对建议回流模板的问题，给出 `_governance/_proposals/TEMPLATE-UPGRADE-*.md` 草案标题和去项目化摘要
 
    I. 同步报告回写建议
-   - 建议回写到 `sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md` 的整理摘要
+   - 建议回写到 `_governance/sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md` 的整理摘要
    - 已处理项、未处理项、待确认项、后续文档审计入口
    - 若用户暂不提交长期报告，写入 `.ai/session-handoff.md` 的临时续接内容
 
@@ -176,7 +176,7 @@
 - 若 `docs/env/local-env.md` 缺失且用户允许，先运行 `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1`；否则只给出待执行命令。
 - 环境约束未知项必须保留“待确认”，不得虚构本机资源或服务器资源。
 - 每一步保持最小变更。
-- 若需要生成 `_proposals/TEMPLATE-UPGRADE-*.md`，必须去项目化，不得包含客户、账号、路径敏感信息或项目专属业务细节。
+- 若需要生成 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`，必须去项目化，不得包含客户、账号、路径敏感信息或项目专属业务细节。
 
 完成后请输出：
 1. 实际变更清单

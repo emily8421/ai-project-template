@@ -1,7 +1,7 @@
 # 01 输入材料评审与入口判定（生成前）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 **用途**：在生成或补齐 docs 文档体系前，先评审现有输入是否足以生成 / 更新 `docs/vision/product-vision.md`，再判断入口模式和文档剖面。
 

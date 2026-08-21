@@ -1,7 +1,7 @@
 # SMOKE-TEST
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本手册用于验证一个新手是否能按当前模板，在 Windows 环境下从零跑通最小路径。它不是派生项目文档，而是模板自身的操作验证说明。
 

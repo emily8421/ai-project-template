@@ -1,7 +1,7 @@
 # 02 单任务执行 / 切换工具续接
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 **用途**：执行 `docs/08-dev-plan.md` 中的单个 Sprint，或在切换 AI 工具 / 新会话时续接当前任务。
 

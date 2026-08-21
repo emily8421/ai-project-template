@@ -1,7 +1,7 @@
 # Web App Scaffold Experiment Protocol
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件用于 Batch 6：在真实项目或独立实验仓验证 Web App scaffold 候选方案。它是实验协议，不是母模板内置脚手架；默认不新增 `template-docs/web-app/`，不启用 `new-project --profile web-app`，也不创建领域模板。
 
@@ -35,7 +35,7 @@
 2. **只生成最小 slice**：只跑通 App Shell、一个页面 / 视图、一个 API client、一个后端 endpoint / mock、一个 API / browser smoke。
 3. **记录偏差**：记录哪些目录保留、哪些被裁剪、哪些技术栈命名不同但职责等价。
 4. **验证阈值**：观察主应用文件、全局样式、页面、service / controller 是否触发文件膨胀阈值。
-5. **回填证据**：把实验结论写回项目 `08/09` 或项目侧实验记录；可通用经验再回流母模板 `_proposals/`。
+5. **回填证据**：把实验结论写回项目 `08/09` 或项目侧实验记录；可通用经验再回流母模板 `_governance/_proposals/`。
 
 ## 5. 实验记录模板
 
@@ -105,4 +105,4 @@
 
 ## 7. 母模板回流要求
 
-回流到母模板前必须去项目化：不得包含客户信息、私有路径、真实账号、业务敏感数据或单项目专属表 / 接口 / 权限。推荐先写 `_proposals/TEMPLATE-UPGRADE-web-app-scaffold-experiment-<topic>.md`，说明实验来源、可复用部分、非目标、版本影响和验证证据。
+回流到母模板前必须去项目化：不得包含客户信息、私有路径、真实账号、业务敏感数据或单项目专属表 / 接口 / 权限。推荐先写 `_governance/_proposals/TEMPLATE-UPGRADE-web-app-scaffold-experiment-<topic>.md`，说明实验来源、可复用部分、非目标、版本影响和验证证据。

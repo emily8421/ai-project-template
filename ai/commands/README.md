@@ -1,7 +1,7 @@
 # AI Commands（快捷命令路由）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本目录提供 AI CLI 的快捷命令路由。命令文件只负责把“用户意图”映射到权威 SOP、Prompt 和脚本说明；完整执行细节仍以 `ai/prompts/`、`SOP.md`、`git-guide.md`、`docs/` 与项目规则为准。
 

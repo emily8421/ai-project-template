@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _governance/_proposals/ 回流。
 # sync-all-derived.sh — 批量同步父目录下所有派生项目到最新模板方法论（维护者用）
 #
 # 用法:
@@ -14,7 +14,7 @@
 # 模板仓专用脚本（v1.65.0 起不下行，不进 template-sync.json）；维护者批量同步工具，类似 check-template。
 #
 # 派生项目判据: 子目录含 VERSION + scripts/sync-template.sh + docs/，
-#               且不含 _examples/（模板本体标识）。
+#               且不含 scripts/check-template.sh（模板本体标识；_examples/ 已随 v1.66.0+ 迁入 _governance/ 且派生仓也有种子，不再作标记）。
 # 工作区有未提交跟踪改动 / 非派生项目 / 同步失败 的项目会被跳过并在汇总里标注，
 # 绝不强行写入（未跟踪的项目内容如 docs/inputs 不阻塞）。
 #
@@ -70,8 +70,8 @@ for sub in "$PARENT_DIR"/*/; do
     SKIP+=("$name（非派生项目）")
     continue
   fi
-  if [[ -d "$sub/_examples" ]]; then
-    SKIP+=("$name（疑似模板本体，含 _examples/）")
+  if [[ -f "$sub/scripts/check-template.sh" ]]; then
+    SKIP+=("$name（疑似模板本体，含 scripts/check-template.sh）")
     continue
   fi
 

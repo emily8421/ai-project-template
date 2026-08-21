@@ -1,7 +1,7 @@
 # UI Prototype Strategy Standard（UI 原型策略 / 实现前原型细粒度标准）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件定义 UI 原型策略 / 实现前原型的记录标准。它适用于已有 `00-03` 需求链、体验原则和基本设计后，进入前端实现前的可视化门禁；不同于 `template-docs/templates/ui-prototype-exploration-template.md` 所描述的“需求探索原型”。若仍在 UI brief、参考分析、需求探索原型或视觉效果探索阶段，应先按 `ai/document-lifecycle-rules.md` §5.2.1 推进，不得把探索稿写成实现前原型已确认。
 

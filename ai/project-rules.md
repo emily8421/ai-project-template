@@ -95,21 +95,21 @@
 
 ## 3. 项目形态与文档裁剪
 
-> 本节用于初始化阶段，决定 docs/06、07 是否保留，以及 frontend/backend/tests/scripts/docker
+> 本节用于初始化阶段，决定 docs/06、07 是否保留，以及 `project/` 内 frontend/backend/tests/docker
 > 哪些目录真正需要。此节应在生成 docs/03-09 之前先填好。
 
 - 是否有持久化存储：（如有数据库 / 文件存储 / 无）
 - 是否有对外接口：（如 REST API / SDK / CLI / 无）
-- 演示形态：[消息通道内交互 / 独立 Web 页面 / 移动端 / CLI / 不需演示]（决定 `frontend/` 是否启用、`docs/04-05` 是否体现前端架构）
+- 演示形态：[消息通道内交互 / 独立 Web 页面 / 移动端 / CLI / 不需演示]（决定 `project/frontend/` 是否启用、`docs/04-05` 是否体现前端架构）
 - 前端交互设计：需要 / 不需要 / 豁免（若需要，推荐 `docs/design/frontend-interaction.md`；若豁免，说明原因）
 - UI 原型策略：需要 / 不需要 / 豁免（若需要，在 §2.3 记录原型形式、位置、覆盖范围和追溯；若豁免，说明原因）
 - 通用详细设计：需要 / 不需要 / 豁免（若存在非平凡子系统、复杂权限 / 安全、AI / 外部服务、导入 / 异步任务、跨模块状态机、Mock / 降级差异或高风险愿景能力，推荐 `docs/design/<subsystem>.md`；若豁免，说明原因、风险和补做时点）
 - System Skeleton Gate：需要 / 不需要 / 豁免（non-trivial 项目——多模块 / 有对外接口 / 有运行依赖——默认需要，首个业务 Sprint 前在 `docs/08-dev-plan.md` Sprint 0 + `docs/09-verification.md` 系统框架测试大纲落地框架验收；quick-script / 纯计算库 / 单文件工具可豁免，须说明原因、风险和补做时点；规则见 `ai/implementation-lifecycle-rules.md` §3）
 - docs/06-db-design.md：保留 / 省略
 - docs/07-api-spec.md：保留 / 省略
-- 需要保留的代码目录：（如 frontend/ backend/ tests/ scripts/ docker/；不用的目录可删除）
+- 需要保留的代码目录：（如 `project/frontend/`、`project/backend/`、`project/tests/`、`project/docker/`；不用的目录可删除）
 
-按项目形态裁剪规则（docs/06 / 07 何时省略、`frontend/` 启用条件、详细设计 / 前端交互 / UI 原型触发条件、目录裁剪等）见 `ai/doc-standards/project-rules.md` §4 §3；本节裁剪决策须与 `docs/00-09` 实际结构一致，省略项留下说明，不适用的裁剪行可删除。
+按项目形态裁剪规则（docs/06 / 07 何时省略、`project/frontend/` 启用条件、详细设计 / 前端交互 / UI 原型触发条件、目录裁剪等）见 `ai/doc-standards/project-rules.md` §4 §3；本节裁剪决策须与 `docs/00-09` 实际结构一致，省略项留下说明，不适用的裁剪行可删除。
 
 ## 4. 目录规范的项目特例
 

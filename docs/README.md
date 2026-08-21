@@ -1,7 +1,7 @@
 # docs/ 项目文档体系与分区规则
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本目录保存项目事实、需求、设计、计划与验证材料。本文档说明三件事：**(1) 文档体系怎么构成**（输入 / 输出 + 00-09 主链）、**(2) 分区规则**（放哪）、**(3) 裁剪**（保留哪些）。文档生成、追溯链、横切事实、变更传播规则见 `ai/document-lifecycle-rules.md`。
 
@@ -82,7 +82,7 @@
 | `docs/archive/` | 已废弃但需留痕的项目文档 | 保留原名或加日期前缀 |
 | `template-docs/profiles/web-fullstack-profile.md` | 复杂 Web / 全栈交互项目的可选结构 Profile 与 Walking Skeleton Gate；**人读参考、非项目事实、不直接落入 docs/** | 触发后把 App Shell、目录边界、vertical slice、文件膨胀阈值和 smoke 验证回填到 `04/05/08/09` |
 | `template-docs/docs-scaffold/` | 模板 `docs/inputs/*`、`docs/vision/*`、`docs/00-09`、`docs/design/*`、`docs/decisions/*`、`docs/research/*` 长期结构副本，保留原始大纲、占位表格和 `【撰写提要：...】`；**人读参考、非项目事实、不自动覆盖 `docs/` 项目事实** | 随模板同步；旧项目可能残留 `docs/_scaffold/` |
-| `ai/doc-standards/` | 模板 `docs/00-09` 与详细设计的撰写规范 / 审计基线；**只读、非项目事实、不直接驱动开发**；改动须走 `_proposals/` 回流模板 | 由 `sync-template` 同步，勿手改 |
+| `ai/doc-standards/` | 模板 `docs/00-09` 与详细设计的撰写规范 / 审计基线；**只读、非项目事实、不直接驱动开发**；改动须走 `_governance/_proposals/` 回流模板 | 由 `sync-template` 同步，勿手改 |
 
 ## 6. 子系统详细设计
 
@@ -138,13 +138,13 @@ AI 判断需要新增文档时，必须按以下顺序处理：
 | 判断条件 | 文档处理 | 目录处理 | 备注 |
 |---|---|---|---|
 | 无持久化存储 | 删除 `docs/06-db-design.md`，并在 §3 声明省略 | 不因 DB 预留目录 | 浏览器 `localStorage` / `IndexedDB` 写入 `docs/05-tech-spec.md`，不触发 06 |
-| 有数据库 / 文件存储 | 保留 `docs/06-db-design.md` | 按技术栈保留 `backend/`、`docker/` 等 | 当前阶段写细，后续阶段可只保留骨架 |
-| 无对外接口 | 删除 `docs/07-api-spec.md`，并在 §3 声明省略 | 不因 API 预留 `backend/` | 纯内部库 / 纯计算模块适用 |
-| CLI / 本地脚本 | 保留 `docs/07-api-spec.md` | 通常保留 `scripts/`，按需保留 `tests/` | 07 用于描述命令、参数、输出契约 |
-| 独立 Web / 移动端 / 小程序 / 桌面端演示 | `docs/04-05` 必须体现前端架构；复杂 UI 按触发条件补 `docs/design/frontend-interaction.md` | 保留 `frontend/`，按需保留 `backend/` | 若愿景含页面/点击/手机等交互词，需人工复核演示形态；前端隐藏不等于权限边界 |
-| 消息通道内交互 / 不需演示 | `docs/04-05` 不强制写前端 | 通常删除 `frontend/` | 若后续变更演示形态，再补前端设计 |
-| 暂无自动化测试 | `docs/09-verification.md` 仍保留 | 可暂删 `tests/` | 09 至少记录人工验证和本机资源验证 |
-| 需要容器 / 外部服务 | `docs/04-05` 写明运行拓扑 | 保留 `docker/` | Demo 优先本机；资源不足再写服务器预案 |
+| 有数据库 / 文件存储 | 保留 `docs/06-db-design.md` | 按技术栈保留 `project/backend/`、`project/docker/` 等 | 当前阶段写细，后续阶段可只保留骨架 |
+| 无对外接口 | 删除 `docs/07-api-spec.md`，并在 §3 声明省略 | 不因 API 预留 `project/backend/` | 纯内部库 / 纯计算模块适用 |
+| CLI / 本地脚本 | 保留 `docs/07-api-spec.md` | 通常保留 `scripts/`，按需保留 `project/tests/` | 07 用于描述命令、参数、输出契约 |
+| 独立 Web / 移动端 / 小程序 / 桌面端演示 | `docs/04-05` 必须体现前端架构；复杂 UI 按触发条件补 `docs/design/frontend-interaction.md` | 保留 `project/frontend/`，按需保留 `project/backend/` | 若愿景含页面/点击/手机等交互词，需人工复核演示形态；前端隐藏不等于权限边界 |
+| 消息通道内交互 / 不需演示 | `docs/04-05` 不强制写前端 | 通常删除 `project/frontend/` | 若后续变更演示形态，再补前端设计 |
+| 暂无自动化测试 | `docs/09-verification.md` 仍保留 | 可暂删 `project/tests/` | 09 至少记录人工验证和本机资源验证 |
+| 需要容器 / 外部服务 | `docs/04-05` 写明运行拓扑 | 保留 `project/docker/` | Demo 优先本机；资源不足再写服务器预案 |
 | 需要真实运行依赖 | `docs/05` 前或首个相关 Sprint 前补 `docs/research/*tech-env-evaluation*.md`，或记录豁免理由 | 按技术栈保留依赖文件 / 启动脚本 | `collect-env` 只采集事实，不等于依赖安装 / 最小运行验证通过 |
 
 ## 9. 轻量项目路径

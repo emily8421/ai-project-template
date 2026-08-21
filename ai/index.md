@@ -1,7 +1,7 @@
 # AI 规则入口与任务路由
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 进入项目后，先读取本文件和 `ai/rules-core.md`，再按任务类型读取对应规则包。规则读取必须覆盖即将执行的动作；若无法判断任务类型或规则覆盖范围，回退读取“完整规则回退包”。
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _governance/_proposals/ 回流。
 # check-template.sh — 检查 ai-project-template 的关键入口、文档骨架与同步清单是否自洽
 #
 # 用法:
@@ -548,7 +548,7 @@ require_new_project_local_smoke() {
   require_contains "$project_dir/README.md" 'ai/prompts/docs/00-generate-or-complete-docs\.md' "new-project 烟测 README 指向多入口生成 Prompt"
   require_contains "$project_dir/README.md" '交付物形态：Demo / MVP / 产品' "new-project 烟测 README 提醒交付物形态"
   require_contains "$project_dir/README.md" 'Phase1 不默认等于 MVP' "new-project 烟测 README 避免 Phase1 默认 MVP"
-  require_file "$project_dir/_proposals/README.md"
+  require_file "$project_dir/_governance/_proposals/README.md"
   require_file "$project_dir/scripts/collect-env.ps1"
   require_file "$project_dir/scripts/README.md"
   require_absent_file "$project_dir/scripts/check-template.sh" "new-project 烟测 scripts/ 不含模板仓专用 check-template.sh"
@@ -560,8 +560,8 @@ require_new_project_local_smoke() {
   require_absent_file "$project_dir/template-docs/maintainer/e2e-report-template.md" "new-project 烟测 template-docs/ 不含模板仓专用 e2e-report-template.md"
   require_absent_file "$project_dir/template-docs/maintainer/rd-data-chain.md" "new-project 烟测 template-docs/ 不含模板仓专用 rd-data-chain.md"
   require_absent_file "$project_dir/template-docs/maintainer/domain-derived-scenarios-template.md" "new-project 烟测 template-docs/ 不含领域专属 domain-derived-scenarios-template.md（普通路线）"
-  require_absent_dir "$project_dir/_examples"
-  require_absent_dir "$project_dir/_archive"
+  require_file "$project_dir/_governance/ai-records/README.md"
+  require_file "$project_dir/_governance/sync-records/README.md"
 
   rm -rf "$test_root"
 }
@@ -732,8 +732,8 @@ check_script_entrypoints() {
 }
 
 check_project_bootstrap_scripts() {
-  require_contains "scripts/new-project.sh" 'rm -rf "\$TARGET/_proposals"' "new-project 清理模板提案收件箱内容"
-  require_contains "scripts/new-project.sh" 'mkdir -p "\$TARGET/_proposals"' "new-project 创建派生提案起草区"
+  require_contains "scripts/new-project.sh" 'rm -rf "\$TARGET/_governance"' "new-project 清理模板治理目录内容"
+  require_contains "scripts/new-project.sh" 'mkdir -p "\$TARGET/_governance/_proposals"' "new-project 创建派生提案起草区"
   require_contains "scripts/new-project.sh" 'cat > "\$TARGET/README.md"' "new-project 项目化 README"
   require_contains "scripts/new-project.sh" '--no-remote' "new-project 支持本地-only 烟测"
   require_contains "scripts/new-project.sh" 'SHAPE="web"' "new-project --shape 缺省 web 不裁剪"
@@ -1030,29 +1030,29 @@ require_files \
   "scripts/bootstrap-dev-env.ps1"
 require_file "template-docs/maintainer/e2e-regression-checklist.md"
 require_file "template-docs/maintainer/e2e-report-template.md"
-require_file "_proposals/README.md"
-require_file "_archive/proposals/README.md"
-require_contains "_proposals/README.md" '模板优化提案收件箱' "_proposals README 标明提案收件箱"
-require_contains "_proposals/README.md" 'TEMPLATE-UPGRADE-vX\.Y\.Z' "_proposals README 说明三段式提案命名"
-require_contains "_proposals/README.md" '任何需要修改项目模板' "_proposals README 说明提案先行"
-require_contains "_proposals/README.md" 'Release impact' "_proposals README 说明 release impact 字段"
-require_contains "_proposals/README.md" 'Release strategy' "_proposals README 说明 release strategy 字段"
-require_contains "_proposals/README.md" '可选脚本参数.*默认按 `patch` 判断|默认按 `patch` 判断.*可选脚本参数' "_proposals README 说明兼容参数默认 patch"
-require_contains "_archive/proposals/README.md" 'VERSION' "归档 README 以 VERSION 为事实来源"
-require_contains "_archive/proposals/README.md" 'TEMPLATE-UPGRADE-version-impact-threshold\.md' "归档 README 记录版本影响门槛收敛提案"
+require_file "_governance/_proposals/README.md"
+require_file "_governance/_archive/proposals/README.md"
+require_contains "_governance/_proposals/README.md" '模板优化提案收件箱' "_proposals README 标明提案收件箱"
+require_contains "_governance/_proposals/README.md" 'TEMPLATE-UPGRADE-vX\.Y\.Z' "_proposals README 说明三段式提案命名"
+require_contains "_governance/_proposals/README.md" '任何需要修改项目模板' "_proposals README 说明提案先行"
+require_contains "_governance/_proposals/README.md" 'Release impact' "_proposals README 说明 release impact 字段"
+require_contains "_governance/_proposals/README.md" 'Release strategy' "_proposals README 说明 release strategy 字段"
+require_contains "_governance/_proposals/README.md" '可选脚本参数.*默认按 `patch` 判断|默认按 `patch` 判断.*可选脚本参数' "_proposals README 说明兼容参数默认 patch"
+require_contains "_governance/_archive/proposals/README.md" 'VERSION' "归档 README 以 VERSION 为事实来源"
+require_contains "_governance/_archive/proposals/README.md" 'TEMPLATE-UPGRADE-version-impact-threshold\.md' "归档 README 记录版本影响门槛收敛提案"
 # 派生项目登记（维护者侧索引，不入同步清单，不下行同步）
-require_file "ai-records/project-registry/README.md"
-require_contains "ai-records/project-registry/README.md" '不下行同步' "project-registry README 声明不下行同步"
-require_contains "ai-records/project-registry/README.md" '模板仓发起同步时优先读取' "project-registry README 说明模板仓发起同步优先读取 registry"
-require_contains "ai-records/project-registry/README.md" 'Path status' "project-registry README 定义 Path status"
-require_contains "ai-records/project-registry/registry.md" 'Sync mode' "project-registry registry 记录 Sync mode"
-require_contains "ai-records/project-registry/registry.md" 'Local path' "project-registry registry 记录 Local path"
+require_file "_governance/ai-records/project-registry/README.md"
+require_contains "_governance/ai-records/project-registry/README.md" '不下行同步' "project-registry README 声明不下行同步"
+require_contains "_governance/ai-records/project-registry/README.md" '模板仓发起同步时优先读取' "project-registry README 说明模板仓发起同步优先读取 registry"
+require_contains "_governance/ai-records/project-registry/README.md" 'Path status' "project-registry README 定义 Path status"
+require_contains "_governance/ai-records/project-registry/registry.md" 'Sync mode' "project-registry registry 记录 Sync mode"
+require_contains "_governance/ai-records/project-registry/registry.md" 'Local path' "project-registry registry 记录 Local path"
 require_contains "ai/commands/sync-methodology.md" '模板仓发起模式' "sync-methodology 覆盖模板仓发起模式"
-require_contains "ai/commands/sync-methodology.md" 'ai-records/project-registry/registry\.md' "sync-methodology 要求读取 project registry"
+require_contains "ai/commands/sync-methodology.md" '_governance/ai-records/project-registry/registry\.md' "sync-methodology 要求读取 project registry"
 require_contains "ai/prompts/maintainers/12-sync-template.md" '模板仓发起模式' "同步 Prompt 覆盖模板仓发起模式"
 require_contains "ai/prompts/maintainers/12-sync-template.md" 'Path status=verified' "同步 Prompt 使用 Path status 区分目标"
-require_contains "git-guide.md" 'ai-records/project-registry/registry\.md' "git-guide 批量同步 registry 优先"
-require_contains "MAINTAINERS.md" 'ai-records/project-registry/registry\.md' "MAINTAINERS 批量同步 registry 优先"
+require_contains "git-guide.md" '_governance/ai-records/project-registry/registry\.md' "git-guide 批量同步 registry 优先"
+require_contains "MAINTAINERS.md" '_governance/ai-records/project-registry/registry\.md' "MAINTAINERS 批量同步 registry 优先"
 require_contains "CONTRIBUTING.md" '提案 → 分支 → PR → 评审 → 合并 → 归档' "CONTRIBUTING 含提案先行流程"
 require_contains "CONTRIBUTING.md" 'vMAJOR\.MINOR\.PATCH' "CONTRIBUTING 含三段式版本规则"
 require_contains "CONTRIBUTING.md" '默认发布级别.*兼容增强' "CONTRIBUTING 说明 patch 是兼容增强默认级别"
@@ -1236,7 +1236,7 @@ require_contains "scripts/sync-template.sh" 'scripts/check-markdown-clean\.ps1' 
 require_contains ".github/workflows/template-check.yml" 'check-markdown-clean\.ps1' "template-check CI 运行 Markdown 清洁预检"
 require_contains "MAINTAINERS.md" 'check-markdown-clean\.ps1' "MAINTAINERS 提醒 PR 前运行 Markdown 清洁预检"
 require_contains "git-guide.md" 'check-markdown-clean\.ps1' "git-guide 模板维护流程包含 Markdown 清洁预检"
-require_contains "scripts/check-template.ps1" 'check-markdown-clean\.ps1"\s+_proposals ai-records' "check-template 本地预检调用 Markdown 清洁检查对齐 CI"
+require_contains "scripts/check-template.ps1" 'check-markdown-clean\.ps1"\s+_governance/_proposals _governance/ai-records' "check-template 本地预检调用 Markdown 清洁检查对齐 CI"
 check_script_entrypoints
 require_contains "scripts/check-derived-sync.sh" '同步清单外变更' "check-derived-sync 检查同步清单外变更"
 require_contains "scripts/check-derived-sync.sh" 'README 模板版本' "check-derived-sync 含 README 模板版本一致性告警（非阻断）"
@@ -1400,9 +1400,9 @@ require_contains "ai/session-rules.md" '\.ai/session-handoff\.md' "session-rules
 require_contains "ai/session-rules.md" 'NEXT-STEPS\.md' "session-rules 兼容 NEXT-STEPS"
 require_contains "ai/session-rules.md" 'Token 热点观察触发' "session-rules 定义 token hotspot 主动提醒"
 require_contains "ai/session-rules.md" '\.ai/token-hotspots/' "session-rules 定义 token hotspot 单条本地路径"
-require_contains "ai/session-rules.md" 'ai-records/token-hotspots/' "session-rules 定义 token hotspot 记录目录"
+require_contains "ai/session-rules.md" '_governance/ai-records/token-hotspots/' "session-rules 定义 token hotspot 记录目录"
 require_contains "ai/session-rules.md" '累计 summary 触发' "session-rules 定义 token hotspot 累计 summary 触发"
-require_contains "ai/session-rules.md" 'ai-records/token-hotspots/SUMMARY.md' "session-rules 定义 token hotspot summary 文件"
+require_contains "ai/session-rules.md" '_governance/ai-records/token-hotspots/SUMMARY.md' "session-rules 定义 token hotspot summary 文件"
 require_contains ".gitignore" '\.ai/token-hotspots/' ".gitignore 排除本地 token hotspot 记录"
 require_contains "MAINTAINERS.md" '\.ai/token-hotspots/' "MAINTAINERS 区分本地 token hotspot 记录"
 require_contains "template-docs/maintainer/rd-data-chain.md" '\.ai/token-hotspots/' "rd-data-chain 区分本地 token hotspot 记录"
@@ -1430,7 +1430,7 @@ require_contains "scripts/sync-template.sh" 'ai/prompts/maintainers/23-domain-te
 require_contains "template-docs/scenario-guides.md" '处理 issue 提案' "scenario C1 包含 issue 提案入口"
 require_contains "template-docs/scenario-guides.md" 'TEMPLATE-UPGRADE:' "scenario C1 覆盖标题型 issue 提案"
 require_contains "CONTRIBUTING.md" 'submit-proposal.*/ submit-feedback|submit-proposal.*submit-feedback|submit-feedback.*submit-proposal' "CONTRIBUTING 说明 issue 回流入口"
-require_contains "_proposals/README.md" 'GitHub issue' "_proposals README 说明 issue 收件箱"
+require_contains "_governance/_proposals/README.md" 'GitHub issue' "_proposals README 说明 issue 收件箱"
 require_contains "ai/prompts/dev/02-run-task.md" '/run run-dev-task' "run-task Prompt 标注快捷命令"
 require_contains "ai/prompts/maintainers/12-sync-template.md" '/run sync-methodology' "同步 Prompt 标注快捷命令"
 require_contains "SOP.md" '快捷命令' "SOP 场景索引包含快捷命令列"
@@ -1527,7 +1527,7 @@ require_contains "git-guide.md" 'v1\.6\.8\+ 后续同步' "git-guide 区分新�
 require_contains "git-guide.md" 'check-template\.sh` / `scripts/check-template\.ps1` 都是\*\*模板仓库完整性自检' "git-guide 禁止用模板自检验收派生同步"
 require_contains "git-guide.md" 'check-derived-sync\.ps1' "git-guide 使用派生同步边界检查"
 require_contains "git-guide.md" '同步后进入标准闭环' "git-guide 说明同步后标准闭环"
-require_contains "git-guide.md" 'sync-records/template-sync/YYYY-MM-DD-sync-template-vX\.Y\.Z\.md' "git-guide 统一同步报告推荐路径"
+require_contains "git-guide.md" '_governance/sync-records/template-sync/YYYY-MM-DD-sync-template-vX\.Y\.Z\.md' "git-guide 统一同步报告推荐路径"
 require_contains "git-guide.md" 'project-check\.yml' "git-guide 说明派生项目 workflow"
 require_contains "git-guide.md" '普通 PR 不应使用该 workflow' "git-guide 禁止派生普通 PR 继承模板 workflow"
 require_contains "CONTRIBUTING.md" 'git-guide\.md.*§5' "CONTRIBUTING 指向 git-guide 下行同步 SOP"
@@ -1559,8 +1559,8 @@ require_contains "ai/prompts/review/16-docs-system-audit.md" '同步后审计模
 require_contains "template-docs/scenario-guides.md" '完整闭环说法' "A13 场景包含完整闭环说法"
 require_contains "template-docs/scenario-guides.md" 'sync-methodology → post-sync-cleanup → docs-system-audit → 提案回流收口 → 同步报告留痕' "A13 完整闭环说法列出关键步骤"
 require_contains "ai/commands/README.md" 'A13 完整闭环' "commands README 同步方法论入口提示 A13 完整闭环"
-require_contains "_proposals/README.md" "PSObject\.Properties\['pull_request'\]" "提案 README 说明 GitHub issue 稳定过滤口径"
-require_contains "_proposals/README.md" '列表 \+ 单项状态复核' "提案 README 要求列表与单项状态复核"
+require_contains "_governance/_proposals/README.md" "PSObject\.Properties\['pull_request'\]" "提案 README 说明 GitHub issue 稳定过滤口径"
+require_contains "_governance/_proposals/README.md" '列表 \+ 单项状态复核' "提案 README 要求列表与单项状态复核"
 require_contains "ai/prompts/maintainers/11-template-proposal-summary.md" '单项状态复核' "提案汇总 Prompt 要求单项状态复核"
 require_contains "template-docs/scenario-guides.md" '项目验证建议 · 已形成或更新同步报告' "A13 完成判据包含验证建议和同步报告"
 require_contains "ai/commands/sync-methodology.md" 'A13 完成判据矩阵' "sync-methodology 要求 A13 完成判据矩阵"
@@ -1610,11 +1610,11 @@ require_contains "ai/commands/submit-proposal.md" '--body-file' "submit-proposal
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '--body-file' "submit-proposal Prompt 使用 body-file"
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '来源标签缺失' "submit-proposal Prompt 处理来源标签缺失"
 require_contains "ai/prompts/maintainers/17-submit-proposal.md" '半成品 issue' "submit-proposal Prompt 失败后检查半成品 issue"
-require_contains "_proposals/README.md" '_proposals/_remote-issues/' "提案收件箱记录远端 issue 镜像目录"
-require_contains "_proposals/README.md" '镜像硬门禁' "提案 README 定义远端 issue 镜像硬门禁"
-require_contains "_proposals/README.md" '不得把未落盘正文直接作为' "提案 README 禁止分析未镜像远端正文"
-require_contains "_proposals/README.md" '必须引用本地镜像路径' "提案 README 要求本地镜像路径作为分析来源"
-require_contains "ai/commands/template-proposal-summary.md" '_proposals/_remote-issues/issue-<number>\.md' "template-proposal-summary 先镜像远端 issue"
+require_contains "_governance/_proposals/README.md" '_governance/_proposals/_remote-issues/' "提案收件箱记录远端 issue 镜像目录"
+require_contains "_governance/_proposals/README.md" '镜像硬门禁' "提案 README 定义远端 issue 镜像硬门禁"
+require_contains "_governance/_proposals/README.md" '不得把未落盘正文直接作为' "提案 README 禁止分析未镜像远端正文"
+require_contains "_governance/_proposals/README.md" '必须引用本地镜像路径' "提案 README 要求本地镜像路径作为分析来源"
+require_contains "ai/commands/template-proposal-summary.md" '_governance/_proposals/_remote-issues/issue-<number>\.md' "template-proposal-summary 先镜像远端 issue"
 require_contains "ai/commands/template-proposal-summary.md" '没有本地镜像路径的 issue 不得进入正文分析' "template-proposal-summary 无镜像路径阻断分析"
 require_contains "ai/prompts/maintainers/11-template-proposal-summary.md" '一批一范围、报告先行、事实与模板分离、去重可审计、可续接' "模板优化汇总 Prompt 定义分批治理原则"
 require_contains "ai/prompts/maintainers/11-template-proposal-summary.md" 'issue 镜像刷新结果与本地镜像路径清单' "模板优化汇总 Prompt 输出本地镜像路径清单"
@@ -2052,7 +2052,7 @@ while IFS= read -r sync_file; do
 done < <(extract_sync_files)
 
 # 脚本同步边界断言（v1.65.0）：模板仓专用脚本不得回流下行清单；工具注册表 README 必须下行。
-# 提案：_proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md（落地后 _archive/proposals/）。
+# 提案：_governance/_proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md（落地后 _governance/_archive/proposals/）。
 check_scripts_sync_boundary() {
   begin_section "检查脚本同步边界（模板专用不下行）"
   local template_only
@@ -2105,18 +2105,18 @@ sys.exit(0 if ('template-docs/maintainer/domain-derived-scenarios-template.md' i
 check_scripts_sync_boundary
 
 begin_section "检查参考样例完整性"
-require_file "_examples/README.md"
-require_contains "_examples/README.md" 'vision-to-product/' "示例导航包含 vision-to-product"
-require_contains "_examples/README.md" 'quick-script/' "示例导航包含 quick-script"
-require_contains "_examples/README.md" 'todo-api/' "示例导航包含 todo-api"
+require_file "_governance/_examples/README.md"
+require_contains "_governance/_examples/README.md" 'vision-to-product/' "示例导航包含 vision-to-product"
+require_contains "_governance/_examples/README.md" 'quick-script/' "示例导航包含 quick-script"
+require_contains "_governance/_examples/README.md" 'todo-api/' "示例导航包含 todo-api"
 
-require_absent_dir "_examples/text-cleaner-cli"
-require_absent_dir "_examples/text-normalizer-lib"
-require_absent_dir "_examples/md-notes-frontend"
+require_absent_dir "_governance/_examples/text-cleaner-cli"
+require_absent_dir "_governance/_examples/text-normalizer-lib"
+require_absent_dir "_governance/_examples/md-notes-frontend"
 
-require_example_common "_examples/vision-to-product"
-require_contains "_examples/vision-to-product/OVERVIEW.md" 'ai/prompts/docs/00-generate-or-complete-docs\.md' "_examples/vision-to-product 指向文档生成 Prompt"
-require_example_docs "_examples/vision-to-product" \
+require_example_common "_governance/_examples/vision-to-product"
+require_contains "_governance/_examples/vision-to-product/OVERVIEW.md" 'ai/prompts/docs/00-generate-or-complete-docs\.md' "_governance/_examples/vision-to-product 指向文档生成 Prompt"
+require_example_docs "_governance/_examples/vision-to-product" \
   00-scenario.md \
   01-user-requirements.md \
   02-srs.md \
@@ -2127,10 +2127,10 @@ require_example_docs "_examples/vision-to-product" \
   07-api-spec.md \
   08-dev-plan.md \
   09-verification.md
-require_example_deliverable_shape "_examples/vision-to-product"
+require_example_deliverable_shape "_governance/_examples/vision-to-product"
 
-require_example_common "_examples/quick-script"
-require_example_docs "_examples/quick-script" \
+require_example_common "_governance/_examples/quick-script"
+require_example_docs "_governance/_examples/quick-script" \
   00-scenario.md \
   01-user-requirements.md \
   02-srs.md \
@@ -2139,12 +2139,12 @@ require_example_docs "_examples/quick-script" \
   05-tech-spec.md \
   08-dev-plan.md \
   09-verification.md
-require_example_deliverable_shape "_examples/quick-script"
-require_absent_file "_examples/quick-script/docs/06-db-design.md"
-require_absent_file "_examples/quick-script/docs/07-api-spec.md"
+require_example_deliverable_shape "_governance/_examples/quick-script"
+require_absent_file "_governance/_examples/quick-script/docs/06-db-design.md"
+require_absent_file "_governance/_examples/quick-script/docs/07-api-spec.md"
 
-require_example_common "_examples/todo-api"
-require_example_docs "_examples/todo-api" \
+require_example_common "_governance/_examples/todo-api"
+require_example_docs "_governance/_examples/todo-api" \
   00-scenario.md \
   01-user-requirements.md \
   02-srs.md \
@@ -2155,7 +2155,7 @@ require_example_docs "_examples/todo-api" \
   07-api-spec.md \
   08-dev-plan.md \
   09-verification.md
-require_example_deliverable_shape "_examples/todo-api"
+require_example_deliverable_shape "_governance/_examples/todo-api"
 
 finish_sections
 echo

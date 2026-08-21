@@ -1,12 +1,12 @@
 # scripts/ 脚本
 
-> Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _proposals/ 回流模板仓库。
+> Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _governance/_proposals/ 回流模板仓库。
 
 本目录放 `ai-project-template` 的自动化脚本：下行同步、同步验收、环境采集与检查、一键安装、提交卫生检查；模板仓侧另有自检、批量同步、发布回归与建项目入口（不下行）。
 
 ## 1. 登记口径与同步边界
 
-工具按真实消费者分为两组（v1.65.0 起，提案 `_archive/proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`）：
+工具按真实消费者分为两组（v1.65.0 起，提案 `_governance/_archive/proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`）：
 
 - **随模板下行（8 类能力 / 10 个文件）**：进 `template-sync.json` `files_all`，派生项目同步时获得并被覆盖更新。本 README 随组下行。
 - **模板仓专用（4 类能力 / 5 个文件）**：`check-template.sh` / `check-template.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`。仅存在于模板仓（本目录可见），不下行、不进同步清单；派生项目不应使用，也不应长期保留历史版本残留（见 §5 孤儿清理）。
@@ -48,7 +48,7 @@
 | `TOOL-SETUP-001` | 无必填参数 | 输出 Required / Recommended 工具状态，不写文件 | 低风险只读；结果用于诊断，不等同于项目可运行 | 单一 PowerShell 实现；当前无强制非零退出契约 |
 | `TOOL-ENV-002` | 当前项目与 PATH / Node manager 状态 | 输出 Node 路径、版本和声明漂移诊断，不写文件 | 低风险只读；属于深诊断，不替代基础前置检查 | 单一 PowerShell 实现；设计为诊断工具，当前始终以 `0` 退出 |
 | `TOOL-SETUP-002` | 可选 `-WithDocker`、`-WithJava` | 通过 `winget` 安装 Git、gh、Node、Python、VS Code 及可选工具，改变本机软件状态 | 高风险系统写入；必须明确确认，且不负责登录、代理、Docker 初始化或项目依赖 | 单一 PowerShell 实现；缺少 `winget` 会失败，单项安装失败会告警并继续 |
-| `TOOL-CHECK-002` | 路径参数，默认 `_proposals` | 递归检查 Markdown 的 BOM、尾空格、文件末尾换行和多余空行，不写文件 | 低风险只读；路径不存在时跳过 | 单一 PowerShell 实现；`0` 通过或无目标文件，`1` 检查失败 |
+| `TOOL-CHECK-002` | 路径参数，默认 `_governance/_proposals` | 递归检查 Markdown 的 BOM、尾空格、文件末尾换行和多余空行，不写文件 | 低风险只读；路径不存在时跳过 | 单一 PowerShell 实现；`0` 通过或无目标文件，`1` 检查失败 |
 | `TOOL-CHECK-001` | 模板仓；可选 `--summary`、`--quiet` | 检查结构、同步契约和临时派生场景；只在临时目录写入 / 清理，不改真实工作区 | 低风险只读检查；发布仍以 Bash + CI 为准 | `.sh` 为完整权威检查，退出 `0/1/2` 分别表示通过、内容失败、环境或参数失败；`.ps1` fallback 仅结构性兜底 |
 | `TOOL-SYNC-003` | 父目录；默认 `--dry-run`，可选 `--commit` | 扫描派生仓；dry-run 汇总，commit 模式调用各项目同步并提交；访问模板远端 | `--commit` 会跨多个仓库写入和提交，必须单步确认并先检查脏状态 | 单一 Bash 实现；子任务或环境失败即非零退出 |
 | `TOOL-RELEASE-001` | 模板仓 | 在临时目录构造派生场景，组合模板自检与批量同步 dry-run；不改真实派生项目 | 低风险本地回归，但依赖 Bash、Git 和临时目录能力 | 单一 Bash 实现；`0` 通过，非零失败 |

@@ -1,7 +1,7 @@
 # 04 系统架构（Architecture）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 
 > **文档定位**：定义系统边界、架构视图、模块职责、关键流程、运行拓扑和架构决策。本文回答“系统如何组织”，不写具体依赖版本、表字段、接口字段或 Sprint 实施步骤。

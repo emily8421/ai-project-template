@@ -1,7 +1,7 @@
 # TEMPLATE-METHODOLOGY
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件说明 `ai-project-template` 这套模板自身“为什么这样设计”。它不是派生项目的过程文档，也不是 AI 运行时规则正文；规则正文以 `ai/` 和 `docs/` 中的活文件为准。
 
@@ -48,7 +48,7 @@
 
 ### 当前模板已经超出早期规范文档的范围
 
-相对 `_archive/` 中的早期设计文档，当前模板已经扩展出完整的方法论产品面：
+相对 `_governance/_archive/` 中的早期设计文档，当前模板已经扩展出完整的方法论产品面：
 
 - 从“规则说明”扩展为“文档生命周期体系”，明确多入口生成、追溯链、横切事实和变更传播。
 - 从“`00-08` 骨架”扩展为“`00-09` 核心文档 + 标准子目录分区”。
@@ -93,10 +93,10 @@
 |---|---|---|
 | 文档 | 输入材料 → `docs/00-09` + `docs/design/*` | `ai/document-lifecycle-rules.md`、`ai/doc-standards/*` |
 | 实现 | 已确认设计 → Sprint / Task / 代码 | `ai/implementation-lifecycle-rules.md`、`docs/08` |
-| 验收 | 实现完成包 → 测试证据与验收结论 | `docs/09`、`tests/*` |
-| 知识 | 决策 / 调研 / 经验 → 可追溯记录与长期回写 | `template-docs/maintainer/rd-data-chain.md`、`docs/decisions/*`、`ai-records/*` |
+| 验收 | 实现完成包 → 测试证据与验收结论 | `docs/09`、`project/tests/*` |
+| 知识 | 决策 / 调研 / 经验 → 可追溯记录与长期回写 | `template-docs/maintainer/rd-data-chain.md`、`docs/decisions/*`、`_governance/ai-records/*` |
 
-四条流在单会话中由同一个 AI 按阶段串行承担（任务协调 / 路由见 `ai/index.md`），不是四个并发 Agent；角色化与并发试点的评估见 `_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` Batch 3-5（未授权）。
+四条流在单会话中由同一个 AI 按阶段串行承担（任务协调 / 路由见 `ai/index.md`），不是四个并发 Agent；角色化与并发试点的评估见 `_governance/_proposals/TEMPLATE-UPGRADE-governance-handbook-agent-tool-registry.md` Batch 3-5（未授权）。
 
 ## 6. 各子系统的设计 why
 
@@ -242,4 +242,4 @@ Prompt Library 设计：
 
 ### 历史来源说明
 
-`_archive/` 中的历史文档只用于保留早期设计背景、术语演化和方法论来源，不用于定义当前模板的能力边界、流程要求或同步策略。当前模板能力边界，以本文件 `§2` 列出的活文件为准。
+`_governance/_archive/` 中的历史文档只用于保留早期设计背景、术语演化和方法论来源，不用于定义当前模板的能力边界、流程要求或同步策略。当前模板能力边界，以本文件 `§2` 列出的活文件为准。
