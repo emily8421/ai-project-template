@@ -6,7 +6,7 @@
 > Author: emily8421
 > Created: 2026-07-29T10:24:40Z
 > Updated: 2026-07-29T10:24:40Z
-> Mirrored at: 2026-08-01T23:02:20+08:00
+> Mirrored at: 2026-08-21
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body

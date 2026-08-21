@@ -1,7 +1,7 @@
 # 05 Technical Specification Standard（技术方案规范镜像）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件是 `docs/05-tech-spec.md` 的规范镜像，用于 AI 生成、修订、审计和评估项目技术方案。它不是项目事实文档，派生项目的实际技术事实仍写入 `docs/05-tech-spec.md`。
 
@@ -67,8 +67,8 @@
 
 触发条件：
 
-- 项目涉及真实运行依赖，如 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API、重型 SDK。
-- 项目同时启用 `frontend/` 与 `backend/`，需要浏览器演示、多页面 / 多状态 / 多角色 / 数据密集界面，或首个前端 Sprint 可能堆入单个主应用文件。
+- 项目涉及真实运行依赖，如 `project/backend/`、`project/frontend/`、`project/docker/`、数据库、本机模型、外部 API、重型 SDK。
+- 项目同时启用 `project/frontend/` 与 `project/backend/`，需要浏览器演示、多页面 / 多状态 / 多角色 / 数据密集界面，或首个前端 Sprint 可能堆入单个主应用文件。
 - Phase 升级、Sprint 开始或用户要求从 Mock / 降级切换到真实能力。
 - 技术环境、密钥、网络、资源、合规、权限或部署条件尚未验证。
 

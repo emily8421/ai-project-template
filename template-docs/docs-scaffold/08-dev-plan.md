@@ -1,7 +1,7 @@
 # 08 开发计划（Development Plan）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 
 > **文档定位**：把已确认的 Phase 范围拆成可执行 Sprint / 任务。本文回答“先做哪个小任务、改哪些文件、怎样验收”。

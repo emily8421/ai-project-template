@@ -1,7 +1,7 @@
 # UI Knowledge（Web UI/UX 设计知识核心层）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 > 定位：母模板内的轻量设计知识核心层。它保存 Web UI/UX 的方法、记录模型、少量精选模式和来源索引，供派生项目做前端参考分析时按 scope 查询。它不是设计素材下载器，不是截图仓，不是第三方资料镜像，也不替代项目自己的 `frontend-ui-reference-analysis`、前端交互设计或验收记录。
 
@@ -191,4 +191,4 @@ AI 做参考分析时**不加载全部知识**，按 scope 选取：
 | 前端交互设计（`ai/doc-standards/frontend-interaction.md`） | 互补不重复：本层提供可引用模式及适用边界，不替代项目交互设计 |
 | 知识记录机制（`capability-packages.md` MECH-KNOW-001） | 合并入：来源登记与抽取记录复用现有知识治理，不另建平行生命周期 |
 
-详细提案：`_proposals/TEMPLATE-UPGRADE-web-ui-design-knowledge-base.md`。
+详细提案：`_governance/_proposals/TEMPLATE-UPGRADE-web-ui-design-knowledge-base.md`。

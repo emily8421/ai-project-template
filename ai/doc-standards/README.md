@@ -1,7 +1,7 @@
 # Document Standards（文档规范镜像）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本目录用于保存每份核心文档的细粒度规范标准，供 AI 生成、精修、审计和评估时作为只读规则依据。
 

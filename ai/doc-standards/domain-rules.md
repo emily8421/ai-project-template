@@ -1,7 +1,7 @@
 # domain-rules 文档规范（审计基线）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件是领域模板仓 `ai/domain-rules.md` 种子实例的**字段规范与审计基线（单一事实源）**，随模板下行同步到**领域模板路线**（`template-sync.json` 的 `files_domain` 组；普通派生项目不接收）。它只定义"领域层 rules 填什么、字段规范、审计项、禁止项"，**不替代**领域模板仓的实例事实——领域专属内容仍写在各自 `ai/domain-rules.md`（不同步、领域仓按本规范自生成）。
 
@@ -60,7 +60,7 @@
 - `执行口径`：advisory（建议）/ gate（强制阻断）。
 - `与母模板的关系`：母模板不承担该项的理由（避免增加非领域项目负担）。
 
-> §1 是领域层权威位置：领域派生项目继承本清单；新增领域标准件经领域模板仓 PR 演进，不回写母模板（除非可跨领域通用，再经 `_proposals/` 回流）。
+> §1 是领域层权威位置：领域派生项目继承本清单；新增领域标准件经领域模板仓 PR 演进，不回写母模板（除非可跨领域通用，再经 `_governance/_proposals/` 回流）。
 
 ### §2 领域裁剪与禁止
 

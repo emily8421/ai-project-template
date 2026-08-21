@@ -1,7 +1,7 @@
 # 19 文档评估机制（整体 / 阶段 / 单文档）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 **用途**：在关键阶段转换前后，对整体文档体系、某个 PLM 阶段转换或单个文档做正式评估，判断是否可进入下一阶段。
 
@@ -168,5 +168,5 @@ E4 / E5 / E6 阶段评估必须重点检查：
    - 若用户确认记录，建议路径：`docs/research/YYYY-MM-DD-docs-evaluation-<scope>.md`
    - 说明落盘报告不替代 00-09，也不得放到 docs 根目录
 
-若发现模板通用缺口，请单列“可回流模板优化建议”，但不要直接创建 `_proposals/`，除非用户确认。
+若发现模板通用缺口，请单列“可回流模板优化建议”，但不要直接创建 `_governance/_proposals/`，除非用户确认。
 ```

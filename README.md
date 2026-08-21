@@ -92,9 +92,9 @@ flowchart LR
 | `ai/prompts/` | 详细 Prompt 模板（按场景拆分） |
 | `ai/doc-standards/` | 规则 / 审计基线：`docs/00-09` 和 `docs/design/*` 应满足什么标准（只读，随模板同步刷新） |
 | `docs/` | 项目事实：需求、设计、计划、验证（分区见 `docs/README.md`） |
-| `sync-records/` | 同步运行记录（派生项目记录模板同步过程，与 `docs/` 项目文档分离） |
 | `tasks/` | 复杂 Sprint 拆分后的任务单（按需启用） |
-| `frontend/` `backend/` `tests/` `docker/` | 代码骨架目录，按项目形态裁剪（见 `ai/project-rules.md §3`） |
+| `project/` | 代码骨架单一入口：`frontend/`、`backend/`、`tests/`、`docker/` 按项目形态裁剪（见 `ai/project-rules.md §3`） |
+| `_governance/` | 模板与派生项目的治理记录入口：`ai-records/`、`sync-records/`、`_proposals/`、`_archive/`、`_examples/` |
 | `scripts/` | 新建项目、同步、自检、环境采集脚本 |
 | `.github/` | CI 工作流（template-check）+ PR/Issue 模板 |
 | `SOP.md` | 操作流程速查（场景→命令） |
@@ -103,6 +103,3 @@ flowchart LR
 | `MAINTAINERS.md` | 模板维护者手册（发布 checklist / 同步清单 / 自检 / README 边界） |
 | `INIT-PROMPT.md` | AI 任务入口指针（指向 commands / prompts 索引） |
 | `template-sync.json` | 下行同步文件清单（哪些方法论文件同步到派生项目） |
-| `_examples/` | 已填好的参考样例项目 |
-| `_proposals/` | 模板优化提案收件箱 |
-| `_archive/` | 已归档提案与旧文档 |

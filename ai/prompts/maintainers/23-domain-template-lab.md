@@ -1,7 +1,7 @@
 # Prompt: Domain Template Lab（领域模板独立实验线）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 ## 目的
 
@@ -23,7 +23,7 @@
 2. `ai/commands/domain-template-lab.md`。
 3. `template-docs/profiles/domain-templates.md`、`ai/doc-standards/domain-rules.md`（领域层 rules 规范基线，领域模板仓 `ai/domain-rules.md` 种子按此生成）。
 4. `template-docs/maintainer/domain-derived-scenarios-template.md`。
-5. `_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md`。
+5. `_governance/_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md`。
 6. 当前仓库的 `git status --short --branch`、`VERSION`、`template-sync.json`（若存在）。
 7. 若当前仓库已是领域模板：读取 `TEMPLATE-BASE.md`、`domain-template-sync.json`、`scripts/sync-domain-template.*`、`scripts/check-domain-derived-sync.*`（若存在）。
 
@@ -39,7 +39,7 @@
 
 | 角色 | 判定线索 | 默认动作 |
 |---|---|---|
-| 母模板 | 仓库为 `ai-project-template`，存在 `_proposals/README.md`、`template-sync.json`、`scripts/check-template.sh` | 只输出实验线计划或维护入口；不写领域 scaffold |
+| 母模板 | 仓库为 `ai-project-template`，存在 `_governance/_proposals/README.md`、`template-sync.json`、`scripts/check-template.sh` | 只输出实验线计划或维护入口；不写领域 scaffold |
 | 派生领域模板 | 存在 `TEMPLATE-BASE.md` 或用户明确声明这是领域模板仓库 | 可规划 / 创建 / 更新领域实验资产 |
 | 领域派生项目 | 用户说明从某领域模板派生，或存在领域模板同步记录 | 不直接同步母模板；建议回到领域模板入口 |
 | 普通派生项目 | 常规业务项目，只需要母模板通用方法论 | 走 `/run sync-methodology`，不启动本命令 |
@@ -57,11 +57,11 @@
 | `domain-template-sync.json` | 领域模板下发给领域派生项目的同步清单，避免和母模板 `template-sync.json` 混淆 | 实验线建议资产 |
 | `scripts/sync-domain-template.ps1` / `.sh` | 领域模板 → 领域派生项目的 dry-run / commit 同步入口 | 实验线建议资产 |
 | `scripts/check-domain-derived-sync.ps1` / `.sh` | 检查领域派生项目同步边界，避免覆盖业务事实 | 实验线建议资产 |
-| `sync-records/domain-template-sync/` | 领域同步运行记录 | 实验线建议资产 |
+| `_governance/sync-records/domain-template-sync/` | 领域同步运行记录 | 实验线建议资产 |
 | `template-docs/<domain>/` | 领域 scaffold / checklist / 示例骨架 | 按领域试点生成 |
 | `template-docs/maintainer/domain-derived-scenarios-template.md` | 母模板提供的 L2-to-L3 playbook template；复制到领域模板后再领域化 | 母模板通用骨架 |
 | `template-docs/<domain>/domain-derived-scenarios.md` | 领域模板 → 领域派生项目的 L2→L3 场景剧本（L2-to-L3 playbook），说明创建、同步、整理、自检、回流和发布后下游同步 | 实验线必备规划项 |
-| `domain-proposals/` 或 `_proposals/` | 领域共性反馈收件箱 | 按仓库约定选择 |
+| `domain-proposals/` 或 `_governance/_proposals/` | 领域共性反馈收件箱 | 按仓库约定选择 |
 
 ## 执行流程
 

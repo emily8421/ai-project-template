@@ -1,7 +1,7 @@
 # 22 需求探索原型（UI Prototype Exploration）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 **用途**：在正式 `00-03` 需求文档定稿、架构和技术路线选择前，用轻量 UI 原型帮助用户确认需求、页面结构、主流程、状态、信息密度和文案方向；也用于 UI brief 之后、正式前端交互设计之前的视觉效果探索和大规模信息架构探索。
 

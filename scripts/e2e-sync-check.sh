@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
+# Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _governance/_proposals/ 回流。
 # e2e-sync-check.sh — L3 端到端回归发布门（可自动化部分）
 #
 # 用法:

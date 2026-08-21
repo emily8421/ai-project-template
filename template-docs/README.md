@@ -60,4 +60,4 @@
 
 > 领域专属：`domain-derived-scenarios-template.md`（L2-to-L3 playbook 模板）仅领域路线下行（files_domain），普通派生项目不接收。
 
-> 这些手册随模板下行同步（见 `template-sync.json`）；派生项目同步后获得最新版，不要在派生项目直接改，通用改进走 `_proposals/` 回流。操作走 `scenario-guides.md` 场景引导，命令速查看 `SOP.md`。
+> 这些手册随模板下行同步（见 `template-sync.json`）；派生项目同步后获得最新版，不要在派生项目直接改，通用改进走 `_governance/_proposals/` 回流。操作走 `scenario-guides.md` 场景引导，命令速查看 `SOP.md`。

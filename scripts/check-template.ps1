@@ -1,5 +1,5 @@
 <#
-Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _proposals/ 回流。
+Template-only notice: 本文件为模板仓专用脚本（v1.65.0 起不下行、不进 template-sync.json），派生项目不应保留或使用；改进请经模板仓 _governance/_proposals/ 回流。
 check-template.ps1 - Windows PowerShell entrypoint for template self-check.
 
 Usage:
@@ -371,7 +371,7 @@ function Invoke-NativeTemplateCheck {
   Require-Contains "scripts/new-project.sh" 'CHANGELOG-PLAIN\.md' "new-project initializes project-owned CHANGELOG-PLAIN.md"
   Require-Contains ".gitignore" '\.ai/token-hotspots/' ".gitignore excludes local token hotspot records"
   Require-Contains "ai/session-rules.md" '\.ai/token-hotspots/' "session-rules defines local token hotspot path"
-  Require-Contains "ai/session-rules.md" 'ai-records/token-hotspots/SUMMARY\.md' "session-rules defines token hotspot summary path"
+  Require-Contains "ai/session-rules.md" '_governance/ai-records/token-hotspots/SUMMARY\.md' "session-rules defines token hotspot summary path"
   Require-Contains "MAINTAINERS.md" '\.ai/token-hotspots/' "MAINTAINERS distinguishes local token hotspot records"
   Require-Contains "template-docs/maintainer/rd-data-chain.md" '\.ai/token-hotspots/' "rd-data-chain distinguishes local token hotspot records"
   Require-Contains "template-docs/profiles/domain-templates.md" 'L2-to-L3 playbook' "domain-templates defines L2-to-L3 playbook"
@@ -402,10 +402,10 @@ function Invoke-NativeTemplateCheck {
 }
 
 function Invoke-MarkdownCleanPreflight {
-  # CI template-check runs check-markdown-clean on _proposals/ and ai-records/
+  # CI template-check runs check-markdown-clean on _governance/_proposals/ and _governance/ai-records/
   # (see .github/workflows/template-check.yml); running it here keeps the local
   # one-command preflight aligned with CI and avoids "local green, CI red".
-  & powershell -ExecutionPolicy Bypass -File "scripts/check-markdown-clean.ps1" _proposals ai-records
+  & powershell -ExecutionPolicy Bypass -File "scripts/check-markdown-clean.ps1" _governance/_proposals _governance/ai-records
   return $LASTEXITCODE
 }
 

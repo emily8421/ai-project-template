@@ -1,7 +1,7 @@
 # Frontend Experience Brief Scaffold（前端体验原则结构模板）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 > 推荐落盘路径：`docs/design/frontend-experience-brief.md`
 > 对应模板：`template-docs/templates/frontend-experience-brief-template.md`

@@ -1,7 +1,7 @@
 # ENV-SETUP
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本手册说明第一次使用 `ai-project-template` 前，如何准备 AI 编程环境、必备软件和一键安装入口。目标是把 Windows 上的准备过程尽量压缩成“先检查 -> 缺什么补什么 -> 重查 -> 新建项目 -> 采集环境”。
 

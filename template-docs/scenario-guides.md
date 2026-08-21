@@ -1,6 +1,6 @@
 # 场景引导（Scenario Guides）
 
-> Sync notice: 本文件由 `ai-project-template` 维护，派生项目同步模板方法论时可能被覆盖。不要在派生项目直接改；通用改进请经 `_proposals/` 回流模板。
+> Sync notice: 本文件由 `ai-project-template` 维护，派生项目同步模板方法论时可能被覆盖。不要在派生项目直接改；通用改进请经 `_governance/_proposals/` 回流模板。
 
 本文件是 `ai-project-template` 的**场景引导编排层**。它把分散的 `ai/commands/`（单点操作）、`ai/prompts/`（详细 Prompt）和 `scripts/` 串成端到端**场景剧本**，让用户在 AI CLI 里说一个具体场景意图，AI 即按契约产出分步引导计划并逐步执行。
 
@@ -40,7 +40,7 @@ AI 收到场景意图后，**第一步判断 cwd 状态再路由**——「已�
 | cwd 状态 | 判据 | 路由 |
 |---|---|---|
 | 零本地资产 | 无 `.git` / 空目录 / 用户明确「只有仓库链接」 | **无论目标是什么，先走 A0**，再衔接 |
-| 在模板仓库 | 有 `template-sync.json` + `_proposals/` + 模板标识 `README` | → **A2 新建派生** 或 **C 维护场景** |
+| 在模板仓库 | 有 `template-sync.json` + `_governance/_proposals/` + 模板标识 `README` | → **A2 新建派生** 或 **C 维护场景** |
 | 在派生项目 | 有 `VERSION` + `ai/` + `docs/`，但非模板本体 | → **A3–A28**；若是领域模板或领域派生项目，先看 §2.1 路径矩阵 |
 
 零资产时不得跳过 A0。
@@ -264,7 +264,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 - **完成判据**：`docs/inputs/` 有原始输入；或已有 `docs/vision/product-vision.md` 并准备在 A5 复评
 - **下一步**：A5
 - **cmd 指针**：`ai/document-lifecycle-rules.md` §3 多入口策略
-- ◐ 待补：`docs/inputs/initial-brief.md` 最小模板（放 `_examples/` 供引用）
+- ◐ 待补：`docs/inputs/initial-brief.md` 最小模板（放 `_governance/_examples/` 供引用）
 
 #### A5 评审输入材料
 - **说明**：让 AI 评审输入是否足以生成 product-vision；不足时给出评估报告和最小补充清单，补齐后复评。
@@ -522,8 +522,8 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 3 | 确认安全后应用更新并做边界验证 | 拿到模板方法论更新，确认没误覆盖项目件；普通派生项目用 `--preserve-project-version` 保留自身版本，领域模板用 `--domain-template` 保留领域版本 | `--commit --preserve-project-version`（普通派生）/ `--domain-template`（领域模板）+ `scripts/check-derived-sync.ps1` |
 | 4 | 同步后整理项目 | README、`project-rules`、docs 分区等项目事实不会被同步脚本自动迁移 | `post-sync-cleanup`(15)，先出迁移计划 |
 | 5 | 文档体系同步后审计 | 检查旧方法生成的 `docs/00-09` 是否需按新规范回梳 | `docs-system-audit`(16)，同步后审计模式 |
-| 6 | 做提案回流收口检查 | 派生提案可能已通过模板 issue / PR 被采纳，同步后应判断本地草稿和 issue 记录是否可归档 | 扫描 `_proposals/`、`.ai/session-handoff.md`、`sync-records/template-sync/`、issue 链接；必要时 `gh issue view` |
-| 7 | 给项目验证建议并形成同步报告 | 留下命令、结果、风险、未验证项、提案收口结论和后续任务 | `template-docs/templates/derived-sync-report-template.md` → `sync-records/template-sync/` |
+| 6 | 做提案回流收口检查 | 派生提案可能已通过模板 issue / PR 被采纳，同步后应判断本地草稿和 issue 记录是否可归档 | 扫描 `_governance/_proposals/`、`.ai/session-handoff.md`、`_governance/sync-records/template-sync/`、issue 链接；必要时 `gh issue view` |
+| 7 | 给项目验证建议并形成同步报告 | 留下命令、结果、风险、未验证项、提案收口结论和后续任务 | `template-docs/templates/derived-sync-report-template.md` → `_governance/sync-records/template-sync/` |
 
 > **同步后续接模式**：若 Git 显示已存在最近的 `sync template vX.Y.Z from ai-project-template` 同步提交，或 `TEMPLATE-BASE.md` 已记录目标模板版本且用户明确说“已同步，只补后续”（旧项目可兼容 `VERSION` 已是目标版本），不要重新执行 dry-run / commit；先核对最新同步提交和工作区，再从第 3 步的边界验证开始补跑 workflow 检查、`post-sync-cleanup`、`docs-system-audit`、项目验证建议和同步运行记录。
 
@@ -643,7 +643,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 - **完成判据**：已明确三层关系（母模板 → 领域模板 → 具体项目）· 已决定独立仓库或不执行 · 已给出可审计创建命令和初始化待办 · 已规划领域模板自己的 L2→L3 场景剧本入口 · 未向母模板新增领域 scaffold
 - **下一步**：执行领域模板创建 / 回 C1 记录模板提案 / 暂停等待人工确认
-- **cmd 指针**：`ai/commands/domain-template-lab.md`；方法论定位见 `template-docs/profiles/domain-templates.md`；参考 `scripts/new-project.sh`、`_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 和 `CONTRIBUTING.md` §4 版本影响判断
+- **cmd 指针**：`ai/commands/domain-template-lab.md`；方法论定位见 `template-docs/profiles/domain-templates.md`；参考 `scripts/new-project.sh`、`_governance/_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 和 `CONTRIBUTING.md` §4 版本影响判断
 
 #### A21 查看演示效果（查看 / 启动 Demo）
 - **说明**：项目有可运行交付物（Demo / MVP / 产品）时，把交付物跑起来并查看效果。执行边界与禁止项见 `ai/commands/show-demo.md`，演示 SOP 模板见 `template-docs/templates/demo-runbook-template.md`，**不替代 `docs/09-verification.md` 验收**。
@@ -659,18 +659,18 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 > cwd：均在 `ai-project-template` 模板仓库。
 
 #### C1 处理提案收件箱
-- **说明**：汇总和处理模板优化提案，来源包括 `_proposals/TEMPLATE-UPGRADE-*.md`、`_proposals/_remote-issues/*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；远端 issue 必须先刷新成本地镜像，镜像路径确认后再分析、分批落地、关闭 issue 或决议归档。
+- **说明**：汇总和处理模板优化提案，来源包括 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`、`_governance/_proposals/_remote-issues/*.md`、带 `proposal` / `feedback` 标签的 GitHub issue，以及标题为 `TEMPLATE-UPGRADE:` 的 open issue；远端 issue 必须先刷新成本地镜像，镜像路径确认后再分析、分批落地、关闭 issue 或决议归档。
 - **触发**：「处理提案」「汇总模板优化」「评审 TEMPLATE-UPGRADE」「处理 issue 提案」
 - **路径口径**：L1 只处理母模板提案；L2 领域模板处理领域提案；领域 L3 的业务事实不得越级进入 L1，跨领域通用结论必须先由 L2 去项目化提炼。
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
-| 1 | 读本地提案和既有 issue 镜像 | 镜像是跨会话稳定输入，不能每次只依赖远端读取 | `_proposals/TEMPLATE-UPGRADE-*.md` + `_proposals/_remote-issues/*.md` |
+| 1 | 读本地提案和既有 issue 镜像 | 镜像是跨会话稳定输入，不能每次只依赖远端读取 | `_governance/_proposals/TEMPLATE-UPGRADE-*.md` + `_governance/_proposals/_remote-issues/*.md` |
 | 2 | 查询并刷新远端 issue 镜像 | issue 是派生免 fork 回流入口，远端正文只允许用于生成 / 刷新本地镜像 | `template-proposal-summary`(11) + `gh issue list` / `gh issue view` |
-| 3 | 确认本轮镜像路径清单 | 没有 `_proposals/_remote-issues/issue-<number>.md` 的 issue 不得进入正文分析 | 镜像路径 + `Updated` / `Mirrored at` |
+| 3 | 确认本轮镜像路径清单 | 没有 `_governance/_proposals/_remote-issues/issue-<number>.md` 的 issue 不得进入正文分析 | 镜像路径 + `Updated` / `Mirrored at` |
 | 4 | 做 triage：补标签、去项目化、去重/冲突/依赖分析 | 避免漏掉未打标签的 `TEMPLATE-UPGRADE:` issue，也避免重复落地 | 标签 `proposal` / `feedback` + Batch 计划 |
 | 5 | 切维护分支，按 Batch 计划辅助修改 | 模板改动必须走分支 PR，一批一范围便于评审和续接 | 切分支 + 落地（规则/脚本/文档） |
-| 6 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_archive/proposals/` / `gh issue close` |
+| 6 | 开 PR、评审、合并后归档 / 关闭 issue | main 受保护禁直推；已处理提案要有收口记录 | `gh pr create` → 评审合并 → 移到 `_governance/_archive/proposals/` / `gh issue close` |
 
 - **完成判据**：提案落地或决议留存 · 已处理本地提案归档 · 已处理 issue 关闭或标记后续状态
 - **下一步**：C2 / C3
@@ -750,8 +750,8 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 |---|---|---|---|
 | 1 | 明确目标派生仓库和模板版本 | 避免在错误仓库验收 | 列出派生仓 cwd、`VERSION`、同步提交 |
 | 2 | 在派生项目跑边界检查 | 确认没误覆盖项目专属文件 | `scripts/check-derived-sync.ps1` / `.sh` |
-| 3 | 记录这次同步的命令/结果/问题 | 留痕才能追溯 | `template-docs/templates/derived-sync-report-template.md` → `sync-records/template-sync/` |
-| 4 | 把可通用优化点转提案回流 | 通用问题回流模板，惠及所有项目 | 转写 `_proposals/TEMPLATE-UPGRADE-*.md`（回 C1） |
+| 3 | 记录这次同步的命令/结果/问题 | 留痕才能追溯 | `template-docs/templates/derived-sync-report-template.md` → `_governance/sync-records/template-sync/` |
+| 4 | 把可通用优化点转提案回流 | 通用问题回流模板，惠及所有项目 | 转写 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`（回 C1） |
 
 - **完成判据**：边界检查通过 · 同步报告留痕
 - **下一步**：C1
@@ -764,7 +764,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 
 | # | 做什么 | 为什么 | 机器执行 |
 |---|---|---|---|
-| 1 | 先写去项目化提案 | 提案才能通用化、可审计 | `_proposals/TEMPLATE-UPGRADE-*.md`（`global-rules §9`） |
+| 1 | 先写去项目化提案 | 提案才能通用化、可审计 | `_governance/_proposals/TEMPLATE-UPGRADE-*.md`（`global-rules §9`） |
 | 2 | 做影响面分析 | 避免只改一个入口导致体系断裂 | 规则 / prompt / command / scenario / scripts / sync 清单 / check-template / docs 骨架 |
 | 3 | 设计分步落地计划 | 大能力拆 PR，降低审查风险 | 明确本 PR 做什么、后续 PR 做什么 |
 | 4 | 实现并自检 | 模板能力要能同步到派生 | 改文件 + `template-sync.json` + `scripts/check-template.*` |
@@ -858,6 +858,6 @@ A7 按 `ai/document-lifecycle-rules.md` §2/§5 的 PLM 链路组织为**有方�
 
 ## 8. 维护
 
-- 新增/调整场景：先 `_proposals/TEMPLATE-UPGRADE-*.md` 提案（`global-rules §9`），合并后回写本文件。
+- 新增/调整场景：先 `_governance/_proposals/TEMPLATE-UPGRADE-*.md` 提案（`global-rules §9`），合并后回写本文件。
 - 场景编排的 command/prompt/script 变更时，同步本文件的「机器执行」列。
 - 派生项目同步模板后获得本文件；项目专属场景不写 here（本文件在同步清单内，会被覆盖）。项目积累出本目录未覆盖的特有操作剧本时，在**同步清单外的项目自有目录**建立项目特有场景手册（如 `docs/` 子目录或项目自管目录），并在 `ai/project-rules.md` §4 登记其位置；编号空间与 A/C/M 隔离（自选前缀），条目格式沿用本文件三层步骤表结构（说明 / 触发 / cwd·前置 / 做什么 / 为什么 / 机器执行 / 完成判据 / 下一步 / cmd 指针），便于 AI 以相同方式消费。

@@ -1,7 +1,7 @@
 # Document Lifecycle Rules（文档生命周期生成规则）
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件定义从产品愿景到需求、总体设计、详细设计、实现计划、测试验证、代码实现的文档生命周期生成规则。AI 生成或修改任何项目事实文档时，必须先识别该文档的上游输入、约束来源、输出职责和下游影响，不得凭空生成。
 
@@ -49,7 +49,7 @@ docs/inputs 原始输入包
 
 关键阶段转换前可使用 `ai/prompts/review/19-docs-evaluation.md` 做文档评估，输出 `Go / Conditional Go / No Go`。评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-docs-evaluation-<scope>.md`，不得写入 `docs/` 根目录，也不得替代 00-09 正式修订。
 
-生成或修订 `docs/05-tech-spec.md` 前，若项目涉及真实运行依赖（如 `backend/`、`frontend/`、`docker/`、数据库、本机模型、外部 API、重型 SDK），应先使用 `ai/prompts/review/20-tech-env-evaluation.md` 做技术路线与环境支撑评估，或在 `ai/project-rules.md` §2.1 / `docs/05-tech-spec.md` 说明跳过理由、风险和补做时点。技术环境评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不得替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。评估结论应回填或引用到 `05` 的 Risk-ID / readiness gate、`09` 验证项和 `08` Sprint 解锁条件。`collect-env` 只采集事实，不等于评估通过。
+生成或修订 `docs/05-tech-spec.md` 前，若项目涉及真实运行依赖（如 `project/backend/`、`project/frontend/`、`project/docker/`、数据库、本机模型、外部 API、重型 SDK），应先使用 `ai/prompts/review/20-tech-env-evaluation.md` 做技术路线与环境支撑评估，或在 `ai/project-rules.md` §2.1 / `docs/05-tech-spec.md` 说明跳过理由、风险和补做时点。技术环境评估报告默认只读输出；用户确认落盘后写入 `docs/research/YYYY-MM-DD-tech-env-evaluation-<scope>.md`，不得替代 `docs/env/local-env.md` 或 `docs/05-tech-spec.md`。评估结论应回填或引用到 `05` 的 Risk-ID / readiness gate、`09` 验证项和 `08` Sprint 解锁条件。`collect-env` 只采集事实，不等于评估通过。
 
 | 评估码 | 阶段转换 | 核心问题 |
 |---|---|---|
@@ -185,7 +185,7 @@ docs/inputs/*
   → docs/design/frontend-interaction.md / docs/design/*interaction*.md
   → UI 原型策略 / 实现前原型记录
   → docs/08-dev-plan.md / tasks/*
-  → frontend/* / tests
+  → project/frontend/* / tests
   → docs/09-verification.md
 ```
 
@@ -199,7 +199,7 @@ docs/inputs/*
 | 体验 Brief | `docs/design/frontend-experience-brief.md` | 已确认设计输入 | 沉淀已确认体验原则、信息架构方向、视觉 / 密度 / 文案方向和阶段边界 | 可回填 `frontend-interaction` | 不写未确认方案，不定义 API / DB |
 | 正式交互设计 | `docs/design/frontend-interaction.md` 或 `docs/design/*interaction*.md` | 设计事实 | 记录页面 / 路由、用户流、状态、权限可见性、接口依赖和验收路径 | 设计评审 Go / Conditional Go，可进入 UI 原型策略或实现计划 | 不新增未授权需求 / 接口 / 验收目标 |
 | 实现前 UI 原型 | 代码原型 / HTML / Storybook / Figma / 截图证据 | 实现前确认 | 验证正式设计的视觉、点击路径、组件密度和覆盖状态 | 用户确认 + `08/09` 就绪 | 不替代 `09`，不新增需求 |
-| 实现与验证 | `frontend/*`、`tests`、`08`、`09` | 实现 / 已验证 | 按任务实现并留存验证证据 | `09` 记录 TC / smoke / 截图 / 人工验收结论 | 不实现 research 未确认内容 |
+| 实现与验证 | `project/frontend/*`、`tests`、`08`、`09` | 实现 / 已验证 | 按任务实现并留存验证证据 | `09` 记录 TC / smoke / 截图 / 人工验收结论 | 不实现 research 未确认内容 |
 
 > 知识来源与选择规则见 `template-docs/ui-knowledge/README.md`（视觉 / 交互模式与来源索引，按 scope 读取）；项目级参考分析落盘模板见 `template-docs/templates/frontend-ui-reference-analysis-template.md`。
 
@@ -224,7 +224,7 @@ docs/inputs/*
 前端交互设计是 `docs/design/*` 的页面 / 交互型子类型，不新增 `docs/00-09` 固定编号，推荐路径为 `docs/design/frontend-interaction.md`；多入口项目可拆成 `docs/design/*interaction*.md`。满足以下任一条件时，开发前应补充该文档，或在 `ai/project-rules.md` §3 / `docs/05-tech-spec.md` 说明豁免理由：
 
 - 交付形态包含独立 Web、移动端、小程序、桌面端或其他可点击 UI。
-- `ai/project-rules.md` §3 保留 `frontend/`，且项目交付物包含多页面交互。
+- `ai/project-rules.md` §3 保留 `project/frontend/`，且项目交付物包含多页面交互。
 - `docs/08-dev-plan.md` 的 Sprint 修改范围包含前端页面、组件、编辑器、搜索 / 问答 UI、管理页或桌面端集成。
 - 存在多页面、多角色、多入口、跨页面流程、复杂表单、筛选、列表、详情、审批、状态流或异常处理。
 - 验收依赖点击路径、页面状态或用户操作。

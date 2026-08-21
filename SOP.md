@@ -1,7 +1,7 @@
 # SOP 索引
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
-> Do not edit it directly in derived projects; propose reusable changes in `_proposals/` and upstream them to the template repository.
+> Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
 
 本文件是 `ai-project-template` 的标准操作流程导航——**命令速查**（「我知道做啥 → 找命令 / 文档 / Prompt」），只回答“当前场景应该看哪里”，不重复完整命令。
 
@@ -48,7 +48,7 @@
 | A12 | Sprint 验收总结 | `/run sprint-summary` | `docs/08-dev-plan.md`、`docs/09-verification.md` | `ai/prompts/dev/09-sprint-summary.md` | 对照验收标准总结是否完成 |
 | A13 | 派生项目同步模板 | `/run sync-methodology` | `git-guide.md` §5 | `ai/prompts/maintainers/12-sync-template.md` | 旧派生项目首次同步先 bootstrap 同步脚本；已同步没跑后续走同步后续接模式；根 `README.md` 不参与下行同步；同步后只做派生边界检查，不跑模板自检，用 `derived-sync-report-template.md` 留记录 |
 | A13 | 同步后项目整理 | `/run post-sync-cleanup` | `docs/README.md`、`ai/project-rules.md`、`docs/env/local-env.md` | `ai/prompts/maintainers/15-post-sync-cleanup.md` | 同步方法论后，先出迁移计划，确认后再执行 |
-| A13/C6 | 派生同步运行记录 | 无 | `template-docs/templates/derived-sync-report-template.md` | `ai/prompts/maintainers/12-sync-template.md` | 记录命令、结果、问题、提案回流收口；长期记录存 `sync-records/template-sync/` |
+| A13/C6 | 派生同步运行记录 | 无 | `template-docs/templates/derived-sync-report-template.md` | `ai/prompts/maintainers/12-sync-template.md` | 记录命令、结果、问题、提案回流收口；长期记录存 `_governance/sync-records/template-sync/` |
 | A14 | Phase 升级评估 | `/run phase-upgrade` | `docs/03-prd.md`、`ai/project-rules.md` §1 | `ai/prompts/planning/08-phase-upgrade.md` | 评估当前完成度，再草拟下一 Phase 边界 |
 | A15 | 回流提案/反馈到模板 | `/run submit-proposal` / `/run submit-feedback` | `scenario-guides.md` A15 | `ai/prompts/maintainers/17-submit-proposal.md` / `18-submit-feedback.md` | 派生→模板开 issue（免 fork）；先去项目化+标来源 |
 | A16 | 会话续接 / 中断恢复 | `/run resume` | `ai/session-rules.md` | 无 | 先读 `.ai/session-handoff.md` + Git 状态恢复；跨 CLI 一致 |
@@ -57,7 +57,7 @@
 | A19 | 文档定稿门禁 | `/run docs-evaluation` / `docs-system-audit` / `docs-open-items` | `ai/prompts/review/19` / `16`、`ai/prompts/docs/21` | 同左 | 完整生成后做评估 + 审计 + open items 收口再编码 |
 | A20 | 领域模板派生 | 无 | `template-docs/scenario-guides.md` A20、`template-docs/profiles/domain-templates.md` | 无 | 母模板 → 领域模板（可选中间层） |
 | A21 | 查看演示效果 | `/run show-demo` | `ai/commands/show-demo.md`、`template-docs/templates/demo-runbook-template.md` | 无 | 路由到项目演示 SOP；不替代 `09` 验收 |
-| C1 | 模板优化提案汇总 | `/run template-proposal-summary` | `CONTRIBUTING.md` §4、`_proposals/README.md` | `ai/prompts/maintainers/11-template-proposal-summary.md` | 先提案，后改模板；完成后归档到 `_archive/proposals/` |
+| C1 | 模板优化提案汇总 | `/run template-proposal-summary` | `CONTRIBUTING.md` §4、`_governance/_proposals/README.md` | `ai/prompts/maintainers/11-template-proposal-summary.md` | 先提案，后改模板；完成后归档到 `_governance/_archive/proposals/` |
 | C2 | 版本 bump 与发布 | 无 | `MAINTAINERS.md` §3、`CONTRIBUTING.md` §4 | 无 | VERSION / CHANGELOG + check + tag / Release |
 | C3 | 模板自检 | 无 | `scripts/check-template.sh` | 无 | `check-template` 全过（仅模板仓存在，不下行到派生项目） |
 | C4 | 维护分支→PR→合并→归档 | 无 | `git-guide.md` §3-4、`CONTRIBUTING.md` | 无 | 模板改动走分支 PR；合并后归档提案 |
@@ -86,7 +86,7 @@
 - “我要开一个新项目” → 用 `/run new-project`。
 - “我要把已有项目同步到最新模板” → 用 `/run sync-methodology`；旧派生项目先按 `git-guide.md` §5.2 bootstrap，拿到新版同步流程后继续完整 A13 闭环，不要停在同步提交；同步后用 `/run post-sync-cleanup`。
 - “我已经同步了模板，只想补完后续闭环” → 用 `/run sync-methodology` 的同步后续接模式；不要重新 dry-run / commit，从 `check-derived-sync`、workflow 检查、`post-sync-cleanup`、`docs-system-audit`、项目验证建议和同步运行记录开始。
-- “我已同步模板，想检查之前回流到模板 issue 的提案是否已处理并可归档” → 用 `/run sync-methodology` 的提案回流收口检查；扫描 `_proposals/`、`.ai/session-handoff.md`、`sync-records/template-sync/` 和 issue 链接后再判断。
+- “我已同步模板，想检查之前回流到模板 issue 的提案是否已处理并可归档” → 用 `/run sync-methodology` 的提案回流收口检查；扫描 `_governance/_proposals/`、`.ai/session-handoff.md`、`_governance/sync-records/template-sync/` 和 issue 链接后再判断。
 - “我要 push / 创建 PR / 合并 PR / 关闭 issue，但不确定当前账号、仓库或 CI 状态对不对” → 先运行 `powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1`，再按 `git-guide.md` §1.2 的 Checkpoint Mode 单步确认远端操作；CI pending 只汇报 pending，不长时间等待。
 - “我要让 AI 生成文档体系” → 输入不确定先用 `/run review-inputs`；评审通过后用 `/run generate-docs`。
 - “我要改模板本身” → 先看 `CONTRIBUTING.md`，先写 `TEMPLATE-UPGRADE-*.md` 提案；已有提案时用 `/run template-proposal-summary`。
