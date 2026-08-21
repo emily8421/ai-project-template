@@ -8,7 +8,7 @@
 
 ## v1.67.0（2026-08-21）
 
-workspace project-container 引入（MINOR）：落地 `_proposals/TEMPLATE-UPGRADE-workspace-project-container.md`（嵌套 B，docs 缓移）。主题：根目录引入 `project/`（项目代码骨架单一入口）与 `_governance/`（治理记录容器）两个容器，根目录可见项从 38 → 约 15。
+workspace project-container 引入（MINOR）：落地 `_governance/_proposals/TEMPLATE-UPGRADE-workspace-project-container.md`（嵌套 B，docs 缓移）。主题：根目录引入 `project/`（项目代码骨架单一入口）与 `_governance/`（治理记录容器）两个容器，根目录可见项从 38 → 约 15。
 
 **目录迁移（git mv 保留历史）**：
 - 4 代码目录（`frontend/ backend/ tests/ docker/`）→ `project/`；5 治理目录（`ai-records/ sync-records/ _proposals/ _archive/ _examples/`）→ `_governance/`。`docs/`、`tasks/` 本次不动（下阶段单独梳理）。
