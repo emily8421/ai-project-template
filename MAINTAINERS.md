@@ -64,6 +64,7 @@
 - **脚本同步边界（v1.65.0 起）**：`scripts/` 按「随模板下行 / 模板仓专用」两组管理（划分见 `scripts/README.md` §1）。模板仓专用脚本（`check-template.sh/.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`）不进 `template-sync.json`，头部用 `Template-only notice` 标注；`check-template.*` 的 `check_scripts_sync_boundary` 断言防回流。派生项目中的这批脚本属历史下行残留，随 post-sync-cleanup 审计清理。
 - **template-docs 文档同步边界（v1.66.0 起）**：`template-docs/` 文档同样按消费者划分（提案 `_governance/_proposals/TEMPLATE-UPGRADE-template-docs-reorg.md`）。模板仓专用文档（`e2e-regression-checklist.md`、`e2e-report-template.md`、`rd-data-chain.md`）不进 `template-sync.json`，头部 `Template-only notice`；`domain-derived-scenarios-template.md` 走 `files_domain` 仅领域路线下行。派生项目中的旧版残留同随 post-sync-cleanup 孤儿审计清理。
 - 派生项目根 `README.md` 是项目专属文档，不参与模板下行同步；由 `scripts/new-project.sh`（模板仓专用）初始化生成，项目自行维护。
+- **`project/` 与 `_governance/` 容器不进同步清单（v1.67.0 起）**：两侧同构嵌套容器（嵌套 B）——`project/` 收代码骨架（`frontend/ backend/ tests/ docker/`），`_governance/` 收治理记录（`ai-records/ sync-records/ _proposals/ _archive/ _examples/`）。二者均不在 `template-sync.json`（`files_all` 只含方法论 `ai/ template-docs/ scripts/` + 根入口/手册/版本 + `docs/` 2 项）；代码骨架由 `new-project.sh` 全量复制进派生仓、治理容器由 `new-project.sh` 建空框架 + 分区 README 种子，`sync-template` 不覆盖、派生侧自行维护。
 - 新增方法论入口、脚本、规则文件时，先判断下行 / 模板仓专用归属，再同步更新 `template-sync.json`、`scripts/sync-template.sh` 兜底清单和自检断言。
 - `template-sync.json` 是完整清单权威；人读文档只维护分组摘要和维护规则，避免复制一份容易漂移的完整文件列表。
 - 新增新手环境准备脚本或安装说明时，必须同时检查 `README.md`、`template-docs/` 下对应文档与 `SOP.md` 的入口是否一致。
