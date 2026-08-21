@@ -6,6 +6,10 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.67.1（2026-08-22）
+
+快速续接输出契约与行动卡（PATCH）：落地 `_governance/_proposals/TEMPLATE-UPGRADE-resume-action-card.md`。`ai/commands/resume.md` 成为恢复摘要格式的唯一权威源，要求将唯一下一步、阻塞 / 待确认、独立 backlog 和依据分开输出；`ai/session-rules.md` 与命令路由改为强制引用该契约。handoff 推荐结构与同步示例在元数据后新增 `Current Action Card`，作为经 Git 裁决的默认决策入口，历史 checkpoint 仅保留为解释与证据。未改变快速续接的只读边界、stale 裁决、同步清单成员或脚本行为；派生项目同步后无需迁移已有 handoff，可在后续更新时补行动卡。
+
 ## v1.67.0（2026-08-21）
 
 workspace project-container 引入（MINOR）：落地 `_governance/_proposals/TEMPLATE-UPGRADE-workspace-project-container.md`（嵌套 B，docs 缓移）。主题：根目录引入 `project/`（项目代码骨架单一入口）与 `_governance/`（治理记录容器）两个容器，根目录可见项从 38 → 约 15。

@@ -38,11 +38,29 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 
 1. 进入 `ai/session-rules.md` §3.1 的快速续接模式。
 2. 只运行本地只读检查：`git status --short --branch`、`git log --oneline -3`、`git stash list`、`git worktree list`，并读取 `VERSION`；除主工作区外存在活跃 worktree 时，一并报告其路径 / 分支 / 未提交改动。
-3. 读取续接文件的元数据、当前状态、下次优先做和阻塞 / 待确认。
+3. 读取续接文件的元数据、`Current Action Card`（存在时）、当前状态、下次优先做和阻塞 / 待确认。
 4. 比对 Git 客观事实与 handoff 的分支、HEAD、VERSION 和任务进度。
-5. 输出恢复摘要：当前分支 / 版本 / 最近提交、handoff 新鲜度、可继续事项、待确认项、未复核远端事项。
+5. 按本文件的「恢复摘要输出契约」输出恢复摘要；`Current Action Card` 是默认决策入口，历史 checkpoint 只能用于解释和交叉核对。
 6. 若 handoff stale，停止深挖旧记录，不联网、不继续执行任务，等待用户确认下一步。
 7. 若用户确认继续执行任务，退出快速续接模式，回到 `ai/index.md` 规则路由与对应 command 流程；无法判断时读取完整规则回退包。
+
+## 恢复摘要输出契约
+
+最终答复必须按以下顺序给出可接手的 briefing，不得只复述版本、提交或 handoff 标题：
+
+1. **续接结论**：写明 `handoff fresh / stale / missing`，以及当前是否存在活跃工作流。
+2. **已确认本地事实**：当前分支与工作区、最近提交、VERSION、stash 与活跃 worktree；远端一律标为“未复核”，除非本轮已按授权复核。
+3. **唯一下一步**：只给出一个推荐动作，包含工作流、目标仓库或 worktree、首个只读或可执行动作、前置条件和停止点。快速续接只报告该动作，不执行它。
+4. **阻塞 / 待确认**：列出会阻止该唯一下一步的事项；须明确 AI 建议、依据、备选方案和阻塞关系。没有则写“无”。
+5. **独立 backlog**：把与唯一下一步无关的后续事项单列，不能混入“下一步”。
+6. **依据**：分别标明 Git、handoff、项目文档和当前用户输入的支撑范围；旧 checkpoint 只能作为历史参考。
+
+输出裁决：
+
+- handoff 存在 `Current Action Card` 且与 Git 一致时，以其“推荐下一步”为默认行动起点。
+- 行动卡缺失时，才从最新、可信的 handoff 状态推导一个行动起点；无法唯一确定时写“待确认”，不得列出多个并列下一步。
+- 行动卡、下次优先做或历史 checkpoint 与 Git 冲突时，标为 `handoff stale`，列出冲突和不确定项后停止。
+- “当前任务 / 当前进度 / 下次优先做 / Latest checkpoint”中的历史段落不改变行动卡的默认决策权。
 
 ## 写入风险
 

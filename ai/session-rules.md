@@ -76,7 +76,7 @@ AI 每次在项目中开始分析、设计或编码前，应按以下顺序恢�
 
 当用户只说“读取续接点”“继续上次”“恢复上下文”“resume”或类似表达，且没有明确要求继续执行远端 issue / PR、同步、合并、关闭、清理或编码任务时，默认进入**快速续接模式**。目标是在约 2 分钟内给出可行动的恢复摘要，而不是做完整审计。
 
-快速续接模式只服务“恢复摘要”，不是分析、设计、编码或任务执行入口；因此默认不展开读取任务规则包。最小规则读取范围为：入口规则中的快速续接例外说明、`ai/session-rules.md` §1 / §3.1，以及必要时的 `ai/commands/resume.md`。一旦用户要求继续执行任务，或需要修改文件、联网复核远端、处理 issue / PR、同步、提交、清理分支、分析设计或编码，立即退出快速续接模式，按 `ai/index.md` 的对应 command / 任务路由读取规则；无法判断时读取完整规则回退包。
+快速续接模式只服务“恢复摘要”，不是分析、设计、编码或任务执行入口；因此默认不展开读取任务规则包。最小规则读取范围为：入口规则中的快速续接例外说明、`ai/session-rules.md` §1 / §3.1，以及 `ai/commands/resume.md` 的恢复摘要输出契约。后者是快速续接答复格式的唯一权威源，本节只定义读取范围与裁决，避免双写。一旦用户要求继续执行任务，或需要修改文件、联网复核远端、处理 issue / PR、同步、提交、清理分支、分析设计或编码，立即退出快速续接模式，按 `ai/index.md` 的对应 command / 任务路由读取规则；无法判断时读取完整规则回退包。
 
 Windows / PowerShell 环境读取中文规则或续接文件时，如输出出现乱码但命令成功，先判定为编码输出问题，不得把乱码当作文件损坏、续接缺失或规则事实。应使用显式 UTF-8 重读最小必要文件后再继续，例如：
 
@@ -93,7 +93,7 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 3. `git stash list`
 4. `git worktree list`（除主工作区外存在活跃 worktree 时，作为恢复摘要的上下文一并报告）
 5. 读取 `VERSION`（若存在）
-6. 读取 `.ai/session-handoff.md` 的元数据、当前状态、下次优先做和阻塞 / 待确认；若不存在，再读 `NEXT-STEPS.md`
+6. 读取 `.ai/session-handoff.md` 的元数据、`Current Action Card`（存在时）、当前状态和阻塞 / 待确认；没有行动卡的旧 handoff 再读取“下次优先做”。若 handoff 不存在，再读 `NEXT-STEPS.md`
 
 快速续接模式默认**不做**：
 
@@ -109,7 +109,7 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 - 若 Git 工作区 dirty、存在 stash、当前分支与 handoff 分支不同，或用户贴出的中断日志与 handoff 冲突，先列出冲突和不确定项，等待用户确认。
 - 远端状态只可写成“未复核”；只有用户明确要求“继续处理远端 issue / PR”或“执行下一步”时，才切换到对应命令并按写入确认规则执行。
 
-快速续接输出至少包含：当前分支与工作区、最近提交 / 版本、handoff 新鲜度（fresh / stale / missing）、可继续事项、待确认项、未复核的远端事项。
+快速续接最终答复必须遵守 `ai/commands/resume.md` 的「恢复摘要输出契约」；其中的“唯一下一步”“阻塞 / 待确认”“独立 backlog”和“依据”不得省略。当前分支与工作区、最近提交 / VERSION、handoff 新鲜度（fresh / stale / missing）和未复核远端事项仍为最低事实字段。
 
 ### 3.2 同会话规则复用边界
 
@@ -298,6 +298,19 @@ pitfall observation log 是可选的 AI 协作观察记录，与 §4.1 token-hot
 - HEAD:
 - VERSION:
 - Remote snapshot:
+
+## Current Action Card（当前行动卡）
+
+> 快速续接的默认决策入口。只记录一个推荐下一步；没有活跃任务时明确写“无”。本卡不授权执行动作，且必须接受 Git 裁决。其后的当前任务、进度、计划、下次优先做和 Latest checkpoint 用于历史说明与证据，不与本卡竞争默认决策权。
+
+- State: active / ready / blocked / closed
+- Workstream:
+- Recommended next action:
+- Target repository / worktree:
+- Preconditions:
+- Stop point:
+- Blocked / confirmation:
+- Evidence:
 
 ## 活跃 worktree
 

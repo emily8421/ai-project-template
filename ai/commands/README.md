@@ -41,7 +41,7 @@
 
 > **场景优先**：当用户说出的是**具体场景意图**（如「帮我新建项目」「帮我准备输入」「帮我规划阶段」「帮我打磨文档」）而非某个具体 command 时，AI 应先走 `/run scenario`（见 `ai/commands/scenario.md`），由 `template-docs/scenario-guides.md` 先产出「做什么 + 为什么」引导计划，确认后再路由到具体 command 执行。新手首次打开 AI CLI 也走此路径。
 
-AI 识别到命令意图后，应先判断是否为 `resume` 快速续接；若用户只要求“读取续接点 / 继续上次 / 恢复上下文”，按 `ai/session-rules.md` §3.1 的最小只读流程执行，不展开完整规则审计。其他命令，或 `resume` 后继续执行具体任务时，应：
+AI 识别到命令意图后，应先判断是否为 `resume` 快速续接；若用户只要求“读取续接点 / 继续上次 / 恢复上下文”，按 `ai/session-rules.md` §3.1 与 `ai/commands/resume.md` 的最小只读流程和输出契约执行，不展开完整规则审计。其他命令，或 `resume` 后继续执行具体任务时，应：
 
 1. 读取 `ai/index.md` 与 `ai/rules-core.md`，按任务路由选择规则包；无法判断时读取完整规则回退包。
 2. 读取本命令索引和对应命令文件。
@@ -76,7 +76,7 @@ AI 识别到命令意图后，应先判断是否为 `resume` 快速续接；若�
 | `docs-evaluation` | 文档评估 / 阶段转换评估 / 单文档评估 | `ai/prompts/review/19-docs-evaluation.md` |
 | `docs-open-items` | 汇总待确认事项 / 生成 open items / 编码前自检未决项 / 阶段任务前检查待确认项 | `ai/prompts/docs/21-docs-open-items.md` |
 | `ui-prototype-exploration` | 先看原型 / 先做页面原型确认需求 / Demo 前先确认交互 / 做视觉效果探索 / 分层信息架构原型 | `ai/prompts/docs/22-ui-prototype-exploration.md` |
-| `resume` | 读取续接点 / 继续上次 / 恢复上下文 | `ai/session-rules.md` §3.1（快速续接模式） |
+| `resume` | 读取续接点 / 继续上次 / 恢复上下文 | `ai/commands/resume.md`（输出契约）→ `ai/session-rules.md` §3.1（快速续接模式） |
 | `tech-env-evaluation` | 技术环境评估 / 技术路线评估 / 依赖安装验证 / 本机能不能跑 | `ai/prompts/review/20-tech-env-evaluation.md` |
 | `template-proposal-summary` | 汇总模板优化提案 | `ai/prompts/maintainers/11-template-proposal-summary.md` |
 | `domain-template-lab`（领域实验·普通项目不用） | 初始化领域模板实验线 / 创建派生领域模板 / 创建 agent-system-template | `ai/prompts/maintainers/23-domain-template-lab.md` |
