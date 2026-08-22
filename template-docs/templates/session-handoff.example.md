@@ -14,6 +14,19 @@
 - VERSION: vX.Y.Z / 不适用
 - Remote snapshot: 未复核 / open issue 为空 / open PR 为空 / 其他摘要（写明复核时间）
 
+## Current Action Card（当前行动卡）
+
+> 快速续接的默认决策入口。只记录一个推荐下一步；没有活跃任务时明确写“无”。本卡不授权执行动作，且必须接受 Git 裁决。其后的当前任务、进度、计划、下次优先做和 Latest checkpoint 用于历史说明与证据，不与本卡竞争默认决策权。
+
+- State: active / ready / blocked / closed
+- Workstream: <一句话工作流名称>
+- Recommended next action: <唯一动作；未执行>
+- Target repository / worktree: <路径或“当前仓库”>
+- Preconditions: <开始前必须成立的事实>
+- Stop point: <何时停止并等待确认>
+- Blocked / confirmation: <无，或待确认项>
+- Evidence: <Git / handoff / 项目文档锚点>
+
 ## 活跃 worktree
 
 > 记录除主工作区外的活跃 worktree。创建 worktree 后立即登记；合并进 main 或明确废弃后移除 worktree 并从本段清除登记。无则写「无」。
