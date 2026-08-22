@@ -1,9 +1,9 @@
 # TEMPLATE-UPGRADE: 快速续接输出契约与 Current Action Card
 
 > 来源：模板维护者
-> 状态：处理中
+> 状态：已落地（v1.67.1，PR #383 squash `3888db9`）
 > 目标版本：v1.67.1
-> Release impact：patch（AI 建议，待维护者确认）
+> Release impact：patch（已落地）
 > Release strategy：单独发布
 
 ## 1. 动机
