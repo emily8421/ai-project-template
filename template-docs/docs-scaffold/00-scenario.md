@@ -12,13 +12,13 @@
 
 ## 0. 文档元信息
 
-【撰写提要：记录本文输入来源、覆盖范围、当前状态和最后更新时间；不得把模板占位内容当作项目事实。「当前状态」一句话状态即可，实现历史 / 演进叙事归 `09` 验收记录与 CHANGELOG，不塞元信息（需要时留历史指针）。】
+【撰写提要：记录本文输入来源、覆盖范围、当前状态和最后更新时间；不得把模板占位内容当作项目事实。「当前状态」写一句话状态 + 权威源指针（见 `ai/project-rules.md` §1），不整段重述演进史；实现历史 / 演进叙事归 `09` 验收记录与 CHANGELOG。】
 | 项 | 内容 |
 |---|---|
 | 输入来源 |  |
 | 入口模式 | Inputs-first / Vision-first / Scenario-first / URS-first / SRS-first / PRD-first / Existing-system / Task-first / Small-tool brief / External-input |
 | 文档剖面 | Full / Standard / Lean |
-| 当前状态 | 草稿 / 候选 / 待人工确认 / 已确认 |
+| 当前状态 | 一句话状态；当前阶段见 `ai/project-rules.md` §1 |
 | 最后更新 | YYYY-MM-DD |
 
 ## 1. 背景与问题
