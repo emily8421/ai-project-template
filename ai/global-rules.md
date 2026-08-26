@@ -136,6 +136,14 @@ ProjectName/
 
 依据引软件工程稳定原理（关注点分离、单一职责、同原因变更聚合、契约式设计）；主流框架布局只作印证注脚，不作约束源——避免规范随框架风尚过时。Web 形态的依据→推荐目录树映射示例见 `template-docs/profiles/web-fullstack-profile.md` §4；派生项目可在 `docs/05-tech-spec.md`（或等价技术文档）登记「本项目目录 → 依据映射表」，作为边界表的前置「为什么」节。
 
+**根级命名空间三分与点目录准入**：根目录的「名字空间」按前缀三分——`.` 点前缀 = **外部系统拥有**（平台 + 工具链 + 本机私有状态），`_` 下划线前缀 = **项目级治理容器**（`_governance/`，排序置顶、与正文命名空间视觉区分），无前缀 = 项目产出 + 模板方法论正文。点前缀混杂三类性质不同的目录：平台硬约定（`.git` `.github`，零选择权）、工具链约定（`.venv` `*_cache` `.vscode` `.history` `.claude` `.cursor` 等，装了就有）、项目自建「隐藏」目录；项目对前两类只能收容（gitignore），**规范对象只有第三类和「工具的选择」**。
+
+- **项目不自建新点目录**；确需新的「本机私有 / 不入库」目录时，优先评估放入 `.ai/`（会话 / 观察类）或 `.tmp/`（临时类）。
+- **点目录准入清单**（清单外 = 审计对象）：平台 `.git` `.github`；模板机制 `.ai`；AI CLI / 编辑器 `.claude` `.cursor`（`.cursor/rules/project-rules.mdc` 为规则入口镜像，在同步清单内）；工具运行时白名单（gitignored，按栈出现）`.venv` `node_modules` `__pycache__` `.mypy_cache` `.pytest_cache` `.ruff_cache` `.vscode` `.idea` `.vs` `.history` `.env` `.env.local`。
+- **`.ai/` 内部白名单**：子目录只准 `token-hotspots/`、`pitfalls/`、`session-handoff-archive/`、`e2e-reports/`，顶层只准 `session-handoff.md`（均 gitignored 本地观察材料）；**禁止在 `.ai/` 根部堆文件**——运行日志进 `e2e-reports/` 或 `.tmp/`，一次性脚本用完即删。整目录 gitignore `.ai/` 会使 `*.log` 规则同时失效，应按子路径 ignore（模板 `.gitignore` 默认值已是子路径式）。
+- **临时目录统一 `.tmp/`**（gitignored）；禁无点 `tmp/`（裸奔不入 ignore，`git add -A` 即误入库）。任务级临时子目录随任务收尾即删，遗留即被准入审计命中。
+- **密钥文件编辑器快照排除**（安全）：`.env*` 类文件加入编辑器 Local History / 时间线排除名单；`.history/`（或等价快照目录）内容永远不该被依赖，安全上视同密钥副本，列入定期清理项。
+
 `docs/` 核心文档固定编号 `00-09`，编号本身不因项目而变；其中 `00-05`、`08`、`09` 对所有项目必备，
 `06-db-design`、`07-api-spec` 按项目形态决定（无持久化 / 无对外接口的项目可省略，
 并在 `ai/project-rules.md` §3 声明）。`docs/` 根目录只放 `README.md` 与 `00-09` 核心文档；

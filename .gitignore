@@ -31,6 +31,7 @@ NEXT-STEPS.md
 .ai/pitfalls/
 .ai/session-handoff-archive/
 .ai/e2e-reports/
+.tmp/
 
 # 构建产物
 dist/

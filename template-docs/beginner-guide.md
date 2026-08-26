@@ -133,6 +133,10 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 | 模板治理（本地记录） | `_governance/sync-records/`、`_governance/ai-records/`、`_governance/_proposals/`、`.ai/` | 不覆盖 | 按各自 README 记录 |
 | 项目产出（自有） | `docs/`、代码目录、`ai/project-rules.md`、根 `README.md`、`VERSION`、`CHANGELOG*`、`tasks/` | 不覆盖 | 你自己的，直接写 |
 
+**根级命名空间速记**（规则口径见 `ai/global-rules.md` §5「根级命名空间三分与点目录准入」）：`.` 点前缀 = 外部系统拥有（`.git` `.github` 平台；`.venv` `*_cache` `.vscode` `.history` 等工具；`.ai` `.claude` `.cursor` 模板机制与 AI CLI）——**项目不自建新点目录**，清单外的点目录是审计对象；`_` 下划线前缀 = 治理容器（`_governance/`）；无前缀 = 正文。临时文件统一进 `.tmp/`（gitignored），不要建无点 `tmp/`。
+
+**安全提示**：`.env` / `.env.local` 等密钥文件应加入编辑器 Local History / 时间线的排除名单——否则快照目录（如 `.history/`）里会累积密钥明文副本（gitignore 挡不住编辑器自己存档）。
+
 > 三个容易混淆的路径：`docs/inputs/*` / `docs/vision/*` / `docs/00-09` / `docs/design/*` / `docs/decisions/*` / `docs/research/*` 是你的项目事实；`template-docs/docs-scaffold/` 下的 `inputs/`、`vision/`、`00-09`、`design/`、`decisions/`、`research/` 是长期结构模板副本；`ai/doc-standards/` 是 AI 规则 / 审计基线。派生项目里：模板方法层是下行同步的只读件（改通用规则要回模板走 PR）；文档事实层和代码骨架层是你自己的。分区规则、裁剪、撰写规范见 `docs/README.md`。
 
 ## 6. 常见错误与常见问题
