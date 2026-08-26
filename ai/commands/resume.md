@@ -61,6 +61,7 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 - 行动卡缺失时，才从最新、可信的 handoff 状态推导一个行动起点；无法唯一确定时写“待确认”，不得列出多个并列下一步。
 - 行动卡、下次优先做或历史 checkpoint 与 Git 冲突时，标为 `handoff stale`，列出冲突和不确定项后停止。
 - “当前任务 / 当前进度 / 下次优先做 / Latest checkpoint”中的历史段落不改变行动卡的默认决策权。
+- **跨仓参考裁决**：若读到的是另一仓库的 handoff（如派生仓会话读模板仓 handoff），以行动卡 `Role` 字段判断角色归属——非本会话角色的行动卡只作背景参考，不作为本会话的下一步接续（见 `ai/session-rules.md` §3.4）。
 
 ## 写入风险
 
