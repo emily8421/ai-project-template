@@ -87,6 +87,7 @@
    - 检查 §2.1 是否引用 `docs/env/local-env.md`，并保留待人工确认项。
    - 检查 §3 是否明确 `docs/06`、`docs/07`、`project/frontend/`、`project/backend/`、`project/tests/`、`scripts/`、`project/docker/` 的保留 / 省略 / 删除决策。
    - 检查 §3 裁剪决策与目录结构是否一致：**「§3 声明不启用 / 省略，但目录或骨架文档仍存在」**（如声明无持久化但 `docs/06-db-design.md` 骨架仍在、声明纯文档仓但 `project/frontend/`/`project/backend/`/`project/tests/`/`project/docker/` 仍以 `.gitkeep` + README 占位）——逐项列出具体路径；发现即提示按 `ai/doc-standards/project-rules.md` §3 裁剪执行步骤补执行（删除占位并把执行事实回填 §3 / §4）。该审计同样适用于普通项目自查，不限于同步后。
+   - 检查根目录点目录准入：**「准入清单外点目录」**——对照 `ai/global-rules.md` §5 点目录准入清单，列出清单外的点目录（含空目录），逐个核对三问：谁创建的 / 还在用吗 / 该收容（gitignore）还是该删。空目录必删或必溯源（不留幽灵目录）；`.ai/` 根部堆文件、无点 `tmp/`、任务级临时目录（如 `.tmp-sprint*/`）遗留同属命中。该审计同样适用于普通项目自查，不限于同步后。
    - `ai/project-rules.md` 字段规范基线在 `ai/doc-standards/project-rules.md`（随模板同步刷新）；审计实例时对照规范基线，只补项目专属约束和裁剪决策，不把模板方法论长文复制进实例。
    - 审计版本机制启用状态：检查 `ai/project-rules.md` 是否含「项目版本管理」规则（辅信号，对应 §2.4 的 PATCH/MINOR/MAJOR 语义），以及 `.github/workflows/project-check.yml` 是否含「Check project version consistency」校验（主信号，防 VERSION↔CHANGELOG 漂移）。
      - 双信号都在：版本机制已启用，无需迁移。
