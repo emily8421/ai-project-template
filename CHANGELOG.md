@@ -6,6 +6,34 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.69.0（2026-08-26）
+
+目录治理全景 MINOR（Batch B，三提案聚合，triage 报告 `docs/research/2026-08-26-batch-b-triage.md`）：落地 issue #370（目录划分依据）+ issue #374（文件治理三层体系）+ 点目录治理提案（PR #400 入箱的 `TEMPLATE-UPGRADE-root-dot-directory-governance.md`）。主题：让「放哪个目录、凭什么」（#370）、「放哪个文件、文件里放什么」（#374）、「根目录谁能建什么」（点目录）三个粒度用同一判断口径（「这行代码 / 这个文件因为什么而变？」）成套成立。
+
+**目录划分依据五条（#370，PR #401）**：
+
+- `ai/global-rules.md` §5 三层区表后新增「目录划分依据」五条表（部署 / 运行时边界 → 架构分层 → 业务特性纵切 → 契约单源 → 开发生命周期），每条配一句判断口径；依据引软件工程稳定原理，主流框架布局只作印证注脚不作约束源；派生项目可在 `docs/05-tech-spec.md` 登记「本项目目录 → 依据映射表」。
+- `template-docs/profiles/web-fullstack-profile.md` §4 新增「目录树 → 划分依据映射」表（Web 特化示例）+ 与既有四问（入口 / 纵切 / API client 追溯 / 状态样式）的关系说明——四问即依据 2/3/4/5 的提问式速查。
+
+**文件治理三层体系（#374，PR #402）**：
+
+- `web-fullstack-profile.md` §5 从「文件膨胀阈值建议」升级为「文件治理三层体系」：L1 职责表（写之前，§5.1）+ L2 结构检查（提交时，§5.2）+ L3 阈值信号（兜底，§5.3），规范与约束成对。
+- §5.1 新增通用「文件职责表」（传输 / 业务 / 持久 / 前端 client / feature 域 / 样式 / 测试 7 类 × 只准放 / 不准放 / 超出职责去哪）；原「主应用文件职责边界」保留为聚合文件特例子节。
+- §5.2 结构检查机制描述：按内容拦分层违规（import 方向）不看行数；基线三条（业务层不 import web 框架（FastAPI 规范源按 Q-B 拍板引 issue #334 §2.1 第 1 条，本体维持暂缓）/ 传输层不 import ORM / 持久层不 import web 框架）；实现零门槛（~80 行脚本 + CI step），模板不内置脚本（§8 脚手架边界，派生项目按 `implementation-lifecycle-rules §6.2` 自建声明）。
+- §5.3 原阈值表迁移：表头「提醒阈值 / 建议动作」→「症状信号阈值（约定值）/ 处置（先对照 §5.1 职责表）」；行数定位为职责混居的间接代理指标，250/300 标注约定值，数字不变向后兼容。
+- `ai/global-rules.md` §2.1 L0-11 补一行指针（超阈值先查职责表）。
+
+**根级命名空间三分与点目录治理（点目录提案，PR #403）**：
+
+- `ai/global-rules.md` §5 新增「根级命名空间三分与点目录准入」段：`.`=外部系统拥有（平台 / 工具链 / 本机私有）`_`=治理容器、无前缀=正文；**项目不自建新点目录**；准入清单制（平台 `.git` `.github` / 模板机制 `.ai` / AI CLI `.claude` `.cursor` / 工具运行时白名单）。
+- `.ai/` 内部白名单：子目录只准 `token-hotspots/` `pitfalls/` `session-handoff-archive/` `e2e-reports/`，顶层只准 `session-handoff.md`；禁根部堆文件（运行日志进 `e2e-reports/` 或 `.tmp/`）；整目录 ignore `.ai/` 会使 `*.log` 失效，应按子路径 ignore。
+- 临时目录统一 `.tmp/`（gitignored），禁无点 `tmp/`（`git add -A` 即误入库）；任务级临时目录随收尾即删。
+- 密钥编辑器快照排除（安全条款）：`.env*` 加入 Local History / 时间线排除；`.history/` 类快照目录视同密钥副本，列定期清理。
+- `ai/commands/post-sync-cleanup.md` + `ai/prompts/maintainers/15-post-sync-cleanup.md` 新增「准入清单外点目录」审计项（谁创建 / 还在用 / 收容还是删；空目录必溯源；`.ai/` 根堆文件、无点 `tmp/`、任务级临时遗留同属命中）；不引入 check-template 断言（人工审计项，遵循「无自检门禁」口径）。
+- `.gitignore` 补 `.tmp/`；`template-docs/beginner-guide.md` §5 补命名空间速记 + 密钥快照安全提示。
+
+本版为 MINOR：三份提案全是规则 / 文档层新增与措辞升级，无 sync 清单路径变更、无脚本断言变更、阈值数字不变——既有派生项目兼容，下行同步即生效。发版验证：check-template 全量 + 三形态 new-project smoke（docs / cli / web 裁剪正确 + Batch B 内容随 archive 下行 + 点目录仅准入清单内）。发版后启动 6 仓同步窗口（本机 5 仓 → v1.69.0，一次带上 v1.68.0 + v1.69.0；LumiOne / gmbl not-local 不动）。
+
 ## v1.68.0（2026-08-26）
 
 LUMEN 回流三提案聚合（MINOR，三 PR 一版本）：落地 issue #392 / #390 / #386（triage 报告 `docs/research/2026-08-26-c1-proposal-triage.md`，Batch A）。主题：跨仓角色隔离 + doc 元信息指针式默认值 + 根目录重组执行层核对清单。
