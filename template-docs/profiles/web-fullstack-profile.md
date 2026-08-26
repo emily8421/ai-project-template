@@ -73,19 +73,37 @@ project/
 
 §4 末尾四问（入口 / 纵切 / API client 追溯 / 状态样式可复用）即依据 2/3/4/5 的提问式速查；派生项目按此口径在 `docs/05-tech-spec.md` 登记「本项目目录 → 依据映射表」。
 
-## 5. 文件膨胀阈值建议
+## 5. 文件治理三层体系（职责表 → 结构检查 → 阈值信号）
 
-以下阈值是治理提醒，不是硬性编译规则；超过时 AI 应先提出拆分计划，并把风险写入 `08/09` 或任务单：
+文件膨胀治理按三层理解（规范与约束成对）：
 
-| 文件类型 | 提醒阈值 | 建议动作 |
-|---|---:|---|
-| `App.*` / 主应用入口 | 300 行 | 拆出 App Shell、routes、providers、layout |
-| 页面 / 视图文件 | 250 行 | 拆 feature、panel、form、table、state hook |
-| 全局 CSS / 样式文件 | 300 行 | 拆 tokens、layout、components、page styles |
-| 后端 service / controller | 250 行 | 拆 service、repository / gateway、schema、error handling |
-| 单个测试文件 | 300 行 | 拆 smoke、contract、edge cases |
+```text
+L1 职责表（源头规范，写之前）—— §5.1：每类文件「只准放 / 不准放 / 超出职责去哪」，写之前先查表
+L2 结构检查（过程约束，提交时）—— §5.2：按内容拦分层违规（import 方向 / 禁止调用），不看行数
+L3 阈值信号（兜底，事后）—— §5.3：行数超标 = 职责混居的可疑信号，处置入口 = 对照 §5.1 职责表拆分
+```
 
-### 5.1 主应用文件职责边界与业务下沉
+行数是职责混居的**间接代理指标**：一个严格按职责写的文件行数自然落在阈值内；因果倒置（拿行数当「写得对不对」的判断器）永远只能事后补救。三层的关系：L1 告诉你往哪写，L2 在提交时拦明显放错的，L3 是漏网后的报警器。
+
+### 5.1 文件职责表（L1，写之前）
+
+每类文件一张三列小表（去项目化骨架，派生项目按本项目技术栈实例化并登记 `docs/05-tech-spec.md`）：
+
+| 文件类型 | 只准放 | 不准放 | 超出职责去哪 |
+|---|---|---|---|
+| 传输层（api / controller / router） | 路由声明、参数解析校验、调业务层、异常→HTTP 映射 | 业务规则、SQL/ORM 调用、领域计算 | 业务进 service；持久化进 repository |
+| 业务层（service / use case） | 业务规则、编排持久层、领域异常、跨模块协调 | web 框架 import（豁免须登记）、HTTP 语义、SQL | 传输关注点进 api 层 |
+| 持久层（repository / gateway） | 接口契约、SQL/ORM 实现、事务边界 | 业务规则、web 框架 import | 业务判断回 service |
+| 前端 API client 层 | 类型定义、单出口调用封装、契约派生产物 | UI 逻辑、状态管理 | UI 进 features；跨组件状态进状态层 |
+| 前端 feature 域 | 该域 UI 组件、域 hooks、域内状态 | 跨域状态 setter、别域 UI 引用 | 跨域协调经回调交应用壳编排 |
+| 样式文件 | 该视图布局与组件样式、token 引用 | 字面色值 / 未登记 token | 通用值进 tokens 单源 |
+| 测试 / 冒烟 | 按域命名的测试、夹具 | 业务实现、重复夹具 | 公共夹具进共享支持件 |
+
+职责表回答「放哪个文件、文件里放什么」；目录划分依据（`ai/global-rules.md` §5）回答「放哪个目录」——两级粒度互补，判断口径一脉相承（「这行代码因为什么而变？」）。
+
+#### 主应用文件职责边界与业务下沉
+
+主应用文件是职责表的一行特例（聚合文件），单列展开。主应用文件（前端 `App.*` / `src/app/*`、后端 `main` 入口、同等聚合文件）只承担：
 
 §5 阈值回答「何时该拆」；本节回答「主应用文件只该放什么、新功能往哪里去」，从源头避免膨胀。主应用文件（前端 `App.*` / `src/app/*`、后端 `main` 入口、同等聚合文件）只承担：
 
@@ -101,6 +119,26 @@ project/
 跨域边界：业务 hook **不持有跨域 setter**；需联动其他域时经回调（如 `onDocumentsChanged`、`onAuthError`）交回主文件做 orchestration，避免循环依赖与跨域闭包过期。一次性 set 多域 state 的跨域 refresh 可留在主文件，但应显式标注 orchestration 职责。
 
 > 与 §5 一致为治理提醒，非硬性；派生项目可在 `ai/project-rules.md` §3 / `docs/05-tech-spec.md` 覆盖或写明豁免。
+
+### 5.2 结构检查（L2，提交时）
+
+按**内容**拦分层违规（import 方向 / 禁止调用），不看行数——把 §5.1 职责表里「不准放」列中可机器判定的条目变成提交时约束：
+
+- 检查项示例（基线三条，派生项目按栈增删）：业务层（service）不 import web 框架（FastAPI 项目规范源见 issue #334 §2.1 第 1 条；豁免清单显式登记 + 豁免失效自动检测）；传输层（api）不 import ORM；持久层 / 模型层不 import web 框架。
+- 实现零门槛：~80 行 Node 脚本或等价 grep 脚本 + CI 一个 step，不强制引入新依赖（import-linter 等工具列备选不列必选）。
+- 落地方式：模板只描述机制与收益，**不内置检查脚本**（超出本 profile「结构基线非脚手架」定位，§8 边界）；脚本由派生项目自建，按 `ai/implementation-lifecycle-rules.md` §6.2 声明适用检查。
+
+### 5.3 阈值信号（L3，兜底）
+
+| 文件类型 | 症状信号阈值（约定值） | 处置（先对照 §5.1 职责表） |
+|---|---:|---|
+| `App.*` / 主应用入口 | 300 行 | 对照主应用职责边界拆 App Shell、routes、providers、layout |
+| 页面 / 视图文件 | 250 行 | 对照职责表拆 feature、panel、form、table、state hook |
+| 全局 CSS / 样式文件 | 300 行 | 对照样式行拆 tokens、layout、components、page styles |
+| 后端 service / controller | 250 行 | 对照职责表拆 service、repository / gateway、schema、error handling |
+| 单个测试文件 | 300 行 | 对照测试行拆 smoke、contract、edge cases |
+
+250/300 为**约定值**（历史引入的整数惯例）而非推导值，行业参照系差异大；数字本身不变（向后兼容既有派生项目基线）。处置入口 = 对照 §5.1 职责表拆分（多个变更原因混居是病因，行数只是症状），不是机械砍行数；超标时 AI 应先提出拆分计划，并把风险写入 `08/09` 或任务单。
 
 ## 6. Sprint 0 / System Skeleton（Web 特化）建议
 
