@@ -122,6 +122,7 @@ DEFAULT_SYNC_FILES=(
   "template-docs/capability-packages.md"
   "template-docs/profiles/remote-ci-sop-profile.md"
   "template-docs/glossary.md"
+  "template-docs/root-reorg-execution-checklist.md"
   "template-docs/docs-scaffold/README.md"
   "template-docs/docs-scaffold/inputs/input-review-report.md"
   "template-docs/docs-scaffold/vision/product-vision.md"

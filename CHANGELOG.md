@@ -6,6 +6,29 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.68.0（2026-08-26）
+
+LUMEN 回流三提案聚合（MINOR，三 PR 一版本）：落地 issue #392 / #390 / #386（triage 报告 `docs/research/2026-08-26-c1-proposal-triage.md`，Batch A）。主题：跨仓角色隔离 + doc 元信息指针式默认值 + 根目录重组执行层核对清单。
+
+**跨仓角色声明（#392，PR #395）**：
+
+- `ai/session-rules.md` 新增 §3.4：派生仓会话中执行模板维护者任务（triage / 模板仓分支 / 模板 PR / 发版 / 同步登记）前，AI 必须输出角色切换声明（目标仓库 / 本轮将动 / 建议）；声明是可审计标记不是二次授权，跨仓操作仍走 Checkpoint 单步确认。含维护者任务残留边界（维护者计划不写入派生仓 handoff）与同步覆盖件保护提示（`MAINTAINERS.md` / `CONTRIBUTING.md` / `ai/prompts/maintainers/*` 直改会被下次同步覆盖）。
+- `ai/session-rules.md` §6 行动卡结构增加 `Role` 字段（maintainer / derived-user / both）；`ai/commands/resume.md` 恢复摘要契约补跨仓参考裁决（非本会话角色的行动卡只作背景参考、不接续）。
+- `CONTRIBUTING.md` §5.1 操作发起目录对照表：回流 / 治理 / 同步 / 整理四类任务的建议发起目录与理由。
+
+**doc 元信息指针式默认值（#390，PR #396）**：
+
+- `ai/doc-standards/00/08/09` 元信息字段行统一补写法约束：「当前状态 / 当前 Phase」为**一句话状态 + 权威源指针**（默认指向 `ai/project-rules.md` §1），不整段重述阶段演进史 / Sprint / TC 收口摘要；演进叙事归 `09` 验收记录与 CHANGELOG。
+- `template-docs/docs-scaffold/00/08/09` 元信息默认值直接给指针式，派生项目初始化即是指针形态，不经历「先重述后矫正」。
+- 收口纪律：doc-standards 08 审计检查 + 09 回写触发清单各补一行——阶段 / Sprint / Wave 收口时状态标记推进须 grep 全部重述点，不凭记忆只改两处。
+
+**根目录重组执行层核对清单（#386，本 PR）**：
+
+- 新增 `template-docs/root-reorg-execution-checklist.md`（入 `files_all` 下行）：存量派生仓迁移到 `project/` / `_governance/` 布局时的 12 类执行层断点载体（CI checker / workflow working-directory / 相对路径深度 / 内联片段 / 类型检查配置 / 工具脚本导入根 / 包管理器 scripts / 启动器 / Dockerfile / compose 相对路径 / 治理目录嵌套 / 注释路径）+ 三段验证纪律（本地全量 + CI 全链 + 部署面，`docker compose config --quiet` 静态验证）。runbook 性质，不引入 CI 硬门禁。
+- `ai/commands/post-sync-cleanup.md` 新增审计项 4d：同步引入目录布局变更时挂接本清单；`template-docs/README.md` 手册导航补登记；`scripts/sync-template.sh` 兜底清单同步。
+
+本版为 MINOR：新增同步范围 runbook 文件（新下游文件）+ doc-standards / scaffold 改变派生项目文档默认生成写法（新下游采用面）+ session-rules 新流程纪律（§3.4 角色声明下行即生效）。非 MAJOR：`files_all` 仅增 1 件 runbook、覆盖式同步机制、文档编号体系均不变；派生仓无迁移成本（存量头部随下次整理自然收敛）。实证：来源仓 486 文件 / 386 rename 迁移 + 本仓生态两例治理目录迁移（含一例引用漏改实证，即清单第 12 类载体）。
+
 ## v1.67.1（2026-08-22）
 
 快速续接输出契约与行动卡（PATCH）：落地 `_governance/_proposals/TEMPLATE-UPGRADE-resume-action-card.md`。`ai/commands/resume.md` 成为恢复摘要格式的唯一权威源，要求将唯一下一步、阻塞 / 待确认、独立 backlog 和依据分开输出；`ai/session-rules.md` 与命令路由改为强制引用该契约。handoff 推荐结构与同步示例在元数据后新增 `Current Action Card`，作为经 Git 裁决的默认决策入口，历史 checkpoint 仅保留为解释与证据。未改变快速续接的只读边界、stale 裁决、同步清单成员或脚本行为；派生项目同步后无需迁移已有 handoff，可在后续更新时补行动卡。

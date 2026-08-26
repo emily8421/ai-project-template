@@ -16,6 +16,7 @@
 | `template-methodology.md` | 模板为什么这么设计（设计原则、四条价值流、各子系统 why、注册表总览） |
 | `capability-packages.md` | 模板机制与专项使用说明：14 类治理机制注册表（负责人 / 触发时机 / 完成判断）+ 工作分区 |
 | `glossary.md` | 模板核心术语索引：文档链路、ID、阶段、状态、原型、handoff、同步治理 |
+| `root-reorg-execution-checklist.md` | 根目录重组执行层核对清单：存量仓迁移到 `project/` / `_governance/` 布局时的 12 类断点载体 + 三段验证纪律 |
 
 ### 2. 专项说明（Profile，按项目形态选读）
 
