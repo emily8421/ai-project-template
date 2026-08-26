@@ -106,6 +106,17 @@
 - **`TEMPLATE-UPGRADE-*.md`** = WHY / WHAT：去项目化说明动机、拟改、版本影响与影响面，给评审者决策。
 - **`TEMPLATE-UPGRADE-*-patch.md`** = HOW：可选但推荐，记录基于当前模板版本的 old→new 修改建议，给执行者合并落地。
 
+### 5.1 操作发起目录建议
+
+同一 owner 常在同一台机器甚至同一个 CLI 会话里先后触碰模板仓与派生仓。下表给出各类任务的**建议发起目录**；违反不禁止（有时就是要在一个会话连做），但在派生仓会话执行模板维护者任务时，AI 必须先输出跨仓角色声明（见 `ai/session-rules.md` §3.4），并注意派生仓内同步覆盖件（`MAINTAINERS.md` / `CONTRIBUTING.md` / `ai/prompts/maintainers/*`）不可直改。
+
+| 任务 | 建议发起目录 | 理由 |
+|---|---|---|
+| 上行回流（起草提案 + `submit-proposal` / `submit-feedback` 开 issue） | 派生仓 | 提案上下文在派生侧，流程本就设计为免 fork 跨仓 issue |
+| 模板治理（C1 triage / 模板仓建分支改文件 / 模板 PR / 发版） | 模板仓 | 维护者规则、handoff、分支纪律天然在模板仓 |
+| 下行同步（`sync-template`） | 派生仓 | 脚本从派生仓拉取，写入面在派生仓 |
+| 同步后整理（`post-sync-cleanup`） | 派生仓 | 审计对象是派生仓差异 |
+
 ## 6. 下行同步（模板 → 项目）
 
 操作 SOP 以 `git-guide.md` §5 为准；同步文件清单见 `template-sync.json`（v1.60.0 起分 `files_all` / `files_ordinary` / `files_domain` 三组，按派生路线选组：领域模板走 `files_all ∪ files_domain`，普通派生走 `files_all ∪ files_ordinary`），`ai/prompts/maintainers/12-sync-template.md` 提供可复制给 AI 执行的 Prompt。提交信息：`sync template vX.Y.Z`。审计：比对各项目根目录 `VERSION`。
