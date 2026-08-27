@@ -560,6 +560,26 @@ require_new_project_local_smoke() {
   require_absent_file "$project_dir/template-docs/maintainer/e2e-report-template.md" "new-project 烟测 template-docs/ 不含模板仓专用 e2e-report-template.md"
   require_absent_file "$project_dir/template-docs/maintainer/rd-data-chain.md" "new-project 烟测 template-docs/ 不含模板仓专用 rd-data-chain.md"
   require_absent_file "$project_dir/template-docs/maintainer/domain-derived-scenarios-template.md" "new-project 烟测 template-docs/ 不含领域专属 domain-derived-scenarios-template.md（普通路线）"
+  require_absent_file "$project_dir/MAINTAINERS.md"
+  require_absent_file "$project_dir/.github/pull_request_template.md"
+  require_absent_file "$project_dir/.github/ISSUE_TEMPLATE/template-change.md"
+  require_absent_file "$project_dir/.github/ISSUE_TEMPLATE/derived-feedback.md"
+  require_file "$project_dir/docs/research/README.md"
+  require_file "$project_dir/docs/archive/README.md"
+  require_contains "$project_dir/docs/research/README.md" '不携带模板仓历史内容' "new-project 烟测 docs/research 为空分区种子"
+  require_contains "$project_dir/docs/archive/README.md" '不携带模板仓历史内容' "new-project 烟测 docs/archive 为空分区种子"
+  research_md_count="$(find "$project_dir/docs/research" -name '*.md' -type f | wc -l)"
+  if [[ "$research_md_count" -eq 1 ]]; then
+    pass "new-project 烟测 docs/research 仅含种子 README（无母仓调研记录）"
+  else
+    fail "new-project 烟测 docs/research 应仅含 1 个 README，实际 $research_md_count 个 .md"
+  fi
+  archive_md_count="$(find "$project_dir/docs/archive" -name '*.md' -type f | wc -l)"
+  if [[ "$archive_md_count" -eq 1 ]]; then
+    pass "new-project 烟测 docs/archive 仅含种子 README（无母仓归档）"
+  else
+    fail "new-project 烟测 docs/archive 应仅含 1 个 README，实际 $archive_md_count 个 .md"
+  fi
   require_file "$project_dir/_governance/ai-records/README.md"
   require_file "$project_dir/_governance/sync-records/README.md"
 
@@ -926,7 +946,6 @@ else
 fi
 require_contains "template-sync.json" '"CHANGELOG\.md"' "template-sync 同步 CHANGELOG"
 require_contains "template-sync.json" '"CHANGELOG-PLAIN\.md"' "template-sync 同步大白话 CHANGELOG"
-require_contains "template-sync.json" '"MAINTAINERS\.md"' "template-sync 同步 MAINTAINERS"
 require_contains "template-sync.json" '"ai/document-lifecycle-rules\.md"' "template-sync 同步文档生命周期规则"
 require_contains "template-sync.json" '"ai/implementation-lifecycle-rules\.md"' "template-sync 同步实现生命周期规则"
 require_contains "template-sync.json" '"ai/session-rules\.md"' "template-sync 同步会话续接规则"
@@ -2101,6 +2120,14 @@ sys.exit(0 if ('template-docs/maintainer/domain-derived-scenarios-template.md' i
     fail "domain-derived-scenarios-template.md 应在 files_domain 且不在 files_all"
   fi
   require_contains "template-docs/maintainer/domain-derived-scenarios-template.md" '仅领域路线下行' "domain-derived-scenarios-template 头部标注仅领域路线下行"
+
+  # 根级文档边界（v1.70.0 起）：MAINTAINERS.md 为模板维护者手册，模板仓专用不下行（防回流）
+  require_file "MAINTAINERS.md"
+  if grep -qF '"MAINTAINERS.md"' template-sync.json; then
+    fail "MAINTAINERS.md 是模板仓专用维护者手册，不得出现在 template-sync.json（防回流）"
+  else
+    pass "MAINTAINERS.md 不在同步清单（模板仓专用）"
+  fi
 }
 check_scripts_sync_boundary
 

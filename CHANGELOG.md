@@ -6,6 +6,32 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.70.0（2026-08-27）
+
+派生项目初始化裁剪补全 MINOR（提案 `_governance/_proposals/TEMPLATE-UPGRADE-derived-init-trim.md`）：`new-project.sh` 是「git archive 全量复制 + 显式删除」机制，v1.65.0（脚本）/ v1.66.0（template-docs）两批裁剪后仍有三类模板仓自留内容随全量复制进入每个新项目首提交（flowkit 实证残留）。本版补齐第三批边界：**模板仓自留内容不随 new-project 复制、MAINTAINERS.md 移出同步清单**。
+
+**new-project.sh 黑名单扩展**：
+
+- `docs/research/`、`docs/archive/` 清空母仓治理记录（调研报告 + e2e 归档），重建空分区 + 种子 README（与 `_governance/` 5 分区种子同款做法；分区本身保留，`check-template` `require_dir` 断言不变）。
+- 删 `MAINTAINERS.md`（模板维护者手册，文件自述派生使用者不用读）。
+- 删 `.github/ISSUE_TEMPLATE/`（模板变更 / 派生反馈 issue 表单，模板仓收件箱配置）与 `.github/pull_request_template.md`（模板治理 PR 检查单）；`project-check.yml` 不变。
+
+**同步清单调整**：
+
+- `template-sync.json` `files_all` 移除 `MAINTAINERS.md`（151 项），`description` 补边界说明；`sync-template.sh` 兜底数组 `DEFAULT_SYNC_FILES` 同步移除（`.ps1` 从 json 读取无需改）；`check-derived-sync` 动态解析自动一致。
+- `CONTRIBUTING.md` 维持下行（§2 三方向文件流 / §5.1 跨仓发起目录被派生仓会话与 `ai/session-rules.md` §3.4 实际引用）。
+
+**配套规则与审计**：
+
+- `MAINTAINERS.md` §4 新增「根级文档与仓库配置同步边界（v1.70.0 起）」条目，延续 v1.65.0 脚本边界 / v1.66.0 文档边界的分层模式。
+- `ai/session-rules.md` §3.4 同步覆盖件保护：覆盖件清单移除 `MAINTAINERS.md`，存量残留走 post-sync-cleanup。
+- post-sync-cleanup 新增审计项 4e「模板仓自留内容残留」（`ai/commands/post-sync-cleanup.md` + `ai/prompts/maintainers/15-post-sync-cleanup.md`）：存量派生仓检测 `MAINTAINERS.md` / `.github` 收件箱件 / `docs/research|archive` 母仓同名记录，提示可安全删除；项目自建内容一律不动。
+- `check-template.sh`：新增 `MAINTAINERS.md` 防回流断言（不得回流 `template-sync.json`）+ new-project 烟测断言 8 项（absent 四类 + 种子 README 存在 + 两分区 `.md` 计数 == 1）；删除与裁剪冲突的旧正断言「template-sync 同步 MAINTAINERS」。
+
+**验证**：`check-template.sh` / `.ps1` 双 2104 项 0 失败（基线 2096 → 2104，新增 8 项全过）；`bash -n` 语法通过；本轮 md 清洁 5 文件通过。
+
+**存量影响**：既有派生仓残留随 v1.70.0 同步窗口 post-sync-cleanup 4e 一趟清理；本机 5 仓同步窗口目标版本由 v1.69.0 顺升 v1.70.0。
+
 ## v1.69.0（2026-08-26）
 
 目录治理全景 MINOR（Batch B，三提案聚合，triage 报告 `docs/research/2026-08-26-batch-b-triage.md`）：落地 issue #370（目录划分依据）+ issue #374（文件治理三层体系）+ 点目录治理提案（PR #400 入箱的 `TEMPLATE-UPGRADE-root-dot-directory-governance.md`）。主题：让「放哪个目录、凭什么」（#370）、「放哪个文件、文件里放什么」（#374）、「根目录谁能建什么」（点目录）三个粒度用同一判断口径（「这行代码 / 这个文件因为什么而变？」）成套成立。

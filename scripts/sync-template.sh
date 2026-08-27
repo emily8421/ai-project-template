@@ -112,7 +112,6 @@ DEFAULT_SYNC_FILES=(
   "VERSION"
   "CHANGELOG.md"
   "CHANGELOG-PLAIN.md"
-  "MAINTAINERS.md"
   "template-docs/beginner-guide.md"
   "template-docs/env-setup.md"
   "template-docs/ai-cli-setup.md"
