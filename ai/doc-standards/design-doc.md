@@ -5,6 +5,8 @@
 
 本文件定义 `docs/design/*` 的通用详细设计标准，供 AI 生成、精修、审计和评估非平凡子系统设计时使用。它是 `04-07` 总体设计 / 契约与 `08-09` 实现计划 / 验证之间的承接层，不替代 `docs/04-architecture.md`、`docs/05-tech-spec.md`、`docs/06-db-design.md` 或 `docs/07-api-spec.md`。
 
+> 设计是否足以开工编码，按 `ai/implementation-lifecycle-rules.md` §5.1「设计可驱动性六问」逐项检查（接口契约 / 内部结构 / 算法逻辑 / 数据进出 / 错误处理 / 验证基准）；本标准的要素清单是六问的检查对象，不另立判据。
+
 ## 1. 适用范围与触发条件
 
 满足以下任一条件时，应新增或补齐 `docs/design/<subsystem>.md`；若豁免，必须在 `ai/project-rules.md`、`docs/05-tech-spec.md`、评估报告或待确认项中说明理由：
