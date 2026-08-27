@@ -22,7 +22,7 @@
 | 当前 Phase 目标 | 当前 Phase、功能范围、交付物形态、退出标准、禁止越界、权威源 |
 | Phase / Sprint / Task 定义 | Phase、Sprint、Task、完成包的定义和输出位置 |
 | Sprint 总览 | Sprint-ID、目标、覆盖 REQ / NFR、输入设计 / 契约、修改范围、验证包、状态、任务单 |
-| Sprint 详情 | 目标、输入文档、修改范围、验证包、验收标准、禁止事项、完成包 |
+| Sprint 详情 | 目标、输入文档、修改范围、验证包、验收标准、禁止事项、完成包；涉及非平凡模块编码的 Sprint 可在「输入文档」处挂设计可驱动性六问结论（可驱动 / ⚠️ 已登记缺口清单，见 `ai/implementation-lifecycle-rules.md` §5.1）作为轻量留痕 |
 | System Skeleton / Sprint 0 | non-trivial 项目首个业务 Sprint 前的可运行系统框架（System Skeleton）计划或豁免；Web 特化见 `template-docs/profiles/web-fullstack-profile.md` |
 | 依赖关系与里程碑 | 项、前置依赖、阻塞风险、是否可并行、处理方式、里程碑 |
 | 任务拆分规则 | 复杂度阈值、拆分触发条件、Task 文件命名、worktree / 分支建议 |
