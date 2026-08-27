@@ -1,11 +1,10 @@
 {
   "version": 1,
-  "description": "ai-project-template 下行同步的模板方法论文件清单；派生项目同步时这些文件会被覆盖，不应直接修改（通用改进请经 _governance/_proposals/ 回流模板仓库）；项目专属内容（ai/project-rules.md / ai/domain-rules.md / docs/ / 业务代码）不在此列。清单只含下行到派生项目的文件；模板仓专用脚本（自检 check-template.*、批量同步 sync-all-derived.sh、发布回归 e2e-sync-check.sh、建项目入口 new-project.sh）与模板仓专用文档（L3 回归清单 e2e-regression-checklist.md、研发数据链地图 rd-data-chain.md）不在此列，仅存在于模板仓；领域专属文件（如 domain-rules.md 规范基线、domain-derived-scenarios-template.md）走 files_domain，仅领域路线下行。",
+  "description": "ai-project-template 下行同步的模板方法论文件清单；派生项目同步时这些文件会被覆盖，不应直接修改（通用改进请经 _governance/_proposals/ 回流模板仓库）；项目专属内容（ai/project-rules.md / ai/domain-rules.md / docs/ / 业务代码）不在此列。清单只含下行到派生项目的文件；模板仓专用脚本（自检 check-template.*、批量同步 sync-all-derived.sh、发布回归 e2e-sync-check.sh、建项目入口 new-project.sh）与模板仓专用文档（L3 回归清单 e2e-regression-checklist.md、研发数据链地图 rd-data-chain.md）与模板维护者手册 MAINTAINERS.md（v1.70.0 起模板仓专用）不在此列，仅存在于模板仓；领域专属文件（如 domain-rules.md 规范基线、domain-derived-scenarios-template.md）走 files_domain，仅领域路线下行。",
   "files_all": [
     "VERSION",
     "CHANGELOG.md",
     "CHANGELOG-PLAIN.md",
-    "MAINTAINERS.md",
     "template-docs/beginner-guide.md",
     "template-docs/scenario-guides.md",
     "template-docs/env-setup.md",

@@ -217,6 +217,26 @@ rm -f "$TARGET/template-docs/maintainer/e2e-regression-checklist.md" \
      "$TARGET/template-docs/maintainer/domain-derived-scenarios-template.md"
 rmdir "$TARGET/template-docs/maintainer" 2>/dev/null || true
 
+# 模板仓自留内容裁剪（v1.70.0 起，提案 _governance/_proposals/TEMPLATE-UPGRADE-derived-init-trim.md）：
+# docs/research 与 docs/archive 为模板仓治理记录分区，派生项目只带空分区 + 种子 README；
+# MAINTAINERS.md 为模板维护者手册（自述派生使用者不用读，v1.70.0 起移出 files_all）；
+# .github 收件箱件（issue 表单 / PR 模板）为模板仓治理配置，对派生项目 GitHub 无意义。
+rm -rf "$TARGET/docs/research" "$TARGET/docs/archive"
+mkdir -p "$TARGET/docs/research" "$TARGET/docs/archive"
+cat > "$TARGET/docs/research/README.md" <<'EOF'
+# docs/research 调研与评估记录
+
+本目录存放本项目自己的技术调研、竞品 / 参考分析、评估报告与探索记录；分区规则与命名建议见 `docs/README.md`。初始化为空分区种子，不携带模板仓历史内容。
+EOF
+cat > "$TARGET/docs/archive/README.md" <<'EOF'
+# docs/archive 历史归档
+
+本目录存放本项目已废弃但需留痕的文档；分区规则见 `docs/README.md`。初始化为空分区种子，不携带模板仓历史内容。
+EOF
+rm -f "$TARGET/MAINTAINERS.md"
+rm -rf "$TARGET/.github/ISSUE_TEMPLATE"
+rm -f "$TARGET/.github/pull_request_template.md"
+
 # The archive may be produced from a pre-migration HEAD, so remove both the
 # current container and the legacy root-level governance directories.
 rm -rf "$TARGET/_governance" \
@@ -426,3 +446,4 @@ echo "  cd \"$TARGET\""
 echo "  先运行 scripts/collect-env.ps1，再按 README 准备 docs/inputs/、初填 ai/project-rules.md，并通过 /run review-inputs -> /run generate-docs 进入文档链路"
 echo "  GitHub Actions 已使用派生项目版 .github/workflows/project-check.yml；普通 PR 不运行模板仓 check-template"
 echo "  scripts/ 已裁剪为派生项目所需（模板仓专用脚本未包含）；工具说明见 scripts/README.md"
+echo "  模板仓自留内容已裁剪：MAINTAINERS.md、.github 收件箱模板、docs/research 与 docs/archive 母仓记录（保留空分区种子）"

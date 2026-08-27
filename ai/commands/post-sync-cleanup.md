@@ -36,6 +36,7 @@
 4b. 审计项包含「模板仓 / 领域专用文档残留」（v1.66.0 起）：`template-docs/` 中存在 `e2e-regression-checklist.md` / `e2e-report-template.md` / `rd-data-chain.md` / `domain-derived-scenarios-template.md` 时提示可安全删除（同脚本残留口径）；细则见 `ai/prompts/maintainers/15-post-sync-cleanup.md`。
 4c. 审计项包含「template-docs 旧路径残留」（v1.66.0 目录重组）：19 个文件迁入 `profiles/` / `templates/` / `maintainer/` 子目录后，派生项目根目录的旧路径副本不再被覆盖、与新路径重复，提示可安全删除；细则见 `ai/prompts/maintainers/15-post-sync-cleanup.md`。
 4d. 审计项包含「目录布局变更挂接」（v1.68.0 起）：本次同步引入目录布局变更（如 `project/` / `_governance/` 容器标准化）时，提示挂接 `template-docs/root-reorg-execution-checklist.md`（根目录重组执行层核对清单：12 类载体 + 三段验证纪律），迁移收口按其核对。
+4e. 审计项包含「模板仓自留内容残留」（v1.70.0 起）：根级 `MAINTAINERS.md`（模板维护者手册，已移出同步清单）、`.github/ISSUE_TEMPLATE/`（模板变更 / 派生反馈 issue 表单）、`.github/pull_request_template.md`（模板治理 PR 检查单）存在时提示可安全删除（同 4a/4b 口径）；`docs/research/`、`docs/archive/` 中与模板仓当前文件同名的治理记录属初始化残留（v1.70.0 前 new-project 全量复制带入），对照模板仓文件名逐份确认后删除，项目自建内容不动；细则见 `ai/prompts/maintainers/15-post-sync-cleanup.md`。
 5. 使用 `15-post-sync-cleanup` 先输出审计结果与迁移计划，并标注哪些问题应回写同步报告。
 6. 用户确认后再执行移动、修改或补齐。
 7. 输出变更清单、待复核链接、验证建议、同步报告更新建议和是否需要生成模板优化提案。
