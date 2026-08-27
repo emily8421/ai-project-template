@@ -788,7 +788,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
       if remote_file_matches_local "$f"; then
         echo "    = $f（无差异）"
       else
-        echo "    Δ $f"
+        echo "    delta $f"
         if [[ -f "$f" ]]; then
           record_summary "$f" "modified"
         else
@@ -796,7 +796,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
         fi
       fi
     else
-      echo "    · $f （模板无此文件，跳过）"
+      echo "    skip $f (not in template)"
       record_summary "$f" "skipped"
     fi
   done
@@ -808,10 +808,10 @@ if [[ "$MODE" == "--dry-run" ]]; then
     LINEAGE_MODE_LABEL="普通派生项目"
     [[ "$DOMAIN_TEMPLATE_MODE" -eq 1 ]] && LINEAGE_MODE_LABEL="领域模板"
     if [[ -f TEMPLATE-BASE.md ]]; then
-      echo "    Δ TEMPLATE-BASE.md（继承版本记录，$LINEAGE_MODE_LABEL）"
+      echo "    delta TEMPLATE-BASE.md (template lineage, $LINEAGE_MODE_LABEL)"
       record_summary "TEMPLATE-BASE.md" "modified"
     else
-      echo "    Δ TEMPLATE-BASE.md（新增继承版本记录，$LINEAGE_MODE_LABEL）"
+      echo "    delta TEMPLATE-BASE.md (new template lineage, $LINEAGE_MODE_LABEL)"
       record_summary "TEMPLATE-BASE.md" "added"
     fi
     warn_if_changelog_plain_needs_project_rewrite
@@ -825,7 +825,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
         if upstream_changelog_matches_local "$source" "$dest"; then
           echo "    = $dest（无差异）"
         else
-          echo "    Δ $dest（母模板 $source 继承参考）"
+          echo "    delta $dest (upstream $source reference)"
           if [[ -f "$dest" ]]; then
             record_summary "$dest" "modified"
           else
@@ -833,7 +833,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
           fi
         fi
       else
-        echo "    · $dest （模板无 $source，跳过）"
+        echo "    skip $dest (template has no $source)"
         record_summary "$dest" "skipped"
       fi
     done
@@ -870,13 +870,13 @@ if [[ "$MODE" == "--dry-run" ]]; then
         if [[ -n "$local_hash" && "$remote_hash" == "$local_hash" ]]; then
           echo "    = $dest（无差异）"
         else
-          echo "    Δ $dest（规范镜像）"
+          echo "    delta $dest (standards mirror)"
         fi
       else
-        echo "    Δ $dest（新增规范镜像）"
+        echo "    delta $dest (new standards mirror)"
       fi
     else
-      echo "    · $dest（模板无 $src，跳过）"
+      echo "    skip $dest (template has no $src)"
     fi
   done
   echo "   确认后执行: bash scripts/sync-template.sh --commit"
