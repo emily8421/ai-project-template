@@ -13,7 +13,7 @@ Windows PowerShell、Bash 及会聚合子命令结果的 AI 工具，对路径�
 
 - `ai/rules-core.md` 的“预检精确查询与失败域隔离”已规定精确查询、关键事实与辅助检查分批及不共享 all-or-nothing 结果。本提案补跨 Shell 路径探测、字面路径读取和预期性可选结果的可执行边界，互补不重复。
 - `ai/rules-core.md` 的失败即停规则仍适用于命令、权限、sandbox、网络、超时、构建、测试、CI、远端和写入失败；本提案只约束无副作用的路径定位。
-- issue #423 的本地镜像见 `_governance/_proposals/_remote-issues/issue-423.md`；其引用的历史提案在当前归档目录未找到，不作为本次实现依据。
+- issue #423 的本地镜像见 `_governance/_archive/proposals/_remote-issues/issue-423.md`；其引用的历史提案在当前归档目录未找到，不作为本次实现依据。
 
 ## 2. 拟改文件
 
