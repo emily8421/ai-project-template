@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.72.1（2026-09-03）
+
+自留内容审计扩展 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-init-residue-audit-scope-extension.md`，LumiOne-Framework / gmbl_project 派生项目回流，PR #433）：补 v1.70.0 自留内容审计三类清单对存量派生仓的第④类缺口。
+
+- 起因：2026-09-03 两仓 v1.72.0 同步轮 post-sync-cleanup 实证——v1.67.0 前初始化的存量派生仓，治理记录目录（`sync-records/`、`ai-records/`、`_archive/`）中带入母仓自留内容（母仓视角下行同步汇总记录、母仓治理副本、母仓归档方法论历史文档），既有三类审计（根 `MAINTAINERS.md` / `.github` 收件箱模板 / `docs/research·archive` 同名记录）不覆盖。
+- `ai/prompts/maintainers/15-post-sync-cleanup.md`「模板仓自留内容残留」段新增「审计治理记录目录中的母仓自留内容（v1.72.1 起）」：母仓视角同步汇总记录、母仓治理副本（`project-registry/` / `token-hotspots/` / `e2e-reports/` 过期副本）、母仓归档方法论历史文档 → 可安全删除（真值以母模板仓为准）；派生自建同步运行记录、提案、归档一律保留；无法区分列待确认项。
+- `scripts/check-template.sh` +1 条防漂移断言锁定新审计项关键词。
+- 边界：init 黑名单裁剪（方案 B）已由 v1.70.0 derived-init-trim 实现（`new-project.sh` 整删根级治理目录并重建 `_governance/` 空种子），本版仅补存量仓审计指引；不新增自检门禁、不改同步清单与默认行为。归档提案走合并后独立 PR，不单独触发版本递增。
+
 ## v1.72.0（2026-09-03）
 
 沙箱环境验证降级与 spawn 失败分流 MINOR（模板维护者自产提案，PR #429）：补「沙箱化 CLI 内能否跑全量验证、进程创建类错误如何定性」两个相邻缺口。起因：2026-09-02 registry 登记被自检故障阻塞约 20 小时——自检死于子进程 spawn 阶段（Win32「系统找不到指定的文件」），复核确认为 Codex CLI 沙箱限制进程创建所致，同一脚本在非沙箱环境与 CI 均通过，脚本无缺陷；既有规则只规定失败即停，未规定停后如何定性与继续。

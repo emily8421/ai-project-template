@@ -980,6 +980,7 @@ require_contains "ai/global-rules.md" '根目录分类框架' "global-rules §5 
 require_contains "ai/session-rules.md" '存量代码维护触发' "session-rules §4.3 含存量维护触发口径（#350）"
 require_contains "ai/doc-standards/project-rules.md" '裁剪执行步骤' "project-rules 标准含裁剪执行步骤（#351）"
 require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '§3 声明不启用 / 省略，但目录或骨架文档仍存在' "post-sync-cleanup 含裁剪一致性审计项（#351）"
+require_contains "ai/prompts/maintainers/15-post-sync-cleanup.md" '母仓自留内容' "post-sync-cleanup 含治理记录目录母仓自留内容审计项（init-residue-audit-scope-extension，v1.72.1）"
 require_contains "template-docs/scenario-guides.md" '项目特有场景手册' "scenario-guides §8 含项目特有场景手册指引"
 require_contains "ai/prompts/setup/14-new-project.md" '项目特有场景手册' "new-project Prompt 步骤 9 含场景手册待办"
 require_file "template-docs/env-setup.md"
