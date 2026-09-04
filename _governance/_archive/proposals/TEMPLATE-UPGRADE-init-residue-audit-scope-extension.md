@@ -1,7 +1,7 @@
 # 提案：自留内容审计扩展——init 期随母仓结构下行的 sync-records / ai-records / _archive 母仓残留
 
 > 来源：LumiOne-Framework（emily8421/LumiOne-Framework）与 gmbl_project（emily8421/gmbl_project）派生项目回流（2026-09-03 v1.72.0 同步轮 post-sync-cleanup 实证）
-> 状态：已评审，落地中（评审结论：仅落地方案 A；方案 B 经核实已由 v1.70.0 derived-init-trim 实现）
+> 状态：已落地并归档（v1.72.1，PR #434 squash `34cf5d7`；评审结论：仅落地方案 A；方案 B 经核实已由 v1.70.0 derived-init-trim 实现）
 > 目标版本：v1.72.1（PATCH，已确认）
 > Release impact：patch（治理说明补强：同步范围内 Prompt 审计项扩展，不改默认行为 / 同步结构 / 下游必做流程）
 > Release strategy：单独发布（PATCH）；归档走合并后独立 PR，不单独触发版本递增
@@ -57,4 +57,4 @@ v1.67.0 前（治理目录迁入 `_governance/` 之前）初始化的存量派�
 
 ## 5. 落地记录
 
-- 2026-09-03：起草（派生同步轮回流）；同日评审——方案 B 已存在，仅落地方案 A，PATCH v1.72.1；实施 PR：见 git log（分支 `change/init-residue-audit-extension`）。
+- 2026-09-03：起草（派生同步轮回流）；同日评审——方案 B 已存在，仅落地方案 A，PATCH v1.72.1；实施 PR #434（squash `34cf5d7`）合入 main；同日归档至本目录。
