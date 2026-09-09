@@ -463,6 +463,19 @@ first_changelog_plain_version() {
     | sed -E 's/^## (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/' || true
 }
 
+# 项目自有双版本 CHANGELOG-PLAIN：识别「## 项目版本」段，提取段内首个版本标题（## / ### / #### 均可）。
+has_changelog_plain_project_section() {
+  [[ -f CHANGELOG-PLAIN.md ]] && grep -q '^## 项目版本' CHANGELOG-PLAIN.md
+}
+
+first_project_changelog_plain_version() {
+  [[ -f CHANGELOG-PLAIN.md ]] || return 0
+  sed -n '/^## 项目版本/,$p' CHANGELOG-PLAIN.md \
+    | grep -E '^#{2,4} v[0-9]+\.[0-9]+\.[0-9]+（' \
+    | head -1 \
+    | sed -E 's/^#+ (v[0-9]+\.[0-9]+\.[0-9]+).*/\1/' || true
+}
+
 warn_if_changelog_plain_needs_project_rewrite() {
   [[ "$PRESERVE_PROJECT_VERSION" -eq 1 || "$DOMAIN_TEMPLATE_MODE" -eq 1 ]] || return 0
 
@@ -481,10 +494,25 @@ warn_if_changelog_plain_needs_project_rewrite() {
   local reason=""
 
   project_version="$(sed '1s/^\xEF\xBB\xBF//' VERSION 2>/dev/null | tr -d '[:space:]' || true)"
-  plain_version="$(first_changelog_plain_version)"
   template_hash="$(git rev-parse "$REF:CHANGELOG-PLAIN.md" 2>/dev/null || true)"
   local_hash="$(git hash-object --path=CHANGELOG-PLAIN.md CHANGELOG-PLAIN.md 2>/dev/null || true)"
 
+  # 两段判定第一段：项目自有双版本结构（含「## 项目版本」段）→ 按段内版本判断，不再引导改写。
+  if has_changelog_plain_project_section; then
+    local project_plain_version
+    project_plain_version="$(first_project_changelog_plain_version)"
+    if [[ -n "$project_plain_version" && -n "$project_version" && "$project_plain_version" == "$project_version" ]]; then
+      echo "✓ CHANGELOG-PLAIN.md 已确认为 $owner_label 自有双版本结构（项目版本 $project_plain_version 与本地 VERSION 一致），保留不动。"
+      return 0
+    fi
+    if [[ -n "$project_plain_version" && -n "$project_version" ]]; then
+      echo "⚠️  根 CHANGELOG-PLAIN.md「项目版本」段顶部版本 $project_plain_version 与本地 VERSION $project_version 不一致，疑似版本漂移，请核对版本记录。"
+      return 0
+    fi
+    # 段存在但未提取到版本标题：保守落入下方存量改写判定。
+  fi
+
+  plain_version="$(first_changelog_plain_version)"
   if [[ -n "$template_hash" && -n "$local_hash" && "$template_hash" == "$local_hash" ]]; then
     reason="内容与当前母模板 CHANGELOG-PLAIN.md 相同"
   elif [[ -n "$project_version" && -n "$plain_version" && "$plain_version" != "$project_version" ]]; then
@@ -786,7 +814,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
   for f in "${SYNC_FILES[@]}"; do
     if git cat-file -e "$REF:$f" 2>/dev/null; then
       if remote_file_matches_local "$f"; then
-        echo "    = $f（无差异）"
+        echo "    = $f (no diff)"
       else
         echo "    delta $f"
         if [[ -f "$f" ]]; then
@@ -823,7 +851,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
       dest="upstream/$source"
       if git cat-file -e "$REF:$source" 2>/dev/null; then
         if upstream_changelog_matches_local "$source" "$dest"; then
-          echo "    = $dest（无差异）"
+          echo "    = $dest (no diff)"
         else
           echo "    delta $dest (upstream $source reference)"
           if [[ -f "$dest" ]]; then
@@ -868,7 +896,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
         remote_hash="$(git rev-parse "$REF:$src")"
         local_hash="$(git hash-object --path="$dest" "$dest" 2>/dev/null || true)"
         if [[ -n "$local_hash" && "$remote_hash" == "$local_hash" ]]; then
-          echo "    = $dest（无差异）"
+          echo "    = $dest (no diff)"
         else
           echo "    delta $dest (standards mirror)"
         fi

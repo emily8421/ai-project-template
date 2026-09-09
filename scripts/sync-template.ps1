@@ -450,6 +450,21 @@ function Get-FirstChangelogPlainVersion {
   return ""
 }
 
+function Get-ProjectChangelogPlainVersion {
+  # Dual-version CHANGELOG-PLAIN: first version heading after the "## 项目版本" section marker (## / ### / #### all accepted).
+  if (-not (Test-Path -LiteralPath "CHANGELOG-PLAIN.md" -PathType Leaf)) {
+    return ""
+  }
+  $inProjectSection = $false
+  foreach ($line in (Get-Content -Encoding UTF8 "CHANGELOG-PLAIN.md")) {
+    if ($line -match '^## 项目版本') { $inProjectSection = $true; continue }
+    if ($inProjectSection -and $line -match '^#{2,4} (v\d+\.\d+\.\d+)（') {
+      return $Matches[1]
+    }
+  }
+  return ""
+}
+
 function Show-ChangelogPlainMigrationNotice {
   param(
     [string]$Ref,
@@ -479,6 +494,17 @@ function Show-ChangelogPlainMigrationNotice {
     $templateHash = Get-RemoteHash -Ref $Ref -Path "CHANGELOG-PLAIN.md"
   }
   $localHash = Get-LocalHash -Path "CHANGELOG-PLAIN.md"
+
+  # Two-stage detection, stage 1: dual-version structure -> judge by the project-version section, not the first template-history heading.
+  $projectPlainVersion = Get-ProjectChangelogPlainVersion
+  if ($projectPlainVersion -and $projectVersion -and $projectPlainVersion -eq $projectVersion) {
+    Write-Host ("✓ CHANGELOG-PLAIN.md confirmed as this {0}'s own dual-version structure (project version {1} matches local VERSION); kept as-is." -f $ownerLabel, $projectPlainVersion)
+    return
+  }
+  if ($projectPlainVersion -and $projectVersion) {
+    Write-Warning "Root CHANGELOG-PLAIN.md project-version section top version ($projectPlainVersion) differs from local VERSION ($projectVersion); possible version drift, please verify the version records."
+    return
+  }
 
   $reason = ""
   if ($templateHash -and $localHash -and $templateHash -eq $localHash) {
