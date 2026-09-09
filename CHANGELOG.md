@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.72.2（2026-09-09）
+
+CHANGELOG-PLAIN 存量迁移提示对「项目自有双版本结构」误报修复 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-v1.72.2-changelog-plain-heuristic.md`，zhiyan-digital-cs-platform 派生项目回流，GitHub issue #433）：`--preserve-project-version` / 领域模板模式下，已完成「项目版本段 + 模板继承历史」双版本改写的派生仓，此前每轮同步都被误报「可能仍是母模板内容，请改写」。
+
+- 根因：改写提示的版本对比取文件首个 `## vX.Y.Z（` 标题；双版本结构的项目版本段用三级（`###`）标题记录项目自有版本，首个二级命中落在模板继承历史段（母模板历史版本号），与本地项目 `VERSION` 对比必然不一致（2026-09-09 triage 以真实双版本仓文件实证）。
+- `sync-template.sh` / `sync-template.ps1` 改两段判定：文件含「## 项目版本」段 → 提取段内首个版本标题（`##` / `###` / `####` 均可）作为项目自有版本——与本地 `VERSION` 一致降级为 ✓ info（保留不动）；不一致改报「版本漂移」提示；段存在但未提取到版本标题时保守落入存量判定。无该段时维持既有两条改写警告分支，行为不变。
+- 搭车统一（吸收 issue #412 残留）：`sync-template.sh` 逐文件 no-diff 状态行 `（无差异）` → `(no diff)`（3 处），与 `.ps1` 输出对齐；该 token 不在 SOP grep 提取面，纯人读一致性修正。
+- 边界：仅提示逻辑 / 文案；同步覆盖行为（CHANGELOG-PLAIN 自 v1.69 起保留不覆盖）、同步清单、断言语义零变化，派生项目零迁移。已核实 `check-derived-sync.*` 无同类改写提示，无需统一；`warn_if_changelog_plain_needs_project_rewrite` / `Show-ChangelogPlainMigrationNotice` 函数名保留，check-template 存在性断言不受影响。
+
 ## v1.72.1（2026-09-03）
 
 自留内容审计扩展 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-init-residue-audit-scope-extension.md`，LumiOne-Framework / gmbl_project 派生项目回流，PR #433）：补 v1.70.0 自留内容审计三类清单对存量派生仓的第④类缺口。
