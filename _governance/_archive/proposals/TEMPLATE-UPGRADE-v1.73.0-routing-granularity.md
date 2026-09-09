@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 规则路由粒度分层（章节级标注，按任务形态收窄必读集）
 
 > 来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流（GitHub issue #441，镜像 `_governance/_proposals/_remote-issues/issue-441.md`）；与本仓 token-hotspot「路由包 / prompt 按任务粒度裁读」窄提案候选（累计 7+ 次命中）同主题合流，以本提案为准
-> 状态：处理中（Batch B-1，2026-09-09 C1 triage 通过）
+> 状态：已落地（PR #443，squash `6372549`，v1.73.0）；issue #441 关闭；2026-09-09 归档
 > 目标版本：v1.73.0（MINOR，LUMEN 回流批三提案一版聚合）
 > Release impact：minor（路由表新增章节级标注语义与同会话复用注记，属推荐工作流变化；无标注场景行为零变化、不要求派生项目迁移）
 > Release strategy：同主题聚合（Batch B 三提案 #441 / #440 / #439 各自 PR，统一 v1.73.0 发版，先例 v1.68.0）

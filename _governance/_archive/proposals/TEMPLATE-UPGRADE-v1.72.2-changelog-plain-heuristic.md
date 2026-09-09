@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: CHANGELOG-PLAIN 启发式对项目自有双版本结构误报（两段判定）
 
 > 来源：zhiyan-digital-cs-platform（emily8421/zhiyan-digital-cs-platform）派生项目回流（GitHub issue #433，镜像 `_governance/_proposals/_remote-issues/issue-433.md`）
-> 状态：处理中（Batch A，2026-09-09 C1 triage 通过）
+> 状态：已落地（PR #442，squash `4af612e`，v1.72.2）；issue #433 关闭、#412 残留吸收后关闭；2026-09-09 归档
 > 目标版本：v1.72.2（PATCH）
 > Release impact：patch（仅提示逻辑与文案，同步覆盖 / 保留行为零变化）
 > Release strategy：单独发布（即时发布——排在 v1.72.1 派生同步窗口之前，消除双版本项目每轮同步误报）

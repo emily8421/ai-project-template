@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 任务卡执行记录形态（照卡可接续）
 
 > 来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流（GitHub issue #440，镜像 `_governance/_proposals/_remote-issues/issue-440.md`）
-> 状态：处理中（Batch B-2，2026-09-09 C1 triage 通过）
+> 状态：已落地（PR #444，squash `b8afb94`，v1.73.0）；issue #440 关闭；2026-09-09 归档
 > 目标版本：v1.73.0（MINOR，LUMEN 回流批三提案一版聚合）
 > Release impact：minor（新增任务卡执行记录默认形态，属推荐工作流变化；不设机器门禁、存量卡不回溯、不要求迁移）
 > Release strategy：同主题聚合（Batch B 三提案 #441 / #440 / #439 各自 PR，统一 v1.73.0 发版，先例 v1.68.0）

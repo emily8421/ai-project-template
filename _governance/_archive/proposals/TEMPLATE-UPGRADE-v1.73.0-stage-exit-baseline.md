@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 阶段准出档位判据基准（stage exit level criteria，L0-L3）
 
 > 来源：LUMEN_demo_T2.1（emily8421/LUMEN-DEMO）派生项目回流（GitHub issue #439，镜像 `_governance/_proposals/_remote-issues/issue-439.md`）
-> 状态：处理中（Batch B-3，2026-09-09 C1 triage 通过）
+> 状态：已落地（PR #445，squash `933b535`，v1.73.0）；issue #439 关闭（裁决点：可试用不升标签）；2026-09-09 归档
 > 目标版本：v1.73.0（MINOR，LUMEN 回流批三提案一版聚合）
 > Release impact：minor（新增同步范围内规范基线文档 1 份 + 指针挂接 + 防滞后断言，属「新增文档骨架规范 / 新同步结构文件」；存量项目不强制回溯采用）
 > Release strategy：同主题聚合（Batch B 三提案 #441 / #440 / #439 各自 PR，统一 v1.73.0 发版，先例 v1.68.0）

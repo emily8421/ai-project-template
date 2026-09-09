@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: document-lifecycle-rules §5 子节重复编号修正（§5.4 ×2）
 
 > 来源：模板维护者（2026-09-09 C1 triage 顺带发现；编号连续性属既有「章节编号是稳定锚点」条款管辖）
-> 状态：处理中（Batch B-4，2026-09-09 C1 triage 通过）
+> 状态：已落地（PR #446，squash `4601c42`，v1.73.0）；2026-09-09 归档
 > 目标版本：v1.73.0（随 LUMEN 回流批聚合发布，不单独触发版本递增）
 > Release impact：patch 级内容并入 MINOR 发布（编号修正，不改任何规则语义）
 > Release strategy：同主题聚合（Batch B 窗口内独立微 PR）
