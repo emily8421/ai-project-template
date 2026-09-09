@@ -615,7 +615,7 @@ require_doc_standards_mirror() {
     printf '# lifecycle\n' > ai/document-lifecycle-rules.md
     mkdir -p ai/prompts ai/doc-standards
     cp -R "$ROOT/ai/prompts/." ai/prompts/
-    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification design-doc; do
+    for standard in 00-scenario 01-user-requirements 02-srs 03-prd 04-architecture 05-tech-spec 06-db-design 07-api-spec 08-dev-plan 09-verification design-doc stage-exit-baseline; do
       printf '# standalone standard %s\n' "$standard" > "ai/doc-standards/$standard.md"
     done
     printf '# docs\n' > docs/README.md
@@ -670,10 +670,10 @@ require_doc_standards_mirror() {
 
   local count
   count="$(find "$derived_dir/ai/doc-standards" -type f 2>/dev/null | wc -l | tr -d ' ')"
-  if [[ "$count" -eq 11 ]]; then
-    pass "doc-standards 生成 11 个独立标准文件"
+  if [[ "$count" -eq 12 ]]; then
+    pass "doc-standards 生成 12 个独立标准文件"
   else
-    fail "doc-standards 应生成 11 个标准文件，实际 $count"
+    fail "doc-standards 应生成 12 个标准文件，实际 $count"
   fi
 
   if grep -q '# standalone standard 08-dev-plan' "$derived_dir/ai/doc-standards/08-dev-plan.md" 2>/dev/null && \
@@ -959,6 +959,9 @@ require_contains "template-sync.json" '"ai/doc-standards/02-srs\.md"' "template-
 require_contains "template-sync.json" '"ai/doc-standards/03-prd\.md"' "template-sync 同步 03 PRD 标准"
 require_contains "template-sync.json" '"ai/doc-standards/04-architecture\.md"' "template-sync 同步 04 架构标准"
 require_contains "template-sync.json" '"ai/doc-standards/05-tech-spec\.md"' "template-sync 同步 05 技术方案标准"
+require_contains "template-sync.json" '"ai/doc-standards/stage-exit-baseline\.md"' "template-sync 同步 stage-exit-baseline 准出判据基准"
+require_contains "ai/global-rules.md" 'stage-exit-baseline' "global-rules §8.1 挂档位判据基准指针"
+require_contains "ai/doc-standards/03-prd.md" 'stage-exit-baseline' "03-prd 退出标准挂档位判据基准指针"
 require_contains "template-sync.json" '"ai/commands/README\.md"' "template-sync 同步 AI 快捷命令索引"
 require_contains "template-sync.json" '"ai/commands/docs-evaluation\.md"' "template-sync 同步 docs-evaluation 命令"
 require_contains "template-sync.json" '"ai/prompts/review/19-docs-evaluation\.md"' "template-sync 同步 docs-evaluation Prompt"
