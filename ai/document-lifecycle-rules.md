@@ -239,7 +239,7 @@ docs/inputs/*
 | 实现前 UI 原型 | 代码原型 / HTML / Storybook / Figma / 截图证据 | 实现前确认 | 验证正式设计的视觉、点击路径、组件密度和覆盖状态 | 用户确认 + `08/09` 就绪 | 不替代 `09`，不新增需求 |
 | 实现与验证 | `project/frontend/*`、`tests`、`08`、`09` | 实现 / 已验证 | 按任务实现并留存验证证据 | `09` 记录 TC / smoke / 截图 / 人工验收结论 | 不实现 research 未确认内容 |
 
-> 知识来源与选择规则见 `template-docs/ui-knowledge/README.md`（视觉 / 交互模式与来源索引，按 scope 读取）；项目级参考分析落盘模板见 `template-docs/templates/frontend-ui-reference-analysis-template.md`。
+> 知识来源与选择规则见 `template-docs/ui-knowledge/README.md`（视觉 / 交互模式与来源索引，按 scope 读取）；项目级参考分析落盘模板见 `template-docs/templates/frontend-ui-reference-analysis-template.md`。实践观察与选型结论的回流去向见同文件 §9.1（两仓分工与项目回流）；回流沿用 `ai/global-rules.md` §9 提案通道，不新增阶段或 Gate。
 
 晋级 Gate 至少包含：
 
