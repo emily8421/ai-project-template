@@ -55,6 +55,10 @@
 
 Web App scaffold 也不自动等于领域模板。复杂 Web / 全栈交互项目先使用 `template-docs/profiles/web-fullstack-profile.md` 与 `template-docs/profiles/web-app-scaffold-experiment.md` 做普通项目或独立实验仓验证；只有当多个同类 Web 项目共享领域标准件、独立版本和自检需求时，才进入领域模板评估。
 
+**候选观察（三条件前的例证积累档位）**：未达上述三条件的领域方向，可先经提案收件箱登记「候选观察」，随真实项目积累例证；例证须「项目名 + 形态一句话 + 登记日期」齐备方计入计数（仅代号占位不计入）。积累 3-5 例后，另起正式 TEMPLATE-UPGRADE 提案按三条件评估。观察登记不构成任何评估结论，不建仓库、不改两层主线与同步语义。
+
+当前观察中的候选：**Web 类系统领域模板**（2026-09-09 登记，来源提案 issue #451；首个成形例证 zhiyan-digital-cs-platform——数字客服平台，管理后台 + 客户 H5 双端；flowkit / lumen 为代号位，形态细节待补）。
+
 ## 3. 三层职责边界
 
 完整定义见 `_governance/_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` §4.1 / §4.2 / §4.3，本节为结论摘要，不复制正文：
@@ -124,6 +128,7 @@ AI 可执行实验入口为 `/run domain-template-lab`（见 `ai/commands/domain
 
 | Batch | 内容 | 状态 |
 |---|---|---|
+| Batch 0 | Web 类领域模板候选观察登记（例证积累中，见 §2 候选观察） | 已登记（2026-09-09，提案 issue #451）；不建仓库、不改三层主线与同步语义 |
 | Batch 1 | 三层继承机制设计 + **方法论文档化（本文件）** | ✅ 本文件落地；机制产物待后续 |
 | Batch 2 | 创建独立 `agent-system-template` 仓库 + 领域 scaffold MVP + `TEMPLATE-BASE.md` | 待办 |
 | Batch 3 | 领域模板自检、同步链路、多级同步自动化评估 | 部分落地：版本保留机制（C-004）已于 v1.47.0 落地——`sync-template.* --domain-template` 保留领域模板 `VERSION`/`CHANGELOG` 并维护领域版 `TEMPLATE-BASE.md`，`check-derived-sync.*` 识别领域角色；母模板已提供 `domain-template-lab` AI 实验入口；多级同步自动化与具体领域资产仍待独立仓库试验 |
