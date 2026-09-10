@@ -104,7 +104,7 @@ is_sync_file() {
 is_protected_project_file() {
   local changed_file="$1"
   case "$changed_file" in
-    README.md|ai/project-rules.md|ai/domain-rules.md|docs/0[0-9]-*|project/frontend/*|project/backend/*|project/tests/*|project/docker/*)
+    README.md|ai/project-rules.md|ai/domain-rules.md|docs/0[0-9]-*|domain/*|project/frontend/*|project/backend/*|project/tests/*|project/docker/*)
       return 0
       ;;
     *)

@@ -243,6 +243,7 @@ function Test-ProtectedProjectFile {
     $ChangedFile -eq "ai/project-rules.md" -or
     $ChangedFile -eq "ai/domain-rules.md" -or
     $ChangedFile -like "docs/0[0-9]-*" -or
+    $ChangedFile -like "domain/*" -or
     $ChangedFile -like "project/frontend/*" -or
     $ChangedFile -like "project/backend/*" -or
     $ChangedFile -like "project/tests/*" -or

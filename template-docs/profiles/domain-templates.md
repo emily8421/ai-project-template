@@ -9,7 +9,7 @@
 
 - **主线治理仍为两层**：母模板（`ai-project-template`）↔ 派生项目。绝大多数项目**直连母模板**，不经过领域模板。
 - **三层是可选增强**：只有当**多类同类项目需要共享一组领域标准件**时，才在母模板与具体项目之间插入一层领域模板。
-- **领域模板层尚在候选 / 演进中**：三层继承机制的设计源头 `_governance/_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 状态为部分落地，其 Batch 2（建仓 + scaffold MVP）、Batch 3 多级同步自动化与 Batch 4 仍**未落地**；Batch 3 的版本保留机制（C-004）已于 v1.47.0 落地（见 §5 / §7）。本文件先固化方法论定位，其余机制产物随后续 Batch 补齐。
+- **领域模板层尚在候选 / 演进中**：三层继承机制的设计源头 `_governance/_proposals/TEMPLATE-UPGRADE-domain-template-inheritance.md` 状态为部分落地，其 Batch 2（建仓 + scaffold MVP）、Batch 3 多级同步自动化与 Batch 4 仍**未落地**；Batch 3 的版本保留机制（C-004）已于 v1.47.0 落地（见 §6 / §8）。本文件先固化方法论定位，其余机制产物随后续 Batch 补齐。
 - **现有派生项目无需迁移**：本文件不要求任何已存在的两层派生项目改变形态。
 - **非强制**：没有任何项目必须经过领域模板。
 
@@ -85,7 +85,7 @@ Web App scaffold 也不自动等于领域模板。复杂 Web / 全栈交互项�
 每个领域模板必须维护自己的 **L2→L3 场景剧本入口（L2-to-L3 playbook）**，例如：
 
 ```text
-template-docs/<domain>/domain-derived-scenarios.md
+domain/scenarios.md
 ```
 
 母模板提供通用骨架 `template-docs/maintainer/domain-derived-scenarios-template.md`，领域模板可复制为上面的入口后再填入领域事实、领域脚本和领域自检项。母模板仍只提供三层边界、初始化要求和检查口径；不承载 agent / OCR / IoT 等具体领域派生项目的创建、同步、整理、自检、回流和发布后下游同步细节。领域派生项目应从对应领域模板读取该剧本，而不是要求母模板脚本直接处理领域 overlay。
@@ -100,9 +100,74 @@ template-docs/<domain>/domain-derived-scenarios.md
 6. L3→L2 回流：领域专属经验回流 L2；跨领域通用经验由 L2 提炼后回流 L1。
 7. 领域模板发布后的下游同步：L2 版本发布、领域 L3 同步、运行记录和验证摘要。
 
-> **当前脚本能力边界（重要）**：`scripts/sync-template.sh` 与 `scripts/check-derived-sync.sh` 按「模板侧 ↔ 派生侧」**两端**校验。自 v1.47.0 起，领域模板作为母模板下游 sync 时可用 `sync-template.* --domain-template`（或仓库存在领域版 `TEMPLATE-BASE.md` 时自动启用）保留领域模板自身 `VERSION`/`CHANGELOG`，并维护领域版 `TEMPLATE-BASE.md`（见 §5）；自 v1.58.0 起，同步脚本会把母模板 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 映射到派生侧 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`，作为只读继承参考。**多级同步自动化（领域模板作为领域派生项目上游的中间同步节点链路）仍属 inheritance 提案 Batch 3，尚未落地**；在它落地前，领域模板的上下游同步沿用两端流程，不引入多级自动化。
+> **当前脚本能力边界（重要）**：`scripts/sync-template.sh` 与 `scripts/check-derived-sync.sh` 按「模板侧 ↔ 派生侧」**两端**校验。自 v1.47.0 起，领域模板作为母模板下游 sync 时可用 `sync-template.* --domain-template`（或仓库存在领域版 `TEMPLATE-BASE.md` 时自动启用）保留领域模板自身 `VERSION`/`CHANGELOG`，并维护领域版 `TEMPLATE-BASE.md`（见 §6）；自 v1.58.0 起，同步脚本会把母模板 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 映射到派生侧 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`，作为只读继承参考。**多级同步自动化（领域模板作为领域派生项目上游的中间同步节点链路）仍属 inheritance 提案 Batch 3，尚未落地**；在它落地前，领域模板的上下游同步沿用两端流程，不引入多级自动化。
 
-## 5. `TEMPLATE-BASE.md` 约定
+## 5. 三层布局模式（v1.75.0 定型）
+
+> 来源提案 `_governance/_proposals/TEMPLATE-UPGRADE-domain-layout.md`（2026-09-10，C-001~C-005 全按 AI 建议裁决）。布局原则：三层各归其位——L1 纯通用、L2 = 母模板结构 + 唯一领域目录、L3 = L2 同步结构 + 项目产出；根目录保持简洁，链路看目录即可辨认。
+
+### 5.1 L2 领域模板标准布局
+
+```text
+<domain>-template/                ← L2 领域模板仓
+├─ ai/  template-docs/  scripts/  docs/ ...   ← 母模板同步结构，原样不动
+├─ ai/domain-rules.md             ← 领域规则种子（唯一例外于 domain/，见本节末）
+├─ domain/                        ← ★ 唯一领域目录（L2 自有，L1 同步永不触碰）
+│  ├─ README.md                   ← 领域定位 + 导览 + 与 TEMPLATE-BASE scope 对应
+│  ├─ standards/                  ← 领域标准件（如 agent：tool 权限矩阵 / memory / eval / trace / HITL 骨架）
+│  ├─ scenarios.md                ← L2→L3 场景剧本（从 §4.1 骨架实例化）
+│  ├─ scaffold/                   ← 领域派生项目生成件 / checklist
+│  └─ checks/                     ← 领域自检（成熟后启用）
+├─ TEMPLATE-BASE.md               ← 领域版溯源（Domain standards scope ↔ domain/ 内容对应）
+└─ VERSION / CHANGELOG ...        ← 领域自有（--domain-template 已保留）
+```
+
+规则：
+
+- `domain/` 是**保留名**（登记于 `ai/global-rules.md` §5 根级命名空间）：L2 与领域派生项目专属可选目录，母模板与普通派生项目不使用。
+- `domain/` 与 `ai/domain-rules.md` 归 L2 自有：不进母模板同步清单，受 `scripts/check-derived-sync.sh` + `.ps1` 保护（v1.75.0 起保护清单含 `domain/*`）。
+- 必须根级，不得并入 `template-docs/<domain>/`——L2 仓内 `template-docs/` 是母模板覆盖同步区，领域自有内容放覆盖区会混淆所有权。
+- `ai/domain-rules.md` 是 `domain/` 的唯一例外领域件：规则文件必须活在 `ai/` 规则层才能被 AI 入口路由（v1.60.0 机制），按 `ai/doc-standards/domain-rules.md` 基线生成。
+
+### 5.2 L3 领域派生项目标准布局
+
+```text
+<project>/                        ← L3
+├─ ai/  template-docs/  scripts/ ...   ← 通用方法论（母模板经 L2 下行）
+├─ domain/                        ← L2→L3 覆盖同步区（标准件 + 剧本 + scaffold，随 L2 同步清单下行）
+├─ docs/  project/  tasks/        ← 项目产出（自有）
+└─ ai/project-rules.md            ← 项目事实种子（含领域规则的项目化实例）
+```
+
+- L3 **不设** `ai/domain-rules.md` 种子：规则分层为通用 / 领域专属 / 项目专属三层，领域规则到 L3 落入 `ai/project-rules.md` 项目化，不产生第三份领域规则文件。
+- L3 的 `domain/` 相对 L2 是覆盖同步区，不得直改；领域件的项目化改写走项目自有文档（`docs/`、`ai/project-rules.md`）。
+
+### 5.3 L1 母模板布局与边界
+
+- 母模板根目录**不出现任何领域目录**；领域机制件按功能归位（规范基线在 `ai/doc-standards/`、命令与 prompt 在 `ai/commands/` + `ai/prompts/maintainers/`、机制在 scripts / `template-sync.json`），并统一登记于 §5.4 索引表。
+- 新增领域机制件必须登记进 §5.4 索引表（文档约定，不加自检断言——避免过度治理）。
+
+### 5.4 母模板领域机制件索引表
+
+| 文件 / 位置 | 角色 | 下行 |
+|---|---|---|
+| `template-docs/profiles/domain-templates.md`（本文件） | 方法论定位 + 布局模式（§5）+ 索引表 | files_all |
+| `template-docs/maintainer/domain-derived-scenarios-template.md` | L2→L3 剧本骨架（领域无关） | files_domain |
+| `ai/doc-standards/domain-rules.md` | 领域规则基线（任何领域通用的种子规范） | files_domain |
+| `ai/commands/domain-template-lab.md` + `ai/prompts/maintainers/23-domain-template-lab.md` | AI 实验入口 | files_all |
+| `scripts/sync-template.*` / `check-derived-sync.*` 内 `--domain-template` / `files_domain` 分支 | 同步机制本体 | 脚本随清单 |
+| `_governance/ai-records/project-registry/` Type / Upstream 字段 | 谱系索引（维护者侧） | 不下行 |
+
+### 5.5 多领域扩展语义（一仓一领域）
+
+- **扩展单元是仓库，不是目录**：一个领域 = 一个独立 L2 仓；`domain/` 语义为「本仓的那个领域」。领域数量增长 = L2 仓数量增长，仓内结构不随领域数量变化。
+- **领域身份三标识**：仓库名（如 `agent-system-template`）、registry `Type` / `Upstream` 字段、`TEMPLATE-BASE.md` 的 `Domain standards scope`。目录名统一是可识别模式的来源（类比各仓 `docs/` 内容不同但目录名统一）。
+- **L1 不随领域数量膨胀**：§5.4 机制件全部领域无关参数化（基线管「任何领域的种子长什么样」、剧本骨架管通用环节、机制按仓识别角色）；各领域标准件永不进 L1。
+- **形态（profile）与领域（domain）判分**：`web-fullstack-profile` 等形态 profile 管工程形态通用约束，随 files_all 下行给全部项目；只有满足 §2 三条件才建领域模板。多数「Web 项目」走母模板 + 形态 profile；Web 类领域模板面向「Web 产品线族群」。
+- **跨领域项目**：单继承是当前边界——L3 只有一个直接上游，选主领域 L2（标准件更重者），另一边靠形态 profile 兜住通用约束；「多领域叠加 / 多重继承」不设计，待真实第 2 例出现再评估。
+- **领域间共享标准**：不做 L2↔L2 横向同步（横向依赖是漂移之源）；共享信号即「跨领域通用」，走两级回流上浮（L2 提炼 → 提案 → L1 收编，各 L2 下次同步获得）。链路严格单向：L1 → L2 → L3，回流只向上。
+
+## 6. `TEMPLATE-BASE.md` 约定
 
 领域模板应在仓库根维护一个 `TEMPLATE-BASE.md` 溯源文件，至少记录：
 
@@ -114,7 +179,7 @@ template-docs/<domain>/domain-derived-scenarios.md
 
 > **领域 rules 层（v1.60.0）**：领域模板仓额外维护 `ai/domain-rules.md` 种子（领域通用但跨项目的标准件骨架，如 agent 系统的工具权限矩阵 / memory 模型 / eval / trace / HITL），按同步下来的 `ai/doc-standards/domain-rules.md` 规范基线（走 `template-sync.json` 的 `files_domain` 组，仅领域路线接收）生成。`ai/domain-rules.md` 不进 `template-sync.json`、不同步、受 `scripts/check-derived-sync.sh` + `.ps1` 保护，由领域仓自行治理。普通派生项目不接收 `ai/doc-standards/domain-rules.md`，也不生成 `ai/domain-rules.md`。规则分层原则见 `ai/global-rules.md` §5。
 
-## 6. 操作入口（怎么创建领域模板）
+## 7. 操作入口（怎么创建领域模板）
 
 创建领域模板的**操作步骤**见 `template-docs/scenario-guides.md` **A20「领域模板派生」**（含：判定是否为领域模板、内置 vs 独立仓、Phase 0 预检、创建命令、初始化待办）。本文件只讲方法论定位，不复制 A20 的操作步骤。
 
@@ -122,7 +187,7 @@ AI 可执行实验入口为 `/run domain-template-lab`（见 `ai/commands/domain
 
 边界：`domain-template-lab` 不接入 `git-guide.md` §5 的普通派生项目同步主路径，不修改母模板 `sync-template` 语义，不让领域派生项目直接同步母模板。母模板只提供实验启动器和方法论边界；领域 scaffold、领域同步清单、领域自检、L2→L3 场景剧本和领域回流 SOP 应在独立领域模板仓库内试验。
 
-## 7. 状态与演进
+## 8. 状态与演进
 
 本文件对应 inheritance 提案的落地节奏：
 
@@ -135,3 +200,5 @@ AI 可执行实验入口为 `/run domain-template-lab`（见 `ai/commands/domain
 | Batch 4 | `new-project --profile <domain>` / 领域模板发布回流 SOP | 待办（需至少一个真实项目试用后再评估） |
 
 领域模板层在至少一个真实项目试用、Batch 2-3 落地成熟后，再评估是否提升主线地位（如写进 `template-methodology.md` §5）。当前以本可选增强文档为准。
+
+> 布局模式（`domain/` 保留名、三层布局、多领域扩展语义、母模板机制件索引表）已于 v1.75.0 经 `_governance/_proposals/TEMPLATE-UPGRADE-domain-layout.md` 落地，见 §5。

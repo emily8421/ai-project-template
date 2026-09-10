@@ -1,8 +1,9 @@
 # Domain-Derived Scenarios Template（领域派生项目场景剧本模板）
 
 > Sync notice: 本文件由 ai-project-template 模板同步维护，**仅领域路线下行**（v1.66.0 起 files_domain，随 `--domain-template` 同步）；普通派生项目不接收本文件；领域模板同步时会被覆盖，不应直接修改，通用改进请经 _governance/_proposals/ 回流模板仓库。
+> 领域层机制件：母模板领域机制件索引见 `template-docs/profiles/domain-templates.md` §5.4。
 
-定位：本文件是 **L2-to-L3 playbook template**，给领域模板复制后领域化。领域模板可将本文件复制为 `template-docs/<domain>/domain-derived-scenarios.md`，再替换 `<domain>`、领域事实、脚本名、清单名和验证项。
+定位：本文件是 **L2-to-L3 playbook template**，给领域模板复制后领域化。领域模板可将本文件复制为 `domain/scenarios.md`（L2 根级领域目录，布局见 `template-docs/profiles/domain-templates.md` §5.1），再替换 `<domain>`、领域事实、脚本名、清单名和验证项。
 
 本文件只提供通用骨架，不承载 agent / OCR / IoT 等具体领域内容，不替代母模板 `scenario-guides.md` 的两层主路径，也不实现 `new-project --profile <domain>` 或多级同步自动化。
 
@@ -86,11 +87,11 @@
 4. 若自检只有 advisory，记录风险后可继续；若是 gate，必须修复或暂停。
 5. 将验证摘要写入项目记录，不把项目事实回写母模板。
 
-领域模板应在自己的 `domain-derived-scenarios.md` 中列出具体文件，例如：
+领域模板应在自己的 `domain/scenarios.md` 中列出具体文件，例如：
 
 ```text
-template-docs/<domain>/checklist.md
-template-docs/<domain>/rules.md
+domain/scaffold/checklist.md
+ai/domain-rules.md
 scripts/check-domain-derived-sync.ps1
 scripts/check-domain-derived-sync.sh
 ```

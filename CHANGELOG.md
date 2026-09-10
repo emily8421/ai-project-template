@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.0（2026-09-10）
+
+三层布局模式定型 MINOR（提案 `_governance/_proposals/TEMPLATE-UPGRADE-domain-layout.md`，C-001~C-005 全按 AI 建议裁决；结构级规则变更发 MINOR，先例 v1.67.0 治理目录迁移）：
+
+- **L2 根级 `domain/` 保留名**：领域模板仓 = 母模板同步结构 + 唯一领域目录 `domain/`（standards / scenarios.md / scaffold / checks + README），L2 自有、L1 同步永不触碰；`ai/domain-rules.md` 种子为唯一例外（规则入口约定，v1.60.0）。L3 领域派生项目：`domain/` 为 L2→L3 覆盖同步区，不设第三份领域规则种子（领域规则到 L3 落 `ai/project-rules.md` 项目化）。保留名登记 `ai/global-rules.md` §5 根级命名空间（三层区表 + 保留名条目）。
+- **多领域扩展语义**（一仓一领域）：扩展单元是仓库不是目录，L2 仓内结构不随领域数量变化；L1 机制件领域无关、不随领域数量增长；形态 profile（web-fullstack 等，管工程形态）与领域模板（管领域标准件，§2 三条件判定）判分；跨领域项目单继承边界（选主领域 L2，另一边靠形态 profile；多领域叠加不设计）；L2 间不做横向同步、共享标准经两级回流上浮。
+- **L1 机制件索引表（R0+，零迁移）**：`template-docs/profiles/domain-templates.md` 新增 §5 三层布局模式（§5.1 L2 / §5.2 L3 / §5.3 L1 边界 / §5.4 索引表 / §5.5 多领域语义）——机制件共 5 文件 + 脚本内分支，文件名均含 domain 且已可 grep，物理迁移收益小且 `template-docs/domain/` 命名会在 L2 与根 `domain/` 形成双同名目录碰撞，故不迁移；4 个机制件头部加「领域层机制件」标记行（domain-rules 基线 / 剧本骨架 / lab 命令 / lab prompt）。
+- **剧本路径收敛**：L2→L3 场景剧本入口 `template-docs/<domain>/domain-derived-scenarios.md` → `domain/scenarios.md`；同步更新 `domain-templates.md` §4.1、`ai/doc-standards/domain-rules.md` §4、`domain-derived-scenarios-template.md`（定位段 + §4 示例：checklist 入 `domain/scaffold/`、rules 即 `ai/domain-rules.md`）、`ai/commands/domain-template-lab.md`、`ai/prompts/maintainers/23-domain-template-lab.md`（资产表 + 执行流程）、`scenario-guides.md` A20 步骤 5；inheritance 提案 Batch 2 最小文件集按新布局修订（散布布局废止）。
+- **保护扩展**：`scripts/check-derived-sync.sh` + `.ps1` 项目保护清单补 `domain/*`（L2 自有内容不被误判为清单外变更；普通路线无此目录、空匹配零影响）。
+- 验证：全量自检非沙箱直跑 2114 项 / 0 失败 + CI Template Check；e2e 回归 R1-R3 自动化通过、R6 PowerShell fallback 冒烟补偿（本轮改 check-derived-sync 双语实现）、R4/R5 经触达面评估豁免（不触场景路由链路与文档生成 prompt 链路），报告 `_governance/ai-records/e2e-reports/2026-09-10-v1.75.0.md`。对派生项目：普通路线零影响（同步清单不变、无新断言，`domain/*` 保护为空匹配；check-derived-sync 双语随既有清单下行更新）；领域路线为纯增量文档 + 剧本路径口径更新 + 保护扩展，零迁移（存量 agent-system-template 按 Batch C 另行迁移）。
+
 ## v1.74.0（2026-09-10）
 
 zhiyan 派生项目回流批 MINOR（三提案一版聚合，先例 v1.68.0 / v1.73.0；issue #447 / #451，C1 triage 2026-09-10 通过）：UI 设计知识回流入口与配方类记录、Web 组件库选型承载声明、Web 领域模板候选观察。

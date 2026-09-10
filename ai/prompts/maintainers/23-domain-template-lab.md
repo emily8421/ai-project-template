@@ -2,6 +2,7 @@
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
+> 领域层机制件：本文件服务可选领域模板层；母模板领域机制件索引见 `template-docs/profiles/domain-templates.md` §5.4。
 
 ## 目的
 
@@ -58,9 +59,9 @@
 | `scripts/sync-domain-template.ps1` / `.sh` | 领域模板 → 领域派生项目的 dry-run / commit 同步入口 | 实验线建议资产 |
 | `scripts/check-domain-derived-sync.ps1` / `.sh` | 检查领域派生项目同步边界，避免覆盖业务事实 | 实验线建议资产 |
 | `_governance/sync-records/domain-template-sync/` | 领域同步运行记录 | 实验线建议资产 |
-| `template-docs/<domain>/` | 领域 scaffold / checklist / 示例骨架 | 按领域试点生成 |
+| `domain/` | L2 根级领域目录（standards / scenarios.md / scaffold / checks + README；布局见 `template-docs/profiles/domain-templates.md` §5.1），承载领域 scaffold / checklist / 示例骨架 | 按领域试点生成 |
 | `template-docs/maintainer/domain-derived-scenarios-template.md` | 母模板提供的 L2-to-L3 playbook template；复制到领域模板后再领域化 | 母模板通用骨架 |
-| `template-docs/<domain>/domain-derived-scenarios.md` | 领域模板 → 领域派生项目的 L2→L3 场景剧本（L2-to-L3 playbook），说明创建、同步、整理、自检、回流和发布后下游同步 | 实验线必备规划项 |
+| `domain/scenarios.md` | 领域模板 → 领域派生项目的 L2→L3 场景剧本（L2-to-L3 playbook），说明创建、同步、整理、自检、回流和发布后下游同步 | 实验线必备规划项 |
 | `domain-proposals/` 或 `_governance/_proposals/` | 领域共性反馈收件箱 | 按仓库约定选择 |
 
 ## 执行流程
@@ -68,7 +69,7 @@
 1. **恢复上下文**：读取规则、当前仓库 Git 状态、版本和已有实验资产。
 2. **判定角色**：输出仓库角色与依据；若不是母模板或领域模板，说明应路由到哪个命令。
 3. **确认边界**：复述“只相邻同步，不跨层操作；跨层回流经中间层提炼”。
-4. **输出计划**：列出目标领域、目标仓库 / 目录、预计新增 / 修改文件、验证方式和不做事项；若创建或更新领域模板实验线，必须规划 L2→L3 场景剧本入口（L2-to-L3 playbook，如 `template-docs/<domain>/domain-derived-scenarios.md`），可从 `template-docs/maintainer/domain-derived-scenarios-template.md` 复制后领域化，未生成时列为待办。
+4. **输出计划**：列出目标领域、目标仓库 / 目录、预计新增 / 修改文件、验证方式和不做事项；若创建或更新领域模板实验线，必须规划 L2→L3 场景剧本入口（L2-to-L3 playbook，如 `domain/scenarios.md`——L2 根级领域目录），可从 `template-docs/maintainer/domain-derived-scenarios-template.md` 复制后领域化，未生成时列为待办。
 5. **等待确认**：未经用户确认，不创建文件、不复制脚本、不提交。
 6. **创建实验资产**：在领域模板仓库内生成最小资产；脚本可参考母模板同步脚本的思想，但必须使用领域清单名和领域提示语。领域模板仓必须按 `ai/doc-standards/domain-rules.md` 生成 `ai/domain-rules.md` 种子（领域通用标准件骨架，§0-§4：领域定位 / 标准件清单 / 裁剪禁止 / 验收口径 / 与 project-rules 关系）；该文件不进 `template-sync.json`、不同步、受 `check-derived-sync` 保护。
 7. **验证**：至少运行结构检查、同步清单解析检查、dry-run（如脚本已生成），并确认不会覆盖领域派生项目的业务事实。
