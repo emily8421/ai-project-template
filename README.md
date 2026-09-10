@@ -82,6 +82,21 @@ flowchart LR
 
 当前模板版本见 `VERSION`；完整记录见 `CHANGELOG.md`；维护者发布流程见 `MAINTAINERS.md`；模板治理见 `CONTRIBUTING.md`。
 
+## 根目录阅读地图（先看分区再看明细）
+
+本仓库有**三重身份**：被派生项目同步的**模板本体**、用自身方法论开发自身的**自举项目**、GitHub 上的**开源仓**。根目录条目按此分六区，看懂分区，目录就自解释了：
+
+| 区 | 根条目 | 下行 / 归属 |
+|---|---|---|
+| **模板方法论**（模板本体） | `ai/`（种子实例除外）、`template-docs/`、`scripts/`（下行脚本）、`SOP.md`、`git-guide.md`、`INIT-PROMPT.md`、`CONTRIBUTING.md`、`AGENTS.md` / `CLAUDE.md`、`template-sync.json` | ✅ 随同步清单下行覆盖；派生项目不直改，通用改进走 `_governance/_proposals/` 回流。机器事实源：`template-sync.json`（AGENTS/CLAUDE 的根级位置由 AI CLI 工具约定，不可挪） |
+| **母仓自举项目件**（母模板自己作为项目） | `docs/`（00-09 + 子目录）、`project/`、`tasks/`、`ai/project-rules.md` | ❌ 不下行——母模板「吃自己狗粮」的项目产出；`docs/00-09` 是**母仓自己的项目事实，不是模板的一部分**。派生项目同步后，这些位置归项目自有 |
+| **版本与发布事实**（各仓自有） | `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md`、根 `README.md` | ❌ 不覆盖——普通派生 `--preserve-project-version` / 领域模板 `--domain-template` 保护（约定见 `template-docs/profiles/domain-templates.md` §6）；母模板发布说明在派生侧以 `upstream/CHANGELOG*` 只读参考 |
+| **治理记录**（各仓自有） | `_governance/`（`ai-records/` / `sync-records/` / `_proposals/` / `_archive/` / `_examples/`） | ❌ 不参与同步，各仓自行治理 |
+| **母仓专用件**（维护者侧） | `MAINTAINERS.md`、`scripts/` 中的 `check-template.*` / `sync-all-derived.sh` / `e2e-sync-check.sh` / `new-project.sh` | ❌ 仅存在于母仓（v1.70.0 起 MAINTAINERS 不下行；专用脚本清单见 `template-sync.json` description） |
+| **平台 / 工具约定**（位置不可挪） | `.github/`、`.cursor/`、`.ai/`（gitignored 本地观察） | — CI 工作流 / AI CLI 入口镜像 / 会话续接记录，位置由外部工具约定 |
+
+> 目录标准的权威源是 `ai/global-rules.md` §5（含 v1.75.0 起的 `domain/` 保留名——仅领域模板仓 L2 与领域派生项目 L3 使用，本仓与普通派生项目没有此目录）；本地图是人读导航，与它冲突时以权威源为准。
+
 ## 目录速览
 
 | 路径 | 作用 |
