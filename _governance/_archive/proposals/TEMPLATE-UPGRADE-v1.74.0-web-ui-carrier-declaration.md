@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：Web 类项目 UI 组件库与样式承载声明
 
-> 来源：zhiyan-digital-cs-platform（emily8421/zhiyan-digital-cs-platform）派生项目回流（GitHub issue #451 变更集 A，镜像 `_governance/_proposals/_remote-issues/issue-451.md`）
-> 状态：处理中（C1 triage 2026-09-10 通过，v1.74.0 Batch 2；变更集 B 另立提案 `TEMPLATE-UPGRADE-v1.74.0-domain-web-candidate-observation.md`）
+> 来源：zhiyan-digital-cs-platform（emily8421/zhiyan-digital-cs-platform）派生项目回流（GitHub issue #451 变更集 A，镜像 `_governance/_archive/proposals/issue-451.md`）
+> 状态：已落地归档（C1 triage 2026-09-10 通过；实施 PR #453 squash `66e29ae`，随 v1.74.0 发布——发版 PR #455 squash `6c83877`；本提案 2026-09-10 归档至 `_archive/proposals/`；变更集 B 另立提案 `TEMPLATE-UPGRADE-v1.74.0-domain-web-candidate-observation.md`）
 > 目标版本：v1.74.0
 > Release impact：patch 级语义随批聚合（AI 建议先例 v1.61.2：advisory 声明位、无新 gate / 默认行为变化；批内最高档为 #447 的 minor，发版取 v1.74.0 MINOR）
 > Release strategy：同主题聚合（与 issue #447 一版发布，先例 v1.68.0 / v1.73.0）
