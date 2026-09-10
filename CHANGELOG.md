@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.74.0（2026-09-10）
+
+zhiyan 派生项目回流批 MINOR（三提案一版聚合，先例 v1.68.0 / v1.73.0；issue #447 / #451，C1 triage 2026-09-10 通过）：UI 设计知识回流入口与配方类记录、Web 组件库选型承载声明、Web 领域模板候选观察。
+
+- **知识回流入口 + REC-\* 配方记录（#447，PR #452）**：`template-docs/ui-knowledge/README.md` §2.1 扩为五类记录（+Recipe `REC-*`——按产品类型组织的选型结论与推荐组合）；新增 §4.3 Recipe 字段规范与使用边界（整体证据等级不超过所引证据最高级；条目承载写明核心层暂不存放 REC 条目、由项目族群自建收集层仓库承接）；§9 新增 §9.1「两仓分工与项目回流」（核心层 ↔ 收集层分工 + 回流内容 / 边界 / 上浮通道三件事；上浮沿用 `ai/global-rules.md` §9 既有提案通道，不改变 core 晋升标准）。指针 ×2：`ai/commands/ui-prototype-exploration.md` 执行流程第 2 步、`ai/document-lifecycle-rules.md` §5.2.1 知识来源注。
+- **Web 组件库与样式承载声明（#451A，PR #453）**：`template-docs/profiles/web-fullstack-profile.md` 新增 §10（advisory，与 §9 同强度）——组件库选型 / 明确自绘属结构性决策须声明（落 `ai/project-rules.md` §2 + `docs/05-tech-spec.md` 依赖登记）、引入前核对前端框架 major 版本 × 组件库官方支持矩阵（补丁包一并登记）、版本锁定不随 `latest`、主题接入点声明（token 单源 → 主题种子映射，不与 §4 双写）；与 `REC-*` 配方双向交叉引用。
+- **Web 领域模板候选观察（#451B，PR #454）**：`template-docs/profiles/domain-templates.md` §2 末补「候选观察」档位（三条件前的例证积累：例证须「项目名 + 形态 + 日期」齐备方计入，仅代号占位不计入；3-5 例后另起提案按三条件正式评估；不建仓库、不改三层主线）+ §7 状态表 Batch 0 行（Web 类候选已登记）。#290（docs 重组 DEFER）维持——候选观察 ≠ 第二个领域模板建成。
+- 验证：每 PR 全量自检非沙箱直跑 2112 项 / 0 失败 + CI Template Check 通过；MINOR 发版门 L3 e2e 回归 R1-R3 通过，R4-R6 经触达面评估（本轮零脚本 / 零 prompt / 零场景路由改动）豁免，报告 `_governance/ai-records/e2e-reports/2026-09-10-v1.74.0.md`。对派生项目：纯文档 / 指针增量，零迁移、零断言变更、同步清单不变。
+
 ## v1.73.0（2026-09-09）
 
 LUMEN_demo_T2.1 派生项目回流批 MINOR（三提案一版聚合，先例 v1.68.0；PR #443–#446，C1 triage 2026-09-09 通过）：规则路由粒度分层、任务卡执行记录形态、阶段准出档位判据基准。
