@@ -123,6 +123,8 @@
 
 条目承载：核心层暂不存放 REC 条目；条目由项目族群自建收集层仓库按 §9.1 回流口径承接，达上浮条件后经 `ai/global-rules.md` §9 提案通道升入核心层。
 
+web 形态选型的项目侧声明与核查口径见 `template-docs/profiles/web-fullstack-profile.md` §10。
+
 ## 5. 选择流程（按 scope 读取）
 
 AI 做参考分析时**不加载全部知识**，按 scope 选取：
