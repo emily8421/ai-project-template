@@ -147,15 +147,18 @@ template-docs/domain-templates/agent-system/
 建议新仓库先从 `ai-project-template` 生成 / 同步，保留母模板通用方法论，再在独立仓库中新增 agent scaffold MVP。建议最小文件集：
 
 ```text
-template-docs/agent-system/README.md
-template-docs/agent-system/agent-system-checklist.md
-template-docs/agent-system/docs/design/agent-architecture.md
-template-docs/agent-system/docs/design/tool-permission-model.md
-template-docs/agent-system/docs/design/memory-and-state.md
-template-docs/agent-system/docs/research/agent-eval-plan.md
+domain/README.md
+domain/standards/agent-architecture.md
+domain/standards/tool-permission-model.md
+domain/standards/memory-and-state.md
+domain/standards/agent-eval-plan.md
+domain/scenarios.md
+ai/domain-rules.md
 ```
 
 MVP 只提供结构模板和检查表，不绑定具体 agent runtime。母模板不新增这些 scaffold 文件。
+
+> 2026-09-10 修订（`TEMPLATE-UPGRADE-domain-layout.md` 提案，v1.75.0 落地）：领域内容收敛为 L2 根级 `domain/` 目录（本节原 `template-docs/agent-system/*` + `docs/design/*` 散布布局废止）；agent-system-template 存量内容迁移见该提案 Batch C，L2 标准布局见 `template-docs/profiles/domain-templates.md` §5.1。
 
 ### Batch 3：领域模板自检与同步链路
 

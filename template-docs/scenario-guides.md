@@ -638,7 +638,7 @@ AI 识别场景后，**先输出引导计划给用户看（用人话 + 为什么
 | 2 | 选择内置还是独立仓库 | 领域模板若需要独立生命周期，应优先独立仓库 | 对比母模板内置 scaffold vs 独立 `*-template` 仓库，列边界和维护成本 |
 | 3 | 做 Phase 0 预检 | 避免创建到错误目录、远端重名或工具不可用 | 只读检查 `new-project.*`、目标目录、远端仓库名、`git` / `gh` / Bash / 权限 |
 | 4 | 输出创建方案 | 创建新仓库前先明确命名、可见性、base version 和初始化范围 | 给出命令、预计修改文件、验证方式和是否需要人工确认 |
-| 5 | 规划 L2→L3 场景剧本入口（L2-to-L3 playbook） | 同步清单和自检脚本不能替代领域派生项目端到端使用剧本 | 从 `template-docs/maintainer/domain-derived-scenarios-template.md` 复制为 `template-docs/<domain>/domain-derived-scenarios.md` 或等价入口，覆盖创建、同步、整理、自检、回流和发布后下游同步 |
+| 5 | 规划 L2→L3 场景剧本入口（L2-to-L3 playbook） | 同步清单和自检脚本不能替代领域派生项目端到端使用剧本 | 从 `template-docs/maintainer/domain-derived-scenarios-template.md` 复制为 `domain/scenarios.md`（L2 根级领域目录，布局见 `template-docs/profiles/domain-templates.md` §5.1）或等价入口，覆盖创建、同步、整理、自检、回流和发布后下游同步 |
 | 6 | 执行创建（需确认） | 新目录 / 新仓库是状态变更，必须确认后再执行 | 从母模板父目录运行 `new-project.sh --local` 或受控复制；创建后写领域版 `TEMPLATE-BASE.md`（`Lineage type: domain template` + `Domain standards scope`），后续从母模板 sync 用 `--domain-template` |
 
 - **完成判据**：已明确三层关系（母模板 → 领域模板 → 具体项目）· 已决定独立仓库或不执行 · 已给出可审计创建命令和初始化待办 · 已规划领域模板自己的 L2→L3 场景剧本入口 · 未向母模板新增领域 scaffold

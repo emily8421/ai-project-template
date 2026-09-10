@@ -121,6 +121,7 @@ ProjectName/
 | 模板方法论（继承） | `ai/`（除 `project-rules.md` 实例）、`template-docs/`、`scripts/`（模板脚本）、`template-sync.json`、`SOP.md`、`git-guide.md` 等 | **覆盖** | 不直接改；通用改进走 `_governance/_proposals/` 回流模板 |
 | 模板治理（本地记录） | `_governance/`（含 `sync-records/`、`ai-records/`、`_proposals/`、`_archive/`、`_examples/`）、`.ai/` | 不覆盖 | 按各自 README 记录，不参与同步 |
 | 项目产出（自有） | `docs/`、`project/` 代码目录、`ai/project-rules.md`、根 `README.md`、`VERSION`、`CHANGELOG*`、`tasks/`、`knowledge/` 等项目自建目录 | 不覆盖 | 项目自有，直接写 |
+| 领域标准件（仅领域路线） | `domain/`（L2 领域模板自有；L3 为 L2→L3 覆盖同步区） | L1 不下发 | L2：领域内容唯一目录，L1 同步永不触碰；L3：不得直改，项目化改写走项目自有文档（布局见 `template-docs/profiles/domain-templates.md` §5） |
 
 机器事实源仍是 `template-sync.json`（本表是人读导航，不是第二权威源）；项目自建目录（如知识沉淀）建议放 `docs/` 子目录或项目自管目录并登记 `ai/project-rules.md` §4，避免根目录膨胀。人读版地图见 `template-docs/beginner-guide.md` §5。
 
@@ -140,6 +141,7 @@ ProjectName/
 
 - **项目不自建新点目录**；确需新的「本机私有 / 不入库」目录时，优先评估放入 `.ai/`（会话 / 观察类）或 `.tmp/`（临时类）。
 - **点目录准入清单**（清单外 = 审计对象）：平台 `.git` `.github`；模板机制 `.ai`；AI CLI / 编辑器 `.claude` `.cursor`（`.cursor/rules/project-rules.mdc` 为规则入口镜像，在同步清单内）；工具运行时白名单（gitignored，按栈出现）`.venv` `node_modules` `__pycache__` `.mypy_cache` `.pytest_cache` `.ruff_cache` `.vscode` `.idea` `.vs` `.history` `.env` `.env.local`。
+- **`domain/` 保留名（领域路线专属，v1.75.0）**：根级 `domain/` 目录仅领域模板仓（L2）与领域派生项目（L3）使用——L2 的领域标准件唯一目录（不在母模板同步清单，L1 同步永不触碰）、L3 的 L2→L3 覆盖同步区；母模板与普通派生项目不建此目录。三层布局模式与多领域扩展语义见 `template-docs/profiles/domain-templates.md` §5。
 - **`.ai/` 内部白名单**：子目录只准 `token-hotspots/`、`pitfalls/`、`session-handoff-archive/`、`e2e-reports/`，顶层只准 `session-handoff.md`（均 gitignored 本地观察材料）；**禁止在 `.ai/` 根部堆文件**——运行日志进 `e2e-reports/` 或 `.tmp/`，一次性脚本用完即删。整目录 gitignore `.ai/` 会使 `*.log` 规则同时失效，应按子路径 ignore（模板 `.gitignore` 默认值已是子路径式）。
 - **临时目录统一 `.tmp/`**（gitignored）；禁无点 `tmp/`（裸奔不入 ignore，`git add -A` 即误入库）。任务级临时子目录随任务收尾即删，遗留即被准入审计命中。
 - **密钥文件编辑器快照排除**（安全）：`.env*` 类文件加入编辑器 Local History / 时间线排除名单；`.history/`（或等价快照目录）内容永远不该被依赖，安全上视同密钥副本，列入定期清理项。

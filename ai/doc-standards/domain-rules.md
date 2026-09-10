@@ -2,6 +2,7 @@
 
 > Sync notice: This file is maintained by `ai-project-template` and may be overwritten when a derived project syncs template methodology.
 > Do not edit it directly in derived projects; propose reusable changes in `_governance/_proposals/` and upstream them to the template repository.
+> 领域层机制件：本文件服务可选领域模板层（普通派生项目不接收）；母模板领域机制件索引见 `template-docs/profiles/domain-templates.md` §5.4。
 
 本文件是领域模板仓 `ai/domain-rules.md` 种子实例的**字段规范与审计基线（单一事实源）**，随模板下行同步到**领域模板路线**（`template-sync.json` 的 `files_domain` 组；普通派生项目不接收）。它只定义"领域层 rules 填什么、字段规范、审计项、禁止项"，**不替代**领域模板仓的实例事实——领域专属内容仍写在各自 `ai/domain-rules.md`（不同步、领域仓按本规范自生成）。
 
@@ -19,7 +20,7 @@
 
 判断标准：一条规则换到**同一领域的不同项目**是否还成立——成立（该领域所有项目共有的标准件，如 agent 系统的工具权限矩阵、memory / state 模型、trace / replay、agent eval、human-in-the-loop）属领域层（本文件规范 + `ai/domain-rules.md` 实例）；换到**不同领域或非领域项目**不成立。换到任何项目都成立的属通用层；只对单个项目成立的属项目层（`ai/project-rules.md`）。
 
-> 领域层是**可选中间层**：只有领域模板仓（如 `agent-system-template`）才有 `ai/domain-rules.md`；普通派生项目不经过领域层，不接收本文件，也不生成 `ai/domain-rules.md`。领域模板机制与适用判定见 `template-docs/profiles/domain-templates.md`。
+> 领域层是**可选中间层**：只有领域模板仓（如 `agent-system-template`）才有 `ai/domain-rules.md`；普通派生项目不经过领域层，不接收本文件，也不生成 `ai/domain-rules.md`。领域模板机制与适用判定见 `template-docs/profiles/domain-templates.md`。种子位置 `ai/domain-rules.md` 是 L2 根级 `domain/` 目录的唯一例外领域件（规则入口路由约定，v1.60.0）；领域派生项目（L3）不设此种子，领域规则在 L3 落入 `ai/project-rules.md` 项目化。三层布局模式见 `domain-templates.md` §5。
 
 ## 2. 章节契约（种子实例必须保留的骨架）
 
@@ -49,7 +50,7 @@
 ### §0 领域定位
 
 - `领域`：该领域模板面向的系统类别（如 agent 系统）。
-- `适用判定`：什么样的项目应走本领域模板、什么项目直连母模板、什么项目不适用（指向 `template-docs/<domain>/domain-derived-scenarios.md` 或 `template-docs/maintainer/domain-derived-scenarios-template.md`）。
+- `适用判定`：什么样的项目应走本领域模板、什么项目直连母模板、什么项目不适用（指向 `domain/scenarios.md`（L2 领域目录内，布局见 `template-docs/profiles/domain-templates.md` §5.1）或 `template-docs/maintainer/domain-derived-scenarios-template.md`）。
 
 ### §1 领域标准件清单
 
