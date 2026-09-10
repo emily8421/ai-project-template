@@ -181,3 +181,15 @@ UI Brief / UI Exploration / frontend experience brief / frontend-interaction / U
 - **测试分层与质量门**：unit / integration 分目录或 marker 区分；**CI 必须跑测试**（口径见 L0-8 可测试性，`ai/global-rules.md §2.1`）。具体 test / type / lint / build 质量门按项目形态裁剪、说明适用 / 不适用项，不强制固定工具组合（裁剪口径见 `ai/implementation-lifecycle-rules.md §6`）。
 
 > 与 §5 / §5.1 一致，本节为治理提醒，非硬性；派生项目可在 `ai/project-rules.md §5` / `docs/05-tech-spec.md` 覆盖或写明豁免。
+
+## 10. UI 组件库与样式承载声明
+
+组件库选型（引入某组件库，或明确自绘）与 UI 原型策略同级，属 web 项目的结构性决策；模板在探索期有默认 UI 基线推荐（`ai/doc-standards/ui-prototype-strategy.md`）、结构期有 token 单源约束（§4 / §5.1），本节补实现期的声明与核查口径：
+
+- **声明项**：引入哪个组件库（或明确自绘）须声明，落 `ai/project-rules.md` §2（技术栈约束）与 `docs/05-tech-spec.md` 依赖登记节；「明确自绘」同样要声明，避免无意识散装样式。
+- **兼容性核查**：引入前核对前端框架 major 版本与组件库官方支持矩阵；需要补丁包的一并确认登记（典型盲区：新框架 major + 组件库既有 major 需官方补丁包，`latest` 依赖习惯下安装时才暴露）。
+- **版本锁定**：组件库及其补丁包锁定版本，不随 `latest` / 浮动 tag；升级为独立决策。
+- **承载声明**：写明主题接入点（token 单源 → 组件库主题种子映射）与自绘 / 组件库边界划分（哪些界面用组件库、哪些自绘）；主题值不与 §4 `styles/` token 单源双写，样式文件职责以 §5.1 为准。
+- 选型结论的知识沉淀载体（`REC-*` 配方）见 `template-docs/ui-knowledge/README.md` §4.3。
+
+> 与 §9 一致，本节为治理提醒（advisory），非硬性 Gate，不引入自检断言；派生项目可在 `ai/project-rules.md §5` / `docs/05-tech-spec.md` 覆盖或写明豁免。
