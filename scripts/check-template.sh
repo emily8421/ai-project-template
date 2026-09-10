@@ -338,22 +338,25 @@ require_changelog_current_version() {
   local version
   version="$(tr -d '\r\n[:space:]' < VERSION)"
 
-  require_contains "CHANGELOG.md" "^## ${version//./\\.}（" "CHANGELOG 包含当前 VERSION: $version"
+  local changelog_file
+  for changelog_file in CHANGELOG.md CHANGELOG-PLAIN.md; do
+    require_contains "$changelog_file" "^## ${version//./\\.}（" "$changelog_file 包含当前 VERSION: $version"
 
-  local first_version
-  local changelog_line
-  first_version=""
-  while IFS= read -r changelog_line; do
-    if [[ "$changelog_line" =~ ^##[[:space:]]+(v[0-9]+\.[0-9]+\.[0-9]+) ]]; then
-      first_version="${BASH_REMATCH[1]}"
-      break
+    local first_version
+    local changelog_line
+    first_version=""
+    while IFS= read -r changelog_line; do
+      if [[ "$changelog_line" =~ ^##[[:space:]]+(v[0-9]+\.[0-9]+\.[0-9]+) ]]; then
+        first_version="${BASH_REMATCH[1]}"
+        break
+      fi
+    done < "$changelog_file"
+    if [[ "$first_version" == "$version" ]]; then
+      pass "$changelog_file 最新三段式版本位于顶部: $version"
+    else
+      fail "$changelog_file 最新三段式版本不在顶部（期望 $version，实际 ${first_version:-未找到}）"
     fi
-  done < CHANGELOG.md
-  if [[ "$first_version" == "$version" ]]; then
-    pass "CHANGELOG 最新三段式版本位于顶部: $version"
-  else
-    fail "CHANGELOG 最新三段式版本不在顶部（期望 $version，实际 ${first_version:-未找到}）"
-  fi
+  done
 }
 
 require_changelog_semver_desc() {
