@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE：UI 设计知识回流入口与配方类记录（REC-*）
 
-> 来源：zhiyan-digital-cs-platform（emily8421/zhiyan-digital-cs-platform）派生项目回流（GitHub issue #447，镜像 `_governance/_proposals/_remote-issues/issue-447.md`）
-> 状态：处理中（C1 triage 2026-09-10 通过，v1.74.0 Batch 1）
+> 来源：zhiyan-digital-cs-platform（emily8421/zhiyan-digital-cs-platform）派生项目回流（GitHub issue #447，镜像 `_governance/_archive/proposals/issue-447.md`）
+> 状态：已落地归档（C1 triage 2026-09-10 通过；实施 PR #452 squash `68af597`，随 v1.74.0 发布——发版 PR #455 squash `6c83877`；本提案 2026-09-10 归档至 `_archive/proposals/`）
 > 目标版本：v1.74.0
 > Release impact：minor（AI 建议，维护者确认：REC-* 为知识模型新记录类型 = 新下游采用面；变更集 A 单独看为 patch 级，随本 PR 聚合）
 > Release strategy：同主题聚合（与 issue #451 两变更集一版发布，先例 v1.68.0 / v1.73.0）
