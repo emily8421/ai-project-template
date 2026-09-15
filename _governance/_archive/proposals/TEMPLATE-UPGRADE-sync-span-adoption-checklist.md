@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 同步跨度采用清单（SOP advisory 步骤 + 运行记录模板可选节）
 
 > 类型：派生项目起草的模板优化提案（去项目化）。
-> 状态：已采纳，实施中（2026-09-15 triage 拍板；试点首轮 digital-cs-demo v1.73.0→v1.75.0 完成）。
+> 状态：已落地归档（2026-09-15）——落地锚点：v1.75.1，PR #467（squash `085235d`）；advisory 语义、零门禁如案。镜像 issue-466 随本归档。
 > 来源：digital-cs-demo（emily8421/digital-cs-demo）派生项目回流；GitHub issue #466。
 > 目标版本：v1.75.1。
 > Release impact：patch（AI 建议，维护者已确认 2026-09-15）。
