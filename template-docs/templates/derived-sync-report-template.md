@@ -76,6 +76,24 @@ _governance/sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md
 - 是否新增 / 刷新 `ai/doc-standards/00-09`：
 - 是否残留旧 `docs/_scaffold/`：
 
+## 同步跨度采用清单（可选）
+
+> advisory 步骤（口径见 `ai/prompts/maintainers/12-sync-template.md` 对应步骤）：不做可整节省略，不阻塞后续环节；旧记录无此节不回溯补写。
+
+- 跨度确定说明（`TEMPLATE-BASE.md` 旧继承版本排除 → 目标版本包含；实查与预期不符时的裁决记录）：
+
+| 版本 | 条目 | 桶 | 存量影响 | 动作 | 负责环节 | 状态 |
+|---|---|---|---|---|---|---|
+|  |  | ① 结构迁移 / ② 规范基线 / ③ 行为规则 / ④ 零迁移 |  |  | cleanup / docs-system-audit / 下次任务 / — |  |
+
+桶分布：① __ ｜ ② __ ｜ ③ __ ｜ ④ __；待确认条目：__
+
+执行反馈（3 行）：
+
+1. 桶分类是否够用 / 歧义点：
+2. 耗时与读取成本：
+3. 不做清单会漏掉的项：
+
 ## 同步后整理摘要
 
 - 是否执行 `/run post-sync-cleanup`：
