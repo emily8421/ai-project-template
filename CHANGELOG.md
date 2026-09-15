@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.1（2026-09-15）
+
+同步跨度采用清单 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-sync-span-adoption-checklist.md`，digital-cs-demo 派生项目回流，GitHub issue #466；2026-09-15 试点拍板「试点后立案」的正式化落地）：补「跨多版本同步后，上游方法论变更在派生侧的采用状态无结构化留痕」缺口——多版本跨度易只记「同步到了 vX.Y.Z」不逐条确认采用状态，规范基线增量对应的存量核查项靠临场判断（试点实证不点名就会漏 1 项）。
+
+- `ai/prompts/maintainers/12-sync-template.md`：边界验证（步骤 11）后插入「同步跨度采用清单」新步骤 12（可选，advisory；跳过不阻塞后续任何环节），原步骤 12-24 顺延为 13-25——确定跨度（`TEMPLATE-BASE.md` 旧继承版本排除 → 目标版本包含；实查为准、与预期不符停止说明）→ 读跨度段（优先 `upstream/CHANGELOG.md`，缺失读母模板仓 `CHANGELOG.md` 对应段）→ 逐条四桶分类（①结构迁移→cleanup ②规范基线→docs-system-audit 点名 ③行为规则→下次任务生效清单 ④零迁移一行带过；②③边界按「是否存在可点名审计的受影响 docs」判定；拿不准列待确认等用户裁决）→ 清单表（7 字段）写入同步运行记录 + 3 行反馈；大跨度可按版本分段或仅逐条列 MINOR 及以上。
+- `template-docs/templates/derived-sync-report-template.md`：新增「同步跨度采用清单（可选）」节（跨度确定说明 + 四桶字段表 + 桶分布 + 3 行反馈位）；旧记录无此节不回溯补写。
+- `git-guide.md` §5.3 末尾补一行指针（同步提交并过边界检查后的可选步骤）。triage 校正：提案原写 §5.5「同步闭环清单」，实查 §5.5 为「注意事项」且无该节，落点改 §5.3。
+- 边界：advisory 语义——跳过不影响 post-sync-cleanup、docs-system-audit、A13 完成判据门禁（SOP 收尾门禁与报告模板 A13 矩阵均不加行，advisory 不进门禁）；纯文档增量，不改脚本、不改 `template-sync.json`、不新增自检断言、不加 CI 门禁。试点首轮数据（digital-cs-demo，v1.73.0→v1.75.0 两段）：约 5 分钟完成、防漏 1 项（#451A 存量声明核验）、②③桶判据歧义已吸收为正式判据。
+
 ## v1.75.0（2026-09-10）
 
 三层布局模式定型 MINOR（提案 `_governance/_proposals/TEMPLATE-UPGRADE-domain-layout.md`，C-001~C-005 全按 AI 建议裁决；结构级规则变更发 MINOR，先例 v1.67.0 治理目录迁移）：

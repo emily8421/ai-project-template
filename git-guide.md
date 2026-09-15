@@ -238,6 +238,8 @@ git push -u origin chore/sync-template-vX.Y.Z
 gh pr create --fill
 ```
 
+同步提交并通过边界检查后，可选执行「同步跨度采用清单」（advisory，跳过不阻塞）：读 `upstream/CHANGELOG.md` 跨度段（`TEMPLATE-BASE.md` 旧继承版本排除 → 目标版本包含）做四桶分类（① 结构迁移 / ② 规范基线 / ③ 行为规则 / ④ 零迁移），清单写入同步运行记录；步骤口径见 `ai/prompts/maintainers/12-sync-template.md` 对应步骤。
+
 ### 5.4 两类检查命令
 
 ```

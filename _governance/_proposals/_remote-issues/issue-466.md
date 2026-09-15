@@ -1,0 +1,86 @@
+# GitHub Issue #466: TEMPLATE-UPGRADE: 同步跨度采用清单（SOP advisory 步骤 + 运行记录模板可选节）
+
+> Source URL: https://github.com/emily8421/ai-project-template/issues/466
+> State: OPEN
+> Labels: proposal, from:digital-cs-demo
+> Author: emily8421
+> Created: 2026-09-15T13:09:43Z
+> Updated: 2026-09-15T13:09:43Z
+> Mirrored at: 2026-09-15
+> Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
+
+## Raw Issue Body
+
+# TEMPLATE-UPGRADE: 同步跨度采用清单（SOP advisory 步骤 + 运行记录模板可选节）
+
+> 类型：派生项目起草的模板优化提案（去项目化）。
+> 状态：待回流 `ai-project-template`（按 `CONTRIBUTING.md` §4 上行流程，跨仓库 issue）。
+> 来源：digital-cs-demo（emily8421/digital-cs-demo）派生项目回流。
+> 背景：母模板仓 2026-09-15 拍板的「同步跨度采用清单」试点（方案 A 手工版，零门禁）已在一家普通派生项目完成首轮实跑；本提案按试点实跑与反馈，将试点机制正式化为模板件。
+
+## 1. 动机
+
+派生项目按 `12-sync-template` SOP 完成同步后，「本次同步采用了哪些上游变更、按什么口径落地、哪些条目已核销」只散落在 CHANGELOG 阅读和运行记录叙述里，缺少结构化留痕：
+
+- 多版本跨度同步时，容易只记录「同步到了 vX.Y.Z」，不逐条确认中间版本的采用状态；上游「零影响」结论与项目侧落地事实之间没有显式核对记录。
+- docs-system-audit 的同步后审计范围靠临场判断，规范基线增量对应的存量核查项容易被漏掉（试点实证：不点名就会漏 1 项）。
+- 运行记录无「采用清单」节时，下轮回流收口与审计需重读 CHANGELOG 重建上下文。
+
+试点首轮实跑数据：跨度 2 个版本段（约 20 行 CHANGELOG），读取 + 四桶分类 + 落表约 5 分钟；上游 CHANGELOG 段末的官方「对派生项目影响」结论可直接引用，成本显著低于逐 PR 复核。
+
+## 2. 拟改（方案 A + B + 桶判据补强）
+
+### 方案 A：`ai/prompts/maintainers/12-sync-template.md` 插一步（advisory）
+
+在边界验证（现步骤 11）之后、post-sync-cleanup（现步骤 17）之前插入一步「同步跨度采用清单（可选，advisory）」：
+
+1. 确定跨度：读 `TEMPLATE-BASE.md` 旧继承版本（排除）→ 目标版本（包含）；实查与用户预期不符时停止说明，不以预期覆盖实查。
+2. 读跨度段：优先读同步提交带来的 `upstream/CHANGELOG.md`；缺失时读母模板仓 `CHANGELOG.md` 对应版本段。
+3. 逐条四桶分类（先不改文件，只出清单；拿不准列「待确认」等用户裁决，不得硬分类）：
+   - ① 结构迁移 → 交 post-sync-cleanup 对应审计项，清单标注「由 cleanup 覆盖」；
+   - ② 规范基线 → 列入 docs-system-audit 同步后审计范围，点名受影响 docs；
+   - ③ 行为规则 → 出「下次任务生效清单」；有存量产物受影响的点名具体位置，纯前瞻的归并一行；
+   - ④ 零迁移 / 随件生效 → 一行带过。
+4. 清单表（字段：版本 / 条目 / 桶 / 存量影响 / 动作 / 负责环节 / 状态）写入本次同步运行记录；清单后补 3 行反馈：桶分类是否够用、耗时与读取成本、是否发现不做清单就会漏掉的项。
+5. 明确标注 advisory 语义：不做不阻塞后续环节；不引入自检断言、不引入 CI 门禁。
+
+### 方案 B：`template-docs/templates/derived-sync-report-template.md` 加可选节
+
+新增「同步跨度采用清单（可选）」节：跨度确定说明 + 四桶字段表（同方案 A 第 3/4 条）+ 3 行反馈位。旧记录无此节不受影响，不回溯补写。
+
+### 桶判据补强（写入清单口径）
+
+②③边界按「是否存在可点名审计的受影响 docs」判定：有 → ②（由 docs-system-audit 点名核查存量）；纯前瞻行为约束 → ③（下次任务生效清单）。试点实证该歧义真实存在：一条 advisory 规范增量同时具「下次任务行为约束」与「存量声明核验」两面，无判据时分类随会话漂移。
+
+## 3. 与既有规则的关系（去重）
+
+| 既有规则 / 文件 | 关系类型 | 说明 |
+|---|---|---|
+| `12-sync-template` 文档体系同步后审计步骤 | 互补不重复 | ②桶点名是其审计范围的结构化输入；清单在前、审计在后 |
+| `15-post-sync-cleanup` | 指向 | ①桶条目移交其对应审计项，不新增审计项 |
+| `derived-sync-report-template.md` 既有「文档体系审计摘要」节 | 指向 | 新节提供其结构化输入，不替代该节 |
+| 上游 CHANGELOG 段末官方「对派生项目影响」结论 | 引用不替代 | 官方结论覆盖④桶兜底；清单价值在①②③的「存量影响 / 动作 / 负责环节」列，官方结论未覆盖 |
+| 运行记录中项目自建的「上游变更要点」叙述惯例 | 合并入 | 非模板件、格式随会话漂移；本提案将其结构化并模板化 |
+
+## 4. 版本影响
+
+PATCH 候选。纯文档增量：一个 Prompt 插一步 advisory + 一个报告模板加可选节；不改脚本、不改 `template-sync.json`、不新增 `check-template` / `check-derived-sync` 断言、不加 CI 门禁。
+
+## 5. 影响面
+
+- `ai/prompts/maintainers/12-sync-template.md`（插一步；普通 / 领域两路线共用）
+- `template-docs/templates/derived-sync-report-template.md`（加可选节）
+- 可选：`git-guide.md` §5.5 同步闭环清单提及该步骤（一行指针）
+
+## 6. 验收口径
+
+- advisory 语义成立：跳过该步骤时，后续 post-sync-cleanup、docs-system-audit、A13 完成判据门禁均不受影响。
+- 清单表 7 字段齐备；②桶条目在 docs-system-audit 审计摘要中可追溯到点名结论（试点首轮：1 条②桶 → 已点名核销）。
+- 拿不准条目呈「待确认」状态而非硬分类。
+- 试点首轮数据可复现：2 版本段跨度、约 5 分钟完成、3 行反馈齐备。
+
+## 7. 风险
+
+- 多版本大跨度同步时清单成本上升：advisory 定位天然缓解（不做不阻塞）；可在口径中提示大跨度按版本分段或仅列 MINOR 及以上。
+- 旧版本段缺上游官方影响结论时需自行判读，成本升高：口径允许「待确认」兜底。
+- 四桶对新形态条目的覆盖度未经长期检验：试点反馈机制持续修正桶定义（本提案已含首轮反馈 3 行——桶判据歧义 1 处、耗时 5 分钟、漏项 1 个）。
