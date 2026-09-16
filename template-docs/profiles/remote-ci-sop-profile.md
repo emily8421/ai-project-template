@@ -53,6 +53,7 @@
 2. CI failed 时只摘失败 job / step、关键错误和链接；不要把完整长日志刷入上下文。
 3. 若失败原因无法确认与本次改动相关，先标记不确定并请用户确认，不直接扩大修复范围。
 4. Windows PowerShell / AI CLI 包装层中，复杂 `gh --jq` / `gh --template` formatter 可能被多层 shell 拆词；需要稳定只读复核 open PR / issue / Actions 时，优先用 GitHub REST API + `Invoke-WebRequest` 获取原始 JSON，再解析摘要。
+5. 编写 / 修改打包型 CI workflow 的 `paths` 触发过滤时，从 CI 产物反向枚举全部输入目录（主源码 + 内置页面 / 资源 + 依赖锁文件 + 构建配置）并逐项声明进 paths；新增产物输入目录的改动必须同步自查相关 workflow paths——防「输入目录变更 → workflow 静默不触发 → 产物与代码脱节」。
 
 ### E. Merge / Close / Delete
 

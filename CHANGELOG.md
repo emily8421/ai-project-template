@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.2（2026-09-16）
+
+C1 双提案聚合 PATCH（agent-system-template 回流 issue #463 + LUMEN_demo_T2.1 回流 issue #464；2026-09-16 triage 拍板「聚合单版、文档级零脚本」）：
+
+- **`ai/prompts/maintainers/15-post-sync-cleanup.md` §5 新增审计项「审计治理容器迁移状态（v1.67.0 前存量仓）」**（置于「母仓自留内容」项之前）：v1.67.0 引入 `project/` / `_governance/` 容器后，覆盖式同步有意不做目录迁移（`template-sync.json` 清单成员不变），存量派生仓根级 5 治理目录（`ai-records/ sync-records/ _proposals/ _archive/ _examples/`）的迁移此前无审计项驱动（agent-system-template 实证：约 8 轮同步未触发迁移，人工复盘才发现，SOP 推荐路径与实际路径持续不一致靠兼容读取兜底）。本项检查根级残留 → 建议 `git mv` 迁入容器（保留历史）并全量更新仓库内引用（`check-derived-sync.*` 禁止路径模式、project-rules §3/§4、layer-map / README、同步记录路径）；v1.67.0 后经 `new-project.sh` 初始化的项目初始即容器化，本项应为空。仅审计提示，不自动迁移、不加门禁、不改同步清单。
+- **`template-docs/profiles/remote-ci-sop-profile.md` §3.D 新增检查点 5**：编写 / 修改打包型 CI workflow 的 `paths` 触发过滤时，从 CI 产物反向枚举全部输入目录（主源码 + 内置页面 / 资源 + 依赖锁文件 + 构建配置）并逐项声明进 paths；新增产物输入目录的改动必须同步自查相关 workflow paths——防「输入目录变更 → workflow 静默不触发 → 产物与代码脱节」（LUMEN_demo_T2.1 侧桌面壳项目完整证据链实证：paths 补齐后同 PR 实测触发恢复）。
+
+两提案均文档条目增补：不改默认行为、不引入自检断言、无脚本改动；#463 可选配套（`check-derived-sync.*` 根级治理目录 advisory 提示）本轮不做，留待复发或下次触达时随 PATCH 评估。提案镜像随本 PR 入库（`_governance/_proposals/_remote-issues/issue-463.md` / `issue-464.md`），随归档 PR 移入 `_archive/`。
+
 ## v1.75.1（2026-09-15）
 
 同步跨度采用清单 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-sync-span-adoption-checklist.md`，digital-cs-demo 派生项目回流，GitHub issue #466；2026-09-15 试点拍板「试点后立案」的正式化落地）：补「跨多版本同步后，上游方法论变更在派生侧的采用状态无结构化留痕」缺口——多版本跨度易只记「同步到了 vX.Y.Z」不逐条确认采用状态，规范基线增量对应的存量核查项靠临场判断（试点实证不点名就会漏 1 项）。
