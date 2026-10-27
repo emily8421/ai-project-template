@@ -266,6 +266,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1       # 仅�
 - 被 `template-sync.json` 列入的方法论文件（`.md` / `.mdc` / `.sh` / `.ps1`；`template-sync.json` 自身用 `description` 字段承载同等声明）会在同步时被覆盖；派生项目不要直接修改这些文件，如需改进请在 `_governance/_proposals/` 起草提案并回流模板。
 - 同步文件清单以 `template-sync.json` 为准（v1.60.0 起分 `files_all` / `files_ordinary` / `files_domain` 三组，按派生路线选组：领域 `files_all ∪ files_domain`，普通 `files_all ∪ files_ordinary`）；`scripts/sync-template.sh` 会优先读取模板远端清单。
 - 同步后若 `check-derived-sync` 失败，先修复同步边界问题，再 push / PR。
+- 同步 PR 以 squash 合并的派生仓，权威边界校验时点在**推送前**：对纯同步提交跑 `check-derived-sync` 并将结果留痕于同步运行记录；squash 合并后原同步提交随分支删除，合并后在 main HEAD 上校验出现「提交信息不像同步提交 / 同步清单外变更」等失败时，对照推送前留痕判定是否为合并粒度伪影（项目自有提交与同步变更揉进同一 squash 提交所致），不要据此回改同步边界。
 - 若已经完成同步提交但不确定后续是否执行，使用 `/run sync-methodology` 的“同步后续接模式”：不要重新 dry-run / commit，先核对 `git log --oneline -8`、`VERSION`、`TEMPLATE-BASE.md`（若存在）、最近同步记录和工作区，再从 `check-derived-sync` 开始补完后续闭环。
 - 同步后进入标准闭环：`check-derived-sync` 边界验证 → `post-sync-cleanup` 整理计划 → `docs-system-audit` 同步后审计 → 项目验证建议 → 同步报告留痕。
 - 同步后整理项目内容时，另开分支执行 `ai/prompts/maintainers/15-post-sync-cleanup.md` 第一段，先只审计并输出迁移计划，不要混入同步提交；整理摘要应回写同步报告。

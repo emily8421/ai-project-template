@@ -94,6 +94,7 @@
    - 运行：git show --name-only --stat <sync-commit>。若 `HEAD` 是 PR merge commit，不要把 merge commit 当作同步提交校验。
    - 如已同步到包含 `scripts/check-derived-sync.ps1` 的版本，运行：powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1 <sync-commit>（若 `HEAD` 本身就是同步提交，可省略参数）。
    - 确认实际同步提交没有误覆盖 README.md、ai/project-rules.md、docs/00-09 或业务代码。
+   - 若同步 PR 以 squash 合并（原同步提交已随分支删除，main HEAD 是混合 squash 提交）：合并后 HEAD 校验失败可能是预期伪影，以推送前对纯同步提交的 `check-derived-sync` 结果及同步运行记录留痕为权威对照判定，不据此回改同步边界；标准做法是推送前完成边界校验并留痕（见 `git-guide.md` §5 checklist）。
 12. 执行「同步跨度采用清单」（可选，advisory；跳过不阻塞后续任何环节）：
    - 确定跨度：读 `TEMPLATE-BASE.md` 旧继承模板版本（排除）→ 目标版本（包含）；实查与用户预期不符时停止说明，不以预期覆盖实查。
    - 读跨度段：优先读同步提交带来的 `upstream/CHANGELOG.md`；缺失时读母模板仓 `CHANGELOG.md` 对应版本段。
