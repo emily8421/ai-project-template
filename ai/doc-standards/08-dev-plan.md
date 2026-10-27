@@ -57,6 +57,8 @@
 | 残留风险 | 摘要 | 风险与未验证项权威记录 |
 | 下一步 | 计划入口 | 后续验证 / 回归入口 |
 
+完成包同批检查版本回写：Sprint 收口提交应包含 `CHANGELOG.md` 与 `VERSION` 的更新（回写职责见 `ai/implementation-lifecycle-rules.md` §7.1，字段规范见 `ai/doc-standards/project-rules.md` §2.4），避免版本号滞留靠人工事后发现。
+
 ## 5. Task 模板最低要求
 
 当 Sprint 复杂到需要拆分时，`tasks/task-*.md` 至少包含任务元信息、目标、输入文档、修改范围、验证包、验收标准、禁止事项、降级 / Mock 边界、完成记录和待确认项。

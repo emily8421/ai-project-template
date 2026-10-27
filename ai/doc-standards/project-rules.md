@@ -108,6 +108,7 @@
 - `MINOR`：可感知的能力增强或里程碑交付，向后兼容。
 - `MAJOR`：不兼容变更、对外契约破坏、首上线。
 - 是否使用 git tag / GitHub Release：默认不强制。
+- 本节不止是初始值约定：Sprint 收口提交必须同批回写 `CHANGELOG.md` 并 bump `VERSION`（回写职责见 `ai/implementation-lifecycle-rules.md` §7.1）；项目可在本节细化节奏（如按功能里程碑 MINOR）。
 
 > 版本号纪律的模板侧规则见 `CONTRIBUTING.md §4`（模板版本三段式）；本节是**项目自有版本**的填写规范。`scripts/check-derived-sync.sh` / `.ps1` 校验 `VERSION` 与 `CHANGELOG.md` 顶部一致。
 

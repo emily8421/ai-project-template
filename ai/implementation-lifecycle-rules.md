@@ -168,7 +168,7 @@ Sprint / Task 完成后必须形成最小完成包：改动文件、验证命令
 
 | 触发 | 必须检查 / 回写 |
 |---|---|
-| Sprint 完成 | `08` 状态 / 下一步、`09` 验收记录 / Sprint 验收包、残留风险 |
+| Sprint 完成 | `08` 状态 / 下一步、`09` 验收记录 / Sprint 验收包、残留风险、`CHANGELOG.md`（存在 `CHANGELOG-PLAIN.md` 时同步）与 `VERSION`——版本回写与完成包同批提交（0.x 阶段 Sprint 收口 bump MINOR、纯修复 bump PATCH），不靠人工事后发现 |
 | Bug 修复 | `09` 缺陷与回归记录、相关 TC 状态、`08` 当前进度 |
 | Mock / 降级验收 | `09` 条件通过 / 风险接受、`08` 后续补齐任务 |
 | Phase 验收 | `03` Phase 状态、`08` Phase 完成情况、`09` Phase 验收、`project-rules` 当前阶段 |
