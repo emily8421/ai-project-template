@@ -96,24 +96,24 @@
 
 ## 4. 现有机制登记
 
-下表登记模板中已经存在的 14 类机制。机制编号用于稳定引用；“负责人”只表示职责归属，不表示已经创建独立 Agent。
+下表登记模板中已经存在的 14 类机制。机制编号用于稳定引用；“负责人”只表示职责归属，不表示已经创建独立 Agent。机制带生命周期管理（提案 `TEMPLATE-UPGRADE-governance-decoupling.md` Phase 1）：状态与退役条件列使机制可进可出，审计节奏见 §9。
 
-| ID | 机制 | 负责人 | 什么时候使用 | 主要依据 | 产出和边界 | 如何确认完成 |
-|---|---|---|---|---|---|---|
-| `MECH-CORE-001` | 判断任务类型并选择规则 | 任务协调 | 开始分析、设计、编码或任何会改变状态的任务时；只读取续接点时可走快速恢复 | `AGENTS.md`、`ai/index.md`、`ai/rules-core.md` | 选出本次必读规则；本机制本身不修改业务文件 | 入口链接有效，模板自检通过 |
-| `MECH-CORE-002` | 写入确认与检查点模式 | 任务协调 | 写入前；批量搜索后；命令失败、超时或遇到高风险远端操作时 | `ai/rules-core.md`、`ai/project-rules.md`、`ai/session-rules.md` | 说明修改范围、风险和验证方式；需要暂停时先汇报，不得越权继续 | 人工确认已取得，检查点要求已执行 |
-| `MECH-CORE-003` | 会话续接与历史整理 | 任务协调 | 多步骤任务、会话中断、切换工具或上下文可能不足时；单轮轻量问答可不建立续接文件 | `ai/session-rules.md`、`.ai/session-handoff.md` | 更新 `.ai/` 下的本地运行记录；不得用续接摘要替代 Git 和正式任务记录 | 新会话能按续接文件和 Git 状态恢复任务 |
-| `MECH-DOC-001` | 文档生成、追溯和变更传播 | 文档负责人 | 新建文档体系、需求变化、设计落盘或跨文档影响时；不改变外部约定的代码内部重构可按规则裁剪 | `ai/document-lifecycle-rules.md`、`ai/doc-standards/*`、`docs/00-09` | 只修改已授权文档并维护上下游关系；不得虚构事实或新增未授权需求 | 文档检查通过，人工评审确认内容准确 |
-| `MECH-DOC-002` | 文档评估和待确认事项处理 | 文档负责人 | 输入评审、文档审计、完成度评估或待确认事项处理时；未获写入确认时只分析 | `ai/commands/docs-system-audit.md`、`ai/prompts/review/19-docs-evaluation.md`、`ai/prompts/docs/21-docs-open-items.md` | 先列缺口、证据和待确认项；用户确认后再修改正式文档 | Markdown 检查通过，待确认项有明确状态和回填位置 |
-| `MECH-IMPL-001` | 阶段、Sprint、任务和系统骨架执行 | 实现负责人 | 环境准备、系统骨架、编码、修复或任务收口时；仅做文档评估时不使用 | `ai/implementation-lifecycle-rules.md`、`ai/commands/run-dev-task.md`、`docs/08-dev-plan.md`、`tasks/*` | 修改已授权代码和任务记录；不得绕过进入条件或扩大任务范围 | 项目要求的测试、lint、build 和任务验收通过 |
-| `MECH-VER-001` | 测试、验收和回归 | 测试验收负责人 | 实现完成、发布前、回归或用户要求验收时；没有可验证对象时只记录缺口 | `ai/implementation-lifecycle-rules.md`、`docs/09-verification.md`、`project/tests/*` | 记录实际执行的测试和结果；不得把未运行或仍在等待的检查写成通过 | 测试证据可复核，失败和未验证项已明确列出 |
-| `MECH-KNOW-001` | 整理决策、调研和会议结论 | 知识记录负责人 | 出现新决策、研究证据、会议结论或需求依据时；临时推测不能直接写入权威文档 | `template-docs/maintainer/rd-data-chain.md`（模板仓文档）、`docs/research/*`、`docs/decisions/*`、`docs/meetings/*` | 记录来源、结论、影响和引用关系；不得把摘要冒充原始材料 | 来源和链接可核对，长期事实已回写正确位置 |
-| `MECH-KNOW-002` | 记录 AI 使用中的问题和可复用经验 | 知识记录负责人 | 出现重复错误、明显低效或高 token 消耗时；一次性且不可复用的问题可不沉淀 | `ai/session-rules.md`、`_governance/ai-records/*`、`.ai/token-hotspots/*`、`.ai/pitfalls/*` | 写入本地观察或受控汇总；观察记录不能自动升级为强制规则 | 记录已去重、有证据，并按规定检查是否需要汇总 |
-| `MECH-GOV-001` | 模板提案、评审、PR 和归档 | 模板维护者 | 修改模板机制、规则入口、同步范围或广泛行为时；派生项目的局部实现按项目规则处理 | `CONTRIBUTING.md`、`MAINTAINERS.md`、`_governance/_proposals/*` | 记录提案和评审；合并后归档；远端状态变更必须单步确认 | diff、评审和 PR / CI 结果符合发布要求 |
-| `MECH-GOV-002` | 版本和发布记录 | 模板维护者 | 下游可见的模板变更准备发布时；只新增提案或本地观察时不单独升版 | `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md`、`MAINTAINERS.md` | 同一批更新版本号、详细变更记录和大白话变更记录；发布前不得写成已经发布 | 版本号一致，模板自检通过 |
-| `MECH-GOV-003` | 下行同步和派生项目检查 | 模板维护者 | 模板内容下行、派生项目升级或同步范围变化时；普通项目开发不使用 | `template-sync.json`、`scripts/sync-template.*`、`scripts/check-derived-sync.*`、`git-guide.md` | 默认预览差异；提交模式会覆盖、暂存并提交同步文件，必须单步确认 | 同步检查和派生项目边界检查通过 |
-| `MECH-PROFILE-001` | 按场景读取专项说明 | 任务协调和对应分区负责人 | `ai/index.md` 判断任务命中某个专项场景时；未命中时不默认读取 | 本文件、`ai/index.md`、各 `template-docs/*profile*` | 只增加该场景需要的说明和检查，不另建一套全局规则 | 专项入口、引用和最低检查项有效 |
-| `MECH-REMOTE-001` | 远端操作和 CI 检查 | 任务协调和模板维护者 | push、PR、issue、分支删除、release 或 CI 查询时；纯本地编辑不使用 | 本文件 §6、`template-docs/profiles/remote-ci-sop-profile.md`、`git-guide.md`、`SOP.md`、`scripts/check-github-context.ps1` | 先做只读预检，再逐项确认会改变远端状态的动作；不得绕过认证、权限或网络限制 | 预检结果明确；CI 结果按通过、失败或等待中如实记录 |
+| ID | 机制 | 负责人 | 什么时候使用 | 主要依据 | 产出和边界 | 如何确认完成 | 状态 | 退役条件 | 最近审计 |
+|---|---|---|---|---|---|---|---|---|---|
+| `MECH-CORE-001` | 判断任务类型并选择规则 | 任务协调 | 开始分析、设计、编码或任何会改变状态的任务时；只读取续接点时可走快速恢复 | `AGENTS.md`、`ai/index.md`、`ai/rules-core.md` | 选出本次必读规则；本机制本身不修改业务文件 | 入口链接有效，模板自检通过 | active | 路由入口被替代且旧入口移除 | 2026-10-29（登记） |
+| `MECH-CORE-002` | 写入确认与检查点模式 | 任务协调 | 写入前；批量搜索后；命令失败、超时或遇到高风险远端操作时 | `ai/rules-core.md`、`ai/project-rules.md`、`ai/session-rules.md` | 说明修改范围、风险和验证方式；需要暂停时先汇报，不得越权继续 | 人工确认已取得，检查点要求已执行 | active | 无独立退役条件；随确认 / 检查点规则重构评估 | 2026-10-29（登记） |
+| `MECH-CORE-003` | 会话续接与历史整理 | 任务协调 | 多步骤任务、会话中断、切换工具或上下文可能不足时；单轮轻量问答可不建立续接文件 | `ai/session-rules.md`、`.ai/session-handoff.md` | 更新 `.ai/` 下的本地运行记录；不得用续接摘要替代 Git 和正式任务记录 | 新会话能按续接文件和 Git 状态恢复任务 | active | 续接机制被新会话协议替代 | 2026-10-29（登记） |
+| `MECH-DOC-001` | 文档生成、追溯和变更传播 | 文档负责人 | 新建文档体系、需求变化、设计落盘或跨文档影响时；不改变外部约定的代码内部重构可按规则裁剪 | `ai/document-lifecycle-rules.md`、`ai/doc-standards/*`、`docs/00-09` | 只修改已授权文档并维护上下游关系；不得虚构事实或新增未授权需求 | 文档检查通过，人工评审确认内容准确 | active | 文档生命周期规则被重写替代 | 2026-10-29（登记） |
+| `MECH-DOC-002` | 文档评估和待确认事项处理 | 文档负责人 | 输入评审、文档审计、完成度评估或待确认事项处理时；未获写入确认时只分析 | `ai/commands/docs-system-audit.md`、`ai/prompts/review/19-docs-evaluation.md`、`ai/prompts/docs/21-docs-open-items.md` | 先列缺口、证据和待确认项；用户确认后再修改正式文档 | Markdown 检查通过，待确认项有明确状态和回填位置 | active | 评估 / 审计命令体系重构 | 2026-10-29（登记） |
+| `MECH-IMPL-001` | 阶段、Sprint、任务和系统骨架执行 | 实现负责人 | 环境准备、系统骨架、编码、修复或任务收口时；仅做文档评估时不使用 | `ai/implementation-lifecycle-rules.md`、`ai/commands/run-dev-task.md`、`docs/08-dev-plan.md`、`tasks/*` | 修改已授权代码和任务记录；不得绕过进入条件或扩大任务范围 | 项目要求的测试、lint、build 和任务验收通过 | active | 实现 / 验证域重组时随域重新归属（联动 §9 载体评估） | 2026-10-29（登记） |
+| `MECH-VER-001` | 测试、验收和回归 | 测试验收负责人 | 实现完成、发布前、回归或用户要求验收时；没有可验证对象时只记录缺口 | `ai/implementation-lifecycle-rules.md`、`docs/09-verification.md`、`project/tests/*` | 记录实际执行的测试和结果；不得把未运行或仍在等待的检查写成通过 | 测试证据可复核，失败和未验证项已明确列出 | active | verification 独立规则落地后随域重新归属 | 2026-10-29（登记） |
+| `MECH-KNOW-001` | 整理决策、调研和会议结论 | 知识记录负责人 | 出现新决策、研究证据、会议结论或需求依据时；临时推测不能直接写入权威文档 | `template-docs/maintainer/rd-data-chain.md`（模板仓文档）、`docs/research/*`、`docs/decisions/*`、`docs/meetings/*` | 记录来源、结论、影响和引用关系；不得把摘要冒充原始材料 | 来源和链接可核对，长期事实已回写正确位置 | active | rd-data-chain 数据链载体重构替代 | 2026-10-29（登记） |
+| `MECH-KNOW-002` | 记录 AI 使用中的问题和可复用经验 | 知识记录负责人 | 出现重复错误、明显低效或高 token 消耗时；一次性且不可复用的问题可不沉淀 | `ai/session-rules.md`、`_governance/ai-records/*`、`.ai/token-hotspots/*`、`.ai/pitfalls/*` | 写入本地观察或受控汇总；观察记录不能自动升级为强制规则 | 记录已去重、有证据，并按规定检查是否需要汇总 | active | 观察记录并入其他域且本地记录目录退役 | 2026-10-29（登记） |
+| `MECH-GOV-001` | 模板提案、评审、PR 和归档 | 模板维护者 | 修改模板机制、规则入口、同步范围或广泛行为时；派生项目的局部实现按项目规则处理 | `CONTRIBUTING.md`、`MAINTAINERS.md`、`_governance/_proposals/*` | 记录提案和评审；合并后归档；远端状态变更必须单步确认 | diff、评审和 PR / CI 结果符合发布要求 | active | 治理流程重写（CONTRIBUTING 替代） | 2026-10-29（登记） |
+| `MECH-GOV-002` | 版本和发布记录 | 模板维护者 | 下游可见的模板变更准备发布时；只新增提案或本地观察时不单独升版 | `VERSION`、`CHANGELOG.md`、`CHANGELOG-PLAIN.md`、`MAINTAINERS.md` | 同一批更新版本号、详细变更记录和大白话变更记录；发布前不得写成已经发布 | 版本号一致，模板自检通过 | active | 版本治理机制变更 | 2026-10-29（登记） |
+| `MECH-GOV-003` | 下行同步和派生项目检查 | 模板维护者 | 模板内容下行、派生项目升级或同步范围变化时；普通项目开发不使用 | `template-sync.json`、`scripts/sync-template.*`、`scripts/check-derived-sync.*`、`git-guide.md` | 默认预览差异；提交模式会覆盖、暂存并提交同步文件，必须单步确认 | 同步检查和派生项目边界检查通过 | active | 同步协议重写（template-sync 变更） | 2026-10-29（登记） |
+| `MECH-PROFILE-001` | 按场景读取专项说明 | 任务协调和对应分区负责人 | `ai/index.md` 判断任务命中某个专项场景时；未命中时不默认读取 | 本文件、`ai/index.md`、各 `template-docs/*profile*` | 只增加该场景需要的说明和检查，不另建一套全局规则 | 专项入口、引用和最低检查项有效 | active | Profile 体系退役 | 2026-10-29（登记） |
+| `MECH-REMOTE-001` | 远端操作和 CI 检查 | 任务协调和模板维护者 | push、PR、issue、分支删除、release 或 CI 查询时；纯本地编辑不使用 | 本文件 §6、`template-docs/profiles/remote-ci-sop-profile.md`、`git-guide.md`、`SOP.md`、`scripts/check-github-context.ps1` | 先做只读预检，再逐项确认会改变远端状态的动作；不得绕过认证、权限或网络限制 | 预检结果明确；CI 结果按通过、失败或等待中如实记录 | active | 远端 SOP Profile 退役或 CI 体系更换 | 2026-10-29（登记） |
 
 ## 5. 多项机制同时适用时怎么处理
 
@@ -125,6 +125,26 @@
 - **当前没有五个独立 Agent**：这些负责人目前由执行任务的 Agent 按阶段承担。是否创建独立 Agent 属于后续决策，本文件不提前设定。
 - **工具说明下行**：工具登记位于 `scripts/README.md`，自 v1.65.0 起该文件已进入 `template-sync.json` 随模板下行（原「不在同步清单」缺口已关闭，见 `scripts/README.md` §5.2）。
 - **文档同步边界（v1.66.0 起）**：`template-docs/` 文档按消费者划分——模板仓专用文档（`e2e-regression-checklist.md`、`e2e-report-template.md`、`rd-data-chain.md`）不下行；`domain-derived-scenarios-template.md` 仅领域路线下行（files_domain）。派生项目侧这些文件的旧版本残留随 post-sync-cleanup 孤儿审计清理（提案 `_governance/_proposals/TEMPLATE-UPGRADE-template-docs-reorg.md`）。
+
+### 5.1 域间交接契约
+
+五个治理域与本文件 §3 工作分区的对应：协调层（任务协调）、文档体系（文档）、编码实现与验证（实现 + 测试验收）、知识沉淀（知识记录）、模板演进（模板维护）；专项说明为横切支持。域间协作除遵守本节上方各条外，正式交接使用以下字段（提案 `TEMPLATE-UPGRADE-governance-decoupling.md` Phase 1；字段吸收自 governance-handbook 提案 §5.5 草案）：
+
+| 字段 | 说明 |
+|---|---|
+| 权威输入 | 本次交接依据的文件与章节，不依赖对话记忆 |
+| 请求动作 | 接收域要完成什么 |
+| 允许范围 | 接收方可读 / 可写路径与边界 |
+| 禁止事项 | 不得顺带完成什么 |
+| 完成条件 | 可核对的输出与验收标准 |
+| 回传证据 | 文档、测试、commit、PR 或记录位置 |
+| 人工确认 | 是否需要、由谁确认、阻塞关系 |
+
+交接规则：
+
+1. 先在本域内完成工作；跨域修改前先列影响清单与修改顺序，再取得相应授权（与上方“跨分区修改前重新确认”同口径）。
+2. 交接不等于自动触发：一个域的完成不会自动启动另一个域的动作。
+3. 失败回退按责任域路由：需求 / 设计缺口回文档域，实现缺陷回实现域，验证环境或证据缺失保留未验证状态交协调层处理；通用模板缺口由知识域提候选、走 `MECH-GOV-001` 提案通道。
 
 ## 6. 远端操作与 CI 专项说明
 
@@ -233,3 +253,6 @@
 - 修改权威规则后，检查本文是否需要同步更新；不得让本文保留失效路径或错误说明。
 - 新增同步范围内的文件时，必须更新 `template-sync.json`、`scripts/sync-template.sh` 的备用清单和 `scripts/check-template.*` 的检查项。
 - 只新增 `_governance/_proposals/` 分析时不递增版本；修改本文件并影响派生项目可见说明时，按实际发布影响更新版本和 CHANGELOG。
+- **新机制准入四问**（提案 `TEMPLATE-UPGRADE-governance-decoupling.md` Phase 1）：新增机制前必须回答——归哪个域、触发点挂在哪、谁验收、何时可退役；四问不全不进 §4 登记表。
+- **机制生命周期与退役**：§4 状态列语义与 `scripts/README.md` 工具侧同款（candidate / experimental / active / deprecated / retired）；机制退役先标 `deprecated`（声明替代机制与迁移窗口），消费者全部迁移后转 `retired` 并从登记表移除；退役需同步迁移消费者入口、更新本表并记入 CHANGELOG。
+- **半年度机制审计**：每年 6 月 / 12 月窗口各做一次，重大机制变更时临时触发；逐项核对十条审计维度——所有权冲突、触发冲突、事实源双写、循环依赖、状态升级越权、验证缺口、孤儿机制（无消费者）、过期机制（有替代仍 active）、范围泄漏、失败扩散；审计结论写 `_governance/ai-records/`，修正与退役走后续 PATCH，不在审计轮搭车。首轮登记时间 2026-10-29，首个审计窗口 2026-12。

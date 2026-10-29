@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.6（2026-10-29）
+
+C1 治理提案 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-governance-decoupling.md`；2026-10-29 维护者拍板 DC-001~DC-004 全按 AI 建议，提案本体已随 #488 入库）：治理机制解耦管理 **Phase 1（契约层）**——补机制生命周期与域间契约，回应「机制只进不出」的体系膨胀结构性根因（工具侧 TOOL-* 有生命周期而机制侧 MECH-* 没有）。
+
+- `template-docs/capability-packages.md`：§4 机制登记表扩三列——`状态`（candidate/experimental/active/deprecated/retired，与工具侧同款语义）+ `退役条件` + `最近审计`，14 机制首轮登记 active（2026-10-29）；§5.1 新增「域间交接契约」——五域对照（协调 / 文档体系 / 编码实现与验证 / 知识沉淀 / 模板演进 ↔ §3 七分区）+ 交接单七字段（权威输入 / 请求动作 / 允许范围 / 禁止事项 / 完成条件 / 回传证据 / 人工确认；字段吸收自 governance-handbook 提案 §5.5 草案）+ 交接三规则（先本域后跨域、跨域先列影响清单、失败按责任域回退）；§9 维护要求补三条——新机制准入四问（归哪个域 / 触发点挂哪 / 谁验收 / 何时可退役，四问不全不进表）、半年度机制审计节奏（6 / 12 月窗口 + 重大变更临时触发，十条审计维度内联：所有权 / 触发 / 事实源 / 循环依赖 / 状态升级 / 验证缺口 / 孤儿 / 过期 / 范围泄漏 / 失败扩散）、退役规则（deprecated 声明替代与迁移窗口 → 消费者迁移后 retired，退役需迁移消费者 + 更新登记表 + CHANGELOG）。
+- `ai/global-rules.md`（全局规则自身版本 v1.16 → v1.17）：各章节首行下补 `> 域：X` 标注（§1-§3 实现 / §4 验证 / §5-§10 横切·协调·文档·演进），文件头部补图例一句（DC-002 搭车项）；标题文字不变，防断言与章节级标注漂移。
+- 边界：纯文档与人读登记，不新增 check-template 断言（rd-data-chain §4 / GOV-C-007「首批人工」口径维持）、不改同步清单、不建 Agent、不并发、不拆规则文件——载体层三处混合（session-rules 协调+知识 / implementation 实现+验证 / document-lifecycle 文档+评审码）按提案 §3.3 触发条件挂账（Phase 3 实证后另行立项）；派生项目零迁移、零门禁（`capability-packages.md` 已在 files_all）。后续：Phase 2 首轮机制审计（2026-12 窗口，advisory）；本提案多阶段在途，不随 Phase 1 归档。
+
 ## v1.75.5（2026-10-29）
 
 C1 单提案 PATCH（LumiOne-Framework 派生项目回流 issue #484；2026-10-29 triage 拍板「仅方向 A、方向 B 留观察」）：同步 PR 收尾件与 squash 合并后边界校验的粒度冲突——SOP 自身要求的收尾提交（提案归档移动、同步运行记录、种子文件联动清理）与同步提交进入同一 PR、squash 合并后，project-check.yml 的合并后边界校验（`check-derived-sync.sh HEAD`）会把收尾件报为清单外变更，每次此类同步在 main 必然红 CI（#478 v1.75.4 统一规范 subject 后该场景常态化）。
