@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.5（2026-10-29）
+
+C1 单提案 PATCH（LumiOne-Framework 派生项目回流 issue #484；2026-10-29 triage 拍板「仅方向 A、方向 B 留观察」）：同步 PR 收尾件与 squash 合并后边界校验的粒度冲突——SOP 自身要求的收尾提交（提案归档移动、同步运行记录、种子文件联动清理）与同步提交进入同一 PR、squash 合并后，project-check.yml 的合并后边界校验（`check-derived-sync.sh HEAD`）会把收尾件报为清单外变更，每次此类同步在 main 必然红 CI（#478 v1.75.4 统一规范 subject 后该场景常态化）。
+
+- `ai/prompts/maintainers/12-sync-template.md`：收尾门禁前新增「同步 PR 边界」段——同步 PR 只包含同步提交；步骤 16-17 提案归档移动、步骤 21 同步运行记录、种子文件联动清理等收尾提交拆到合并后的后续小 PR / 提交执行，合并后 HEAD 即纯同步提交，边界校验天然通过；仍失败时按 `git-guide.md` §5 checklist squash 校验时点口径裁决。
+- `git-guide.md` §5.5：新增同口径 bullet（与既有 squash 校验时点指引相邻，构成「源头消除 + 失败裁决」互补两层）。
+- 边界：纯文档指引，不改 `check-derived-sync.*` 豁免逻辑（方向 B 不做——对清单外 rename 对 / sync-records 豁免会削弱种子文件保护边界，方向 A 源头消除后留观察）、不改 subject 正则与 project-check.yml 触发机制、无自检断言新增；存量派生项目无迁移义务，对未来同步生效。镜像 `issue-484.md` 随本 PR 入库，随归档 PR 移入 `_archive/`。同 PR 归档已处理提案 `TEMPLATE-UPGRADE-changelog-plain-version-assert.md`（CHANGELOG-PLAIN↔VERSION 双文件断言已于 #459 实施落地、自检 2112→2114 实证，处理记录在提案内；纯归档 chore）。
+
 ## v1.75.4（2026-10-27）
 
 C1 三提案聚合 PATCH（web-ui-knowledge-base issue #478 / LumiOne-Framework issue #479 / gmbl_project issue #481 派生项目回流；2026-10-27 triage 拍板「聚合单 PR、#478 收窄采纳、#479 定级 PATCH」）：三份均为文档条目增补，互不重叠、无脚本改动、无自检断言新增。
