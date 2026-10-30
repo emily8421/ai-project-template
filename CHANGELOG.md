@@ -6,7 +6,7 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
-## v1.75.6（2026-10-29）
+## v1.75.6（2026-10-30）
 
 C1 治理提案 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-governance-decoupling.md`；2026-10-29 维护者拍板 DC-001~DC-004 全按 AI 建议，提案本体已随 #488 入库）：治理机制解耦管理 **Phase 1（契约层）**——补机制生命周期与域间契约，回应「机制只进不出」的体系膨胀结构性根因（工具侧 TOOL-* 有生命周期而机制侧 MECH-* 没有）。
 
