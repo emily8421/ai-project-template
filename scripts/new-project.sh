@@ -206,6 +206,7 @@ rm -f "$TARGET/scripts/check-template.sh" \
      "$TARGET/scripts/check-template.ps1" \
      "$TARGET/scripts/sync-all-derived.sh" \
      "$TARGET/scripts/e2e-sync-check.sh" \
+     "$TARGET/scripts/check-registry-drift.ps1" \
      "$TARGET/scripts/new-project.sh"
 
 # 模板仓 / 领域专用文档裁剪（v1.66.0 起不进 files_all，git archive 全量复制后须显式删除）：

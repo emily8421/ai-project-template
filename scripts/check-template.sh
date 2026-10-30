@@ -2088,6 +2088,7 @@ check_scripts_sync_boundary() {
     "scripts/sync-all-derived.sh"
     "scripts/e2e-sync-check.sh"
     "scripts/new-project.sh"
+    "scripts/check-registry-drift.ps1"
   )
   for template_only in "${template_only_scripts[@]}"; do
     require_file "$template_only"

@@ -2,14 +2,14 @@
 
 > Sync notice: 本文件由 ai-project-template 模板同步维护，派生项目同步时会被覆盖；不应直接修改，通用改进请经 _governance/_proposals/ 回流模板仓库。
 
-本目录放 `ai-project-template` 的自动化脚本：下行同步、同步验收、环境采集与检查、一键安装、提交卫生检查；模板仓侧另有自检、批量同步、发布回归与建项目入口（不下行）。
+本目录放 `ai-project-template` 的自动化脚本：下行同步、同步验收、环境采集与检查、一键安装、提交卫生检查；模板仓侧另有自检、批量同步、发布回归、建项目入口与登记对账（不下行）。
 
 ## 1. 登记口径与同步边界
 
 工具按真实消费者分为两组（v1.65.0 起，提案 `_governance/_archive/proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`）：
 
 - **随模板下行（8 类能力 / 10 个文件）**：进 `template-sync.json` `files_all`，派生项目同步时获得并被覆盖更新。本 README 随组下行。
-- **模板仓专用（4 类能力 / 5 个文件）**：`check-template.sh` / `check-template.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`。仅存在于模板仓（本目录可见），不下行、不进同步清单；派生项目不应使用，也不应长期保留历史版本残留（见 §5 孤儿清理）。
+- **模板仓专用（5 类能力 / 6 个文件）**：`check-template.sh` / `check-template.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`、`check-registry-drift.ps1`。仅存在于模板仓（本目录可见），不下行、不进同步清单；派生项目不应使用，也不应长期保留历史版本残留（见 §5 孤儿清理）。
 
 本注册表描述工具当前行为，不授予执行权限，也不改变退出码、默认参数、同步范围或自动化门禁。执行前仍须遵守 `ai/rules-core.md`、`ai/session-rules.md`、`SOP.md` 和 `git-guide.md` 的确认要求。
 
@@ -36,6 +36,7 @@
 | `TOOL-SYNC-003` | 批量同步父目录下的派生项目 | `sync-all-derived.sh` | 模板仓（指向派生父目录） | Governance | 维护者；`MAINTAINERS.md` C8、`git-guide.md` | Active |
 | `TOOL-RELEASE-001` | 同步链路端到端回归 | `e2e-sync-check.sh` | 仅模板仓 | Governance / Verification | 维护者、发布流程；`MAINTAINERS.md` C3 | Active |
 | `TOOL-PROJECT-001` | 从模板创建项目 | `new-project.sh` | 模板仓或任意可访问模板的位置 | Governance / Setup | 使用者（在模板仓侧运行）；`ai/commands/new-project.md`（命令文档随行下行）、`git-guide.md` | Active |
+| `TOOL-GOV-001` | 派生登记对账（registry ↔ 各仓 TEMPLATE-BASE） | `check-registry-drift.ps1` | 仅模板仓（只读本机各派生仓） | Governance | 维护者；C1 triage 开头、半年度机制审计、派生同步窗口收尾；提案 `TEMPLATE-UPGRADE-registry-writeback-enforcement` | Active |
 
 ### 2.3 运行契约
 
@@ -53,6 +54,7 @@
 | `TOOL-SYNC-003` | 父目录；默认 `--dry-run`，可选 `--commit` | 扫描派生仓；dry-run 汇总，commit 模式调用各项目同步并提交；访问模板远端 | `--commit` 会跨多个仓库写入和提交，必须单步确认并先检查脏状态 | 单一 Bash 实现；子任务或环境失败即非零退出 |
 | `TOOL-RELEASE-001` | 模板仓 | 在临时目录构造派生场景，组合模板自检与批量同步 dry-run；不改真实派生项目 | 低风险本地回归，但依赖 Bash、Git 和临时目录能力 | 单一 Bash 实现；`0` 通过，非零失败 |
 | `TOOL-PROJECT-001` | 项目名；可选 `--account`、`--visibility`、`--no-examples`、`--local`、`--no-remote`、`--shape` | 创建目录、复制 / 克隆模板、裁剪（含删除模板仓专用脚本）、初始化 Git 并提交；未加 `--no-remote` 时还可建远端并 push | 高风险写入；创建目标、切换账号、建远端和 push 均须核对目标并确认 | 单一 Bash 实现；任一步失败即非零退出 |
+| `TOOL-GOV-001` | 可选 `-RegistryPath`（默认仓内 registry.md） | 只读比对登记 Inherited 与各仓 TEMPLATE-BASE 同步版本，输出差异表；不写文件、不联网、不自动回写 | 低风险只读；漂移仅提示，处置由维护者决定 | 单一 PowerShell 实现；`0` 全部一致，`1` 存在漂移，`2` 结构性错误 |
 
 > 注意：`check-template.*` 是**模板仓**自检（不下行），`check-derived-sync.*` 才是**派生项目**同步验收。派生项目若发现 `scripts/` 中存在 `check-template.*` 等模板仓专用脚本，属历史版本下行残留，可安全删除（见 §5）。
 
