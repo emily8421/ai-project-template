@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.7（2026-10-30）
+
+C1 治理 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-registry-writeback-enforcement.md`；2026-10-30 维护者拍板「①+②组合」，③推式上报挂多机 / 多用户触发）：registry 回写挂钩 + 母仓登记对账——治 stale-shared-state 弱触发第三次实证（08-27~09-16 LUMEN 4 轮、09-19 v1.75.3 轮 3 仓全漏、10-30 窗口 2 仓漏 + zhiyan 未同步，均靠人工实查补登 PR #475 / #492）。
+
+- `ai/prompts/maintainers/12-sync-template.md`：收尾门禁 A13 完成判据矩阵覆盖清单补「母仓 registry 回写登记」项（挂钩现行步骤 6）——未回写必须标 `部分完成` 并列补登路径，不得标 `完成`。治「有步骤、无判据」：同步会话收尾时强制核对回写状态。
+- `ai/prompts/maintainers/11-template-proposal-summary.md`：分析要求新增第 10 条「先期状态核实」——提案声称的缺口先核实现行版本是否已修复（#478 实证 v1.54.3 先期修复），引用的姊妹提案 / 文件先核实存在性（#485 实证悬空引用）；引用失真标注校正，不直接采信提案表述。
+- `scripts/check-registry-drift.ps1`（新增，模板仓专用）：只读对账 registry `Inherited` ↔ 各仓 TEMPLATE-BASE `Current synced template version`，输出差异表；`0` 一致 / `1` 漂移 / `2` 结构错误。挂载时点：C1 triage 开头、半年度机制审计、派生同步窗口收尾。把「人工发现漂移」变为例行点名（拉式感知；推式上报按维护者拍板挂多机 / 多用户触发，暂不做）。
+- `scripts/check-template.sh`：`check_scripts_sync_boundary` 模板专用脚本数组补新脚本（+3 断言，自检 2114 → 2117）；`scripts/new-project.sh` 裁剪名单同步；`scripts/README.md` §1 计数 5 类 / 6 文件 + §2.2 登记 `TOOL-GOV-001` + §2.3 运行契约补行。
+- 边界：advisory 工具只报不修；对账脚本不进同步清单、不进 CI、不自动回写；不新增其他 check-template 内容断言（rd-data-chain §4 / GOV-C-007 口径）；派生项目零影响（new-project 裁剪 + 同步清单不含）。
+
 ## v1.75.6（2026-10-30）
 
 C1 治理提案 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-governance-decoupling.md`；2026-10-29 维护者拍板 DC-001~DC-004 全按 AI 建议，提案本体已随 #488 入库）：治理机制解耦管理 **Phase 1（契约层）**——补机制生命周期与域间契约，回应「机制只进不出」的体系膨胀结构性根因（工具侧 TOOL-* 有生命周期而机制侧 MECH-* 没有）。
