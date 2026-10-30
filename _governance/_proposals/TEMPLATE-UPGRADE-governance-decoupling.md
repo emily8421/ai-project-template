@@ -137,3 +137,4 @@
 
 - 2026-10-29：评估会话（两轮：治理机制全面评估 + 五域解耦补充评估）后落盘本提案；评估证据均基于 v1.75.5 当日实查（capability-packages / session-rules / global-rules / implementation-lifecycle / document-lifecycle 章节结构、check-template :1818-1823 / :1070-1081 断言现状、12-sync-template A13 矩阵字段清单）。待维护者拍板 DC-001~DC-004 后进入 Phase 1。
 - 2026-10-29：维护者拍板 DC-001~DC-004 **全按 AI 建议**（Phase 1 立项 / 域标签搭车 / 载体层维持实证口径 / 审计定半年度）；同拍板确认提案文件先行 chore PR 入库（收件箱增长，无版本递增），Phase 1 随后单独 PATCH PR 实施。
+- 2026-10-29：提案入库（PR #488，squash `5660fc7`）。Phase 1 同日实施（v1.75.6 PATCH）：capability-packages §4 三列扩表（14 机制首轮 active 登记）+ §5.1 交接契约（七字段 + 三规则）+ §9 准入四问 / 半年度审计（十条维度内联）/ 退役规则；global-rules 各章节 `> 域：X` 标签 + 图例（全局规则版本 v1.16 → v1.17）；DC-002 落地为标题下一行标注式（标题文字不变，规避 :1210 类标题断言风险）。本提案多阶段在途，Phase 1 落地后不归档；Phase 2 首个审计窗口 2026-12。
