@@ -28,14 +28,16 @@
 
 当你同时打开模板仓库和多个派生项目，或多个 AI CLI / 终端并行工作时，在任何 `git push`、`gh pr create`、`gh pr merge`、`git pull` 合并、tag / release 前，先确认当前上下文：
 
+> PowerShell 调用总则（本文件各 `powershell` 示例适用）：优先 `powershell -NoProfile -File <script> ...`（无 bypass）运行；仅当脚本报「此系统上禁止运行脚本」类加载错误时，再改用 `-ExecutionPolicy Bypass` 重试。AI CLI 权限管控通常拦截 bypass 形式，`CurrentUser = RemoteSigned` 且脚本无 Mark-of-the-Web 时无 bypass 即可运行。
+
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1
+powershell -NoProfile -File scripts/check-github-context.ps1
 ```
 
 如已知目标仓库，可加期望 owner / repo 做只读校验：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1 -ExpectedOwner <owner> -ExpectedRepo <repo>
+powershell -NoProfile -File scripts/check-github-context.ps1 -ExpectedOwner <owner> -ExpectedRepo <repo>
 ```
 
 预检只读输出：当前 repo root、分支、origin、Git 提交身份、工作区状态、`gh auth status` 和 `gh repo view` 权限。它不会切账号、不会改 remote、不会 push / merge。若预检发现账号无权限、remote 不符合预期、工作区有未确认改动或 `gh repo view` 失败，应先停止并说明，不要继续执行远端操作。
@@ -79,9 +81,9 @@ powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1 -Expec
 git status
 git diff
 git diff --check
-powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records  # 模板仓 Markdown 提案 / 记录预检
+powershell -NoProfile -File scripts/check-markdown-clean.ps1 _proposals ai-records  # 模板仓 Markdown 提案 / 记录预检
 # 运行项目对应验证命令，例如：bash scripts/check-template.sh / npm test / pytest
-powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1  # push / PR 前只读预检
+powershell -NoProfile -File scripts/check-github-context.ps1  # push / PR 前只读预检
 git add <文件路径>
 git commit -m "类型: 简短说明"
 git push -u origin <当前分支名>   # 首次推送该分支
@@ -205,7 +207,7 @@ git show --name-only --stat HEAD
 检查最新同步提交没有误覆盖 `README.md`、`ai/project-rules.md`、`docs/00-09` 或业务代码。旧派生项目首次同步到新版脚本后，不要停在同步提交；应继续读取新同步到的 `ai/prompts/maintainers/12-sync-template.md`，按标准闭环完成边界验证、同步后整理、文档体系审计、项目验证建议和同步运行记录。同步到包含 `scripts/check-derived-sync.ps1` 的版本后，也可以运行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
+powershell -NoProfile -File scripts/check-derived-sync.ps1
 ```
 
 随后继续执行 `/run post-sync-cleanup`、`/run docs-system-audit` 的同步后审计模式，并按 `template-docs/templates/derived-sync-report-template.md` 生成或更新 `_governance/sync-records/template-sync/YYYY-MM-DD-sync-template-vX.Y.Z.md`。若项目当前 AI 入口仍是旧版本，先直接打开新同步到的 `ai/prompts/maintainers/12-sync-template.md` 作为后续步骤清单。
@@ -219,14 +221,14 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 ```powershell
 git status
 git switch -c chore/sync-template-vX.Y.Z
-powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
+powershell -NoProfile -File scripts/sync-template.ps1 --dry-run
 ```
 
 确认 `--dry-run` 输出只涉及模板方法论同步文件，且不会覆盖项目专属内容后，再执行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
-powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
+powershell -NoProfile -File scripts/sync-template.ps1 --commit
+powershell -NoProfile -File scripts/check-derived-sync.ps1
 git status --short --branch
 git show --name-only --stat HEAD
 ```
@@ -242,9 +244,11 @@ gh pr create --fill
 
 ### 5.4 两类检查命令
 
+> PowerShell 调用总则（无 bypass 优先、被拦再降级）见 §1.1。
+
 ```
-powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1  # 派生项目同步边界检查
-powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1       # 仅模板仓库完整性自检
+powershell -NoProfile -File scripts/check-derived-sync.ps1  # 派生项目同步边界检查
+powershell -NoProfile -File scripts/check-template.ps1       # 仅模板仓库完整性自检
 ```
 
 ### 5.4.1 派生项目 GitHub Actions
@@ -351,7 +355,7 @@ bash scripts/new-project.sh <项目名> --account <账号> --visibility public
 
 ```powershell
 cd <项目名>
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+powershell -NoProfile -File scripts/collect-env.ps1
 ```
 
 随后填写：

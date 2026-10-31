@@ -57,7 +57,7 @@
 3. 审计运行环境与资源约束
    - 检查是否存在 `docs/env/local-env.md`。
    - 若不存在，检查是否存在 `scripts/collect-env.ps1`；若存在，建议先运行：
-     `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1`
+     `powershell -NoProfile -File scripts/collect-env.ps1`
    - 若 `scripts/collect-env.ps1` 不存在，说明需要先完成模板方法论同步。
    - 检查 `docs/env/local-env.md` 是否已补齐人工确认项，至少包括：
      - Demo 阶段必须在本机运行的部分
@@ -177,7 +177,7 @@
 - 移动文件后，更新被影响的相对链接。
 - 根 `README.md` 只补项目说明版块，不改成模板 README。
 - `ai/project-rules.md` 只补项目专属约束，不复制模板方法论长文。
-- 若 `docs/env/local-env.md` 缺失且用户允许，先运行 `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1`；否则只给出待执行命令。
+- 若 `docs/env/local-env.md` 缺失且用户允许，先运行 `powershell -NoProfile -File scripts/collect-env.ps1`；否则只给出待执行命令。
 - 环境约束未知项必须保留“待确认”，不得虚构本机资源或服务器资源。
 - 每一步保持最小变更。
 - 若需要生成 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`，必须去项目化，不得包含客户、账号、路径敏感信息或项目专属业务细节。

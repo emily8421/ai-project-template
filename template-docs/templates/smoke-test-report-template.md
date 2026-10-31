@@ -38,7 +38,7 @@
 ### 步骤 1：检查基础环境
 
 - 执行命令：
-  `powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1`
+  `powershell -NoProfile -File scripts/check-prereqs.ps1`
 - 结果：通过 / 失败
 - 看到的关键输出：
 - 是否知道下一步该做什么：是 / 否
@@ -57,7 +57,7 @@
 ### 步骤 3：进入新项目并采集环境
 
 - 执行命令：
-  先 `cd smoke-demo`，再 `powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1`
+  先 `cd smoke-demo`，再 `powershell -NoProfile -File scripts/collect-env.ps1`
 - 结果：通过 / 失败
 - 是否成功生成 `docs/env/local-env.md`：是 / 否
 - 问题描述：

@@ -30,7 +30,7 @@
 ### A. 动作前预检
 
 1. 读取 Git 事实：`git status --short --branch`，确认当前分支、staged / unstaged / untracked 范围。
-2. 若准备 push / PR / merge / close / delete / release，运行只读预检：`powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1`。
+2. 若准备 push / PR / merge / close / delete / release，运行只读预检：`powershell -NoProfile -File scripts/check-github-context.ps1`。
 3. 输出预检摘要：repo root、branch、origin、Git identity、`gh` auth、viewer permission、工作区是否含未确认改动。
 4. 若预检失败、权限不明、remote 不符合预期或工作区混入无关改动，立即停止并请用户确认。
 

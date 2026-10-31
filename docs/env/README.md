@@ -9,7 +9,7 @@
 在项目根目录运行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+powershell -NoProfile -File scripts/collect-env.ps1
 ```
 
 脚本会生成 `docs/env/local-env.md`，并保留需要人工确认的 Demo 资源边界、联网权限、服务器资源预案等字段。

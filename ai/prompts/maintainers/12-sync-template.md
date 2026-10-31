@@ -79,20 +79,21 @@
    - 运行：& "C:\Program Files\Git\bin\bash.exe" scripts/sync-template.sh --dry-run
    - 如果 Git for Windows 安装位置不同，用本机实际 `bash.exe` 路径替换示例路径。
 8. 如果是 v1.6.8+ 后续同步：
-   - 运行：powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
+   - PowerShell 调用总则（本文件各 `powershell` 命令适用）：优先无 `-ExecutionPolicy Bypass` 运行；仅当脚本报「此系统上禁止运行脚本」类加载错误时，再改用 `-ExecutionPolicy Bypass` 重试。
+   - 运行：powershell -NoProfile -File scripts/sync-template.ps1 --dry-run
    - 大批量同步（跨多版本 / 首次同步）输出可能很长并含大量 `LF will be replaced by CRLF` 噪音；建议重定向到 log（`> sync.log 2>&1`）并用更长超时（300s+）。CRLF warning 不等于失败（见 git-guide §5.8）。
 9. 检查 dry-run 输出，确认只涉及模板方法论同步文件；普通派生项目双版本模式允许出现 `TEMPLATE-BASE.md`，但不应出现 README.md、ai/project-rules.md、docs/00-09、project/frontend/、project/backend/、project/tests/、project/docker/ 或业务代码。大同步时优先 grep 摘要而非完整输出：`grep -nE 'README\.md|ai/project-rules\.md|ai/doc-standards/domain-rules\.md|docs/00-09|project/frontend/|project/backend/|project/tests/|project/docker/' sync.log` 查项目专属 / 领域专属误触及（普通派生不应出现 domain-rules standards）；`grep -nE 'VERSION|CHANGELOG|TEMPLATE-BASE|preserve-project-version|domain-template' sync.log` 查版本机制；`grep -nE '^[[:space:]]+delta ' sync.log` 提取实际变更文件清单（`skip` 表示模板无此文件，不计入变更；历史 Bash 日志若仍使用 `Δ` / `跳过`，按旧 token 查询）。Bash 与 PowerShell 入口当前均使用 ASCII `delta` / `skip` token；EXIT 与变化文件数作摘要，成功不回灌完整列表。
 10. 如果 dry-run 合理，执行同步：
    - 普通派生项目若已有或准备采用 `TEMPLATE-BASE.md` 双版本模式，优先追加 `--preserve-project-version`，使 `VERSION` / `CHANGELOG.md` 保持项目自身版本，继承模板版本写入 `TEMPLATE-BASE.md`；若仓库已存在 `TEMPLATE-BASE.md`，新版脚本会自动启用该模式。
    - 领域模板（如 `agent-system-template`，仓库存在领域版 `TEMPLATE-BASE.md`：`Lineage type: domain template`）从母模板 sync 时改用 `--domain-template`（与 `--preserve-project-version` 互斥），保留领域模板自身 `VERSION` / `CHANGELOG.md`，并把继承母模板版本写入领域版 `TEMPLATE-BASE.md`（含 `Domain standards scope`）；仓库已存在领域版 `TEMPLATE-BASE.md` 时自动启用。领域路线会额外同步 `files_domain` 组（含 `ai/doc-standards/domain-rules.md` 领域 rules 规范基线）；领域仓的 `ai/domain-rules.md` 种子不入清单、不同步、受 `check-derived-sync` 保护。普通派生项目不要用 `--domain-template`，反之领域模板不要用 `--preserve-project-version`，二者冲突时脚本会停止并提示。
    - 旧派生项目首次同步：运行 & "C:\Program Files\Git\bin\bash.exe" scripts/sync-template.sh --commit --preserve-project-version
-   - v1.6.8+ 后续同步：运行 powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit --preserve-project-version
+   - v1.6.8+ 后续同步：运行 powershell -NoProfile -File scripts/sync-template.ps1 --commit --preserve-project-version
    - 若维护者明确要求继续沿用旧语义（`VERSION` = 继承模板版本），才不加 `--preserve-project-version`；需在同步报告说明。
 11. 只做派生同步边界检查：
    - 运行：git status --short --branch
    - 运行：git log --oneline -8，定位实际 `sync template vX.Y.Z from ai-project-template` 同步提交。
    - 运行：git show --name-only --stat <sync-commit>。若 `HEAD` 是 PR merge commit，不要把 merge commit 当作同步提交校验。
-   - 如已同步到包含 `scripts/check-derived-sync.ps1` 的版本，运行：powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1 <sync-commit>（若 `HEAD` 本身就是同步提交，可省略参数）。
+   - 如已同步到包含 `scripts/check-derived-sync.ps1` 的版本，运行：powershell -NoProfile -File scripts/check-derived-sync.ps1 <sync-commit>（若 `HEAD` 本身就是同步提交，可省略参数）。
    - 确认实际同步提交没有误覆盖 README.md、ai/project-rules.md、docs/00-09 或业务代码。
    - 若同步 PR 以 squash 合并（原同步提交已随分支删除，main HEAD 是混合 squash 提交）：合并后 HEAD 校验失败可能是预期伪影，以推送前对纯同步提交的 `check-derived-sync` 结果及同步运行记录留痕为权威对照判定，不据此回改同步边界；标准做法是推送前完成边界校验并留痕（见 `git-guide.md` §5 checklist）。
 12. 执行「同步跨度采用清单」（可选，advisory；跳过不阻塞后续任何环节）：
@@ -106,7 +107,7 @@
    - 若存在 `.github/workflows/template-check.yml`，说明它通常是模板仓自检入口，提示迁移为 `.github/workflows/project-check.yml`。
    - 派生项目版 workflow 应保留 `git diff --check`，并仅在提交信息匹配 `sync template vX.Y.Z from ai-project-template` 时运行 `scripts/check-derived-sync.sh HEAD`。
 14. 如本次同步引入新的项目专属骨架项，不要直接覆盖 ai/project-rules.md；列出需要人工迁移的字段，例如 `§2.1 运行环境与资源约束`。领域模板仓的 `ai/domain-rules.md` 种子不在同步清单、不会被覆盖；如本次同步刷新了 `ai/doc-standards/domain-rules.md` 规范基线，对照它维护领域种子（§0-§4）。
-15. 如项目已同步到含 `scripts/collect-env.ps1` 的模板版本，但尚无 `docs/env/local-env.md`，提示运行：powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1，并补齐人工确认项。
+15. 如项目已同步到含 `scripts/collect-env.ps1` 的模板版本，但尚无 `docs/env/local-env.md`，提示运行：powershell -NoProfile -File scripts/collect-env.ps1，并补齐人工确认项。
 16. 做提案回流收口检查：
    - 扫描本项目 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`、`.ai/session-handoff.md`、最近 `_governance/sync-records/template-sync/` 运行记录（旧路径 `docs/archive/template-sync/` 兼容读取），找出本项目曾提交到模板仓的 issue 链接、待处理提案和已生成回流提案。
    - 若记录了模板仓 issue 链接，必要时运行 `gh issue view <编号或URL> --repo <模板owner>/<模板repo> --json number,title,state,labels,url,closedAt`，判断 issue 是否已关闭、是否仍标记 `proposal` / `feedback`、是否有后续说明。
