@@ -36,8 +36,8 @@ GitHub 账号：<如需远端仓库再填写；也可让脚本读取当前 gh �
    - 指定账号 / 可见性：bash scripts/new-project.sh <项目名> --account <账号> --visibility <private|public>
    - 本地烟测：bash scripts/new-project.sh <项目名> --local --no-remote
 5. 创建完成后进入新项目目录。
-6. 如机器基础开发环境未准备好，先提醒查看 `template-docs/env-setup.md`，并运行：powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
-7. 运行：powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+6. 如机器基础开发环境未准备好，先提醒查看 `template-docs/env-setup.md`，并运行：powershell -NoProfile -File scripts/check-prereqs.ps1
+7. 运行：powershell -NoProfile -File scripts/collect-env.ps1
 8. 检查 docs/env/local-env.md 是否生成，并提醒人工补齐确认项。
 9. 输出下一步待办：
    - 准备 `docs/inputs/` 原始上游输入材料；已有成熟 `docs/vision/product-vision.md` 时也要复评来源和缺口

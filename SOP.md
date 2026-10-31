@@ -87,7 +87,7 @@
 - “我要把已有项目同步到最新模板” → 用 `/run sync-methodology`；旧派生项目先按 `git-guide.md` §5.2 bootstrap，拿到新版同步流程后继续完整 A13 闭环，不要停在同步提交；同步后用 `/run post-sync-cleanup`。
 - “我已经同步了模板，只想补完后续闭环” → 用 `/run sync-methodology` 的同步后续接模式；不要重新 dry-run / commit，从 `check-derived-sync`、workflow 检查、`post-sync-cleanup`、`docs-system-audit`、项目验证建议和同步运行记录开始。
 - “我已同步模板，想检查之前回流到模板 issue 的提案是否已处理并可归档” → 用 `/run sync-methodology` 的提案回流收口检查；扫描 `_governance/_proposals/`、`.ai/session-handoff.md`、`_governance/sync-records/template-sync/` 和 issue 链接后再判断。
-- “我要 push / 创建 PR / 合并 PR / 关闭 issue，但不确定当前账号、仓库或 CI 状态对不对” → 先运行 `powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1`，再按 `git-guide.md` §1.2 的 Checkpoint Mode 单步确认远端操作；CI pending 只汇报 pending，不长时间等待。
+- “我要 push / 创建 PR / 合并 PR / 关闭 issue，但不确定当前账号、仓库或 CI 状态对不对” → 先运行 `powershell -NoProfile -File scripts/check-github-context.ps1`，再按 `git-guide.md` §1.2 的 Checkpoint Mode 单步确认远端操作；CI pending 只汇报 pending，不长时间等待。
 - “我要让 AI 生成文档体系” → 输入不确定先用 `/run review-inputs`；评审通过后用 `/run generate-docs`。
 - “我要改模板本身” → 先看 `CONTRIBUTING.md`，先写 `TEMPLATE-UPGRADE-*.md` 提案；已有提案时用 `/run template-proposal-summary`。
 - “我重新打开了 CLI 窗口” → 先按 `ai/session-rules.md` 读取 `.ai/session-handoff.md` / `NEXT-STEPS.md` 和 Git 状态。
@@ -96,20 +96,22 @@
 
 ### 派生项目使用者
 
+> PowerShell 调用总则（本节各 `powershell` 示例适用）：优先 `powershell -NoProfile -File <script> ...`（无 bypass）运行；仅当脚本报「此系统上禁止运行脚本」类加载错误时，再改用 `-ExecutionPolicy Bypass` 重试。AI CLI 权限管控通常拦截 bypass 形式，`CurrentUser = RemoteSigned` 且脚本无 Mark-of-the-Web 时无 bypass 即可运行。
+
 ```bash
 # 检查新手环境前置项
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 # 一键安装基础开发环境
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+powershell -NoProfile -File scripts/bootstrap-dev-env.ps1
 # 新建正式项目（默认创建远端仓库；需要 gh auth login）
 bash scripts/new-project.sh my-demo --visibility private
 bash scripts/new-project.sh my-demo --account <GitHub账号> --visibility private
 # push / PR / merge / close issue 前只读检查当前 GitHub 上下文；远端动作按 Checkpoint Mode 单步确认
-powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1
+powershell -NoProfile -File scripts/check-github-context.ps1
 # 派生项目同步模板方法论（在派生项目仓库运行；v1.6.8+ 后续同步）
-powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --dry-run
-powershell -ExecutionPolicy Bypass -File scripts/sync-template.ps1 --commit
-powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
+powershell -NoProfile -File scripts/sync-template.ps1 --dry-run
+powershell -NoProfile -File scripts/sync-template.ps1 --commit
+powershell -NoProfile -File scripts/check-derived-sync.ps1
 ```
 
 旧项目首次同步见 `git-guide.md` §5；派生项目同步验收使用 `check-derived-sync`，不要用完整模板自检替代。真实派生同步完成后，建议用 `template-docs/templates/derived-sync-report-template.md` 记录同步运行结果。
@@ -120,8 +122,8 @@ powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1
 # 新建本地烟测项目（只用于验证模板链路，不是正式项目起步默认命令；new-project.sh 为模板仓专用脚本，在模板仓运行）
 bash scripts/new-project.sh smoke-demo --local --no-remote
 # 模板仓库完整性自检（仅在 ai-project-template 模板仓库运行；check-template.* 为模板仓专用脚本，不下行）
-powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _proposals ai-records
-powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1
+powershell -NoProfile -File scripts/check-markdown-clean.ps1 _proposals ai-records
+powershell -NoProfile -File scripts/check-template.ps1
 # Bash 完整自检入口（CI 使用同类路径）
 bash scripts/check-template.sh
 ```
@@ -142,7 +144,7 @@ bash scripts/check-template.sh
 - **等价性**：fallback 通过 ≠ 完整自检通过；发布前仍应以 CI 或 Bash 自检为准
 
 **Windows fallback 最短判断链**：
-1. 模板仓先跑 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
+1. 模板仓先跑 `powershell -NoProfile -File scripts/check-template.ps1`。
 2. 若进入 fallback，先看 Bash 启动错误和 fallback 结果；fallback 通过只代表结构检查通过。
 3. 发布前仍以 `bash scripts/check-template.sh` 或 CI 为准；本地快速自检可用 `bash scripts/check-template.sh --summary`（只输出计数与失败项，避免回灌 1800+ 行成功日志）；必要时用 Git Bash 全路径重跑。
 4. 成功路径只记命令、退出码 / check 结论和通过摘要；失败路径只保留失败断言块、文件、expected pattern、复现命令和必要的 Bash / fallback 错误。

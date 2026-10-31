@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.75.8（2026-10-31）
+
+C1 双提案聚合 PATCH（flowkit-derived 派生项目回流 issue #490 + #491；2026-10-30 triage 拍板「聚合单 PR、#491 方案 a、#490 三桶范围」）：SOP 类 PowerShell 调用建议「优先无 bypass、被拦再降级」+ 路由表「PR / CI / Git 收尾」行对齐 remote-ci-sop-profile §2 最小必读集，消除双口径。
+
+- **#490（sync-ps1-bypass-optional）**：SOP 类人读文档 14 件 56 处示例命令 `powershell -ExecutionPolicy Bypass -File ...` 统一改为 `powershell -NoProfile -File ...`（无 bypass），并在主 SOP 枢纽（git-guide §1.1 / §5.4、SOP 常用命令、MAINTAINERS §3 / §5、env-setup、12-sync-template 步骤 8、smoke-test）补降级总则——优先无 bypass 运行，仅当报「此系统上禁止运行脚本」类加载错误时再加 `-ExecutionPolicy Bypass` 重试。动机实证：AI CLI 权限管控通常拦截 bypass 形式（09-09 pitfalls SUMMARY 已登记模板缺口），`CurrentUser = RemoteSigned` 且脚本无 Mark-of-the-Web 时无 bypass 即可运行（flowkit-derived v1.75.6 同步全流程 EXIT=0 + 本仓 v1.75.5 / 09-16 无 bypass 实录）。范围三桶：A 桶人读文档 14 件本轮改；B 桶脚本 usage 注释（11 件 35 处）留观察、随下次脚本触达评估；C 桶历史归档 / ai-records / research 记录不回溯改写（同 #479 存量渐进口径）。不改脚本本体、workflow、`template-sync.json`；无自检断言增减。
+- **#491（route-table-prci-minimal-set）**：`ai/index.md` 路由表「PR / CI / Git 收尾」行改为以 `template-docs/profiles/remote-ci-sop-profile.md` 为权威入口（按其 §2 最小必读集分诊），消除两清单双口径固定读取成本（两清单仅 2 项相交，执行侧实测 6-7 份全读）；保留条件性补充——发版 / 版本判定类收尾另读 `ai/implementation-lifecycle-rules.md`（§7.1 回写职责）与 `ai/project-rules.md`，涉及 Git 流程读 `git-guide.md` 相关章节（profile §2 最小集不含上述三件，整行委托会丢发版类指针，triage 补正）。断言核验：`check-template.sh:1829`（index.md 须含 profile 文件名）与 `:1340/:1341`（implementation-lifecycle / commands README 字样在其他路由行仍存）均不受影响。「同模式排查其余路由行」本轮不做（初扫未见同型双口径），留后续候选。
+- 校正 2 处（prompt 11 第 10 条「先期状态核实」首战）：#490 提案影响面低估（列 5-6 文件，实为人读文档 14 件 56 处）；`ai/commands/sync-methodology.md` / `collect-env.md` 实存但零 Bypass 命中，提案「命令文件含同模式示例」表述不成立、无需改。
+- 边界：纯文档口径与示例调整，不改默认行为、不改同步清单、不新增 check-template 断言；存量派生项目零迁移义务，对未来同步 / 检查操作生效。镜像 issue-490.md / issue-491.md 随本 PR 入库，随归档 PR 移入 `_archive/`。
+
 ## v1.75.7（2026-10-30）
 
 C1 治理 PATCH（提案 `_governance/_proposals/TEMPLATE-UPGRADE-registry-writeback-enforcement.md`；2026-10-30 维护者拍板「①+②组合」，③推式上报挂多机 / 多用户触发）：registry 回写挂钩 + 母仓登记对账——治 stale-shared-state 弱触发第三次实证（08-27~09-16 LUMEN 4 轮、09-19 v1.75.3 轮 3 仓全漏、10-30 窗口 2 仓漏 + zhiyan 未同步，均靠人工实查补登 PR #475 / #492）。

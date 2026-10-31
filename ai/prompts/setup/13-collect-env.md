@@ -23,7 +23,7 @@
 执行要求：
 1. 先阅读 ai/index.md 及其列出的全部规则文件。
 2. 检查是否存在 scripts/collect-env.ps1；如果不存在，停止并说明需要先同步模板方法论或从模板复制该脚本。
-3. 运行：powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+3. 运行：powershell -NoProfile -File scripts/collect-env.ps1
 4. 确认已生成 docs/env/local-env.md。
 5. 阅读 docs/env/local-env.md，汇总自动采集到的关键资源信息：OS、CPU、内存、GPU、磁盘、Docker、Git、Python、Node 等。
 6. 列出仍需人工确认的项目，至少包括：Demo 最大内存 / 显存 / 磁盘占用、是否允许联网、是否允许安装依赖、是否允许使用公司服务器、本机必须跑通的功能、可 Mock / 远程运行的功能。

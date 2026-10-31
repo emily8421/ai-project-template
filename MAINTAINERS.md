@@ -38,6 +38,8 @@
 
 > **MINOR / MAJOR 发布前额外跑 L3 端到端回归**：`bash scripts/e2e-sync-check.sh` + 按 `template-docs/maintainer/e2e-regression-checklist.md` 跑人工项（R4–R6）+ 用 `template-docs/maintainer/e2e-report-template.md` 出报告确认（两件均为模板仓专用文档，v1.66.0 起不下行）。PATCH（含兼容性脚本参数 / 默认关闭能力 / 文档与治理小修）可豁免。
 
+> PowerShell 调用总则：checklist 中 `powershell` 命令优先无 `-ExecutionPolicy Bypass` 运行（`powershell -NoProfile -File <script>`）；仅当报「此系统上禁止运行脚本」类加载错误时再加 bypass 重试（总则详见 §5）。
+
 每次发版前逐条过：
 
 1. 先确认当前不在 `main` 直接改动；改动发生在维护分支上。
@@ -49,8 +51,8 @@
 7. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 doc-standards 镜像自检（`require_doc_standards_mirror`）通过。
 8. 若改变用户入口，保持 `README.md` 的「快速开始」三入口可读，不塞入维护者细节。
 9. 运行：`git diff --check`。
-10. 若新增 / 修改准备提交的 `_governance/_proposals/`、`_governance/ai-records/` 等 Markdown 记录，运行：`powershell -ExecutionPolicy Bypass -File scripts/check-markdown-clean.ps1 _governance/_proposals _governance/ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。单条 token hotspot 记录位于 `.ai/token-hotspots/`，是 gitignored 本地过程观察，不作为提交内容；只有脱敏汇总 `_governance/ai-records/token-hotspots/` 才按正式记录检查。
-11. 运行：`bash scripts/check-template.sh`（或 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`）。
+10. 若新增 / 修改准备提交的 `_governance/_proposals/`、`_governance/ai-records/` 等 Markdown 记录，运行：`powershell -NoProfile -File scripts/check-markdown-clean.ps1 _governance/_proposals _governance/ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。单条 token hotspot 记录位于 `.ai/token-hotspots/`，是 gitignored 本地过程观察，不作为提交内容；只有脱敏汇总 `_governance/ai-records/token-hotspots/` 才按正式记录检查。
+11. 运行：`bash scripts/check-template.sh`（或 `powershell -NoProfile -File scripts/check-template.ps1`）。
 12. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
 
 ## 4. 下行同步清单
@@ -82,8 +84,10 @@
 - **等价性**：fallback 通过 ≠ 完整自检通过；发布前仍应以 CI 或 Bash 自检为准
 
 本地自检：
-- 模板仓：`bash scripts/check-template.sh` 或 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`
-- 派生项目：`bash scripts/check-derived-sync.sh` 或 `powershell -ExecutionPolicy Bypass -File scripts/check-derived-sync.ps1`
+- 模板仓：`bash scripts/check-template.sh` 或 `powershell -NoProfile -File scripts/check-template.ps1`
+- 派生项目：`bash scripts/check-derived-sync.sh` 或 `powershell -NoProfile -File scripts/check-derived-sync.ps1`
+
+> PowerShell 调用总则：优先 `powershell -NoProfile -File <script> ...`（无 bypass）运行；仅当脚本报「此系统上禁止运行脚本」类加载错误时，再改用 `-ExecutionPolicy Bypass` 重试。AI CLI 权限管控通常拦截 bypass 形式，`CurrentUser = RemoteSigned` 且脚本无 Mark-of-the-Web 时无 bypass 即可运行。
 
 CI：`.github/workflows/template-check.yml` 在 PR 和 `main` push 上运行空白检查与模板自检。
 
@@ -99,7 +103,7 @@ Windows 下若 PowerShell 无法拉起 Git Bash，`check-template.ps1`、`sync-t
 
 **Windows fallback 最短判断链**：
 
-1. 模板仓本地先跑 `powershell -ExecutionPolicy Bypass -File scripts/check-template.ps1`。
+1. 模板仓本地先跑 `powershell -NoProfile -File scripts/check-template.ps1`。
 2. 若进入 fallback，先看 Bash 启动错误与 fallback 结果；fallback 通过只代表结构检查通过，不代表完整自检通过。
 3. 发布前仍以 `bash scripts/check-template.sh` 或 CI 为准；本地快速自检可用 `bash scripts/check-template.sh --summary`（只输出计数与失败项，避免回灌完整成功日志）；必要时用 Git Bash 全路径重跑。
 4. 成功路径只记命令、退出码 / check 结论和通过摘要，不回灌完整成功日志。

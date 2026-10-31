@@ -34,10 +34,10 @@
 
 ### 步骤 1：检查基础环境
 
-在模板仓库根目录运行：
+在模板仓库根目录运行（PowerShell 调用总则：优先无 `-ExecutionPolicy Bypass` 运行，报「此系统上禁止运行脚本」类加载错误时再加 bypass 重试）：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 检查点：
@@ -50,7 +50,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 若缺基础工具，可按需运行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+powershell -NoProfile -File scripts/bootstrap-dev-env.ps1
 ```
 
 > 说明：如果当前机器本来就已具备环境，本烟测不要求你真的安装软件；这里只验证入口是否可发现、命令是否合理。
@@ -82,7 +82,7 @@ bash scripts/new-project.sh smoke-demo --local --no-remote
 
 ```powershell
 cd smoke-demo
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+powershell -NoProfile -File scripts/collect-env.ps1
 ```
 
 检查点：

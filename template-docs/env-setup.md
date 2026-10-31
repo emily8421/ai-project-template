@@ -7,8 +7,10 @@
 
 如果你是第一次使用模板，不要先猜自己缺什么；先运行检测脚本，让它告诉你下一步：
 
+> PowerShell 调用总则（本页各 `powershell` 示例适用）：优先 `powershell -NoProfile -File <script> ...`（无 bypass）运行；仅当脚本报「此系统上禁止运行脚本」类加载错误时，再改用 `-ExecutionPolicy Bypass` 重试。AI CLI 权限管控通常拦截 bypass 形式。
+
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 ## 1. 这页帮你做什么 + 先检测
@@ -182,7 +184,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 先安装核心工具：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
+powershell -NoProfile -File scripts/bootstrap-dev-env.ps1
 ```
 
 默认会尽量安装：Git for Windows、GitHub CLI、Node.js LTS、Python 3.11、Visual Studio Code。
@@ -190,19 +192,19 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
 连可选工具一起装：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1 -WithDocker -WithJava
+powershell -NoProfile -File scripts/bootstrap-dev-env.ps1 -WithDocker -WithJava
 ```
 
 只检测，不安装：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 安装完成后采集本机环境：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+powershell -NoProfile -File scripts/collect-env.ps1
 ```
 
 ### 新手最常见的三种路径
@@ -210,9 +212,9 @@ powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
 **路径 A：完全不确定机器状态**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
-powershell -ExecutionPolicy Bypass -File scripts/bootstrap-dev-env.ps1
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/bootstrap-dev-env.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 如果要创建远端仓库，再执行 `gh auth login`。如果只做本地烟测，可直接进入项目流程。
@@ -220,7 +222,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 **路径 B：机器上已有大部分开发工具**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 看报告里哪些是缺失项，再决定是否运行安装脚本补齐。
@@ -228,7 +230,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
 **路径 C：只想做本地烟测**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 必备项通过后即可运行：
@@ -476,14 +478,14 @@ gh --version
 node --version
 npm --version
 python --version
-powershell -ExecutionPolicy Bypass -File scripts/check-prereqs.ps1
+powershell -NoProfile -File scripts/check-prereqs.ps1
 ```
 
 如果要使用模板完整流程，再确认：
 
 ```powershell
 bash --version
-powershell -ExecutionPolicy Bypass -File scripts/collect-env.ps1
+powershell -NoProfile -File scripts/collect-env.ps1
 ```
 
 ## 11. 去哪看什么（导航）

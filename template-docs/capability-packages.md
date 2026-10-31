@@ -188,7 +188,7 @@
 ### 6.5 如何验证
 
 - 本地提交前：运行 `git diff --check`，并按任务需要运行项目验证。
-- 远端操作前：运行 `powershell -ExecutionPolicy Bypass -File scripts/check-github-context.ps1`。
+- 远端操作前：运行 `powershell -NoProfile -File scripts/check-github-context.ps1`。
 - 创建 PR 后：运行一次或短时间轮询 `gh pr checks <number>`；仍在运行时停止等待并汇报。
 - 修改模板规则、同步或自检时：运行 `scripts/check-template.*`。
 
