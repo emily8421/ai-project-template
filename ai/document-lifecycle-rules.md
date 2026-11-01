@@ -592,4 +592,25 @@ AI 生成或修改后输出：
 
 图纸审核四维度（让图可审 / 可追溯 / 可验收，不改本节柔性）：① 可渲染（mermaid 默认或 `ai/project-rules.md` §2.2 指定格式）；② 有图 ID（`DIAG-<DOC>-<TYPE>-<NN>`，如 `DIAG-ARCH-01` / `DIAG-API-SEQ-01` / `DIAG-DB-ER-01`，可被评审 / 验收指名）；③ 可追溯（架构图→REQ / 模块，时序图→API-ID / 关键流程，ER 图→表 / REQ，状态图→子系统 / TC，挂 §6 追溯链）；④ 覆盖异常 / 降级 / 权限路径，非仅正常路径。各 doc-standards（04 / 06 / 07）按此落实关键图字段与检查项。
 
+**图表体系评审清单（按文档类型收拢 + OO overlay「选用即评审」）**：四维度是通用审核基准；本清单按文档类型收拢「应含图表 + 审核条目入口」索引，供生成自查与三份评审命令（`ai/prompts/review/10`、`16`、`19`）核对（项目在 `ai/project-rules.md` §3 声明裁剪的文档除外）。评审时点与结论落点见 `ai/review-guide.md` 触发矩阵：
+
+| 文档 | 应含图表（见上表） | 审核条目入口（文档专属维度） |
+|---|---|---|
+| `docs/04-architecture.md` | 系统架构图、运行拓扑 / 部署图 | `ai/doc-standards/04-architecture.md` 关键图字段 |
+| `docs/05-tech-spec.md` | 技术栈分层、部署拓扑 | `ai/doc-standards/05-tech-spec.md` |
+| `docs/06-db-design.md` | ER 图 | `ai/doc-standards/06-db-design.md` |
+| `docs/07-api-spec.md` | 接口交互 / 时序图 | `ai/doc-standards/07-api-spec.md` |
+| `docs/design/*` | 流程图、状态机、交互图 | `ai/doc-standards/design-doc.md` |
+
+**OO overlay「选用即评审」**：§2.1 的 OO 可选产物（事物-事件表、用例本体表 + 用例图、分析类图 / 领域模型、数据词典）一旦选用，审核标准同正式产物，按下列最小审核条目核对：
+
+| 产物 | 最小审核条目 |
+|---|---|
+| 事物-事件表 | ①场景覆盖完整；②事物 / 事件识别有依据（可回 SC-ID）；③与 U-ID 对应可追溯 |
+| 用例本体表 + 用例图 | ①actor 与 SC 对应；②include / extend 语义正确；③plantuml 可渲染 + 有 `DIAG-UC-NN` 图 ID |
+| 分析类图 / 领域模型 | ①实体 / 关联有场景事件依据（无 §2.2「无事件依据的类图」断点）；②与 `06` 概念模型一致；③有 `DIAG-DOM-NN` 图 ID |
+| 数据词典 | ①字段说明齐全；②与 `06` 目标结构一致；③字段契约状态按 §7.1 区分（目标设计 / 当前实现 / Mock） |
+
+OO 产物与本节 §2.2 对账断点互相引用：断点登记是评审输入，本清单审核条目是评审动作；OO overlay 只补审核条目，不改 §2.1 可选定位与 §2.2 断点登记义务。
+
 **图表生成式镜像（可选机制）**：图表密集的 Full 剖面项目可在 `docs/diagrams/` + `docs/tables/` 建生成式镜像目录——脚本从文档正文（唯一权威源）抽取全部 fenced mermaid / plantuml 图块与核心矩阵表，每图 / 表一文件 + `INDEX.md`（按 §2 PLM 阶段分组 + 按文档反查），作为审核主入口。约束：镜像头部声明「生成式产物、不手改、以源文档为准」；启用前提是 CI 有 `--check` 同步校验（镜像与源不一致即红），未启用 CI 校验的项目不建议建镜像目录（过期镜像误导审核）；增量日志型表（Sprint 完成包 / 验收记录）只挂锚点链接不抽镜像。脚本样例见 `template-docs/examples/extract-diagrams.mjs`。

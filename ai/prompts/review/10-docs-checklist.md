@@ -40,6 +40,7 @@
 - [ ] Web App Structure Profile（如触发）：复杂 Web / 全栈交互项目已记录 App Shell、前后端目录边界、API client ↔ API-ID、vertical slice、文件膨胀阈值、Sprint 0 / Walking Skeleton 和 API / browser smoke；若没有，已有豁免理由
 - [ ] 08-dev-plan：Sprint 拆分合理，单 Sprint 限制在 1~3 个文件；验收标准可判断；当前阶段 Sprint 支撑对应交付物形态；每个当前 Sprint 有验证包、TC-ID、完成包字段和状态
 - [ ] 09-verification：REQ → TC 追溯矩阵覆盖当前阶段全部 REQ，包含交付物形态；TC 详情包含前置条件、步骤、输入、期望结果、异常验证、自动化位置和证据记录；包含本机启动、内存 / 显存 / 磁盘 / 端口等资源验证项
+- [ ] 图表体系：`04-09` / `docs/design/*` 应含图表已按 `ai/document-lifecycle-rules.md` §13「图表体系评审清单」核对——应含图表存在、过图纸审核四维度，OO 可选产物选用即评审（项目声明裁剪的除外）
 - [ ] 待人工确认项：不是纯问题列表；每项包含 ID、AI 建议、建议依据、备选方案、取舍影响 / 阻塞关系；高风险项未被 AI 建议自动视为已确认
 - [ ] 待确认事项总览 / open items：若存在 `docs/research/*docs-open-items*.md`、会话总览或审计 / 评估中的阻塞项，编码前已确认阻塞项关闭、转任务或被明确风险接受；未关闭时不得开始对应 Sprint
 - [ ] 语言表述（`global-rules §10`）：术语一致、表述具体可核对、状态准确；无无事实支撑的宣传口号或生活化比喻（行业通用术语除外）；抽象词（赋能 / 闭环等）已说明对象 / 动作 / 边界

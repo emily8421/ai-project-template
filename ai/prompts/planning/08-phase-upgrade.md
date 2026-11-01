@@ -27,6 +27,7 @@
 - docs/research/*tech-env-evaluation*.md（如下一 Phase 解锁真实依赖、数据库、外部服务、LLM、Docker / 部署或权限安全能力）
 - docs/06-db-design.md、docs/07-api-spec.md（如下一 Phase 解锁持久化、对外接口、Mock → 真实调用、内部 API → 外部 API 或真实隐私 / 业务数据处理）
 - docs/research/*docs-open-items*.md 或会话中的待确认事项总览（如存在）
+- ai/review-guide.md（评审触发矩阵：Phase 收口 / 升级时点的评审义务与结论落点）
 
 输出：
 1. 当前Phase的完成情况核对

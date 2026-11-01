@@ -69,6 +69,7 @@
 | Web App Structure Profile | 复杂 Web / 全栈交互项目是否触发 `template-docs/profiles/web-fullstack-profile.md`；App Shell、目录边界、vertical slice、文件膨胀阈值、Sprint 0 / Walking Skeleton 和 API / browser smoke 是否闭合 | 列 WSG-001 到 WSG-006 断点、豁免理由和进入业务 Sprint 风险 |
 | 阶段边界 | 当前阶段是否混入后续功能 | 标出越界内容 |
 | 阶段归属审计 | 需求 / 概要文档（00-05）是否混入详细设计 / 实现级内容——典型信号：表名、API-ID、migration 号、类名、实现算法、版本演进史出现在 00-05 正文或矩阵行；无权限访问、接口契约细节应指向 `07` 而非内联。对照 `ai/document-lifecycle-rules.md` §2「E6 反向同步落点约束」逐项判定「通过 / 需收敛」，收敛动作 = 归 `09` / `docs/design/*` / CHANGELOG，或另立实现索引文档后在原位留指针 | 列出每处错置内容、所在文档 / 章节、建议收敛落点；有同类错置但未逐项列出时不得判通过 |
+| 图表体系 | `04-09` / `docs/design/*` 是否含 `ai/document-lifecycle-rules.md` §13 应含图表；OO 可选产物是否「选用即评审」（项目声明裁剪的除外） | 列缺图、不可渲染、无图 ID、OO 未审项 |
 | 可验证性 | 需求和设计是否有可验收口径 | 标出不可测条目 |
 | 维护性 | 文档是否便于后续增量演进 | 标出结构化改进项 |
 

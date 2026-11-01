@@ -34,6 +34,7 @@
 - 若结论为 Conditionally Ready：允许生成 / 更新 `docs/vision/product-vision.md`，但必须把不确定项标为“待人工确认”，不得伪装成事实。
 - 若结论为 Ready：先生成 / 更新 `docs/vision/product-vision.md`，再由 product-vision 与输入来源锚点生成 `00-09`。
 - 若用户尚未运行输入评审，先转用 `ai/prompts/docs/01-review-inputs.md`，不要直接生成 00-09。
+- 阶段转换前：按 `ai/review-guide.md` 评审触发矩阵确认本轮评审义务与结论落点（评估码语义见 `ai/document-lifecycle-rules.md` §2）。
 
 【心智模型，务必遵守】
 - 两层分离：需求层(00-03)完整描述系统、跨阶段稳定、不按阶段裁剪；

@@ -40,6 +40,7 @@
 6. 可行性维度：需求 → 设计是否技术可行（受 ai/project-rules.md §2 / §2.1 + docs/env 约束）、设计 → 计划是否可执行、计划 → 验证是否可验收；各约束有无降级方案。
 7. 交付物形态（ai/global-rules.md §8.1）：各 Phase 是否声明 Demo / MVP / 产品，有无 Demo 误称 MVP / 产品。
 8. 规范基线对照：优先读取 `ai/doc-standards/00-09`（模板撰写规范镜像，随 `sync-template` 刷新，只读、非项目事实）；若不存在，再 fallback 到旧路径 `docs/_scaffold/00-09`。对照规范基线核查项目 `docs/00-09` 的关键约束（文档定位 / 上游输入 / §0 文档元信息 / 追溯矩阵 / 接口或表或用例矩阵 / 验收记录 / 风险与未验证项 / 环境验证）与撰写规范偏离；重点对照 `ai/doc-standards/04-architecture.md`、`05-tech-spec.md`、`06-db-design.md`、`07-api-spec.md` 检查架构视图、COMP / MOD / Flow ID、ADR、依赖配置、Risk-ID、readiness gate、字段级契约、endpoint contract matrix、契约状态和 DB / API / TC 追溯；旧派生项目按语义等价和最小补齐审计，不要求逐字重写成规范示例，规范镜像只作基准，不直接驱动开发。
+9. 图表体系（document-lifecycle-rules §13「图表体系评审清单」）：按文档类型核对 `04-09` / `docs/design/*` 应含图表与图纸审核四维度，OO 可选产物是否「选用即评审」（项目声明裁剪的除外）；缺图、不可渲染、无图 ID、OO 产物无审核记录计入问题清单（规范基线缺口或单列「图表体系缺口」）。
    - 审计需求阶段时，必须逐份对照 `ai/doc-standards/00-scenario.md`、`01-user-requirements.md`、`02-srs.md`、`03-prd.md`，而不是只看 docs 大纲。
    - 审计 DB / API 阶段时，必须逐份对照 `ai/doc-standards/06-db-design.md`、`07-api-spec.md`，检查字段级契约、endpoint contract matrix、契约状态、迁移 / seed / 回滚、API-ID、错误码、权限和 DB / API / TC 交叉追溯。
    - 审计计划 / 验证阶段时，必须逐份对照 `ai/doc-standards/08-dev-plan.md`、`09-verification.md`，检查 Sprint 验证包、完成包、TC 详情、验收证据、缺陷 / 回归和正式回写闭环。
