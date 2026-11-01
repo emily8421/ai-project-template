@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.76.0（2026-11-01）
+
+MINOR 单提案（gmbl_project 派生项目回流 issue #485「TEMPLATE-UPGRADE-v1.76.0：评审机制总纲（触发矩阵）+ 图表体系评审清单」；2026-10-29 triage 属实 + 校正 3 处已被 gmbl 侧采纳并刷新正文，正文与实施内容一致）：评审机制此前「资产齐、收拢弱」——E1~E6 评估码、四个评审命令、doc-standards 审计基线均存在，但无「阶段 × 时点 × 命令 × 结论落点」总表，派生实证 E2~E5 阶段评估断档三周无人执行；OO 可选产物「选用即失管」，图表审核维度散落无统一 checklist。MINOR 判据：同步清单新增规则文件（新增下游采用面，CONTRIBUTING §4）。
+
+- **新增 `ai/review-guide.md`（评审总纲，一页索引型，登记 `template-sync.json` `files_all`）**：§1 评审触发矩阵——行 = E1-E6 阶段转换 + 关键时点（真实运行依赖触达 / 编码前 / Sprint 收口 / Phase 收口 / 同步后 / 收尾梳理），列 = 触发条件（强制 / 建议）× 命令 × 评估粒度 × 结论落点 × 报告落盘路径；§2 评审标准索引（公共维度 → document-lifecycle §6 / §6.0.1 / §6.1-6.2 / §7.1 / §9 / §13，文档专属 → doc-standards，实现侧 → implementation-lifecycle §5.1 / §6 / §7）；§3 结论分级与关闭规则（指针引用不复制）；§4 评审独立性约定（AI 自查 / 交叉评审 / 人工确认）；§5 与既有机制关系（姊妹提案尚在派生侧试点，正式回流前不引文件名，回流后补引）；§6 剖面裁剪。纯索引型、规则正文零复制；`scripts/sync-template.sh` 兜底数组同步补登（`sync-template.ps1` 无硬编码清单，不涉及）。
+- **`ai/document-lifecycle-rules.md` §13 增「图表体系评审清单」段**：按文档类型收拢「应含图表 + 审核条目入口」索引表（指向既有图纸审核四维度与 doc-standards 关键图字段，不复制）；OO overlay「选用即评审」——§2.1 四类可选产物一旦选用按最小审核条目核对（事物-事件表 / 用例本体表 + 用例图 / 分析类图 / 数据词典各 3 条）；与 §2.2 对账断点互相引用（断点登记 = 评审输入，审核条目 = 评审动作）。
+- **阶段转换轻挂钩（各 1 行，不加新 Gate、不引入自检断言）**：`ai/prompts/docs/00-generate-or-complete-docs.md`【前置门槛】、`ai/prompts/dev/02-run-task.md` 要求新增第 11 条（原 11 / 12 顺延为 12 / 13）、`ai/prompts/planning/08-phase-upgrade.md` 阅读清单各加「按 `ai/review-guide.md` 评审触发矩阵确认本轮评审义务与结论落点」。
+- **评审命令接图表维度（各 1 条条件检查项）**：`ai/prompts/review/10-docs-checklist.md` B 段、`16-docs-system-audit.md` 核查维度新增第 9 条、`19-docs-evaluation.md` 评估维度表各加「按 §13 图表体系评审清单核对（项目声明裁剪的除外）」。
+- 边界：不新增命令、不改命令文件结构、不引入 CI 断言；总纲为索引型，维护成本接近零；Lean 项目按总纲 §6 裁剪；`ai/index.md` 路由表不动（review-guide 为被引用索引文件，非规则包入口）。镜像 `issue-485.md` 随本 PR 入库，随归档 PR 移入 `_archive/`。
+
 ## v1.75.8（2026-10-31）
 
 C1 双提案聚合 PATCH（flowkit-derived 派生项目回流 issue #490 + #491；2026-10-30 triage 拍板「聚合单 PR、#491 方案 a、#490 三桶范围」）：SOP 类 PowerShell 调用建议「优先无 bypass、被拦再降级」+ 路由表「PR / CI / Git 收尾」行对齐 remote-ci-sop-profile §2 最小必读集，消除双口径。

@@ -163,6 +163,7 @@ DEFAULT_SYNC_FILES=(
   "ai/document-lifecycle-rules.md"
   "ai/implementation-lifecycle-rules.md"
   "ai/session-rules.md"
+  "ai/review-guide.md"
   "ai/doc-standards/README.md"
   "ai/doc-standards/00-scenario.md"
   "ai/doc-standards/01-user-requirements.md"
