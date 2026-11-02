@@ -163,6 +163,8 @@ cd /path/ai-project-template && git worktree remove ../ai-tpl-wt2
 
 无论哪种路径，`scripts/check-template.sh` / `scripts/check-template.ps1` 都是**模板仓库完整性自检**，不应作为派生项目同步成功判断。派生项目同步后只检查同步边界与最近提交。
 
+> 注（读取面边界）：下行同步任务按 `ai/index.md` 路由表「派生项目下行同步」最小必读集执行；读取面收窄不新增核对缺口——同步跨度引入的规则变更由 SOP 既有步骤（dry-run 边界核验、`check-derived-sync`、同步后对被同步改写的规则文件做 diff 定向重读）覆盖；模板仓维护者侧任务（规则改造 / 自检脚本 / 发布）不受影响，仍走完整规则回退包。
+
 > Windows 说明：
 > 若 `scripts/sync-template.ps1` 或 `scripts/check-derived-sync.ps1` 报 Git Bash / MSYS 启动错误，脚本会先明确标注并进入 PowerShell fallback；fallback 可完成同步 dry-run / commit 与派生边界检查，并按 UTF-8 bytes 解码 Git 输出，避免 Windows PowerShell 5.1 代码页导致中文 Markdown、JSON 或文件名乱码。若 fallback 也失败，再优先视为本机 Git / 权限 / 网络问题，不要先把它理解成模板缺了新手步骤。
 
@@ -262,6 +264,7 @@ powershell -NoProfile -File scripts/check-template.ps1       # 仅模板仓库�
 ### 5.5 注意事项
 
 - 执行前工作区应干净；若 `git status` 显示未提交改动，先提交 / 暂存 / 放弃这些改动，不要混入同步提交。
+- 工作区干净 ≠ 本地最新：同步预检 A 阶段含派生仓自身 origin 新鲜度核验（`git fetch origin` 后实读 `git rev-list --left-right --count main...origin/main`）；behind > 0 先拉齐 main 再同步，ahead > 0 先确认本地未推送提交如何收口（契约见 `ai/prompts/maintainers/12-sync-template.md` 预检两阶段契约）。
 - 同步前先 bootstrap 模板远端最新版 `scripts/sync-template.sh`；不要无条件信任派生项目本地旧脚本。
 - 新版 `sync-template.sh` 会在 fetch 后对比远端自身版本；若本地脚本不是最新版，会停止并提示先更新脚本。
 - `--dry-run` 只预览差异，不修改工作区、不 stage。

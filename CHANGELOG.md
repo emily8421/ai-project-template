@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.76.1（2026-11-02）
+
+PATCH 聚合（两件派生回流提案同批落地：web-ui-knowledge-base issue #503 + LUMEN_demo_T2.1 issue #505；triage 均属实，#505 校正 1 处——check-template 断言行号 `:1340/:1341` 实为 1339-1341，结论不变；实施调整 1 处——#505 路由行保留 `MAINTAINERS.md` 于「规则改造」桶，维护者手册为模板仓任务权威且该桶仅模板仓执行，修复「派生仓清单含不存在文件」主诉不受影响）：
+
+- **同步预检 A 阶段补派生仓自身 origin 新鲜度核验（#503）**：`12-sync-template.md` 预检两阶段契约 A 阶段新增一项——`git fetch origin`（只读）后 `git rev-list --left-right --count main...origin/main` 实读 ahead/behind：0/0 pass；behind > 0 停下列待确认（先拉齐 main 再同步，避免同步分支基于落后 HEAD）；ahead > 0 记录并提示需人工确认本地未推送提交收口方式。「干净 ≠ 最新」缺口闭环（对上游模板实读远端 `VERSION` 的既有原则补齐对派生仓自身的一半）。同口径落点：`sync-methodology.md` 契约段与模板仓发起模式 A 阶段枚举（双写镜像）、`git-guide.md` §5.5 新增一条。
+- **任务路由表「模板维护 / 规则改造 / 同步机制」行按场景拆分必读集（#505）**：`ai/index.md` 该行拆为两桶——「规则改造 / 自检脚本 / 模板发布」维持完整规则回退包 + `MAINTAINERS.md` + `CONTRIBUTING.md` + `template-sync.json`；「派生项目下行同步」收窄为 `12-sync-template.md`（全文）+ `git-guide.md §5` + `session-rules §3.3/§3.4` + `rules-core.md`（硬规则门禁）+ 留痕模板；同步提交后按 `session-rules §3.2` 对被同步改写的规则文件做 diff 定向重读（替代同步前整读回退包）。`git-guide.md` §5.1 补读取面边界注（收窄不新增核对缺口；维护者侧不受影响）。同步 SOP 全部硬门禁（预检契约 / 失败即停 / dry-run 边界 / `check-derived-sync` / A13 矩阵）零改动。
+
+验证：`bash scripts/check-template.sh` 全量自检（基线 2119 对照）；md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（MAINTAINERS §3 口径）。
+
 ## v1.76.0（2026-11-01）
 
 MINOR 单提案（gmbl_project 派生项目回流 issue #485「TEMPLATE-UPGRADE-v1.76.0：评审机制总纲（触发矩阵）+ 图表体系评审清单」；2026-10-29 triage 属实 + 校正 3 处已被 gmbl 侧采纳并刷新正文，正文与实施内容一致）：评审机制此前「资产齐、收拢弱」——E1~E6 评估码、四个评审命令、doc-standards 审计基线均存在，但无「阶段 × 时点 × 命令 × 结论落点」总表，派生实证 E2~E5 阶段评估断档三周无人执行；OO 可选产物「选用即失管」，图表审核维度散落无统一 checklist。MINOR 判据：同步清单新增规则文件（新增下游采用面，CONTRIBUTING §4）。
