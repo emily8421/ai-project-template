@@ -1,7 +1,7 @@
 # TEMPLATE-UPGRADE: 模板开发手册、分层管家、治理机制与工具注册体系评估
 
 > 来源：模板维护者（2026-08-13 关于模板开发手册、四路径管家、治理机制登记与工具管理的讨论）
-> 状态：Batch 1 已落地（v1.61.6）；Batch 2 已授权并实施（v1.65.1，见 §17）；Batch 3-5 未授权
+> 状态：Batch 1 已落地（v1.61.6）；Batch 2 已授权并实施（v1.65.1，见 §17）；**Batch 3 已吸收关闭（2026-11-03，核心内容被 `TEMPLATE-UPGRADE-governance-decoupling.md` Phase 1 以轻量方式吸收并随 v1.75.6 落地——见 §18，不再按原样实施）**；Batch 4-5 未授权（Batch 4 双用例试点等真实试点窗口，Batch 5 仅在试点证明必要后）
 > 目标版本：v1.61.6（Batch 1）；v1.65.1（Batch 2）
 > Release impact：patch（Batch 1 新增人读机制与工具登记，不改变默认行为、同步范围或门禁）；后续 Batch 分别判断 patch / minor
 > Release strategy：先登记与手册整理，再做角色化试点；不在首批默认启用真正并发多 Agent
@@ -853,3 +853,7 @@ AI 建议维护者确认以下总体方向：
 - `Release impact: patch`（只重组说明和导航，不改变默认行为、同步范围或推荐流程；符合 §9 Batch 2「若只重组说明和导航，patch」与 CONTRIBUTING §4 兼容增强默认 patch）。
 - 验证：`scripts/check-markdown-clean.ps1`（改动文件）+ `bash scripts/check-template.sh --summary` + `git diff --check`；PATCH 豁免 L3 e2e 回归。
 - 验证结果（2026-08-19）：markdown clean 8 文件通过；`git diff --check` 通过（仅 VERSION 行尾 LF→CRLF 提示，Windows 工作区常态）；`check-template.sh --summary` 通过（2086 项 / 0 失败）。
+
+## 18. 处理记录
+
+- 2026-11-03：**Batch 3 改判「已吸收关闭」**（维护者拍板「按建议执行」）。依据：Batch 3 核心交付物——五角色逻辑模型（GOV-C-002 采纳方向：角色化、不默认并发）、跨角色交接字段（原 §5.5 草案）、冲突审核口径（原 §6.5）——已被 `TEMPLATE-UPGRADE-governance-decoupling.md` Phase 1 以轻量方式吸收（不建 Agent、不并发、不拆文件），随 v1.75.6 落地（PR #489，`capability-packages.md` §4 三列 + §5.1 交接契约 + §9 准入/审计/退役 + global-rules 域标签）。按原样实施 Batch 3 将与已落地机制重复建设。GOV-C 待确认项随本改判一并关闭（不另行逐项裁决）。**Batch 4（双用例试点）继续挂账**，触发条件不变：真实项目试点窗口（观察指标见原文 §Batch 4）；**Batch 5 仅在 Batch 4 试点证明必要后评估**。本提案继续留 `_proposals/`（Batch 4-5 未处置）；`Release impact: none`（提案记录更新，不改 VERSION）。
