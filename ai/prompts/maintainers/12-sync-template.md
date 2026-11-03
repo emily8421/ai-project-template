@@ -13,7 +13,7 @@
 
 **不适用场景**：要把派生项目经验回流到模板；这种情况应先在派生项目 `_governance/_proposals/` 起草提案，再按 `CONTRIBUTING.md` 上行流程处理。
 
-**使用前准备**：确认当前在派生项目根目录，已保存业务改动；目标模板版本必须从模板仓库根目录 `VERSION` 读取，不在 Prompt 中固定写死。
+**使用前准备**：确认当前在派生项目根目录，已保存业务改动；目标模板版本必须从模板仓库根目录 `VERSION` 读取，不在 Prompt 中固定写死。同步需联网（`git fetch` 上游模板）并写 `.git`（`git checkout FETCH_HEAD` / 同步提交），须在非沙箱环境（或 `workspace-write` + `network_access`）执行——沙箱受限环境先申请非沙箱再动手，不得先撞 `Permission denied` 再分流。
 
 **续接要求**：同步流程开始后，按 `ai/session-rules.md` 记录当前同步路径、目标版本、已执行命令、边界验证结果、整理 / 审计摘要、项目验证建议、待确认项和下一步。
 
