@@ -24,7 +24,7 @@
 | 编码 / 修 bug / Sprint 执行 | 实现任务、修缺陷、执行当前 Sprint | `ai/global-rules.md`、`ai/implementation-lifecycle-rules.md`、`ai/project-rules.md`、`ai/commands/run-dev-task.md` 或 `ai/commands/fix-bug.md` |
 | 文档 / 需求 / 设计 / 计划 | 生成或审计 docs、精修单文档、阶段规划、同步代码事实到文档 | `ai/global-rules.md`（回流 / 提案评估场景可只读 §9 / §10）、`ai/document-lifecycle-rules.md`（评估 / 回测场景可只读 §2 / §7.1）、相关 `ai/doc-standards/`（评估 / 回测场景可只读 03 §3 §4、09 §3 §4）、`ai/implementation-lifecycle-rules.md`、`ai/project-rules.md` |
 | UI 探索 / 原型 / 交互设计 | UI brief、需求探索原型、实现前原型、前端交互设计 | `ai/document-lifecycle-rules.md`、相关 `ai/doc-standards/`、`ai/commands/ui-prototype-exploration.md`、`ai/project-rules.md` |
-| 模板维护 / 规则改造 / 同步机制 | 修改 `ai/` 规则、入口镜像、同步清单、自检脚本、模板发布 | **规则改造 / 自检脚本 / 模板发布**：完整规则回退包、`MAINTAINERS.md`、`CONTRIBUTING.md`、`template-sync.json`、相关脚本；**派生项目下行同步**：`ai/prompts/maintainers/12-sync-template.md`（全文）、`git-guide.md §5`、`ai/session-rules.md §3.3 / §3.4`、`ai/rules-core.md`（全文，硬规则门禁）；留痕时读 `template-docs/templates/derived-sync-report-template.md`；同步提交后按 `ai/session-rules.md` §3.2 对**本次被同步改写的规则文件做 diff 定向重读**（替代同步前整读回退包） |
+| 模板维护 / 规则改造 / 同步机制 | 修改 `ai/` 规则、入口镜像、同步清单、自检脚本、模板发布 | **规则改造 / 自检脚本 / 模板发布**：完整规则回退包、`MAINTAINERS.md`（仅模板仓存在，v1.70.0 起不下行）、`CONTRIBUTING.md`、`template-sync.json`、相关脚本；**派生项目下行同步**：`ai/prompts/maintainers/12-sync-template.md`（全文）、`git-guide.md §5`、`ai/session-rules.md §3.3 / §3.4`、`ai/rules-core.md`（全文，硬规则门禁）；留痕时读 `template-docs/templates/derived-sync-report-template.md`；同步提交后按 `ai/session-rules.md` §3.2 对**本次被同步改写的规则文件做 diff 定向重读**（替代同步前整读回退包） |
 
 > **章节级标注语义**：必读规则包列中「（<场景>可只读 §x / §y）」为章节级标注——标注场景下按所列章节读取即为合规读取，无需整文件加载；任务需要标注外内容、或场景不符时仍按整文件读取（保守方向兜底）。未标注条目行为不变（整文件）。本会话已按规则路由读取、之后未被修改的规则文件，按 `ai/session-rules.md` §3.2 复用，不因任务切换重复整读。章节编号以各规则文件当前版本为准，规则章节改编号时同步更新标注。
 

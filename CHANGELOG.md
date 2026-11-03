@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.77.1（2026-11-03）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-cross-cli-sandbox-friendliness.md`「跨 CLI 友好性——派生仓下行同步的非沙箱前置声明 + MAINTAINERS.md 路由标注」，源起 2026-11-03 zhiyan 派生仓 Codex 会话下行同步撞 `MAINTAINERS.md` 缺失 + sandbox 拦 `.git` 写入；C1 triage 属实 + 补强 2 处：①路由本身正确——「派生项目下行同步」桶本就不含 `MAINTAINERS.md`，摩擦系非 Claude CLI 误落「规则改造」桶，标注为防误读 robustness 而非修路由错误；②非沙箱前置声明的最高杠杆落点是 `12-sync-template.md`——该文件全文无沙箱字样，而其 `git fetch` / `git checkout FETCH_HEAD` 恰是撞 `Permission denied` 的那一步）：
+
+- **MAINTAINERS.md 路由标注（防误读）**：`ai/index.md` 路由表「规则改造 / 自检脚本 / 模板发布」桶 `MAINTAINERS.md` 后标注「仅模板仓存在，v1.70.0 起不下行」——任何按字面读规则的 CLI（如 Codex）在派生仓误落该桶时，不再误读为必须存在的文件。
+- **同步前置非沙箱声明**：`12-sync-template.md`「使用前准备」补一句——同步需联网 `git fetch` 上游 + 写 `.git`（`git checkout FETCH_HEAD` / 同步提交），须在非沙箱或 `workspace-write` + `network_access` 环境执行，沙箱受限先申请非沙箱，不得撞 `Permission denied` 再分流。
+- **沙箱分流规则前置化（`rules-core.md` §4）**：把「先自问是否沙箱」从「全量自检 / 全量验证」扩到「需写 `.git` / 联网的操作（下行同步 / `git fetch·push·merge` / `gh` 联网）」。
+- **顺带订正**：`session-rules.md` §3.3 沙箱分流口径交叉引用 `rules-core §2` → `§4`（分流全文实际在 §4）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean + `git diff --check`；PATCH 豁免 L3 e2e（纯 advisory 文档级，无脚本 / 同步清单 / 断言改动）。
+
 ## v1.77.0（2026-11-03）
 
 MINOR 单提案（LUMEN_demo_T2.1 派生项目回流 issue #334「Stack Adapter（R5）—— FastAPI / Python + React / TypeScript」；2026-11-03 重评立项——修正 08-12 初判与 11-03 前判「关闭」：先期核实实证 LUMEN / digital-cs / zhiyan 三主力派生仓 project-rules + tech-spec 均声明 FastAPI，需求面成立；R1/R2 兄弟提案 issue #332 已落地关闭，上层就绪。MINOR 判据：同步清单新增目录与文件，新增下游采用面，CONTRIBUTING §4）：
