@@ -25,6 +25,7 @@
 - `git-guide.md` §5
 - `ai/prompts/maintainers/12-sync-template.md`
 - `template-docs/templates/derived-sync-report-template.md`
+- 其余 `ai/` 规则文件不要求预读：同步任务的读取面按 `ai/index.md` 路由表「派生项目下行同步」最小必读集执行（含 `ai/rules-core.md` 全文硬规则门禁与 `ai/session-rules.md` §3.3 / §3.4）；规则改造 / 同步机制变更类任务仍走完整规则回退包（`ai/rules-core.md` §3 口径）。
 - `scripts/sync-template.ps1`
 - `scripts/check-derived-sync.ps1`
 - `_governance/ai-records/project-registry/README.md` 与 `_governance/ai-records/project-registry/registry.md`（仅当从模板仓发起“同步至派生项目 / 同步 N 个派生”时读取）

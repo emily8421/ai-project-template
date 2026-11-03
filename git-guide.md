@@ -265,6 +265,7 @@ powershell -NoProfile -File scripts/check-template.ps1       # 仅模板仓库�
 
 - 执行前工作区应干净；若 `git status` 显示未提交改动，先提交 / 暂存 / 放弃这些改动，不要混入同步提交。
 - 工作区干净 ≠ 本地最新：同步预检 A 阶段含派生仓自身 origin 新鲜度核验（`git fetch origin` 后实读 `git rev-list --left-right --count main...origin/main`）；behind > 0 先拉齐 main 再同步，ahead > 0 先确认本地未推送提交如何收口（契约见 `ai/prompts/maintainers/12-sync-template.md` 预检两阶段契约）。
+- **结构取证预检（目录迁移 / 布局对齐 / 容器审计类任务）**：动本仓目录前，先显式锚定母仓结构证据——`git ls-tree <母仓 remote>/main --name-only`（或本地模板仓路径 `git -C <模板仓> ls-tree`），并 grep 母仓 `CHANGELOG.md` 的结构条目交叉印证；**禁止以 `FETCH_HEAD`、上次 pull 残留对象或本仓 `origin/main` 作为母仓结构证据**（`FETCH_HEAD` 会被任何 fetch / pull 覆写，本仓 `origin/main` 不是母仓）。
 - 同步前先 bootstrap 模板远端最新版 `scripts/sync-template.sh`；不要无条件信任派生项目本地旧脚本。
 - 新版 `sync-template.sh` 会在 fetch 后对比远端自身版本；若本地脚本不是最新版，会停止并提示先更新脚本。
 - `--dry-run` 只预览差异，不修改工作区、不 stage。
