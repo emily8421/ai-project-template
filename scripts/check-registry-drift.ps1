@@ -65,17 +65,32 @@ foreach ($row in $rows) {
     foreach ($l in (Get-Content -LiteralPath $base -Encoding UTF8)) {
         if ($l -match 'Current synced template version:\s*(v[0-9]+\.[0-9]+\.[0-9]+)') { $synced = $Matches[1]; break }
     }
+    # 工作区分支守卫：业务分支检出的工作区 TEMPLATE-BASE 是旧基线视图，直接比对会产生假阳性 DRIFT。
+    # 分支非 main 时改用 git show main:TEMPLATE-BASE.md 的 main 基线作为 Repo 比对值（rev-parse / show 均纯只读）。
+    $branchNote = ''
+    $branch = (& git -C $row.LocalPath rev-parse --abbrev-ref HEAD 2>$null)
+    if ($LASTEXITCODE -eq 0 -and $branch -and $branch -ne 'main') {
+        $mainSynced = $null
+        foreach ($l in (& git -C $row.LocalPath show main:TEMPLATE-BASE.md 2>$null)) {
+            if ($l -match 'Current synced template version:\s*(v[0-9]+\.[0-9]+\.[0-9]+)') { $mainSynced = $Matches[1]; break }
+        }
+        if ($mainSynced) {
+            $synced = $mainSynced
+            $branchNote = "；工作区在 $branch，比对以 main 为准（建议该仓会话收尾切回 main）"
+        }
+        # main 基线读不出（如未建 main）则保守沿用工作区值，不标守卫注记
+    }
     if (-not $synced) {
         $drift++
         $results += [pscustomobject]@{ Project = $row.Project; Registry = $row.Inherited; Repo = '-'; Result = 'DRIFT（TEMPLATE-BASE 无版本行）' }
         continue
     }
     if ($synced -eq $row.Inherited) {
-        $results += [pscustomobject]@{ Project = $row.Project; Registry = $row.Inherited; Repo = $synced; Result = 'MATCH' }
+        $results += [pscustomobject]@{ Project = $row.Project; Registry = $row.Inherited; Repo = $synced; Result = "MATCH$branchNote" }
     }
     else {
         $drift++
-        $results += [pscustomobject]@{ Project = $row.Project; Registry = $row.Inherited; Repo = $synced; Result = 'DRIFT（registry 落后或超前，实查回写）' }
+        $results += [pscustomobject]@{ Project = $row.Project; Registry = $row.Inherited; Repo = $synced; Result = "DRIFT（registry 落后或超前，实查回写）$branchNote" }
     }
 }
 

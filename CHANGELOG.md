@@ -6,6 +6,16 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.76.2（2026-11-03）
+
+PATCH 聚合（同维护窗口三类维护侧小改，用户拍板聚合；两件派生回流提案 + 一件模板自产提案）：
+
+- **同步类任务路由一致性收口（issue #514 部分吸收）**：其主体诉求（同步场景不整读完整回退包）已随 v1.76.1 路由行拆分落地且更彻底（同步桶不读 document-lifecycle）；本版收口其指出的真实残余——`ai/rules-core.md` §3 与路由表的语义张力（原「模板维护……必须读取完整规则回退包」未区分「改机制」与「执行例行同步」，执行侧无所适从）：现改为「规则改造 / 同步清单 / 自检脚本变更及模板发布须整读；派生项目例行下行同步按路由表最小必读集，标注外回退全读兜底」。`ai/commands/sync-methodology.md` 必读文件链同口径补标注。校正 1 处：提案方 Release impact 预估 MINOR 基于未见 v1.76.1 的视角，残余收口实际 PATCH 足够。
+- **结构迁移类任务「母仓结构取证」固定预检步（issue #515）**：`git-guide.md` §5.5 新增一条——动本仓目录前显式锚定母仓结构证据（`git ls-tree <母仓 remote>/main --name-only` 或本地模板仓 `git -C <模板仓> ls-tree` + 母仓 CHANGELOG 结构条目交叉印证），禁止以 `FETCH_HEAD`（会被任意 fetch / pull 覆写）、pull 残留对象或本仓 `origin/main` 作为母仓结构证据；`ai/prompts/maintainers/15-post-sync-cleanup.md` 审计清单加同口径取证项引用（与 v1.75.2 容器迁移审计项相邻落位、措辞不重叠）。
+- **registry 对账工具工作区分支守卫（提案 `TEMPLATE-UPGRADE-registry-drift-worktree-branch-guard.md` 同批实施）**：`check-registry-drift.ps1` 比对前加分支检测（`git rev-parse --abbrev-ref HEAD`，只读）——分支非 main 时改用 `git show main:TEMPLATE-BASE.md` 基线比对，假阳性 DRIFT 转 `MATCH（附工作区分支注记与切回提示）` 不计漂移；真 DRIFT 仍 EXIT=1。消业务分支检出假阳性（2026-11-03 meeting-minutes 实证），行为验证：原假阳性仓转 MATCH 注记、全真 MATCH EXIT=0、9 仓行为不变。工具为模板仓专用（不下行），定位不变（advisory 只报不修）。
+
+验证：全量自检（基线 2122 对照）+ md-clean + `git diff --check` + drift 工具行为验证三例；PATCH 豁免 L3 e2e。
+
 ## v1.76.1（2026-11-02）
 
 PATCH 聚合（两件派生回流提案同批落地：web-ui-knowledge-base issue #503 + LUMEN_demo_T2.1 issue #505；triage 均属实，#505 校正 1 处——check-template 断言行号 `:1340/:1341` 实为 1339-1341，结论不变；实施调整 1 处——#505 路由行保留 `MAINTAINERS.md` 于「规则改造」桶，维护者手册为模板仓任务权威且该桶仅模板仓执行，修复「派生仓清单含不存在文件」主诉不受影响）：
