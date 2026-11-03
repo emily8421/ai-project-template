@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.77.0（2026-11-03）
+
+MINOR 单提案（LUMEN_demo_T2.1 派生项目回流 issue #334「Stack Adapter（R5）—— FastAPI / Python + React / TypeScript」；2026-11-03 重评立项——修正 08-12 初判与 11-03 前判「关闭」：先期核实实证 LUMEN / digital-cs / zhiyan 三主力派生仓 project-rules + tech-spec 均声明 FastAPI，需求面成立；R1/R2 兄弟提案 issue #332 已落地关闭，上层就绪。MINOR 判据：同步清单新增目录与文件，新增下游采用面，CONTRIBUTING §4）：
+
+- **新增 `template-docs/stack-adapters/`（3 文件，登记 `template-sync.json` `files_all` + `sync-template.sh` 兜底数组）**：README（层级去重边界表 + 选择矩阵——未覆盖栈如 PostgreSQL / Vue 注明暂无 Adapter、需要时回流新增；不引入硬 CI 门禁口径）+ `fastapi-python.md`（7 条：service 层禁 import fastapi / code→HTTP 映射全局唯一 / router 列表循环注册 / `typing.Protocol` + `@runtime_checkable` 多实现契约 / 依赖注入类型注解 / Pydantic Settings 配置集中与关键 secret 启动期 fail-closed / import 卫生）+ `react-typescript.md`（3 条：禁 any 泛型贯穿 / `ReturnType<typeof useXxx>` 跨层 props 复用 / 后端 OpenAPI 为类型单一事实源 + codegen 同步）。每条带「要求 / 违例信号 / 检查口径」。
+- **校正 2 处**（triage 实证，提案方知悉）：①悬空引用——原提案「governance §8.3 要求放进 Adapter」在母仓治理文档对应不上（handbook §8.3 为「不采用事件自动触发链」），实施稿去除该引用，层级关系改为直接指认 L0 / §6.2 / web-fullstack-profile；②口径不一致——原提案正文提「PostgreSQL 示例放进 Adapter」但拟改仅 2 份 Adapter 文件，实施稿在 README 选择矩阵注明未覆盖栈处理路径。
+
+验证：全量自检（`check-template.sh --summary`）+ L3 e2e R1-R3（`e2e-sync-check.sh`，R4-R6 触达面豁免——新增 3 纯文本 Adapter 文件不触碰场景路由 / 文档生成 / PowerShell fallback）+ md-clean + `git diff --check`；e2e 报告 `docs/archive/e2e/2026-11-03-v1.77.0.md` 随 PR 入库。
+
 ## v1.76.2（2026-11-03）
 
 PATCH 聚合（同维护窗口三类维护侧小改，用户拍板聚合；两件派生回流提案 + 一件模板自产提案）：
