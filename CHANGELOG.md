@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.77.2（2026-11-09）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-post-merge-tail-discipline.md`「合并后收尾第一步纪律（switch main + squash HEAD 核对）」，源起 pitfall 第十一批 rollup #530 回流候选——2026-11-08 registry 补登轮实证：squash 合并确认后未先切 main 就跑收尾链，pull 在任务分支空跑（"Already up to date" 输出误导）+ 分支删除被 checkout 占用拒绝，失败即停逐项纠正，无远端影响；C1 triage 属实 + 补强，其中 squash HEAD 核对采纳「写进命令块内注释行」而非散文声明——「关键前置未进执行清单」家族的教训反向应用）：
+
+- **`git-guide.md` §3.1 合并后清理顺序纪律**：引导句改为「收尾第一步固定：先同步本地 `main` 并核对已拉到合并结果，再做分支清理」；命令块补核对行 `git log --oneline -1`（HEAD 为带 ` (#<PR号>)` 尾缀的 squash 提交，尾缀约定同 v1.54.3 脚本层正则，不引入新约定）与行内注释（switch main 第一步固定动作）；分支敏感操作（`branch -d` / `-D`、`push --delete`）单独执行提示 + worktree 占用拒绝场景一句。
+- **范围裁剪（triage 判定）**：`template-docs/scenario-guides.md` 场景 C4 第 4 行不改——该行语序已隐含先后且 cmd 指针指向 git-guide §3-4，§3.1 修好后指针即覆盖，避免双写漂移。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（流程文档表述补强，无脚本 / 同步清单 / 断言改动）。
+
 ## v1.77.1（2026-11-03）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-cross-cli-sandbox-friendliness.md`「跨 CLI 友好性——派生仓下行同步的非沙箱前置声明 + MAINTAINERS.md 路由标注」，源起 2026-11-03 zhiyan 派生仓 Codex 会话下行同步撞 `MAINTAINERS.md` 缺失 + sandbox 拦 `.git` 写入；C1 triage 属实 + 补强 2 处：①路由本身正确——「派生项目下行同步」桶本就不含 `MAINTAINERS.md`，摩擦系非 Claude CLI 误落「规则改造」桶，标注为防误读 robustness 而非修路由错误；②非沙箱前置声明的最高杠杆落点是 `12-sync-template.md`——该文件全文无沙箱字样，而其 `git fetch` / `git checkout FETCH_HEAD` 恰是撞 `Permission denied` 的那一步）：
