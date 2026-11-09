@@ -96,12 +96,13 @@ gh pr create --fill              # 如项目要求走 PR；模板仓强制
 git push
 ```
 
-PR 合并后，同步本地 `main` 并清理已合并分支：
+PR 合并（含 squash）后，收尾第一步固定：先同步本地 `main` 并核对已拉到合并结果，再做分支清理。分支敏感操作（`git branch -d` / `-D`、`git push --delete`）单独执行，不嵌入长链：
 
 ```powershell
-git switch main
+git switch main                # 第一步固定动作：先离开任务分支，后续收尾命令才不会落在旧分支上
 git pull
-git branch -d <已合并分支名>
+git log --oneline -1           # 核对 HEAD 为带 (#<PR号>) 尾缀的 squash 提交，确认合并结果已拉到
+git branch -d <已合并分支名>    # 单独执行；分支被 worktree 占用时会拒绝，先移除占用
 ```
 
 常用提交类型：
