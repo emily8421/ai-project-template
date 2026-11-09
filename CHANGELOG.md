@@ -6,6 +6,19 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.77.3（2026-11-09）
+
+PATCH 聚合轮（双输入：模板仓 issue #526「下行同步预检的 `git fetch` 写入边界措辞」（zhiyan 派生回流 2026-11-07）+ 模板自产提案 `TEMPLATE-UPGRADE-codex-checkpoint-portability.md`「Windows/Codex 续接、只读核对与补丁调用的失败域分流」（2026-11-09 合并 C1 triage 通过，吸收 zhiyan 研究分析 P2-b 与故障分流分支 3））：
+
+- **同步预检措辞修正（#526）**：`12-sync-template.md` 两处 + `sync-methodology.md` 镜像两处——含 `git fetch origin` 的 A 阶段不再统称「只读预检」（整体只读限定为不改工作区文件），fetch 括注改为「不改工作区文件，但联网并写入 .git」，消除受限环境执行者误判纯只读探测的歧义；真只读场景（check-github-context 预检等 6 处）措辞不变。
+- **续接状态分级（提案拟改 1 + zhiyan P2-b）**：`ai/session-rules.md` §3.1 裁决规则新增一条——handoff 新鲜度按 `Branch/HEAD/VERSION`、工作区、stash/worktree、远端快照逐项输出「一致 / 过时 / 未复核」，未跟踪路径 / 未登记 worktree 只记「归属待确认」；跨仓续接区分「本地已提交 / 已推送 / PR 已合并 / 仅本地跟踪快照」四态。`ai/commands/resume.md` 恢复摘要输出契约第 1/2 条跟随小改。
+- **远端只读查询范式（提案拟改 2）**：`remote-ci-sop-profile.md` §3.D 第 4 条扩写——查询成功才报告远端字段，解析失败标「未核实」，`GitHub main` / Release / tag 逐项报告，不把本地 `VERSION`、本地合并提交或历史快照写成远端事实。
+- **CLI 症状速查表（提案拟改 3 + zhiyan 分支 3/P2-a）**：`ai-cli-setup.md` §6 新增「常见症状速查」表（症状 → 可核验证据 → 安全处置 ×4：编码乱码 / 权限边界 / 命令构造 / 写入空跑），命令构造与补丁格式错误归类「命令域」，不按沙箱 / 权限故障处理；不硬编码特定 CLI 内部命令。
+
+补丁失败归因裁决（合并 triage）：差分证据支持「该环境 `.bat` 包装器多行传参失真」的窄结论；字节级失真机制按 zhiyan 口径视为未定位，不写进模板。zhiyan 收缩提案两处论证失准（「原 P1 已覆盖」以偏概全 / P2-b「现有已规定」口径过宽）经母仓重评估修正记录，不回改派生仓文件。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（措辞 / 示例级文档改动，无脚本 / 同步清单 / 断言变更）。同步关闭 issue #526。
+
 ## v1.77.2（2026-11-09）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-post-merge-tail-discipline.md`「合并后收尾第一步纪律（switch main + squash HEAD 核对）」，源起 pitfall 第十一批 rollup #530 回流候选——2026-11-08 registry 补登轮实证：squash 合并确认后未先切 main 就跑收尾链，pull 在任务分支空跑（"Already up to date" 输出误导）+ 分支删除被 checkout 占用拒绝，失败即停逐项纠正，无远端影响；C1 triage 属实 + 补强，其中 squash HEAD 核对采纳「写进命令块内注释行」而非散文声明——「关键前置未进执行清单」家族的教训反向应用）：

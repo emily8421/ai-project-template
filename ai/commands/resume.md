@@ -48,8 +48,8 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 
 最终答复必须按以下顺序给出可接手的 briefing，不得只复述版本、提交或 handoff 标题：
 
-1. **续接结论**：写明 `handoff fresh / stale / missing`，以及当前是否存在活跃工作流。
-2. **已确认本地事实**：当前分支与工作区、最近提交、VERSION、stash 与活跃 worktree；远端一律标为“未复核”，除非本轮已按授权复核。
+1. **续接结论**：写明 `handoff fresh / stale / missing`，以及当前是否存在活跃工作流；按 `ai/session-rules.md` §3.1 对 `Branch / HEAD / VERSION`、工作区、stash / worktree、远端快照逐项标注 `一致 / 过时 / 未复核`。
+2. **已确认本地事实**：当前分支与工作区、最近提交、VERSION、stash 与活跃 worktree；远端一律标为“未复核”，除非本轮已按授权复核。跨仓续接时按 §3.1 区分 `本地已提交 / 已推送 / PR 已合并 / 仅本地跟踪快照`。
 3. **唯一下一步**：只给出一个推荐动作，包含工作流、目标仓库或 worktree、首个只读或可执行动作、前置条件和停止点。快速续接只报告该动作，不执行它。
 4. **阻塞 / 待确认**：列出会阻止该唯一下一步的事项；须明确 AI 建议、依据、备选方案和阻塞关系。没有则写“无”。
 5. **独立 backlog**：把与唯一下一步无关的后续事项单列，不能混入“下一步”。

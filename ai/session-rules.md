@@ -108,6 +108,7 @@ Get-Content -Path ai/session-rules.md -Encoding UTF8 -Raw
 - 若 handoff 缺少元数据，或其分支 / HEAD / 版本 / 进度明显落后于 Git，立即标记为 `handoff stale`；以 Git 客观事实和用户当前输入为准，handoff 仅作参考，不继续深挖旧记录。
 - 若 Git 工作区 dirty、存在 stash、当前分支与 handoff 分支不同，或用户贴出的中断日志与 handoff 冲突，先列出冲突和不确定项，等待用户确认。
 - 远端状态只可写成“未复核”；只有用户明确要求“继续处理远端 issue / PR”或“执行下一步”时，才切换到对应命令并按写入确认规则执行。
+- 续接状态分级输出：`Branch / HEAD / VERSION`、工作区文件、stash / worktree、远端快照逐项标注 `一致 / 过时 / 未复核`，不得混作单一新鲜度结论；工作区新增未跟踪路径或 handoff 未登记的 worktree 时只记“归属待确认”，不直接下清理结论。跨仓续接区分 Git 状态：`本地已提交 / 已推送 / PR 已合并 / 仅本地跟踪快照`——本地提交与跟踪快照不证实远端合并或发布，远端事实以实查为准；真实分支 / HEAD / 版本冲突仍按 stale 规则停止。
 
 快速续接最终答复必须遵守 `ai/commands/resume.md` 的「恢复摘要输出契约」；其中的“唯一下一步”“阻塞 / 待确认”“独立 backlog”和“依据”不得省略。当前分支与工作区、最近提交 / VERSION、handoff 新鲜度（fresh / stale / missing）和未复核远端事项仍为最低事实字段。
 
