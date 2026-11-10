@@ -113,6 +113,7 @@ DEFAULT_SYNC_FILES=(
   "CHANGELOG.md"
   "CHANGELOG-PLAIN.md"
   "template-docs/beginner-guide.md"
+  "template-docs/git-beginner-handbook.md"
   "template-docs/env-setup.md"
   "template-docs/ai-cli-setup.md"
   "template-docs/smoke-test.md"

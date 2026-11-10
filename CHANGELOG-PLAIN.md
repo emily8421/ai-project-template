@@ -5,6 +5,14 @@
 
 本文是母模板 `ai-project-template` 的 changelog 大白话版，记录母模板自身演进。派生项目同步后，根目录 `CHANGELOG.md` / `CHANGELOG-PLAIN.md` 归派生项目自有；母模板继承版本号以 `TEMPLATE-BASE.md` 为准，母模板发布说明参考见同步生成的 `upstream/CHANGELOG.md` / `upstream/CHANGELOG-PLAIN.md`。权威版本事实仍以母模板 `VERSION`、`CHANGELOG.md` 和 Git 历史为准；本文件只帮助人快速读懂母模板发布影响。
 
+## v1.78.0（2026-11-10）
+
+这一版给完全没用过 Git 的新手加了一本中文入门手册，一共三件事：
+
+1. **新增《Git 新手操作手册》**：用大白话 + 图示讲清楚 Git 是什么、GitHub/GitLab 是什么，以及 `commit` 和 `push`、`pull` 和 `clone` 这些新手最容易搞混的区别，最后附常用命令速查表。手册开头说清楚了：它只讲概念，真正动手时的操作规矩（分支、同步、远端那些）以 `git-guide.md` 为准。
+2. **新手导航加了入口**：`template-docs/beginner-guide.md` 的「去哪看什么」表格新增一行，Git 零基础的人能直接找到这本手册。
+3. **手册会随模板同步下发**：登记进同步清单，所有派生项目下次同步都能拿到——这也是这版升 MINOR（而不是 PATCH）的原因：同步清单多了一份文件。
+
 ## v1.77.3（2026-11-09）
 
 这一版是一批「说明书找茬」修正，来自 Codex 这个 AI 工具实际踩坑的复盘（两批材料：zhiyan 项目回流的一条小修正 + 母仓挂起的跨 CLI 提案），一共四件事：

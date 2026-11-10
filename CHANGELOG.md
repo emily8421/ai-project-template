@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.0（2026-11-10）
+
+MINOR 发布（提案 `TEMPLATE-UPGRADE-git-beginner-handbook.md`——模板维护者草案经 C1 triage 后实施；`files_all` 新增下行文档，同步清单扩展）：
+
+- **新增 `template-docs/git-beginner-handbook.md`**：Git 零基础概念手册（30 节：Git / GitHub / GitLab 概念、「工作区→暂存区→本地仓库→远程仓库」四区模型、status / add / commit / push / pull / clone / fetch / branch / switch / merge / stash / diff / log / restore / revert / reset 逐命令讲解 + 命令速查表与学习顺序建议）。整理项：顶部补 Sync notice 与「定位与优先级」说明（操作争议以根目录 `git-guide.md` 权威 SOP 为准，安装环境见 `template-docs/env-setup.md`）；标题层级统一（31 个 `##` 主节）；GitLab 示例去项目化；一处散文误入代码块修正。
+- **`template-docs/beginner-guide.md` §7 导航 +1 条**：「Git 零基础入门（概念与常用命令）」指向新手册。
+- **同步清单双入口登记**：`template-sync.json` `files_all` 与 `scripts/sync-template.sh` 兜底清单各 +1（普通与领域路线均下行）。
+
 ## v1.77.3（2026-11-09）
 
 PATCH 聚合轮（双输入：模板仓 issue #526「下行同步预检的 `git fetch` 写入边界措辞」（zhiyan 派生回流 2026-11-07）+ 模板自产提案 `TEMPLATE-UPGRADE-codex-checkpoint-portability.md`「Windows/Codex 续接、只读核对与补丁调用的失败域分流」（2026-11-09 合并 C1 triage 通过，吸收 zhiyan 研究分析 P2-b 与故障分流分支 3））：
