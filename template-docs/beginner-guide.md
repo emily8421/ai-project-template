@@ -167,6 +167,7 @@ docs/inputs/ 原始输入  ──→  docs/vision/product-vision.md  ──→  
 | 第一次整体上手 | 本手册 + `README.md` |
 | 装工具 / 装环境 | `template-docs/env-setup.md` |
 | 装 AI CLI | `template-docs/ai-cli-setup.md` |
+| Git 零基础入门（概念与常用命令） | `template-docs/git-beginner-handbook.md` |
 | 具体场景怎么操作 | `template-docs/scenario-guides.md`（A0–A28 / C1–C8 / 元场景） |
 | 找命令速查 | `SOP.md`、`ai/commands/README.md` |
 | 查 how-to 任务操作入口 | `template-docs/templates/user-guide-template.md`（任务→权威入口导航表） |
