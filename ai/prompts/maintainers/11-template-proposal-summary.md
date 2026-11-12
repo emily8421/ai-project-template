@@ -36,6 +36,7 @@
 - _governance/_proposals/_remote-issues/*.md（已镜像的远端 issue；若远端更新较新，先刷新镜像）
 
 镜像门禁检查：
+- 镜像落盘后立即清尾（剥 EOF 多余空行与行尾空白）再进入检查 / 分析与提交（mirror-eof-whitespace-gate：未清尾镜像会被 CI whitespace 门禁拦截）。
 - 列出本轮参与分析的 `_governance/_proposals/_remote-issues/issue-<number>.md` 路径、远端 `Updated` 和本地 `Mirrored at`。
 - 对每个准备分析的远端 issue，确认镜像存在且未过期；未通过时只允许刷新镜像，不得输出正文分析。
 - 优化计划中的去重、冲突、依赖、分批计划、拟修改文件、版本影响和续接记录必须引用本地镜像路径作为输入来源。

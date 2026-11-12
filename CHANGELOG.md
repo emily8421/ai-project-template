@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.1（2026-11-12）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-c1-mirror-eof-tail-clean.md`「C1 issue 镜像落盘清尾写进 prompt 11 操作序列」，源起 pitfall SUMMARY 第十二批回流候选——mirror-eof-whitespace-gate 家族两次实证：2026-10-31 #490/#491 实施轮首证、2026-11-09 #526 镜像落盘当场复发；维护者拍板即日实施）：
+
+- **`ai/prompts/maintainers/11-template-proposal-summary.md` 镜像门禁检查清单 +1 条**：镜像落盘后立即清尾（剥 EOF 多余空行与行尾空白）再进入检查 / 分析与提交——把「清尾」从行为纪律自觉提升为操作序列固定步，不改变既有镜像硬门禁语义（「坑记了、修法不模板化进操作步骤就还会犯」，第十二批模式结论的机制化兑现）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（1 行 Prompt 小修，无脚本 / 同步清单 / 断言变更）。
+
 ## v1.78.0（2026-11-10）
 
 MINOR 发布（提案 `TEMPLATE-UPGRADE-git-beginner-handbook.md`——模板维护者草案经 C1 triage 后实施；`files_all` 新增下行文档，同步清单扩展）：
