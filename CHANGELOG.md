@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.4（2026-11-14）
+
+PATCH 单提案（LumiOne-Framework 派生项目回流 issue #548「双提交同步分支的 PR 标题显式指定」，2026-11-14 C1 triage 逐条核实全部属实——SOP 步骤 24 现状 / 校验机制 / 同仓两轮 PR 对照（#12 `--fill` 伪影 / #13 显式标题通过）均与远端实查吻合，拍板即日实施）：
+
+- **`ai/prompts/maintainers/12-sync-template.md` 步骤 24**：同步分支含 bootstrap 等前置提交（多提交）时，`gh pr create` 显式指定标题 `sync template vX.Y.Z from ai-project-template`，使 squash 合并后 HEAD 信息保持同步提交格式；单提交分支保留 `--fill`。修复机制：伪影标题使 `project-check.yml` 因 HEAD 信息不匹配同步模式而跳过合并后 `check-derived-sync` 边界校验（校验覆盖静默降级）。
+- **`git-guide.md` §5.3 + §5.5 同口径补注**：多提交同步分支的 PR 标题显式指定口径（§5.3 命令旁一行 + §5.5 注意事项一条，含同仓两轮对照实证说明）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（SOP 命令措辞级，不改同步清单 / 断言 / 校验行为本身）。关联登记：本轮 triage 顺带发现 LumiOne / digital-cs 两仓 v1.78.0 同步未回写 registry，已随 PR #553 补登清账（对账 9 仓 MATCH）。
+
 ## v1.78.3（2026-11-14）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-route-annotation-coverage.md`「任务路由表场景级标注覆盖扩展」，源起 token-hotspot SUMMARY「路由包重读」观察家族累计 12+ 次实证、§14 升级「待 C1 评估立案」、§15 判证据链完整；2026-11-14 C1 triage 通过并修订后拍板实施；#441 章节级标注机制的覆盖面扩展，PATCH 与 #491 同先例）：

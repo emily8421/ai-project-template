@@ -245,6 +245,8 @@ git push -u origin chore/sync-template-vX.Y.Z
 gh pr create --fill
 ```
 
+同步分支含 bootstrap 等前置提交（多提交）时，上面的 `gh pr create` 改为显式指定标题：`gh pr create --title "sync template vX.Y.Z from ai-project-template" --body "<同步摘要>"`——`--fill` 在多提交分支上取分支名 / 首提交作标题，squash 合并后 HEAD 信息不匹配同步模式，`project-check.yml` 的合并后边界校验会被跳过（信息伪影）。
+
 同步提交并通过边界检查后，可选执行「同步跨度采用清单」（advisory，跳过不阻塞）：读 `upstream/CHANGELOG.md` 跨度段（`TEMPLATE-BASE.md` 旧继承版本排除 → 目标版本包含）做四桶分类（① 结构迁移 / ② 规范基线 / ③ 行为规则 / ④ 零迁移），清单写入同步运行记录；步骤口径见 `ai/prompts/maintainers/12-sync-template.md` 对应步骤。
 
 ### 5.4 两类检查命令
@@ -279,6 +281,7 @@ powershell -NoProfile -File scripts/check-template.ps1       # 仅模板仓库�
 - 同步后若 `check-derived-sync` 失败，先修复同步边界问题，再 push / PR。
 - 同步 PR 以 squash 合并的派生仓，权威边界校验时点在**推送前**：对纯同步提交跑 `check-derived-sync` 并将结果留痕于同步运行记录；squash 合并后原同步提交随分支删除，合并后在 main HEAD 上校验出现「提交信息不像同步提交 / 同步清单外变更」等失败时，对照推送前留痕判定是否为合并粒度伪影（项目自有提交与同步变更揉进同一 squash 提交所致），不要据此回改同步边界。
 - 同步 PR 只包含同步提交：提案归档移动（`_governance/_proposals/` → `_governance/_archive/proposals/`）、同步运行记录落盘、种子文件联动清理等 SOP 要求的收尾提交，拆到同步 PR 合并后的后续小 PR / 提交执行，让合并后 HEAD 保持纯同步提交，边界校验天然通过（对应 `ai/prompts/maintainers/12-sync-template.md`「同步 PR 边界」段）。
+- 同步分支含 bootstrap 等前置提交（多提交）时，PR 标题显式指定为 `sync template vX.Y.Z from ai-project-template`，不用 `--fill`：squash 合并后 HEAD 信息保持同步提交格式，合并后边界校验才会执行。同仓两轮对照实证：`--fill` 伪影标题导致校验跳过，显式标题轮干净通过（来源 LumiOne-Framework 派生回流 issue #548）。
 - 若已经完成同步提交但不确定后续是否执行，使用 `/run sync-methodology` 的“同步后续接模式”：不要重新 dry-run / commit，先核对 `git log --oneline -8`、`VERSION`、`TEMPLATE-BASE.md`（若存在）、最近同步记录和工作区，再从 `check-derived-sync` 开始补完后续闭环。
 - 同步后进入标准闭环：`check-derived-sync` 边界验证 → `post-sync-cleanup` 整理计划 → `docs-system-audit` 同步后审计 → 项目验证建议 → 同步报告留痕。
 - 同步后整理项目内容时，另开分支执行 `ai/prompts/maintainers/15-post-sync-cleanup.md` 第一段，先只审计并输出迁移计划，不要混入同步提交；整理摘要应回写同步报告。
