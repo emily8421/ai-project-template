@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.2（2026-11-14）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-untracked-safe-add-note.md`「git-guide §3.1 补 untracked 安全 add 附注」，源起 pitfall SUMMARY 第十三批——`git add -A` 暂存范围失控第三次实证达第四批既定立案口径（2026-08-12 `.ai/tmp` / 2026-08-21 归档评估稿 7 份 / 2026-11-10 CJK 原稿，三次均靠事后 `diff --stat` 对照拦下、零错误提交；2026-11-14 C1 triage 逐条核实全部属实，拍板即日实施）：
+
+- **`git-guide.md` §3.1「代码修改完成后的标准流程」补 untracked 安全 add 附注**：工作区存在刻意未跟踪的草稿 / 原稿 / 本地记录时，禁用 `git add -A`、`git add .`，改显式路径暂存；多文件提交前用 `git diff --stat`（暂存后 `git diff --cached --stat`）对照本次触碰文件清单，多出文件先 reset 核对再继续——把「暂存范围安全」从行为纪律自觉提升为操作文档固定提醒（「关键前置未进执行清单」家族第五面的机制化兑现）。不双写：`SOP.md` 为入口索引不改，`git-beginner-handbook.md` 头部已声明以 `git-guide.md` 为权威。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（纯附注文案，无脚本 / 同步清单 / 断言变更）。
+
 ## v1.78.1（2026-11-12）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-c1-mirror-eof-tail-clean.md`「C1 issue 镜像落盘清尾写进 prompt 11 操作序列」，源起 pitfall SUMMARY 第十二批回流候选——mirror-eof-whitespace-gate 家族两次实证：2026-10-31 #490/#491 实施轮首证、2026-11-09 #526 镜像落盘当场复发；维护者拍板即日实施）：

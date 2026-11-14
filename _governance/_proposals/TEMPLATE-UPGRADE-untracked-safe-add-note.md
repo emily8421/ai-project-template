@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: git-guide §3.1 补 untracked 安全 add 附注
 
 > 来源：模板维护者（pitfall SUMMARY 第三次实证：2026-08-12 `.ai/tmp` / 2026-08-21 归档评估稿 / 2026-11-10 add-a-untracked-draft-stage）
-> 状态：候选（待 C1 triage 与维护者拍板）
-> 目标版本：待确认
+> 状态：已拍板实施（2026-11-14 C1 triage 逐条核实全部属实，无校正；目标 v1.78.2）
+> 目标版本：v1.78.2
 > Release impact：patch（AI 建议，待维护者确认——流程文档附注级补强，不改变默认行为与流程结构）
 > Release strategy：同主题聚合候选（可与其他 git-guide / 流程文档微调聚合为一个发布边界）
 
