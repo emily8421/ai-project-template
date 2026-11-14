@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.3（2026-11-14）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-route-annotation-coverage.md`「任务路由表场景级标注覆盖扩展」，源起 token-hotspot SUMMARY「路由包重读」观察家族累计 12+ 次实证、§14 升级「待 C1 评估立案」、§15 判证据链完整；2026-11-14 C1 triage 通过并修订后拍板实施；#441 章节级标注机制的覆盖面扩展，PATCH 与 #491 同先例）：
+
+- **`ai/index.md` 路由表 +2 处场景标注**（triage 修订后口径，原拟改第 1 处 PR/CI merge-only 经核实已被 v1.75.8 #491 覆盖、删除）：①「模板维护 / 规则改造 / 同步机制」行补行内分口径「**C1 triage（提案收件箱评估，不含实施）**」——prompt 11 + 收件箱 README「提案正文章节」「远端 issue 本地镜像」节 + CONTRIBUTING §1-§5，拍板后进入实施仍回规则改造口径读完整回退包；②「PR / CI / Git 收尾」行触发列与规则列补「registry 登记 / handoff 刷新等纯治理记录写入」场景——可只读 `ai/session-rules.md` §1 / §3 / §4 与 `ai/project-rules.md` §6。
+- **`ai/prompts/maintainers/11-template-proposal-summary.md` 读取口径同批对齐**（triage 补强，防与路由表标注双写漂移）：「使用前准备」与「读取前先确认」清单中 `CHANGELOG.md` 全文必读改为按需（核实版本占用 / 先期修复对照时查 `VERSION` 与相关近期条目）；「ai/index.md 列出的全部规则文件」改为指向 C1 triage 场景最小必读集。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check` + 人工核对标注与场景实际必读集一致；PATCH 豁免 L3 e2e（纯导航标注，无脚本 / 同步清单 / 断言变更）。
+
 ## v1.78.2（2026-11-14）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-untracked-safe-add-note.md`「git-guide §3.1 补 untracked 安全 add 附注」，源起 pitfall SUMMARY 第十三批——`git add -A` 暂存范围失控第三次实证达第四批既定立案口径（2026-08-12 `.ai/tmp` / 2026-08-21 归档评估稿 7 份 / 2026-11-10 CJK 原稿，三次均靠事后 `diff --stat` 对照拦下、零错误提交；2026-11-14 C1 triage 逐条核实全部属实，拍板即日实施）：

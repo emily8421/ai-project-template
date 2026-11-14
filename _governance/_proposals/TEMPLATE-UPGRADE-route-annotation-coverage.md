@@ -1,8 +1,8 @@
 # TEMPLATE-UPGRADE: 任务路由表场景级标注覆盖扩展（路由包裁读）
 
 > 来源：模板维护者（token-hotspot SUMMARY §8~§15「路由包重读」观察家族，累计 12+ 次实证）
-> 状态：候选（待 C1 triage 与维护者拍板）
-> 目标版本：待确认
+> 状态：已拍板实施（2026-11-14 C1 triage：证据链与 #441 机制核实属实；校正 1——原场景① PR/CI merge-only 已由 v1.75.8 #491 覆盖且 §15 后无复发，拟改删除；补强 1——prompt 11 读取口径同批对齐防双写漂移；细化 1——场景③落点定稿挂「PR / CI / Git 收尾」行；目标 v1.78.3）
+> 目标版本：v1.78.3
 > Release impact：patch（AI 建议，待维护者确认——复用 #441 既有章节级标注机制，无新能力层级 / 同步结构变化）
 > Release strategy：单独发布
 
@@ -24,15 +24,16 @@
 
 **本提案不重复它们**：#441 只铺了部分行的标注；本提案补「PR / CI 收尾 merge-only」「C1 triage」「registry chore / handoff 刷新」三类场景的标注空白。
 
-## 2. 拟改
+## 2. 拟改（2026-11-14 triage 修订后实施口径）
 
-`ai/index.md` 任务路由表三处标注（标注格式沿用 #441「（<场景>可只读 §x / §y）」语义，脚注不变）：
+> triage 修订记录：原拟改第 1 处（「PR / CI / Git 收尾」行补 merge-only 标注）经核实已被 v1.75.8 #491 覆盖（现行行已为「权威入口，按其 §2 最小必读集分诊；发版类另读」，且 §15 最新实证无 merge-only 复发），实施时删除；场景③落点定稿为挂「PR / CI / Git 收尾」行；补强——prompt 11 读取口径与路由表标注同批对齐，避免双写漂移。
 
-1. **「PR / CI / Git 收尾」行**：补 merge-only 场景标注——如「（merge-only 收尾场景可按 profile §2 最小必读集分诊，不整读本行全部）」。
-2. **「模板维护 / 规则改造 / 同步机制」行**：补 C1 triage 场景标注——如「（C1 triage 场景可只读 `ai/prompts/maintainers/11-template-proposal-summary.md` + `_governance/_proposals/README.md`「远端 issue 本地镜像」「提案正文章节」节 + `CONTRIBUTING.md` §1-§5）」。
-3. **registry chore / handoff 刷新场景**：在对应路由行（或其标注）补——如「（registry 登记 / handoff 刷新等纯记录写入场景可只读 `ai/session-rules.md` §1 / §3 / §4、`ai/project-rules.md` §6）」。
+`ai/index.md` 任务路由表两处标注（沿用 #441 章节级标注与 v1.76.1 行内分口径语义，脚注不变）：
 
-另随 triage 评估（本提案附带评估项，可独立裁决）：prompt 11「使用前准备」中 `CHANGELOG.md` 全文必读改为「按需（`VERSION` + 近期条目）」（hotspot §11 同族建议）。
+1. **「PR / CI / Git 收尾」行**：触发列补「registry 登记 / handoff 刷新等纯治理记录写入」；规则列补「registry 登记 / handoff 刷新等纯治理记录写入（无本地代码改动、非发版）可只读 `ai/session-rules.md` §1 / §3 / §4 与 `ai/project-rules.md` §6」。
+2. **「模板维护 / 规则改造 / 同步机制」行**：补行内分口径「**C1 triage（提案收件箱评估，不含实施）**：`ai/prompts/maintainers/11-template-proposal-summary.md`、`_governance/_proposals/README.md`「提案正文章节」与「远端 issue 本地镜像」节、`CONTRIBUTING.md` §1-§5（拍板后进入实施即回规则改造口径，读完整回退包）」。
+
+随同批落地（triage 补强兑现，原附带评估项扩围）：prompt 11「使用前准备」与「读取前先确认」清单对齐路由表 C1 标注——`CHANGELOG.md` 全文必读改「按需（`VERSION` + 相关近期条目）」，「ai/index.md 列出的全部规则文件」改为指向 C1 triage 场景最小必读集（hotspot §11 同族建议 + triage 补强）。
 
 ## 3. 版本影响
 
