@@ -498,3 +498,13 @@ powershell -NoProfile -File scripts/collect-env.ps1
 | 具体场景怎么操作 | `template-docs/scenario-guides.md`（A0–A28 / C1–C8 / 元场景） |
 | 找命令速查 | `SOP.md`（仓库根）、`ai/commands/README.md` |
 | 采集本机资源 | `docs/env/README.md`、`scripts/collect-env.ps1` |
+
+## 12. 换机 / 迁移恢复时的本地态清单
+
+换机、重装系统或备份恢复时，Git 仓库本体可从远端恢复，但 gitignored 的本地目录**不随 clone / 依赖重装恢复**——迁移清单需显式列出这些目录，或明确声明接受丢失并在续接文件标注悬空指针位置：
+
+- `.ai/`：会话续接（`session-handoff.md`）、pitfall / token-hotspot 观察记录、handoff 归档——丢失后新会话续接链断裂，历史观察不可恢复；
+- `.tmp/`：任务级临时文件（按约定随任务收尾即删，通常可放弃）；
+- 项目自声明的其他 gitignored 本地态：对照项目根 `.gitignore` 与 `ai/project-rules.md` §4 的目录特例登记逐项确认。
+
+迁移 / 备份恢复前逐项打勾：已列入清单 → 已拷贝 → 新机落位路径一致（按原路径解析的引用不断链）；决定不迁移的项，在续接文件中标注「接受丢失 + 悬空指针位置」。
