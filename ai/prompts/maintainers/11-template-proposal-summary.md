@@ -13,7 +13,7 @@
 
 **不适用场景**：普通派生项目日常开发；派生项目只负责起草提案，不使用本节直接改模板。若模板仓库内需要直接修改模板但尚无提案，也应先新增 `TEMPLATE-UPGRADE-*.md`。
 
-**使用前准备**：确认当前在模板仓库，已阅读 `ai/index.md`、`CONTRIBUTING.md`、`MAINTAINERS.md`、`CHANGELOG.md` 与 `_governance/_proposals/README.md`。
+**使用前准备**：确认当前在模板仓库，已阅读 `ai/index.md`、`CONTRIBUTING.md`、`MAINTAINERS.md` 与 `_governance/_proposals/README.md`（`CHANGELOG.md` 按需读取——发版核实只查 `VERSION` 与相关近期条目，不通读全文）。
 
 **续接要求**：输出优化计划后，将分批计划、拟修改文件、版本影响、验证方式和归档计划写入 / 更新续接文件，避免长任务中断后丢失路线。
 
@@ -27,10 +27,10 @@
 请读取 _governance/_proposals/ 下所有 TEMPLATE-UPGRADE-*.md（提案）与可选 *-patch.md（具体改动建议），**先读取既有 `_governance/_proposals/_remote-issues/*.md`，再读取模板仓库带 `proposal` / `feedback` 标签的 issue**（`gh issue list --label proposal` 与 `--label feedback`——派生项目经 `submit-proposal` / `submit-feedback` 开的回流 issue），并覆盖 open issue 中标题匹配 `TEMPLATE-UPGRADE:` 的条目。远端 issue 正文必须先镜像 / 刷新到 `_governance/_proposals/_remote-issues/issue-<number>.md`，再与本地提案一并纳入分析，输出一份模板优化计划。镜像硬门禁：远端正文只允许用于生成 / 刷新镜像；没有本地镜像路径的 issue 不得进入去重、冲突、依赖、分批计划、拟修改文件或续接记录；若已误读远端正文但尚未落镜像，必须丢弃该轮分析结论，先刷新镜像，再重新读取本地镜像继续。查询远端 issue / PR 时必须避免临时过滤误判：GitHub `/issues` API 会同时返回 issue 与 PR，PowerShell 中应通过 `$null -eq $_.PSObject.Properties['pull_request']` 判断普通 issue；关闭、改标签或评论前必须做 open 列表与单项状态复核。issue 处理完后应关闭；转为实施的，落地后关闭对应 issue。
 
 读取前先确认：
-- ai/index.md 列出的全部规则文件
+- ai/index.md 及其路由表「模板维护」行的 **C1 triage 场景最小必读集**（本 prompt + 收件箱 README 相关节 + CONTRIBUTING §1-§5；拍板后进入实施即回规则改造口径，读完整规则回退包）
 - CONTRIBUTING.md（模板变更治理流程）
 - MAINTAINERS.md（模板维护、发布 checklist、同步清单维护）
-- CHANGELOG.md（完整版本记录）
+- CHANGELOG.md 按需：核实目标版本未被占用 / 先期修复对照时查 `VERSION` 与相关近期条目，不通读全文
 - README.md（普通使用者入口，避免塞入维护细节）
 - _governance/_proposals/README.md（提案收件箱规则）
 - _governance/_proposals/_remote-issues/*.md（已镜像的远端 issue；若远端更新较新，先刷新镜像）
