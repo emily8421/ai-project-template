@@ -138,7 +138,7 @@
    - 对可通用于多个项目的问题，生成去项目化 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`；不得包含客户、账号、路径敏感信息或项目专属业务细节。
    - 若没有可回流问题，记录“本次无模板回流提案”。
 23. 推送当前分支：git push -u origin chore/sync-template-vX.Y.Z。
-24. 创建 PR：gh pr create --fill。
+24. 创建 PR：同步分支含 bootstrap 等前置提交（双提交 / 多提交）时，显式指定标题，使 squash 合并后 HEAD 信息保持 `sync template vX.Y.Z from ai-project-template` 格式——`--fill` 在多提交分支上取分支名 / 首提交作标题，伪影标题会使 `project-check.yml` 的合并后边界校验被跳过：`gh pr create --title "sync template vX.Y.Z from ai-project-template" --body "<同步摘要>"`；单提交分支可保留 `gh pr create --fill`。
 25. 最后汇总：同步到的模板版本、同步提交、采用的同步路径、同步边界检查结果、workflow 迁移建议、同步后整理状态、文档体系审计状态、提案回流收口结论、项目验证建议、同步运行记录路径、是否需要人工迁移 project-rules、是否需要运行 collect-env、提案归档情况、是否生成回流提案和 PR 链接。
 
 同步 PR 边界：同步 PR 只包含同步提交；步骤 16-17 的提案归档移动、步骤 21 的同步运行记录、种子文件联动清理等收尾提交，拆到同步 PR 合并后的后续小 PR / 提交执行——避免 squash 合并后 HEAD 混入清单外变更，触发合并后 `check-derived-sync` 校验失败；若仍出现失败，按 `git-guide.md` §5 checklist 的 squash 校验时点口径对照推送前留痕裁决。
