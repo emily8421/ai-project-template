@@ -90,6 +90,8 @@ git push -u origin <当前分支名>   # 首次推送该分支
 gh pr create --fill              # 如项目要求走 PR；模板仓强制
 ```
 
+**untracked 安全 add 附注**：工作区存在刻意未跟踪的草稿 / 原稿 / 本地记录时，禁用 `git add -A`、`git add .`，按上方命令块用显式路径 `git add <文件路径>` 暂存；多文件提交前用 `git diff --stat`（已暂存时 `git diff --cached --stat`）对照本次触碰文件清单，发现多出文件先 `git reset` 核对再继续。
+
 后续同一分支已有 upstream 时，推送可简化为：
 
 ```powershell
