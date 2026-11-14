@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.78.5（2026-11-14）
+
+PATCH 单提案（zhiyan-digital-cs-platform 派生项目回流 issue #543「割接 / 迁移类任务的下游引用 sweep + gitignored 本地态清单收尾检查项」，2026-11-14 C1 triage 核实属实——env-setup 确无本地态迁移项 / document-lifecycle §9 变更传播矩阵确无基础设施割接类行，拍板即日实施；落点经维护者裁量：收尾自检落 session-rules §4、本地态清单落 env-setup 新节）：
+
+- **`ai/session-rules.md` §4 新增收尾自检项（割接 / 迁移类任务附加自检）**：割接、迁移、端口调整、路径重组类任务收尾时，对旧标识（端口、路径、域名、命令关键字）做一次全仓 grep，逐命中区分「活事实（随动修改）vs 历史记录（保留）」，防失效引用静默残留；换机 / 备份恢复类任务对照 env-setup 本地态清单核对。
+- **`template-docs/env-setup.md` 新增 §12「换机 / 迁移恢复时的本地态清单」**：gitignored 本地目录不随 clone / 依赖重装恢复——`.ai/`（续接与观察记录）、`.tmp/`、项目自声明本地态逐项列入迁移清单或显式声明接受丢失；迁移前逐项打勾 + 新机路径一致性核对。补位动机实证：gitignored 观察目录漏迁导致续接文件历史摘要引用成悬空指针。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（规则附注级，不引入自检断言 / CI 门禁，与「避免过度治理」口径一致——grep 是否执行属语义判断）。
+
 ## v1.78.4（2026-11-14）
 
 PATCH 单提案（LumiOne-Framework 派生项目回流 issue #548「双提交同步分支的 PR 标题显式指定」，2026-11-14 C1 triage 逐条核实全部属实——SOP 步骤 24 现状 / 校验机制 / 同仓两轮 PR 对照（#12 `--fill` 伪影 / #13 显式标题通过）均与远端实查吻合，拍板即日实施）：
