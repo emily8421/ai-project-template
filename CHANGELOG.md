@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.79.3（2026-11-16）
+
+PATCH 单提案（首轮机制审计 R1 落地补登，F1 + F6；审计记录 `_governance/ai-records/mechanism-audits/2026-11-16-mechanism-audit-r1.md` 同日入库——2026-12 半年度窗口提前执行，用户 2026-11-16 拍板）：
+
+- **`template-docs/capability-packages.md` §4 补 `MECH-CORE-004`「评审触发矩阵」登记行**（F1，协调域）：decoupling 提案 Phase 1 承诺「#485 落地后其触发矩阵登记进 MECH 表」，#485 已随 v1.76.0 落地（`ai/review-guide.md` 12 时点强制 / 建议矩阵 + 图表体系评审清单）但登记缺失，首轮审计检出后补登；登记表 14 类 → 15 类，§9 审计节奏句同步刷新（首轮 R1 已执行、下一窗口 2026-06）。
+- **§4 既有 14 行「最近审计」列刷新为 2026-11-16（R1 审计）**（F6）：原值停留在登记日 2026-10-29。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（人读登记表补行与簿记列刷新，无断言 / 同步清单 / 脚本变更）。
+
 ## v1.79.2（2026-11-16）
 
 PATCH 单提案（agent-system-template 派生项目回流 issue #565「同步收尾补『版本复制指针核对』advisory 步」，2026-11-16 C1 triage 核实属实——`复制指针` 全 `ai/` 零命中（缺口未被现行版本覆盖）、两落点锚点实存（12-sync-template 步骤 14 / 15-post-sync-cleanup §5）、来源仓 patch 文件实查存在；同族实证链：#481 发版侧 VERSION 滞留 + 来源仓 2026-11-02 / 2026-11-16 连续两轮 `ai/project-rules.md` §0 复制指针滞留；拍板即日实施）：
