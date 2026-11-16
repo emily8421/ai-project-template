@@ -38,7 +38,7 @@
 3. 若修改来源是"对话中新增建议"，应先把建议整理进提案，再继续改模板；不要改完再回忆补提案。
 4. 改文件，并按 §4 判断是否递增根目录 VERSION。
 5. 本地自测（脚本可跑、文档自洽）。
-6. 将已处理提案移动到 `_governance/_archive/proposals/`；未处理或延后处理的提案留在 `_governance/_proposals/`。
+6. 将已处理提案移动到 `_governance/_archive/proposals/`；未处理或延后处理的提案留在 `_governance/_proposals/`。归档移动与索引表登记同批完成：`git mv` 后同步更新 `_governance/_archive/proposals/README.md` 归档索引表（批次行 + 落地版本 / PR / squash 锚点），不留「只 rename 未登记」中间态。
 7. push 分支，提 PR（自动套用 .github/pull_request_template.md 核对清单）。
 8. 评审要点：
    - 是否含项目专属内容（应剔除或留在 project-rules）
