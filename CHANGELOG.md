@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.79.2（2026-11-16）
+
+PATCH 单提案（agent-system-template 派生项目回流 issue #565「同步收尾补『版本复制指针核对』advisory 步」，2026-11-16 C1 triage 核实属实——`复制指针` 全 `ai/` 零命中（缺口未被现行版本覆盖）、两落点锚点实存（12-sync-template 步骤 14 / 15-post-sync-cleanup §5）、来源仓 patch 文件实查存在；同族实证链：#481 发版侧 VERSION 滞留 + 来源仓 2026-11-02 / 2026-11-16 连续两轮 `ai/project-rules.md` §0 复制指针滞留；拍板即日实施）：
+
+- **`ai/prompts/maintainers/12-sync-template.md` 步骤 14 尾部 + `ai/prompts/maintainers/15-post-sync-cleanup.md` §5**：两处同措辞补「核对非同步清单文件的版本复制指针」advisory 步——核对派生仓内手抄版本号（如 `ai/project-rules.md` §0 的领域模板版本 / 继承母模板版本、根 README 状态行等）与权威源（根 `VERSION` / `TEMPLATE-BASE.md`）一致，发现滞留即随收尾提交回写或建议改写为纯指针（「以 <权威源> 为准，不复制版本号」）从源头消除漂移面；两处同措辞防双写漂移（v1.79.1 归档固定步先例）。advisory 语义零门禁：不新增同步结构、不挂自检断言、不改脚本与同步清单。
+- **归档收尾**：issue #549 镜像随本批补归档（该提案已随 v1.79.0 PR #557 落地吸收、issue 已关闭，镜像归档欠账清偿；归档索引表登记同批完成）+ issue #565 镜像入库 `_remote-issues/`（落地吸收后随收尾轮归档）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（SOP / 审计清单文案增量，无脚本 / 同步清单 / 断言变更）。
+
 ## v1.79.1（2026-11-16）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-archive-index-fixed-step.md`「归档操作序列补同步更新归档索引表固定步」，源起 pitfall SUMMARY §18 第十四批——archive-index-backfill-drift 同族第三次实证（2026-09-10 #456 / 2026-11-10 #542 / 2026-11-12 #547 归档均漏登索引表，前两次靠事后补登记）；2026-11-16 用户随 rollup #559 拍板立案即日实施，与 untracked add 附注 v1.78.2、镜像清尾 v1.78.1 同款「三犯立案」先例）：
