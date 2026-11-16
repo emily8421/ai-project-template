@@ -49,11 +49,12 @@
 5. 若 `Release impact` 不是 `none`，更新根目录 `VERSION`。
 6. 若递增版本，更新 `CHANGELOG.md`，确保包含当前 `VERSION`；同主题多 Batch 用短摘要 + 子弹列表，不把候选池写入已发布成果。
 7. 若新增 / 删除下行同步方法论文件，更新 `template-sync.json`；若改动 `docs/00-09` 撰写规范，确认 `check-template.sh` 的 doc-standards 镜像自检（`require_doc_standards_mirror`）通过。
-8. 若改变用户入口，保持 `README.md` 的「快速开始」三入口可读，不塞入维护者细节。
-9. 运行：`git diff --check`。
-10. 若新增 / 修改准备提交的 `_governance/_proposals/`、`_governance/ai-records/` 等 Markdown 记录，运行：`powershell -NoProfile -File scripts/check-markdown-clean.ps1 _governance/_proposals _governance/ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。单条 token hotspot 记录位于 `.ai/token-hotspots/`，是 gitignored 本地过程观察，不作为提交内容；只有脱敏汇总 `_governance/ai-records/token-hotspots/` 才按正式记录检查。
-11. 运行：`bash scripts/check-template.sh`（或 `powershell -NoProfile -File scripts/check-template.ps1`）。
-12. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
+8. 若本次改动引入新治理机制或新脚本工具，当场登记 `template-docs/capability-packages.md` §4（MECH 表，回答准入四问）或 `scripts/README.md` §2（TOOL 表），并刷新受影响行的「最近审计」列；登记与改动同批提交，不留「已上线未登记」中间态（首轮审计 R1 实证：#485 v1.76.0 落地后漏登 MECH 表，2026-11-16 R1 检出补登）。
+9. 若改变用户入口，保持 `README.md` 的「快速开始」三入口可读，不塞入维护者细节。
+10. 运行：`git diff --check`。
+11. 若新增 / 修改准备提交的 `_governance/_proposals/`、`_governance/ai-records/` 等 Markdown 记录，运行：`powershell -NoProfile -File scripts/check-markdown-clean.ps1 _governance/_proposals _governance/ai-records`，避免行尾空格、BOM 或 EOF 多空行到 CI 后才失败。单条 token hotspot 记录位于 `.ai/token-hotspots/`，是 gitignored 本地过程观察，不作为提交内容；只有脱敏汇总 `_governance/ai-records/token-hotspots/` 才按正式记录检查。
+12. 运行：`bash scripts/check-template.sh`（或 `powershell -NoProfile -File scripts/check-template.ps1`）。
+13. push 分支并创建 PR，等待 GitHub Actions `Template Check` 通过后再合并。
 
 ## 4. 下行同步清单
 
