@@ -1,12 +1,12 @@
 # GitHub Issue #549: 核心实体生命周期完备性检查（C/R/U/D 四问 + 三选一留痕）——补审核矩阵的生成侧完备性盲区
 
 > Source URL: https://github.com/emily8421/ai-project-template/issues/549
-> State: open
+> State: CLOSED
 > Labels: proposal, from:LUMEN_demo_T2.1
 > Author: emily8421
 > Created: 2026-11-14T03:26:11Z
-> Updated: 2026-11-14T03:26:11Z
-> Mirrored at: 2026-11-14
+> Updated: 2026-11-15T02:11:05Z
+> Mirrored at: 2026-11-16
 > Mirror status: raw remote issue copy for local triage; GitHub issue remains source of comments and closure state.
 
 ## Raw Issue Body
@@ -50,7 +50,6 @@
 | R | 怎么被看见？（列表 / 查询 / 详情 / 切换） | 通常最先被满足（「能用」先行），缺 R 少见 |
 | U | 怎么被修改？（编辑 / 改名 / 配置 / 成员管理） | 结构性实体的 U 常被误认为「当然有」 |
 | D | 到哪去？（删除 / 归档 / 转移 / 停用） | 数据生命周期重决策，最常被显式延后——但须留痕而非沉默 |
-
 
 **每个空档必须三选一留痕**：
 

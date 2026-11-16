@@ -106,7 +106,7 @@
    - 普通 PR 不应运行 `scripts/check-template.sh` 或 `scripts/check-template.ps1`。
    - 若存在 `.github/workflows/template-check.yml`，说明它通常是模板仓自检入口，提示迁移为 `.github/workflows/project-check.yml`。
    - 派生项目版 workflow 应保留 `git diff --check`，并仅在提交信息匹配 `sync template vX.Y.Z from ai-project-template` 时运行 `scripts/check-derived-sync.sh HEAD`。
-14. 如本次同步引入新的项目专属骨架项，不要直接覆盖 ai/project-rules.md；列出需要人工迁移的字段，例如 `§2.1 运行环境与资源约束`。领域模板仓的 `ai/domain-rules.md` 种子不在同步清单、不会被覆盖；如本次同步刷新了 `ai/doc-standards/domain-rules.md` 规范基线，对照它维护领域种子（§0-§4）。
+14. 如本次同步引入新的项目专属骨架项，不要直接覆盖 ai/project-rules.md；列出需要人工迁移的字段，例如 `§2.1 运行环境与资源约束`。领域模板仓的 `ai/domain-rules.md` 种子不在同步清单、不会被覆盖；如本次同步刷新了 `ai/doc-standards/domain-rules.md` 规范基线，对照它维护领域种子（§0-§4）。同步收尾另核对派生仓内非同步清单文件的版本复制指针（如 `ai/project-rules.md` §0 的领域模板版本 / 继承母模板版本、根 README 状态行等）与权威源（根 `VERSION` / `TEMPLATE-BASE.md`）一致；发现滞留即随收尾提交回写，或建议改写为纯指针（「以 <权威源> 为准，不复制版本号」）从源头消除漂移面。
 15. 如项目已同步到含 `scripts/collect-env.ps1` 的模板版本，但尚无 `docs/env/local-env.md`，提示运行：powershell -NoProfile -File scripts/collect-env.ps1，并补齐人工确认项。
 16. 做提案回流收口检查：
    - 扫描本项目 `_governance/_proposals/TEMPLATE-UPGRADE-*.md`、`.ai/session-handoff.md`、最近 `_governance/sync-records/template-sync/` 运行记录（旧路径 `docs/archive/template-sync/` 兼容读取），找出本项目曾提交到模板仓的 issue 链接、待处理提案和已生成回流提案。
