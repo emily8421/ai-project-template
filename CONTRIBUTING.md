@@ -37,16 +37,17 @@
 2. 再新增或确认已有 TEMPLATE-UPGRADE-*.md 提案，说明动机、拟改、版本影响、影响面和验证方式。
 3. 若修改来源是"对话中新增建议"，应先把建议整理进提案，再继续改模板；不要改完再回忆补提案。
 4. 改文件，并按 §4 判断是否递增根目录 VERSION。
-5. 本地自测（脚本可跑、文档自洽）。
-6. 将已处理提案移动到 `_governance/_archive/proposals/`；未处理或延后处理的提案留在 `_governance/_proposals/`。归档移动与索引表登记同批完成：`git mv` 后同步更新 `_governance/_archive/proposals/README.md` 归档索引表（批次行 + 落地版本 / PR / squash 锚点），不留「只 rename 未登记」中间态。
-7. push 分支，提 PR（自动套用 .github/pull_request_template.md 核对清单）。
-8. 评审要点：
+5. 若本次改动引入新治理机制或新脚本工具，当场登记 `template-docs/capability-packages.md` §4（MECH 表，回答准入四问）或 `scripts/README.md` §2（TOOL 表），并刷新受影响行的「最近审计」列；登记与改动同批提交，不留「已上线未登记」中间态（首轮审计 R1 实证：#485 v1.76.0 落地后漏登 MECH 表，2026-11-16 R1 检出补登）。
+6. 本地自测（脚本可跑、文档自洽）。
+7. 将已处理提案移动到 `_governance/_archive/proposals/`；未处理或延后处理的提案留在 `_governance/_proposals/`。归档移动与索引表登记同批完成：`git mv` 后同步更新 `_governance/_archive/proposals/README.md` 归档索引表（批次行 + 落地版本 / PR / squash 锚点），不留「只 rename 未登记」中间态。
+8. push 分支，提 PR（自动套用 .github/pull_request_template.md 核对清单）。
+9. 评审要点：
    - 是否含项目专属内容（应剔除或留在 project-rules）
    - 是否有提案记录与归档计划
    - 是否按三段式规则更新 VERSION 与 CHANGELOG
    - 是否影响下游、需下行同步哪些项目
-9. 合并到 main（squash）。
-10. 下行同步到各进行中派生项目（见 §6）。
+10. 合并到 main（squash）。
+11. 下行同步到各进行中派生项目（见 §6）。
 ```
 
 ### 3.1 主动修改模板时的提案记录要求

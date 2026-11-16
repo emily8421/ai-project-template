@@ -6,6 +6,15 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.79.4（2026-11-16）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-mechanism-registration-landing-step.md`「机制 / 工具登记接入发版清单固定步」，源起首轮机制审计 R1 收官后维护者「半年度节奏是否会积压」复议——根因分析结论：R1 唯一实锤 F1（#485 v1.76.0 落地后漏登 MECH 表）源于落地时点缺登记工序而非体检间隔，体检频率治不了漏登；拍板方案 B：半年度节奏不动（DC-004 维持），登记工序前移到发版时点）：
+
+- **`MAINTAINERS.md` §3 发布 checklist 插入新条目 8（原 8-12 顺延 9-13）+ `CONTRIBUTING.md` §3 改模板流程插入新步骤 5（原 5-10 顺延 6-11）**：两处同措辞（v1.79.1 归档固定步范式）——改动引入新治理机制 / 新脚本工具时，当场登记 `capability-packages.md` §4（MECH 表，准入四问）或 `scripts/README.md` §2（TOOL 表）并刷新受影响行「最近审计」列；登记与改动同批提交，不留「已上线未登记」中间态。发版清单是每次发版必过的执行节点，模板迭代越快该工序触发越勤，自动适配快速优化期；半年度审计由「抓漏登」降级为「对账抽查」。
+- 提案文件同 PR 入库 `_governance/_proposals/`（§3.1 对话新增建议先落提案先例）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（维护者清单文案增量，无断言 / 同步清单 / 脚本变更）。
+
 ## v1.79.3（2026-11-16）
 
 PATCH 单提案（首轮机制审计 R1 落地补登，F1 + F6；审计记录 `_governance/ai-records/mechanism-audits/2026-11-16-mechanism-audit-r1.md` 同日入库——2026-12 半年度窗口提前执行，用户 2026-11-16 拍板）：
