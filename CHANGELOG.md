@@ -6,6 +6,14 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.79.1（2026-11-16）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-archive-index-fixed-step.md`「归档操作序列补同步更新归档索引表固定步」，源起 pitfall SUMMARY §18 第十四批——archive-index-backfill-drift 同族第三次实证（2026-09-10 #456 / 2026-11-10 #542 / 2026-11-12 #547 归档均漏登索引表，前两次靠事后补登记）；2026-11-16 用户随 rollup #559 拍板立案即日实施，与 untracked add 附注 v1.78.2、镜像清尾 v1.78.1 同款「三犯立案」先例）：
+
+- **`CONTRIBUTING.md` §3 步骤 6 + `ai/prompts/maintainers/11-template-proposal-summary.md` 分析要求 8**：归档移动与索引表登记**同批完成**——`git mv` 后同步更新 `_governance/_archive/proposals/README.md` 归档索引表（批次行 + 落地版本 / PR / squash 锚点），不留「只 rename 未登记」中间态；两处同措辞防双写漂移——把「暂存范围安全」式的纪律提升为操作序列固定步（「关键前置未进执行清单」家族第六面的机制化兑现）。
+
+验证：全量自检（`check-template.sh --summary`）+ md-clean 窄检 + `git diff --check`；PATCH 豁免 L3 e2e（治理流程文档固定步，无脚本 / 同步清单 / 断言变更）。
+
 ## v1.79.0（2026-11-15）
 
 MINOR 单提案（LUMEN-DEMO 派生项目回流 issue #549「核心实体生命周期完备性检查（C/R/U/D 四问 + 三选一留痕）」，2026-11-14 C1 triage 核实属实——全部审核入口确无生成侧完备性维度、document-lifecycle §6.0.1 断点表确无生成侧断点类型、LUMEN 仓试验记录实查存在（8 实体 32 问：1 真实缺口 + 逼出 2 个从未讨论的操作，零误报）；用户确认 issue 提交为有意（正文头部「暂不回流」状态行过时，不影响技术内容）；拍板单独轮实施）：
