@@ -334,6 +334,34 @@ check_project_rules_section_continuity() {
   [[ "$gap" -eq 0 ]] && pass "project-rules §2.x 子节编号连续（无未说明跳号）"
 }
 
+# advisory（非阻断，v1.79.5）：launcher-menu 清单指向目标存在性（单一清单源防漂移）。
+# 菜单条目引用的脚本 / prompt / 命令文件若被移动或改名而清单未随动，此处告警（不计入失败）。
+check_launcher_menu_targets() {
+  begin_section "检查 launcher-menu 清单指向目标（advisory）"
+  [[ -f scripts/launcher-menu.json ]] || { echo "ℹ️  无 scripts/launcher-menu.json，跳过"; return 0; }
+  local line key target source n=0 missing=0
+  while IFS= read -r line; do
+    key="$(printf '%s' "$line" | sed -E 's/^.*"key":"([^"]+)".*/\1/')"
+    [[ "$key" == "$line" ]] && continue  # 非条目行（如根对象大括号）
+    n=$((n + 1))
+    target="$(printf '%s' "$line" | sed -E 's/^.*"target":"([^"]+)".*/\1/')"
+    if [[ "$target" != "$line" && -n "$target" && ! -f "$target" ]]; then
+      echo "⚠️  launcher-menu 条目 $key 的 target 不存在：$target（模板仓专用脚本须配 scope=maintainer；若文件已移动请随动清单）" >&2
+      missing=1
+    fi
+    source="$(printf '%s' "$line" | sed -E 's/^.*"source":"([^"]+)".*/\1/')"
+    if [[ "$source" != "$line" && -n "$source" && "$source" != "inline" && ! -f "$source" ]]; then
+      echo "⚠️  launcher-menu 条目 $key 的 source 不存在：$source" >&2
+      missing=1
+    fi
+  done < <(grep -E '^[[:space:]]*\{' scripts/launcher-menu.json | grep -v '^[[:space:]]*{$')
+  if [[ "$n" -eq 0 ]]; then
+    echo "⚠️  launcher-menu 未解析到任何条目（期待每条目单行 {} 格式）" >&2
+    return 0
+  fi
+  [[ "$missing" -eq 0 ]] && pass "launcher-menu 清单指向目标全部存在（$n 条）"
+}
+
 require_changelog_current_version() {
   local version
   version="$(tr -d '\r\n[:space:]' < VERSION)"
@@ -2069,6 +2097,7 @@ require_doc_standards_mirror
 
 check_files_domain_no_overlap
 check_project_rules_section_continuity
+check_launcher_menu_targets
 
 begin_section "检查同步清单一致性"
 while IFS= read -r sync_file; do

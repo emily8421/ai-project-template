@@ -8,7 +8,7 @@
 
 工具按真实消费者分为两组（v1.65.0 起，提案 `_governance/_archive/proposals/TEMPLATE-UPGRADE-scripts-sync-boundary.md`）：
 
-- **随模板下行（8 类能力 / 10 个文件）**：进 `template-sync.json` `files_all`，派生项目同步时获得并被覆盖更新。本 README 随组下行。
+- **随模板下行（9 类能力 / 13 个文件）**：进 `template-sync.json` `files_all`，派生项目同步时获得并被覆盖更新。本 README 随组下行。
 - **模板仓专用（5 类能力 / 6 个文件）**：`check-template.sh` / `check-template.ps1`、`sync-all-derived.sh`、`e2e-sync-check.sh`、`new-project.sh`、`check-registry-drift.ps1`。仅存在于模板仓（本目录可见），不下行、不进同步清单；派生项目不应使用，也不应长期保留历史版本残留（见 §5 孤儿清理）。
 
 本注册表描述工具当前行为，不授予执行权限，也不改变退出码、默认参数、同步范围或自动化门禁。执行前仍须遵守 `ai/rules-core.md`、`ai/session-rules.md`、`SOP.md` 和 `git-guide.md` 的确认要求。
@@ -27,6 +27,7 @@
 | `TOOL-ENV-002` | 深度诊断 Node 运行时 | `check-runtime.ps1` | 任意项目 | Implementation / Environment | 使用者；`template-docs/env-setup.md` | Active |
 | `TOOL-SETUP-002` | 安装基础开发工具 | `bootstrap-dev-env.ps1` | Windows 本机 | Implementation / Setup | 使用者；`SOP.md` A1、`template-docs/env-setup.md` | Active |
 | `TOOL-CHECK-002` | Markdown 清洁度检查 | `check-markdown-clean.ps1` | 模板仓或指定路径 | Governance / Verification | 维护者、CI、`check-template.ps1`；`MAINTAINERS.md` C2 | Active |
+| `TOOL-LAUNCH-001` | 控制台启动器菜单（常用操作点选入口，对话即界面的并列方式） | `menu-launcher.sh`、`menu-launcher.ps1`、`launcher-menu.json` | 模板仓或派生项目 | Governance | 维护者与使用者；`launcher-menu.json`（单一清单源）、`check-template.sh` advisory | Active |
 
 ### 2.2 能力总览——模板仓专用（不下行，仅模板仓存在）
 
@@ -55,6 +56,7 @@
 | `TOOL-RELEASE-001` | 模板仓 | 在临时目录构造派生场景，组合模板自检与批量同步 dry-run；不改真实派生项目 | 低风险本地回归，但依赖 Bash、Git 和临时目录能力 | 单一 Bash 实现；`0` 通过，非零失败 |
 | `TOOL-PROJECT-001` | 项目名；可选 `--account`、`--visibility`、`--no-examples`、`--local`、`--no-remote`、`--shape` | 创建目录、复制 / 克隆模板、裁剪（含删除模板仓专用脚本）、初始化 Git 并提交；未加 `--no-remote` 时还可建远端并 push | 高风险写入；创建目标、切换账号、建远端和 push 均须核对目标并确认 | 单一 Bash 实现；任一步失败即非零退出 |
 | `TOOL-GOV-001` | 可选 `-RegistryPath`（默认仓内 registry.md） | 只读比对登记 Inherited 与各仓 TEMPLATE-BASE 同步版本，输出差异表；不写文件、不联网、不自动回写 | 低风险只读；漂移仅提示，处置由维护者决定 | 单一 PowerShell 实现；`0` 全部一致，`1` 存在漂移，`2` 结构性错误 |
+| `TOOL-LAUNCH-001` | 无必填参数；`-List` / `--list` 非交互列出当前仓可见菜单项 | 渲染菜单并按选择执行脚本类项（只读 / 向导脚本）或生成会话类点单词（显示 / 复制剪贴板 / 拉起 claude / codex）；不改文件、不联网 | 点选 ≠ 授权：会话类仅生成点单词，远端状态变更仍须会话内逐项确认；脚本类仅限登记在册只读 / 向导脚本；模板仓专用目标在派生仓按 scope 过滤或提示缺失 | `.sh` / `.ps1` 双实现同源（清单 `launcher-menu.json`，按行解析约束见其 description）；菜单交互失败即返回上级，不自动重试 |
 
 > 注意：`check-template.*` 是**模板仓**自检（不下行），`check-derived-sync.*` 才是**派生项目**同步验收。派生项目若发现 `scripts/` 中存在 `check-template.*` 等模板仓专用脚本，属历史版本下行残留，可安全删除（见 §5）。
 

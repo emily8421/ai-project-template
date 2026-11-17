@@ -158,7 +158,10 @@
     "scripts/collect-env.ps1",
     "scripts/check-prereqs.ps1",
     "scripts/check-runtime.ps1",
-    "scripts/bootstrap-dev-env.ps1"
+    "scripts/bootstrap-dev-env.ps1",
+    "scripts/launcher-menu.json",
+    "scripts/menu-launcher.sh",
+    "scripts/menu-launcher.ps1"
   ],
   "files_ordinary": [
   ],

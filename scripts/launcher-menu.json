@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "description": "menu-launcher 单一清单源（v1.79.5 起）：菜单渲染自本文件，不在清单的条目不出现；check-template advisory 校验 target / source 指向存在。解析约束：每个条目必须单行 {} 且字段顺序固定 key,type,title,(target,runner,args|source,brief),scope（bash 侧无 JSON 解析器，按行解析）；值内禁用双引号与换行（中文引号用「」）。scope：all=模板仓与派生仓都显示；maintainer=仅模板仓（以 MAINTAINERS.md 存在与否为准，#522 判据）；derived=仅派生仓。红线：点选 ≠ 授权，会话类仅生成点单词，远端状态变更仍须会话内逐项确认。",
+  "items": [
+    {"key":"registry-drift","type":"script","title":"registry 全仓对账（只读）","target":"scripts/check-registry-drift.ps1","runner":"powershell","args":"","scope":"maintainer"},
+    {"key":"template-check","type":"script","title":"模板全量自检（check-template --summary）","target":"scripts/check-template.sh","runner":"bash","args":"--summary","scope":"maintainer"},
+    {"key":"new-project","type":"script","title":"新项目向导（创建派生项目）","target":"scripts/new-project.sh","runner":"bash","args":"","scope":"maintainer"},
+    {"key":"c1-triage","type":"session","title":"C1 提案 triage（模板仓）","source":"ai/prompts/maintainers/11-template-proposal-summary.md","brief":"在模板仓按 prompt 11 处理收件箱提案与远端镜像：先镜像后分析，输出去重/冲突/依赖/分批/拟改文件/版本影响/验证/归档计划 triage 报告，交付拍板，不直接实施。","scope":"maintainer"},
+    {"key":"collect-env","type":"script","title":"采集本机环境事实","target":"scripts/collect-env.ps1","runner":"powershell","args":"","scope":"all"},
+    {"key":"md-clean","type":"script","title":"Markdown 清洁度检查","target":"scripts/check-markdown-clean.ps1","runner":"powershell","args":"","scope":"all"},
+    {"key":"resume","type":"session","title":"快速续接（读取续接点，只读）","source":"ai/commands/resume.md","brief":"按 session-rules §3.1 快速续接模式：先 git 实情（status/log/stash/worktree）再读 .ai/session-handoff.md，交叉核对输出恢复摘要与下一步建议，只读恢复不执行任务。","scope":"all"},
+    {"key":"rollup","type":"session","title":"观察 rollup（hotspot / pitfall）","source":"inline","brief":"按 session-rules §4.2 / §4.3 做观察记录 rollup：枚举本地 .ai/token-hotspots/ 与 .ai/pitfalls/ 未汇总单条，对照 _governance/ai-records/ 对应 SUMMARY 覆盖清单核实无漏网，提炼重复模式与回流候选入库（SUMMARY 写入边界需用户确认），PR 走 ai-records 批次。","scope":"all"},
+    {"key":"sync-round","type":"session","title":"派生同步轮（在派生仓发起）","source":"ai/prompts/maintainers/12-sync-template.md","brief":"在本派生仓按 prompt 12 执行下行同步：正式同步步骤 + 同步 PR 只含同步提交 + 多提交分支 PR 标题显式指定 + 同步后自检 + 重新规范化 + registry 回写（即时回写判据）；同步前先读本仓 handoff 与 git 实查。","scope":"derived"},
+    {"key":"post-sync-cleanup","type":"session","title":"同步后清理与回流归纳（在派生仓发起）","source":"ai/prompts/maintainers/15-post-sync-cleanup.md","brief":"在本派生仓按 prompt 15 执行同步后清理审计（残留清理 / 遗留补课 / 重新规范化），并从同步运行记录归纳可回流模板的建议（去项目化转 TEMPLATE-UPGRADE 提案）。","scope":"derived"},
+    {"key":"submit-proposal","type":"session","title":"提案回流提交（跨仓开 issue）","source":"ai/prompts/maintainers/17-submit-proposal.md","brief":"在本派生仓按 prompt 17 把成熟 TEMPLATE-UPGRADE 提案以 issue 提交模板仓（免 fork，proposal 标签 + 来源标签，--body-file 方式）。","scope":"derived"}
+  ]
+}

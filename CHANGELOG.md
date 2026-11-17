@@ -6,6 +6,17 @@
 
 模板版本采用三段式 `vMAJOR.MINOR.PATCH`，以根目录 `VERSION` 为单一审计入口。版本是发布边界，不是提案数量边界；提案收件箱增长不触发版本递增，只有合并到同步范围内并改变模板行为或下游同步判断的 PR 才判断 `PATCH / MINOR / MAJOR`。`ai/global-rules.md` 顶部仅记录全局规则自身版本。
 
+## v1.79.5（2026-11-17）
+
+PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-launcher-menu.md`「控制台启动器菜单——对话即界面的并列点选入口」，2026-11-17 同日起草 → C1 triage 核实属实（先期状态核实：现行版本无等价点选执行器，SOP / commands README 为文档地图形态）→ 维护者拍板「按建议执行」立项；W-001~W-004 按 AI 建议决议 + triage 校正 2 / 补强 2 随批吸收）：
+
+- **新增 `scripts/menu-launcher.ps1` / `menu-launcher.sh` + 单一清单源 `scripts/launcher-menu.json`（`TOOL-LAUNCH-001`，随模板下行）**：Phase 1 共 11 项——脚本类 5（registry 对账 / check-template 自检 / new-project 向导 / collect-env / check-markdown-clean，同步边界判定：前三者为模板仓专用 → scope=maintainer）+ 会话类 6（C1 triage / resume / rollup / 派生同步轮 / post-sync-cleanup / submit-proposal；生成点单词后可显示 / 复制剪贴板 / 拉起 claude / codex；会话类按 §5.1 发起目录语义分仓——同步轮与清理在派生仓发起）。仓型自适应：按 `MAINTAINERS.md` 存在与否过滤 scope（maintainer / derived / all，#522 判据）；**红线「点选 ≠ 授权」**：会话类仅生成点单词，远端状态变更仍须会话内逐项确认（11-14 授权粒度教训承接）。实现约束：bash 侧无 JSON 解析器，清单按行解析（每条目单行 `{}`、字段顺序固定，约束写入清单 description）；`.ps1` 纯 ASCII 源码 + 中文文案全部在 UTF-8 清单（规避 PS 5.1 无 BOM 编码坑，菜单显示名与 ASCII key 分离）；运行前置缺失（bash / powershell 不在 PATH）降级为显示命令不报错。
+- **`scripts/check-template.sh` 补 advisory（非阻断）**：launcher-menu 清单 target / source 指向存在性校验（单一清单源防漂移；rd-data-chain §4 避免过度治理口径，不设硬门禁）。
+- **登记与同步清单**：`scripts/README.md` TOOL 表登记 `TOOL-LAUNCH-001`（§2.1 下行组 + §2.3 运行契约）+ §1 分组计数刷新（下行组 8 类 / 10 文件 → 9 类 / 13 文件，登记与改动同批——v1.79.4 固定步）；`template-sync.json` `files_all` +3。
+- 提案文件同 PR 入库 `_governance/_proposals/`（实施 PR 先入库、归档 PR 随后，#570/#571 先例）。
+
+验证：全量自检（`check-template.sh --summary`，advisory +1 计数预期）+ md-clean 触达面 + `git diff --check` + 双启动器 `--list` 冒烟（母仓视角 8 项 / 模拟派生仓视角 7 项，scope 过滤正确）+ JSON 可解析 + bash 语法检查；PATCH 豁免 L3 e2e（新增可选工具，无骨架 / 规则文件触达）；dogfood 两周观察（成功判据见提案 §5）。
+
 ## v1.79.4（2026-11-16）
 
 PATCH 单提案（模板自产提案 `TEMPLATE-UPGRADE-mechanism-registration-landing-step.md`「机制 / 工具登记接入发版清单固定步」，源起首轮机制审计 R1 收官后维护者「半年度节奏是否会积压」复议——根因分析结论：R1 唯一实锤 F1（#485 v1.76.0 落地后漏登 MECH 表）源于落地时点缺登记工序而非体检间隔，体检频率治不了漏登；拍板方案 B：半年度节奏不动（DC-004 维持），登记工序前移到发版时点）：
